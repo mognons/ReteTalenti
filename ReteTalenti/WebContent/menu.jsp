@@ -38,7 +38,13 @@
 
 	<div style="position: relative; left: 0px; top: 0px; z-index: 10">
 		<ul id="verticalMenu">
-			<li><a href="coursesLink">Courses</a></li>
+			<li>Disadattati
+				<ul>
+					<li class="ui-state-disabled">Anagrafica</li>
+					<li>Annagrafica</li>
+					<li>Panna Grafica</li>
+				</ul>
+			</li>
 			<li class="ui-state-disabled">Classes</li>
 			<li><a href="tableLink">Students</a></li>
 			<li>-</li>

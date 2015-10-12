@@ -7,7 +7,7 @@
 <body>
 	<div class="main-header" style="position: relative">
 		<h1>
-			<a href="home.action">class<span class="light">Action >>></span></a>
+			<a href="home.action">rete<span class="light">Talenti</span></a>
 		</h1>
 		<h2>
 			<a href="profileLink"> <s:property value="user.userFirstname"></s:property>
