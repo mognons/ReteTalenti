@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+		<package name="default" extends="struts-default">
+			<result-types>
+				<result-type name="tiles"
+					class="org.apache.struts2.views.tiles.TilesResult" />
+			</result-types>
+			<interceptors>
+            	<interceptor name="authentication" 
+            		class="com.interceptor.AuthenticationInterceptor">
+            	</interceptor>
+            	<interceptor-stack name="authStack">
+            	    <interceptor-ref name="authentication"></interceptor-ref>
+            	    <interceptor-ref name="defaultStack"></interceptor-ref>
+            	</interceptor-stack>
+        	</interceptors>
+ 
+        	<default-interceptor-ref name="authStack"></default-interceptor-ref>
+ 
+ 	       	<global-results>
+	        	<result name="login" type="tiles">/login.tiles</result>
+	       	</global-results>
+	       	
+        	<action name="home">
+            	<result type="tiles">/welcome.tiles</result>
+        	</action>
+
+        	<action name="header" class="com.action.HeaderAction">
+            	<result>/header.jsp</result>
+        	</action>
+        	
+ 			<action name="*Link" class="com.action.LinkAction" method="{1}">
+				<result name="welcome" type="tiles">/welcome.tiles</result>
+				<result name="courses" type="tiles">/coursestable.tiles</result>
+				<result name="table" type="tiles">/studenttable.tiles</result>
+				<result name="class_register" type="tiles">/classregister.tiles</result>
+				<result name="report" type="tiles">/report.tiles</result>
+				<result name="calendar" type="tiles">/calendar.tiles</result>
+				<result name="nowhere" type="tiles">/welcome.tiles</result>
+				<result name="users" type="tiles">/userstable.tiles</result>
+				<result name="filemanager" type="tiles">/fm.tiles</result>
+				<result name="profile" type="tiles">/profile.tiles</result>
+			</action>
+			
+        	<action name="login" class="com.action.LoginAction">
+        	    <interceptor-ref name="defaultStack"></interceptor-ref>
+        	    <result name="success" type="tiles">/welcome.tiles</result>
+        	    <result name="input" type="tiles">/login.tiles</result>
+        	</action>
+
+        	<action name="Logout" class="com.action.LogoutAction">
+        		<result name="input" type="tiles">/login.tiles</result>
+        	</action>
+        	
+        	<action name="updateUser" class="com.action.UpdateProfileAction">
+        	    <result name="success" type="tiles">/welcome.tiles</result>
+        	    <result name="input" type="tiles">/profile.tiles</result>
+        	    <result name="error" type="tiles">/profile.tiles</result>
+        	</action>
+        	
+        	<action name="RegistrationAction" class="com.action.RegistrationAction">
+        	    <interceptor-ref name="defaultStack"></interceptor-ref>
+        	    <result name="success" type="tiles">/welcome.tiles</result>
+        	    <result name="input" type="tiles">/login.tiles</result>
+        	    <result name="error">/error.jsp</result>
+        	</action>
+
+        	<action name="welcome" class="com.action.WelcomeAction">
+        	    <result name="success">welcome.jsp</result>
+        	</action>
+        	
+        	<action name="menu" class="com.action.MenuAction">
+        	    <result name="success">menu.jsp</result>
+        	</action>
+        	
+        	<action name="report" class="com.action.ReportAction" method="getExcel">
+        		<result type="stream">
+        			<param name="contentDisposition">attachment;filename="${filename}"</param>
+        			<param name="contentType">application/vnd.ms-excel</param>
+        			<param name="inputName">excelStream</param>
+        			<param name="bufferSize">1024</param>
+				</result>
+        	</action>
+        </package>
+        
+        <package name="jtable" extends="json-default">
+			<interceptors>
+            	<interceptor name="authentication" 
+            		class="com.interceptor.AuthenticationInterceptor">
+            	</interceptor>
+            	<interceptor-stack name="authStack">
+            	    <interceptor-ref name="authentication"></interceptor-ref>
+            	    <interceptor-ref name="defaultStack"></interceptor-ref>
+            	</interceptor-stack>
+        	</interceptors>
+ 
+        	<default-interceptor-ref name="authStack"></default-interceptor-ref>
+        	<global-results>
+	        	<result name="login" type="redirect">/home.action</result>
+	       	</global-results>
+        	
+        	
+                <action name="*CoursesAction" class="com.action.CoursesTableAction"
+                        method="{1}">
+                        <result type="json"></result>
+                </action>
+                
+                <action name="*StudentAction" class="com.action.StudentTableAction"
+                        method="{1}">
+                        <result type="json"></result>
+                </action>
+                
+                <action name="*ModulesAction" class="com.action.ModulesTableAction"
+                        method="{1}">
+                        <result type="json"></result>
+                </action>
+                
+                <action name="*DocumentsAction" class="com.action.DocumentsTableAction"
+                        method="{1}">
+                        <result type="json"></result>
+                </action>
+                
+                <action name="*UserAction" class="com.action.UsersTableAction"
+                        method="{1}">
+                        <result type="json"></result>
+                </action>
+                
+                <action name="*Groups" class="com.action.UsersGroupAction"
+                        method="{1}">
+                        <result type="json"></result>
+                </action>
+                
+                <action name="*ClassesAction" class="com.action.ClassesTableAction"
+                        method="{1}">
+                        <result type="json"></result>
+                </action>
+                
+                <action name="*MarksTableAction" class="com.action.MarksTableAction"
+                        method="{1}">
+                        <result type="json"></result>
+                </action>
+                
+                <action name="*classRegisterAction" class="com.action.classRegisterAction"
+                        method="{1}">
+                        <result type="json"></result>
+                </action>
+                
+                <action name="Choose_*" class="com.action.dropdownAction" method="{1}">
+                        <result type="json"></result>
+                </action>
+                                                                
+                <action name="ResetPassword" class="com.action.UsersTableAction" method="resetPassword">
+                        <result type="json"></result>
+                </action>
+          
+                <action name="CloneCourse" class="com.action.CoursesTableAction" method="cloneCourse">
+                        <result type="json"></result>
+                </action>
+          
+         		<action name="CalendarEvents_*" class="com.action.CalendarEventsAction" method="{1}">
+                        <result type="json"></result>
+        		</action>
+        	
+           		<action name="uploadFile" class="com.utilities.uploadFile">
+        			<result type="json"></result>
+        		</action>
+        		
+        </package>
+        
+</struts>
