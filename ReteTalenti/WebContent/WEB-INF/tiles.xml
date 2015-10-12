@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<definition name="baseLayout" template="/BaseLayout.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header" value="/header.action" />
+		<put-attribute name="menu" value="/menu.action" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/footer.jsp" />
+	</definition>
+	<definition name="loginLayout" template="/LoginLayout.jsp">
+		<put-attribute name="title" value="classAction Login Page" />
+		<put-attribute name="header" value="/header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/footer.jsp" />
+	</definition>
+	 
+	<definition name="/welcome.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Welcome to classAction" />
+		<put-attribute name="body" value="/welcome.action" />
+	</definition>
+	 
+	<definition name="/studenttable.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Students" />
+		<put-attribute name="body" value="/studentTable.jsp" />
+	</definition>
+	<definition name="/userstable.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Users" />
+		<put-attribute name="body" value="/usersTable.jsp" />
+	</definition>
+	
+	<definition name="/coursestable.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Courses" />
+		<put-attribute name="body" value="/coursesTable.jsp" />
+	</definition>
+	
+	<definition name="/classregister.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Class Register" />
+		<put-attribute name="body" value="/classRegister.jsp" />
+	</definition>
+	
+	<definition name="/report.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Report" />
+		<put-attribute name="body" value="/error.jsp" />
+	</definition>
+	<definition name="/profile.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Update User's Profile" />
+		<put-attribute name="body" value="/userProfile.jsp" />
+	</definition>
+	<definition name="/nowhere.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Error" />
+		<put-attribute name="body" value="/error.jsp" />
+	</definition>
+	
+	<definition name="/fm.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Document Management" />
+		<put-attribute name="body" value="/fileManager.jsp" />
+	</definition>
+	
+	<definition name="/calendar.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Course Calendar" />
+		<put-attribute name="body" value="/calendar.jsp" />
+	</definition>
+	
+	<definition name="/login.tiles" extends="loginLayout">
+		<put-attribute name="body" value="/login.jsp" />
+	</definition>
+</tiles-definitions>
