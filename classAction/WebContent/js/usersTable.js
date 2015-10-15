@@ -129,6 +129,11 @@ $(document).ready(function() {
 				width : '20%',
 				edit : true
 			}
+		},
+		formCreated: function(event, data) {
+			data.form.parent().css('width','800px').css('height','300px'); 
+			$(".jtable-input-field-container").slice(0,1).wrapAll("<div class='row'/>"); 
+			$(".jtable-input-field-container").slice(1,4).wrapAll("<div class='row'/>");
 		}
 	});
 	$('#UsersTableContainer').jtable('load');
