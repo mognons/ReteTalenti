@@ -27,8 +27,8 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 	private int totalRecordCount,jtStartIndex,jtPageSize;
 	private String jtSorting;
 	//
-	private int id;
-	private String userFirstname, userLastname, userEmail, username;
+	private int id, ente;
+	private String userFirstname, userLastname, userEmail, username, userPhone, password, errorMsg;
 
 	public String list() {
 		try {
@@ -46,7 +46,31 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 	}
 
 	public String create() throws IOException {
-		return Action.SUCCESS;
+		User User = new User();
+		User.setUsername(username);
+		User.setPassword(password);
+		User.setUserFirstname(userFirstname);
+		User.setUserLastname(userLastname);
+		User.setUserEmail(userEmail);
+		User.setUsername(username);
+		User.setUserPhone(userPhone);
+		User.setEnte(ente);
+		System.out.println("Creating "+username);
+		if (dao.verifyUsername(User.getUserLastname())) {
+			try {
+				dao.createUser(User);
+				setErrorMsg("");
+				return SUCCESS;
+
+			} catch (Exception e) {
+				setErrorMsg(e.getMessage());
+				System.err.println(e.getMessage());
+				return Action.ERROR;
+			}
+		} else {
+			setErrorMsg("Can't sign-up: username already exists");
+			return ERROR;
+		}
 	}
 
 	public String update() throws IOException {
@@ -56,11 +80,13 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 		User.setUserLastname(userLastname);
 		User.setUserEmail(userEmail);
 		User.setUsername(username);
+		User.setUserPhone(userPhone);
+		User.setEnte(ente);
 		System.out.println("Updating "+username);
 
 		try {
 			// Update existing record
-			dao.updateUserSimple(User);
+			dao.updateUser(User);
 			result = "OK";
 		} catch (Exception e) {
 			result = "ERROR";
@@ -209,5 +235,37 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 	public void setUser(User user) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public int getEnte() {
+		return ente;
+	}
+
+	public void setEnte(int ente) {
+		this.ente = ente;
+	}
+
+	public String getUserPhone() {
+		return userPhone;
+	}
+
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getErrorMsg() {
+		return errorMsg;
+	}
+
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
 	}
 }

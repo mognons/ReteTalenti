@@ -6,12 +6,13 @@
 </head>
 <body>
 	<div class="main-header" style="position: relative">
-		<h1>
-			<a href="home.action">rete<span class="light">Talenti</span></a>
-		</h1>
+		<a href="home.action"><img alt="ReteTalenti" src="images/logoReteTalenti.png" height="75" width="160"></a>
 		<h2>
-			<a href="profileLink"> <s:property value="user.userFirstname"></s:property>
+			<a href="profileLink"><s:property value="user.userFirstname"></s:property>
 				<s:property value="user.userLastname"></s:property>
+				<s:if test="user.ente">
+					 - <s:property value="user.descrizioneEnte"></s:property>
+				</s:if>
 			</a>
 		</h2>
 	</div>

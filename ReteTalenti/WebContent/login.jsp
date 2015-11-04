@@ -37,7 +37,6 @@
 			<div id="tabs">
 				<ul>
 					<li><a href="#login">Login</a></li>
-					<li><a href="#register">Sign up</a></li>
 				</ul>
 				<div id="login">
 					<h3 style="color: red">
@@ -48,22 +47,6 @@
 						<s:textfield name="password" label="Password" type="password" required="true"></s:textfield>
 						<s:submit value="Login"></s:submit>
 					</s:form>
-				</div>
-				<div id="register">
-					<h3 style="color: red">
-						<s:property value="errorMsg"></s:property>
-					</h3>
-					<s:form action="RegistrationAction">
-						<s:textfield id="username" name="username" label="User" size="30" readonly="true"></s:textfield>
-						<s:textfield id="userFirstname" name="userFirstname"
-							label="First Name" size="30" required="true"></s:textfield>
-						<s:textfield id="userLastname" name="userLastname" label="Last Name" size="30" required="true"></s:textfield>
-						<s:textfield name="userEmail" label="Email address" size="30" required="true"></s:textfield>
-						<s:textfield name="password" label="Password" type="password"
-							size="30" required="true"></s:textfield>
-						<s:submit value="Sign Up"></s:submit>
-					</s:form>
-
 				</div>
 			</div>
 		</div>

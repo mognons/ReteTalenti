@@ -65,7 +65,7 @@ public class UpdateProfileAction extends ActionSupport implements SessionAware, 
 		user.setPassword(newPassword);
     	try {    			
     		if (newPassword.length() == 0)
-    			dao.updateUserSimple(user);
+    			dao.updateUser(user);
     		else
     			dao.updateUserFull(user);
             errorMsg="";

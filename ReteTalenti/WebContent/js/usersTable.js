@@ -12,6 +12,7 @@ $(document).ready(function() {
         openChildAsAccordion: true,
 		actions : {
 			listAction : 'listUserAction',
+			createAction : 'createUserAction',
             updateAction : 'updateUserAction',
             deleteAction : 'deleteUserAction'
 		},
@@ -112,40 +113,66 @@ $(document).ready(function() {
 			username : {
 				title : 'Username',
 				width : '20%',
+				inputClass: 'validate[required]',
 				edit : true
 			},
+			password : {
+				title : 'Password',
+				type : 'password',
+				inputClass: 'validate[required]',
+				list : false,
+				edit : false,
+				create : true
+			},
 			userFirstname : {
-				title : 'First name',
+				title : 'Nome',
+				inputClass: 'validate[required]',
 				width : '30%',
 				edit : true
 			},
 			userLastname : {
-				title : 'Last name',
+				title : 'Cognome',
+				inputClass: 'validate[required]',
 				width : '30%',
 				edit : true
 			},
 			userEmail : {
 				title : 'Email',
+				inputClass: 'validate[required,custom[email]]',
+				width : '20%',
+				inputWIdth: '200',
+				edit : true
+			},
+			userPhone : {
+				title : 'Telefono',
 				width : '20%',
 				edit : true
+			},
+			ente : {
+				title : 'Ente',
+				width : '20%',
+				edit : true,
+				options: 'Choose_Enti'
 			}
 		},
         //Initialize validation logic when a form is created
         formCreated: function (event, data) {
-        	data.form.parent().css('width','980px').css('height','600px');
-        	$(".jtable-input-field-container").slice(0,2).wrapAll("");
+        	data.form.find('input[name=userEmail]').css('width','200px');
+        	data.form.parent().css('width','400px');
+        	// data.form.parent().css('height','600px');
+        	//$(".jtable-input-field-container").slice(0,2).wrapAll("");
         	// Slice Parameters are Start Stop
-        	$(".jtable-input-field-container").slice(2,3).wrapAll("");
-        //    data.form.validationEngine();
+        	//$(".jtable-input-field-container").slice(2,5).wrapAll("");
+            data.form.validationEngine();
         },
         //Validate form when it is being submitted
         formSubmitting: function (event, data) {
-        //    return data.form.validationEngine('validate');
+        	return data.form.validationEngine('validate');
         },
         //Dispose validation logic when form is closed
         formClosed: function (event, data) {
-        //    data.form.validationEngine('hide');
-        //    data.form.validationEngine('detach');
+        	data.form.validationEngine('hide');
+        	data.form.validationEngine('detach');
         }
 	});
 	$('#UsersTableContainer').jtable('load');

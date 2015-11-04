@@ -40,6 +40,25 @@ public class DropDownDao {
 		return options;
 	}
 	
+	public List<JSONObject> getAllEnti() {
+
+		ArrayList<JSONObject> options = new ArrayList<JSONObject>();
+		String query = "SELECT ID, DESCRIZIONE FROM ENTI";
+		try {
+			Statement stmt = dbConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				JSONObject option = new JSONObject();
+				option.put("Value", rs.getInt("ID"));
+				option.put("DisplayText", rs.getString("DESCRIZIONE"));
+				options.add(option);
+			}
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return options;
+	}
+	
 
 	/* STUDENTS DROPDOWN */
 	public List<JSONObject> getAllStudents() {

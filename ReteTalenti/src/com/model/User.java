@@ -10,6 +10,9 @@ public class User {
 	private String userFirstname;
 	private String userLastname;
 	private String userEmail;
+	private String userPhone;
+	private int ente;
+	private String descrizioneEnte;
 	private List<Groups> groups;
         
 	public String getPassword() {
@@ -57,5 +60,29 @@ public class User {
 
 	public void setGroups(List<Groups> groups) {
 		this.groups = groups;
+	}
+
+	public String getUserPhone() {
+		return userPhone;
+	}
+
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
+	}
+
+	public int getEnte() {
+		return ente;
+	}
+
+	public void setEnte(int ente) {
+		this.ente = ente;
+	}
+
+	public String getDescrizioneEnte() {
+		return descrizioneEnte;
+	}
+
+	public void setDescrizioneEnte(String descrizioneEnte) {
+		this.descrizioneEnte = descrizioneEnte;
 	}
 }

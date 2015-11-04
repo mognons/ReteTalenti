@@ -29,7 +29,7 @@ public class CrudDao {
 
 	public void createUser(User user) {
 		String insertUserQuery =  "INSERT INTO USERS (ID, USERNAME, "
-								+ "USERFIRSTNAME, USERLASTNAME, USEREMAIL, PASSWORD) VALUES (?,?,?,?,?,?)";
+								+ "USERFIRSTNAME, USERLASTNAME, USEREMAIL, PASSWORD, USERPHONE, ENTE) VALUES (?,?,?,?,?,?,?,?)";
 		String inserUserGroupQuery = "INSERT INTO USERGROUP (USERID, GROUPID) VALUES (?, 3)";
 		if (verifyUsername(user.getUsername())) {
 			try {
@@ -41,6 +41,8 @@ public class CrudDao {
 				pStmt.setString(4, user.getUserLastname());
 				pStmt.setString(5, user.getUserEmail());
 				pStmt.setString(6, enc.crypt(user.getPassword()));
+				pStmt.setString(7, user.getUserPhone());
+				pStmt.setInt(8, user.getEnte());
 				pStmt.executeUpdate();
 				pStmt = dbConnection.prepareStatement(inserUserGroupQuery);
 				pStmt.setInt(1, nextUserId);
@@ -55,40 +57,48 @@ public class CrudDao {
 	}
 
 	public void updateUserFull(User user) {
-		String insertQuery = "UPDATE USERS SET  "
-				+ "USERFIRSTNAME=?, USERLASTNAME=?, USEREMAIL=?, PASSWORD=?"
+		String updateQuery = 
+				"UPDATE USERS SET  "
+				+ "PASSWORD=?, USERFIRSTNAME=?, USERLASTNAME=?, USEREMAIL=?, USERPHONE=?, ENTE=?"
 				+ " WHERE USERNAME=?";
 		try {
-			pStmt = dbConnection.prepareStatement(insertQuery);
-			pStmt.setString(1, user.getUserFirstname());
-			pStmt.setString(2, user.getUserLastname());
-			pStmt.setString(3, user.getUserEmail());
-			pStmt.setString(4, enc.crypt(user.getPassword()));
-			pStmt.setString(5, user.getUsername());
+			pStmt = dbConnection.prepareStatement(updateQuery);
+			pStmt.setString(1, enc.crypt(user.getPassword()));
+			pStmt.setString(2, user.getUserFirstname());
+			pStmt.setString(3, user.getUserLastname());
+			pStmt.setString(4, user.getUserEmail());
+			pStmt.setString(5, user.getUserPhone());
+			pStmt.setInt(6, user.getEnte());
+			pStmt.setString(7, user.getUsername());
 			pStmt.executeUpdate();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
 	}
 
-	public void updateUserSimple(User user) {
-		String insertQuery = "UPDATE USERS SET  "
-				+ "USERFIRSTNAME=?, USERLASTNAME=?, USEREMAIL=?"
+	public void updateUser(User user) {
+		String updateQuery = 
+				"UPDATE USERS SET"
+				+ " USERFIRSTNAME=?, USERLASTNAME=?, USEREMAIL=?, USERPHONE=?, ENTE=?"
 				+ " WHERE USERNAME=?";
 		try {
-			pStmt = dbConnection.prepareStatement(insertQuery);
+			pStmt = dbConnection.prepareStatement(updateQuery);
 			pStmt.setString(1, user.getUserFirstname());
 			pStmt.setString(2, user.getUserLastname());
 			pStmt.setString(3, user.getUserEmail());
-			pStmt.setString(4, user.getUsername());
+			pStmt.setString(4, user.getUserPhone());
+			pStmt.setInt(5, user.getEnte());
+			pStmt.setString(6, user.getUsername());
 			pStmt.executeUpdate();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
 	}
+
 
 	public void updateUserPassword(String username, String password) {
-		String updateQuery = "UPDATE USERS SET  "
+		String updateQuery = 
+				"UPDATE USERS SET  "
 				+ "PASSWORD=?"
 				+ " WHERE USERNAME=?";
 		try {
@@ -383,6 +393,8 @@ public class CrudDao {
 				user.setUserFirstname(rs.getString("USERFIRSTNAME"));
 				user.setUserLastname(rs.getString("USERLASTNAME"));
 				user.setUserEmail(rs.getString("USEREMAIL"));
+				user.setUserPhone(rs.getString("USERPHONE"));
+				user.setEnte(rs.getInt("ENTE"));
 				users.add(user);
 			}
 		} catch (SQLException e) {
@@ -408,10 +420,11 @@ public class CrudDao {
 		List<Groups> groups = new ArrayList<Groups>();
 		System.out.println("Inside getUser with " + username);
 		String newQuery = "SELECT U.ID, U.USERNAME, U.USERFIRSTNAME, U.USERLASTNAME, " + 
-						  "U.USEREMAIL, G.GROUPID, G.GROUPNAME " + 
-						  "FROM USERS U ,USERGROUP UG , GROUPS G " +
+						  "U.USEREMAIL, U.USERPHONE, U.ENTE, E.DESCRIZIONE, G.GROUPID, G.GROUPNAME " + 
+						  "FROM USERS U ,USERGROUP UG , GROUPS G, ENTI E " +
 						  "WHERE U.USERNAME=? AND " +
 					 	  "U.ID = UG.USERID AND "+
+					 	  "U.ENTE = E.ID AND "+
 						  "G.GROUPID = UG.GROUPID";
 		
 		try {
@@ -424,9 +437,12 @@ public class CrudDao {
 				user.setUserFirstname(rs.getString(3));
 				user.setUserLastname(rs.getString(4));
 				user.setUserEmail(rs.getString(5));
+				user.setUserPhone(rs.getString(6));
+				user.setEnte(rs.getInt(7));
+				user.setDescrizioneEnte(rs.getString(8));
 				Groups myGroup = new Groups();
-				myGroup.setGroupId(rs.getInt(6));
-				myGroup.setGroupName(rs.getString(7));
+				myGroup.setGroupId(rs.getInt(9));
+				myGroup.setGroupName(rs.getString(10));
 				groups.add(myGroup);
 			}
 			user.setGroups(groups);

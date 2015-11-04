@@ -3,7 +3,7 @@
 <html>
 <head>
 </head>
-<body>
-	<div class="main-footer">&copy;2015 - 5020-cinquantaventi test</div>
-</body>
+	<body>
+		<div class="main-footer">&copy;2015 - ACLI Verona - Developed by <span class="light">5020-cinquantaventi</span></div>
+	</body>
 </html>

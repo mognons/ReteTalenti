@@ -24,6 +24,14 @@ public class dropdownAction extends ActionSupport {
 		return Action.SUCCESS;
 	}
 
+	public String Enti() {
+		options = new ArrayList<JSONObject> ();
+		options = dao.getAllEnti();
+		System.out.println("Inside getAllEnti()");
+		result = "OK";
+		return Action.SUCCESS;
+	}
+
 
 	public String Students() {
 		options = new ArrayList<JSONObject> ();
