@@ -38,19 +38,19 @@
 
 	<div style="position: relative; left: 0px; top: 0px; z-index: 10">
 		<ul id="verticalMenu">
-			<li><a href="coursesLink">Courses</a></li>
+			<li><a href="coursesLink"></a>Courses</li>
 			<li class="ui-state-disabled">Classes</li>
-			<li><a href="tableLink">Students</a></li>
+			<li><a href="tableLink"></a>Students</li>
 			<li>-</li>
-			<li><a href="welcomeLink">Activities</a></li>
-			<li><a href="calendarLink">Agenda</a></li>
+			<li><a href="welcomeLink"></a>Activities</li>
+			<li><a href="calendarLink"></a>Agenda</li>
 			<li>-</li>
 			<s:if test="%{#isAdmin}">
-				<li><a href="usersLink">Users Management</a></li>
-				<li><a href="filemanagerLink">Docs Management</a></li>
+				<li><a href="usersLink"></a>Users Management</li>
+				<li><a href="filemanagerLink"></a>Docs Management</li>
 			</s:if>
 			<li>-</li>
-			<li><a href="Logout">Logout</a></li>
+			<li><a href="Logout"></a>Logout</li>
 		</ul>
 	</div>
 	<script type="text/javascript">
