@@ -83,6 +83,15 @@
         			<param name="bufferSize">1024</param>
 				</result>
         	</action>
+        	
+        	<action name="download" class="com.action.DownloadFileAction">
+        		<result type="stream">
+        			<param name="contentDisposition">attachment;filename="${filename}"</param>
+        			<param name="contentType">application/pdf</param>
+        			<param name="inputName">pdfDocument</param>
+        			<param name="bufferSize">1024</param>
+				</result>
+        	</action>
         </package>
         
         <package name="jtable" extends="json-default">
@@ -166,6 +175,7 @@
            		<action name="uploadFile" class="com.utilities.uploadFile">
         			<result type="json"></result>
         		</action>
+        		
         		
         </package>
         

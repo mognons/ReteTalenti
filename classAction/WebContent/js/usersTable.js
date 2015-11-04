@@ -131,7 +131,11 @@ $(document).ready(function() {
 			}
 		},
 		formCreated: function(event, data) {
-			data.form.parent().css('width','800px').css('height','300px'); 
+			// Whole form CSS styling, mainly dimensions
+			data.form.css('width','800px').css('height','300px'); 
+			// Single field CSS styling... 
+			data.form.find('input[name=userEmail]').css('width','180px').css('color','blue');
+			// Fields slicing
 			$(".jtable-input-field-container").slice(0,1).wrapAll("<div class='row'/>"); 
 			$(".jtable-input-field-container").slice(1,4).wrapAll("<div class='row'/>");
 		}
