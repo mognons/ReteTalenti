@@ -129,7 +129,24 @@ $(document).ready(function() {
 				width : '20%',
 				edit : true
 			}
-		}
+		},
+        //Initialize validation logic when a form is created
+        formCreated: function (event, data) {
+        	data.form.parent().css('width','980px').css('height','600px');
+        	$(".jtable-input-field-container").slice(0,2).wrapAll("");
+        	// Slice Parameters are Start Stop
+        	$(".jtable-input-field-container").slice(2,3).wrapAll("");
+        //    data.form.validationEngine();
+        },
+        //Validate form when it is being submitted
+        formSubmitting: function (event, data) {
+        //    return data.form.validationEngine('validate');
+        },
+        //Dispose validation logic when form is closed
+        formClosed: function (event, data) {
+        //    data.form.validationEngine('hide');
+        //    data.form.validationEngine('detach');
+        }
 	});
 	$('#UsersTableContainer').jtable('load');
 });
