@@ -28,7 +28,7 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 	private String jtSorting;
 	//
 	private int id, ente;
-	private String userFirstname, userLastname, userEmail, username, userPhone, password, errorMsg;
+	private String userFirstname, userLastname, userEmail, username, userPhone, password;
 
 	public String list() {
 		try {
@@ -56,20 +56,24 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 		User.setUserPhone(userPhone);
 		User.setEnte(ente);
 		System.out.println("Creating "+username);
-		if (dao.verifyUsername(User.getUserLastname())) {
+		if (dao.verifyUsername(username)) {
 			try {
 				dao.createUser(User);
-				setErrorMsg("");
+				message = "";
+				result = "OK";
 				return SUCCESS;
 
 			} catch (Exception e) {
-				setErrorMsg(e.getMessage());
+				message = e.getMessage();
 				System.err.println(e.getMessage());
-				return Action.ERROR;
+				result = "ERROR";
+				return SUCCESS;
 			}
 		} else {
-			setErrorMsg("Can't sign-up: username already exists");
-			return ERROR;
+			System.out.println("Username already exists");
+			message = "Impossibile creare un nuovo utente: username <b>" + username + "</b> già inserito";
+			result = "ERROR";
+			return SUCCESS;
 		}
 	}
 
@@ -106,7 +110,7 @@ public class UsersTableAction extends ActionSupport implements UserAware {
     					"Please login into classAction and change your password as soon as possible";
     	sendMail sm = new sendMail();
     	sm.main("Password reset", msgBody, mailRecipient);
-		message = "Password succesfully reset to: " + newPassword;
+		message = "Password resettata con successo al valore: " + newPassword;
 		System.out.println(message);
 		result = "OK";
 		return Action.SUCCESS;
@@ -261,11 +265,4 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 		this.password = password;
 	}
 
-	public String getErrorMsg() {
-		return errorMsg;
-	}
-
-	public void setErrorMsg(String errorMsg) {
-		this.errorMsg = errorMsg;
-	}
 }

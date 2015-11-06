@@ -219,7 +219,9 @@ public class CrudDao {
 		if (username.isEmpty() || password.isEmpty()) {
 			throw new Exception("No valid credential given");
 		} else {
-			String countQuery = "SELECT ID FROM USERS WHERE USERNAME=? AND PASSWORD=?";
+			String countQuery = "SELECT ID FROM USERS U, USERGROUP UG " +
+								"WHERE U.ID = UG.USERID " + // Added to enforce user must belong to group(s) in order to login
+								"AND USERNAME=? AND PASSWORD=?";
 			try {
 				pStmt = dbConnection.prepareStatement(countQuery);
 				pStmt.setString(1, username);
