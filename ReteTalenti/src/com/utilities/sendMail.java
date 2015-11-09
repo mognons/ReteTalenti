@@ -13,7 +13,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class sendMail {
-	public static void main(String mailSubject, String msgBody, String mailRecipient) {
+	public void send(String mailSubject, String msgBody, String mailRecipient) {
 		ResourceBundle rb = ResourceBundle.getBundle("com.properties.basicConfiguration");
 		final String username = rb.getString("mailUser");
 		final String password = rb.getString("mailPassword");

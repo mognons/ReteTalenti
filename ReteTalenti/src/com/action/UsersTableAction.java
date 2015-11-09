@@ -46,35 +46,31 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 	}
 
 	public String create() throws IOException {
-		User User = new User();
-		User.setUsername(username);
-		User.setPassword(password);
-		User.setUserFirstname(userFirstname);
-		User.setUserLastname(userLastname);
-		User.setUserEmail(userEmail);
-		User.setUsername(username);
-		User.setUserPhone(userPhone);
-		User.setEnte(ente);
-		System.out.println("Creating "+username);
+		User record = new User();
+		record.setUsername(username);
+		record.setPassword(password);
+		record.setUserFirstname(userFirstname);
+		record.setUserLastname(userLastname);
+		record.setUserEmail(userEmail);
+		record.setUsername(username);
+		record.setUserPhone(userPhone);
+		record.setEnte(ente);
 		if (dao.verifyUsername(username)) {
 			try {
-				dao.createUser(User);
-				message = "";
+				System.out.println("Creating "+username);
+				dao.createUser(record);
 				result = "OK";
-				return SUCCESS;
-
 			} catch (Exception e) {
 				message = e.getMessage();
 				System.err.println(e.getMessage());
 				result = "ERROR";
-				return SUCCESS;
 			}
 		} else {
 			System.out.println("Username already exists");
 			message = "Impossibile creare un nuovo utente: username <b>" + username + "</b> già inserito";
 			result = "ERROR";
-			return SUCCESS;
 		}
+		return SUCCESS;
 	}
 
 	public String update() throws IOException {
@@ -109,7 +105,7 @@ public class UsersTableAction extends ActionSupport implements UserAware {
     					"your password has been reset to: " + newPassword + "." + "\n\n" + 
     					"Please login into classAction and change your password as soon as possible";
     	sendMail sm = new sendMail();
-    	sm.main("Password reset", msgBody, mailRecipient);
+    	sm.send("Password reset", msgBody, mailRecipient);
 		message = "Password resettata con successo al valore: " + newPassword;
 		System.out.println(message);
 		result = "OK";

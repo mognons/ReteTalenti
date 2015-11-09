@@ -28,13 +28,13 @@ a, a:visited, a:hover, a:active {
 <body>
 	<!-- Builds Auth switches  -->
 	<s:iterator value="groups">
-		<s:if test="%{groupName.contains('Administrators')}">
+		<s:if test="%{groupName.contains('Amministratori Sistema')}">
 			<s:set var="isAdmin" value="%{'true'}" />
 		</s:if>
-		<s:elseif test="%{groupName.contains('Tutors')}">
-			<s:set var="isTutor" value="%{'true'}" />
+		<s:elseif test="%{groupName.contains('Amministratori Ente')}">
+			<s:set var="isAdminEnte" value="%{'true'}" />
 		</s:elseif>
-		<s:elseif test="%{groupName.contains('Users')}">
+		<s:elseif test="%{groupName.contains('Operatori Ente')}">
 			<s:set var="isUser" value="%{'true'}" />
 		</s:elseif>
 		<s:elseif test="%{groupName.contains('Students')}">
@@ -44,46 +44,25 @@ a, a:visited, a:hover, a:active {
 
 	<div style="position: relative; left: 0px; top: 0px; z-index: 10">
 		<ul id="verticalMenu">
-			<li>Gestione Assistiti
+			<li>Anagrafica Assistiti
 				<ul>
 					<li class="ui-state-disabled">Anagrafica Assistiti</li>
-					<li class="ui-state-disabled">Tabella Causali</li>
-					<li class="ui-state-disabled">Tabella Nazioni</li>
+					<li class="ui-state-disabled">Inserimento Emporio</li>
+					<li class="ui-state-disabled">Altro...</li>
 				</ul>
 			</li>
-			<li>Gestione Donatori
+			<li>Gestione Eccedenze
 				<ul>
-					<li class="ui-state-disabled">Anagrafica Donatori</li>
-					<li class="ui-state-disabled">Tabella Causali Donazioni</li>
-					<li class="ui-state-disabled">Tabella Categorie Merceologiche</li>
-				</ul>
-			</li>
-			<li>Gestione Prodotti
-				<ul>
-					<li class="ui-state-disabled">Anagrafica Prodotti</li>
-					<li class="ui-state-disabled">Tabella Famiglia Prodotti</li>
-					<li class="ui-state-disabled">Tabella Unità Misura</li>
-				</ul>
-			</li>
-			<li>Gestione Magazzini Enti
-				<ul>
-					<li class="ui-state-disabled">Tabella Enti</li>
-					<li class="ui-state-disabled">Tabella Magazzini Beneficiari</li>
-					<li class="ui-state-disabled">Tabella Causali Movimenti Magazzino</li>
-				</ul>
-			</li>
-			<li>-</li>
-			<li>Gestione Movimenti
-				<ul>
-					<li class="ui-state-disabled">Donazione Assistiti</li>
-					<li class="ui-state-disabled">Carico Magazzini</li>
-					<li class="ui-state-disabled">Trasferimento tra Magazzini</li>
+					<li class="ui-state-disabled">Segnalazione Eccedenze</li>
+					<li class="ui-state-disabled">Prenotazione Ritiri</li>
 				</ul>
 			</li>
 			<li>-</li>
 			<li>Report
 				<ul>
 					<li class="ui-state-disabled">Interrogazione Giacenze</li>
+					<li class="ui-state-disabled">Elenco Assistiti</li>
+					<li class="ui-state-disabled">Graduatoria Emporio</li>
 				</ul>
 			</li>
 			<s:if test="%{#isAdmin}">
@@ -91,7 +70,8 @@ a, a:visited, a:hover, a:active {
 					<ul>
 						<li onclick="window.location='usersLink';">Gestione Utenti</li>
 						<li class="ui-state-disabled">Tabella Indici di Bisogno</li>
-						<li class="ui-state-disabled">Tabella Indici testa</li>
+						<li class="ui-state-disabled">Tabella Unità Misura</li>	
+						<li class="ui-state-disabled">Tabella Enti</li>	
 					</ul>
 				</li>
 			</s:if>
