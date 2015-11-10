@@ -4,6 +4,6 @@
 <head>
 </head>
 	<body>
-		<div class="main-footer">&copy;2015 - ACLI Verona - Developed by raoul <span class="light">5020-cinquantaventi</span></div>
+		<div class="main-footer">&copy;2015 - ACLI Verona - Developed by  <span class="light">5020-cinquantaventi</span></div>
 	</body>
 </html>
