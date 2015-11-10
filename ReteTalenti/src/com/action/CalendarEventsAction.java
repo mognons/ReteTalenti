@@ -22,6 +22,9 @@ import com.model.User;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
+
+//inserisco un commento e faccio 1. commit e 2. Push
+
 public class CalendarEventsAction extends ActionSupport implements UserAware {
 
 	private static final long serialVersionUID = 8111120314704779336L;
