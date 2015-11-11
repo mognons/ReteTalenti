@@ -114,7 +114,8 @@ $(document).ready(function() {
 				title : 'Username',
 				width : '20%',
 				inputClass: 'validate[required]',
-				edit : true
+				edit : false,
+				create: true
 			},
 			password : {
 				title : 'Password',
@@ -127,13 +128,13 @@ $(document).ready(function() {
 			userFirstname : {
 				title : 'Nome',
 				inputClass: 'validate[required]',
-				width : '30%',
+				width : '20%',
 				edit : true
 			},
 			userLastname : {
 				title : 'Cognome',
 				inputClass: 'validate[required]',
-				width : '30%',
+				width : '20%',
 				edit : true
 			},
 			userEmail : {
@@ -145,7 +146,8 @@ $(document).ready(function() {
 			},
 			userPhone : {
 				title : 'Telefono',
-				width : '20%',
+				inputClass: 'validate[required]',
+				width : '15%',
 				edit : true
 			},
 			ente : {
