@@ -8,7 +8,7 @@ import java.util.List;
 
 import com.utilities.RandomString;
 import com.utilities.sendMail;
-import com.dao.CrudDao;
+import com.dao.UsersDao;
 import com.interceptor.UserAware;
 import com.model.User;
 import com.opensymphony.xwork2.Action;
@@ -18,7 +18,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class UsersTableAction extends ActionSupport implements UserAware {
 	private static final long serialVersionUID = 1L;
 	
-	private CrudDao dao = new CrudDao();
+	private UsersDao dao = new UsersDao();
 
 	private List<User> records;
 	private String result;
@@ -45,8 +45,8 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 		return Action.SUCCESS;
 	}
 
-	public String create() throws IOException {
-		User record = new User();
+	public String create() throws Exception {
+		record = new User();
 		record.setUsername(username);
 		record.setPassword(password);
 		record.setUserFirstname(userFirstname);
@@ -74,19 +74,19 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 	}
 
 	public String update() throws IOException {
-		User User = new User();
+		record = new User();
 
-		User.setUserFirstname(userFirstname);
-		User.setUserLastname(userLastname);
-		User.setUserEmail(userEmail);
-		User.setUsername(username);
-		User.setUserPhone(userPhone);
-		User.setEnte(ente);
+		record.setUsername(username);
+		record.setUserFirstname(userFirstname);
+		record.setUserLastname(userLastname);
+		record.setUserEmail(userEmail);
+		record.setUserPhone(userPhone);
+		record.setEnte(ente);
 		System.out.println("Updating "+username);
 
 		try {
 			// Update existing record
-			dao.updateUser(User);
+			dao.updateUser(record);
 			result = "OK";
 		} catch (Exception e) {
 			result = "ERROR";
