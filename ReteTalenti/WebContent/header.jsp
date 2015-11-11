@@ -7,23 +7,24 @@
 <body>
 	<div class="main-header" style="position: relative">
 		<table border="0" width="100%">
-		<tr>
-		<td align="left">
-		<a href="home.action"><img alt="ReteTalenti" src="images/logoReteTalenti.png" height="75" width="160"></a>
-		</td>
-		<td align="right">
-		<a href="home.action"><img alt="ReteTalenti" src="images/stemmacolore.png" height="75" width="90"></a>
-		</td>
-		</tr>
+			<tr>
+				<td width="20%" ><a href="home.action"><img
+						alt="ReteTalenti" src="images/logoReteTalenti.png" height="75"
+						width="160"></a></td>
+				<td width="400%">
+					<h2>
+						<a href="profileLink"><s:property value="user.userFirstname"></s:property>
+							<s:property value="user.userLastname"></s:property> <s:if
+								test="user.ente">
+					 		- <s:property value="user.descrizioneEnte"></s:property>
+							</s:if></a>
+					</h2>
+				</td>
+				<td align="right"><a href="home.action"><img
+						alt="ReteTalenti" src="images/stemmacolore.png" height="75"
+						width="90"></a></td>
+			</tr>
 		</table>
-		<h2>
-			<a href="profileLink"><s:property value="user.userFirstname"></s:property>
-				<s:property value="user.userLastname"></s:property>
-				<s:if test="user.ente">
-					 - <s:property value="user.descrizioneEnte"></s:property>
-				</s:if>
-			</a>
-		</h2>
 	</div>
 </body>
 </html>

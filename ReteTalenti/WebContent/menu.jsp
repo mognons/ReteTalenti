@@ -47,6 +47,12 @@ a, a:visited, a:hover, a:active {
 			<li>Anagrafica Assistiti
 				<ul>
 					<li class="ui-state-disabled">Anagrafica Assistiti</li>
+					<li class="ui-state-disabled">Altro...</li>
+				</ul>
+			</li>
+			<li>Gestione Emporio
+				<ul>
+					<li class="ui-state-disabled">Candidatura Emporio</li>
 					<li class="ui-state-disabled">Inserimento Emporio</li>
 					<li class="ui-state-disabled">Altro...</li>
 				</ul>
@@ -60,7 +66,8 @@ a, a:visited, a:hover, a:active {
 			<li>-</li>
 			<li>Report
 				<ul>
-					<li class="ui-state-disabled">Interrogazione Giacenze</li>
+					<li class="ui-state-disabled">Elenco Eccedenze</li>
+					<li class="ui-state-disabled">Elenco Prenotazioni</li>
 					<li class="ui-state-disabled">Elenco Assistiti</li>
 					<li class="ui-state-disabled">Graduatoria Emporio</li>
 				</ul>
@@ -69,9 +76,9 @@ a, a:visited, a:hover, a:active {
 				<li>Sistema
 					<ul>
 						<li onclick="window.location='usersLink';">Gestione Utenti</li>
-						<li class="ui-state-disabled">Tabella Indici di Bisogno</li>
+						<li class="ui-state-disabled">Tabella Nazioni</li>
 						<li class="ui-state-disabled">Tabella Unità Misura</li>	
-						<li class="ui-state-disabled">Tabella Enti</li>	
+						<li class="ui-state-disabled" onclick="window.location='usersLink';">Tabella Enti</li>	
 					</ul>
 				</li>
 			</s:if>

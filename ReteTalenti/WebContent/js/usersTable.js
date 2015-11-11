@@ -60,10 +60,6 @@ $(document).ready(function() {
             }]
         },
 		fields : {
-			id : {
-				key : true,
-				list : false,
-			},
             //CHILD TABLE DEFINITION FOR "GROUPS"
             Groups: {
                 title: '',
@@ -111,41 +107,44 @@ $(document).ready(function() {
                 }
             },
 			username : {
+				key: true,
 				title : 'Username',
-				width : '20%',
+				width : '5%',
 				inputClass: 'validate[required]',
-				edit : true
+				edit : false,
+				create: true
 			},
 			password : {
 				title : 'Password',
-				type : 'password',
+				width : '0%',
 				inputClass: 'validate[required]',
-				list : false,
+				list: false,
 				edit : false,
-				create : true
+				create: true
 			},
 			userFirstname : {
 				title : 'Nome',
 				inputClass: 'validate[required]',
-				width : '30%',
+				width : '15%',
 				edit : true
 			},
 			userLastname : {
 				title : 'Cognome',
 				inputClass: 'validate[required]',
-				width : '30%',
+				width : '15%',
 				edit : true
 			},
 			userEmail : {
 				title : 'Email',
 				inputClass: 'validate[required,custom[email]]',
-				width : '20%',
+				width : '15%',
 				inputWIdth: '200',
 				edit : true
 			},
 			userPhone : {
 				title : 'Telefono',
-				width : '20%',
+				inputClass: 'validate[required]',
+				width : '15%',
 				edit : true
 			},
 			ente : {
