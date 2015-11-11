@@ -6,11 +6,10 @@
 package com.dao;
 
 import com.jdbc.DataAccessObject;
+import com.model.Ente;
 import com.model.Groups;
 import com.model.Student;
 import com.model.User;
-import com.model.UserGroup;
-import com.model.classRegister;
 import com.utilities.MD5;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,10 +19,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author gminardi
- */
 public class EntiDao {
 
     private Connection dbConnection;
@@ -35,109 +30,43 @@ public class EntiDao {
         dbConnection = DataAccessObject.getConnection();
     }
 
-    public void createUser(User user) {
-        String insertUserQuery = "INSERT INTO USERS (ID, USERNAME, "
-                + "USERFIRSTNAME, USERLASTNAME, USEREMAIL, PASSWORD, USERPHONE, ENTE) VALUES (?,?,?,?,?,?,?,?)";
-        String inserUserGroupQuery = "INSERT INTO USERGROUP (USERID, GROUPID) VALUES (?, 3)";
-        if (verifyUsername(user.getUsername())) {
-            try {
-                int nextUserId = getNextUserID();
-                pStmt = dbConnection.prepareStatement(insertUserQuery);
-                pStmt.setInt(1, nextUserId);
-                pStmt.setString(2, user.getUsername());
-                pStmt.setString(3, user.getUserFirstname());
-                pStmt.setString(4, user.getUserLastname());
-                pStmt.setString(5, user.getUserEmail());
-                pStmt.setString(6, enc.crypt(user.getPassword()));
-                pStmt.setString(7, user.getUserPhone());
-                pStmt.setInt(8, user.getEnte());
-                pStmt.executeUpdate();
-                pStmt = dbConnection.prepareStatement(inserUserGroupQuery);
-                pStmt.setInt(1, nextUserId);
-                pStmt.executeUpdate();
-            } catch (SQLException e) {
-                System.err.println(e.getMessage());
-            }
-        } else {
-            throw new Error("Username " + user.getUsername()
-                    + " already exists");
+    public void createEnte(Ente ente) {
+        String insertEnteQuery = "INSERT INTO ENTI (DESCRIZIONE, RESPONSABILE, RESP_EMAIL, RESP_PHONE, PROVINCIA_ENTE) VALUES (?,?,?,?,?)";
+        try {
+            pStmt = dbConnection.prepareStatement(insertEnteQuery);
+            pStmt.setString(1, ente.getDescrizione());
+            pStmt.setString(2, ente.getResponsabile());
+            pStmt.setString(3, ente.getResp_email());
+            pStmt.setString(4, ente.getResp_phone());
+            pStmt.setString(5, ente.getProvincia_ente());
+            pStmt.executeUpdate();
+            pStmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
         }
     }
 
-    public void updateUserFull(User user) {
-        String updateQuery
-                = "UPDATE USERS SET  "
-                + "PASSWORD=?, USERFIRSTNAME=?, USERLASTNAME=?, USEREMAIL=?, USERPHONE=?, ENTE=?"
-                + " WHERE USERNAME=?";
+    public void updateEnte(Ente ente) {
+        String updateQuery = "UPDATE ENTE SET DESCRIZIONE=?, RESPONSABILE=?, RESP_EMAIL=?, RESP_PHONE=?, PROVINCIA_ENTE=? WHERE ID=?";
         try {
             pStmt = dbConnection.prepareStatement(updateQuery);
-            pStmt.setString(1, enc.crypt(user.getPassword()));
-            pStmt.setString(2, user.getUserFirstname());
-            pStmt.setString(3, user.getUserLastname());
-            pStmt.setString(4, user.getUserEmail());
-            pStmt.setString(5, user.getUserPhone());
-            pStmt.setInt(6, user.getEnte());
-            pStmt.setString(7, user.getUsername());
+            pStmt.setString(1, ente.getDescrizione());
+            pStmt.setString(2, ente.getResponsabile());
+            pStmt.setString(3, ente.getResp_email());
+            pStmt.setString(4, ente.getResp_phone());
+            pStmt.setString(5, ente.getProvincia_ente());
+            pStmt.setInt(6, ente.getId());
             pStmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
     }
 
-    public void updateUser(User user) {
-        String updateQuery
-                = "UPDATE USERS SET"
-                + " USERFIRSTNAME=?, USERLASTNAME=?, USEREMAIL=?, USERPHONE=?, ENTE=?"
-                + " WHERE USERNAME=?";
-        try {
-            pStmt = dbConnection.prepareStatement(updateQuery);
-            pStmt.setString(1, user.getUserFirstname());
-            pStmt.setString(2, user.getUserLastname());
-            pStmt.setString(3, user.getUserEmail());
-            pStmt.setString(4, user.getUserPhone());
-            pStmt.setInt(5, user.getEnte());
-            pStmt.setString(6, user.getUsername());
-            pStmt.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
-    public void updateUserPassword(String username, String password) {
-        String updateQuery
-                = "UPDATE USERS SET  "
-                + "PASSWORD=?"
-                + " WHERE USERNAME=?";
-        try {
-            pStmt = dbConnection.prepareStatement(updateQuery);
-            pStmt.setString(1, enc.crypt(password));
-            pStmt.setString(2, username);
-            pStmt.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
-    public void addStudent(Student student) {
-        String insertQuery = "INSERT INTO STUDENT(STUDENTID, NAME, "
-                + "DEPARTMENT, EMAIL) VALUES (?,?,?,?)";
-        try {
-            pStmt = dbConnection.prepareStatement(insertQuery);
-            pStmt.setInt(1, student.getStudentId());
-            pStmt.setString(2, student.getName());
-            pStmt.setString(3, student.getDepartment());
-            pStmt.setString(4, student.getEmailId());
-            pStmt.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
-    public int deleteStudent(int studentId) {
-        String query = "SELECT * FROM CLASSES WHERE STUDENTID=?";
+    public int deleteEnte(int enteId) {
+        String query = "SELECT * FROM ENTI WHERE ID=?";
         try {
             pStmt = dbConnection.prepareStatement(query);
-            pStmt.setInt(1, studentId);
+            pStmt.setInt(1, enteId);
             ResultSet rs = pStmt.executeQuery();
             if (rs.next()) {
                 return -1;
@@ -204,48 +133,6 @@ public class EntiDao {
         return result;
     }
 
-    public boolean verifyUsername(String username) {
-        String countQuery = "SELECT ID FROM USERS WHERE USERNAME=?";
-        int result = 0;
-        try {
-            pStmt = dbConnection.prepareStatement(countQuery);
-            pStmt.setString(1, username);
-            ResultSet rs = pStmt.executeQuery();
-            while (rs.next()) {
-                result = rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-        return (result == 0);
-    }
-
-    public boolean verifyLogin(String username, String password) throws Exception {
-        System.out.println("Inside verifyLogin");
-        int result = 0;
-        if (username.isEmpty() || password.isEmpty()) {
-            throw new Exception("No valid credential given");
-        } else {
-            String countQuery = "SELECT ID FROM USERS U, USERGROUP UG "
-                    + "WHERE U.ID = UG.USERID " + // Added to enforce user must belong to group(s) in order to login
-                    "AND USERNAME=? AND PASSWORD=?";
-            try {
-                pStmt = dbConnection.prepareStatement(countQuery);
-                pStmt.setString(1, username);
-                pStmt.setString(2, enc.crypt(password));
-                ResultSet rs = pStmt.executeQuery();
-                while (rs.next()) {
-                    result = rs.getInt(1);
-                }
-            } catch (SQLException e) {
-                System.err.println(e.getMessage());
-                throw new Exception("SQL Error");
-            }
-
-        }
-        return (result != 0);
-    }
-
     public int getNextUserID() {
         String countQuery = "SELECT COALESCE(MAX(ID), COUNT(ID)) AS TT FROM USERS";
         int result = 0;
@@ -259,22 +146,6 @@ public class EntiDao {
             System.err.println(e.getMessage());
         }
         return result;
-    }
-
-    public void updateStudent(Student student) {
-        String updateQuery = "UPDATE STUDENT SET NAME = ?, "
-                + "DEPARTMENT = ?, EMAIL = ? WHERE STUDENTID = ?";
-        try {
-            pStmt = dbConnection.prepareStatement(updateQuery);
-            pStmt.setString(1, student.getName());
-            pStmt.setString(2, student.getDepartment());
-            pStmt.setString(3, student.getEmailId());
-            pStmt.setInt(4, student.getStudentId());
-            pStmt.executeUpdate();
-
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
     }
 
     public List<Student> getAllStudents(int jtStartIndex, int jtPageSize,
@@ -302,91 +173,6 @@ public class EntiDao {
         return students;
     }
 
-    // REGISTER SECTION
-    public List<classRegister> getStudentsInClass(String today, int courseId, int moduleId) {
-        List<classRegister> registerEntries = new ArrayList<classRegister>();
-    	//DateTime dt = new DateTime();
-        //DateTimeFormatter fmt = ISODateTimeFormat.date();
-        int hasRegister = 0;
-        //String today = fmt.print(dt);
-        String checkRegister = "SELECT COUNT(*) FROM REGISTER R "
-                + "WHERE R.COURSEID=? AND R.REGISTERDATE=? ";
-        try {
-            pStmt = dbConnection.prepareStatement(checkRegister);
-            pStmt.setInt(1, courseId);
-            pStmt.setString(2, today);
-            ResultSet rs = pStmt.executeQuery();
-            while (rs.next()) {
-                hasRegister = rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-
-        if (hasRegister == 0) {
-            // Create register entries, one for each student in class
-            String insert = "INSERT INTO REGISTER (REGISTERDATE,COURSEID,STUDENTID,ENTRYTYPE) "
-                    + "SELECT ?, COURSEID, STUDENTID, 'P' FROM CLASSES "
-                    + "WHERE COURSEID=?";
-
-            try {
-                pStmt = dbConnection.prepareStatement(insert);
-                pStmt.setString(1, today);
-                pStmt.setInt(2, courseId);
-                pStmt.executeUpdate();
-            } catch (SQLException e) {
-                System.err.println(e.getMessage());
-            }
-        }
-
-        String query = "SELECT S.*, R.* "
-                + "FROM CLASSES C ,REGISTER R , STUDENT S "
-                + "WHERE C.COURSEID=? AND R.REGISTERDATE=? "
-                + "AND R.COURSEID=C.COURSEID AND R.STUDENTID=C.STUDENTID "
-                + "AND C.STUDENTID=S.STUDENTID "
-                + "ORDER BY S.NAME ";
-        try {
-            pStmt = dbConnection.prepareStatement(query);
-            pStmt.setInt(1, courseId);
-            pStmt.setString(2, today);
-            ResultSet rs = pStmt.executeQuery();
-            while (rs.next()) {
-                classRegister registerEntry = new classRegister();
-
-                registerEntry.setStudentId(rs.getInt("STUDENTID"));
-                registerEntry.setName(rs.getString("NAME"));
-                registerEntry.setEntryType(rs.getString("ENTRYTYPE"));
-                registerEntry.setCourseId(courseId);
-                registerEntry.setModuleId(moduleId);
-                registerEntry.setAbsenceReason(rs.getString("ANNOTATION"));
-                registerEntry.setRegisterValue(rs.getInt("REGISTERVALUE"));
-                registerEntry.setRegisterDate(rs.getString("REGISTERDATE"));
-                registerEntry.setRegisterId(rs.getInt("ID"));
-                registerEntries.add(registerEntry);
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-        return registerEntries;
-    }
-
-    public void updateClassRegister(classRegister event) {
-        String updateQuery = "UPDATE REGISTER SET ANNOTATION=?, ENTRYTYPE = ?, REGISTERVALUE=? "
-                + "WHERE ID=?";
-        try {
-            pStmt = dbConnection.prepareStatement(updateQuery);
-            pStmt.setString(1, event.getAbsenceReason());
-            pStmt.setString(2, event.getEntryType());
-            pStmt.setInt(3, event.getRegisterValue());
-            pStmt.setInt(4, event.getRegisterId());
-            pStmt.executeUpdate();
-
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
-// END OF REGISTER SECTION
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<User>();
 
@@ -461,90 +247,20 @@ public class EntiDao {
         return user;
     }
 
-    public List<Groups> getGroupsByUser(int userId) {
-        List<Groups> groups = new ArrayList<Groups>();
-        String query = "SELECT GROUPS.GROUPID, GROUPS.GROUPNAME FROM USERS,GROUPS,USERGROUP"
-                + " WHERE 1=1"
-                + " AND USERS.ID = USERGROUP.USERID"
-                + " AND GROUPS.GROUPID = USERGROUP.GROUPID"
-                + " AND USERS.ID="
-                + Integer.toString(userId);
+    public boolean verifyEnte(String descrizione) {
+        String countQuery = "SELECT ID FROM ENTI WHERE DESCRIZIONE=?";
+        int result = 0;
         try {
-            Statement stmt = dbConnection.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
+            pStmt = dbConnection.prepareStatement(countQuery);
+            pStmt.setString(1, descrizione);
+            ResultSet rs = pStmt.executeQuery();
             while (rs.next()) {
-                Groups group = new Groups();
-
-                group.setGroupId(rs.getInt("GROUPID"));
-                group.setGroupName(rs.getString("GROUPNAME"));
-                groups.add(group);
+                result = rs.getInt(1);
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        return groups;
-    }
-
-    public Groups getGroupById(int groupId) {
-        Groups group = new Groups();
-        String query = "SELECT GROUPS.GROUPID, GROUPS.GROUPNAME FROM GROUPS"
-                + " WHERE 1=1" + " AND GROUPS.GROUPID="
-                + Integer.toString(groupId);
-        try {
-            Statement stmt = dbConnection.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            while (rs.next()) {
-                group.setGroupId(rs.getInt("GROUPID"));
-                group.setGroupName(rs.getString("GROUPNAME"));
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-        return group;
-    }
-
-    public void addUserGroup(UserGroup userGroup) throws Exception {
-        String insertQuery = "INSERT INTO USERGROUP(USERID,GROUPID) VALUES (?,?)";
-        try {
-            pStmt = dbConnection.prepareStatement(insertQuery);
-            pStmt.setInt(1, userGroup.getUserId());
-            pStmt.setInt(2, userGroup.getGroupId());
-            pStmt.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-            throw new Exception(e.getMessage());
-        }
-    }
-
-    public void deleteUser(int userId) {
-        String deleteQuery = "DELETE FROM USERS WHERE ID=?";
-        try {
-            pStmt = dbConnection.prepareStatement(deleteQuery);
-            pStmt.setInt(1, userId);
-            pStmt.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-        deleteQuery = "DELETE FROM USERGROUP WHERE USERID=?";
-        try {
-            pStmt = dbConnection.prepareStatement(deleteQuery);
-            pStmt.setInt(1, userId);
-            pStmt.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
-    public void deleteUserGroup(int userId, int groupId) {
-        String deleteQuery = "DELETE FROM USERGROUP WHERE USERID=? AND GROUPID=?";
-        try {
-            pStmt = dbConnection.prepareStatement(deleteQuery);
-            pStmt.setInt(1, userId);
-            pStmt.setInt(2, groupId);
-            pStmt.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
+        return (result == 0);
     }
 
 }

@@ -8,7 +8,7 @@ import com.utilities.RandomString;
 import com.utilities.sendMail;
 import com.dao.CrudDao;
 import com.interceptor.UserAware;
-import com.model.Enti;
+import com.model.Ente;
 import com.model.User;
 import com.opensymphony.xwork2.Action;
 import static com.opensymphony.xwork2.Action.SUCCESS;
@@ -20,7 +20,7 @@ public class EntiTableAction extends ActionSupport implements UserAware {
 	
 	private CrudDao dao = new CrudDao();
 
-	private List<Enti> records;
+	private List<Ente> records;
 	private String result;
 	private String message;
 	private User record;
@@ -32,7 +32,7 @@ public class EntiTableAction extends ActionSupport implements UserAware {
 
 	public String list() {
 		try {
-			// Fetch Data from User Table
+			// Fetch Data from Enti Table
 			records = dao.getAllUsers();
 			result = "OK";
 			totalRecordCount = dao.getUsersRecordCount();
@@ -96,21 +96,6 @@ public class EntiTableAction extends ActionSupport implements UserAware {
 		return Action.SUCCESS;
 	}
 	
-	public String resetPassword()  throws IOException {
-		RandomString rs = new RandomString(12);
-		String newPassword = rs.nextString();
-		dao.updateUserPassword(username, newPassword);
-	   	String mailRecipient = userEmail;
-    	String msgBody = "Dear " + userFirstname + " " + userLastname + ", \n\n" + 
-    					"your password has been reset to: " + newPassword + "." + "\n\n" + 
-    					"Please login into classAction and change your password as soon as possible";
-    	sendMail sm = new sendMail();
-    	sm.send("Password reset", msgBody, mailRecipient);
-		message = "Password resettata con successo al valore: " + newPassword;
-		System.out.println(message);
-		result = "OK";
-		return Action.SUCCESS;
-	}
 
 	public String delete() throws IOException {
 		System.out.println("Deleting user " + id);

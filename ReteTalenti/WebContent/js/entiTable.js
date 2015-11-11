@@ -16,50 +16,7 @@ $(document).ready(function () {
             updateAction: 'updateEntiAction',
             deleteAction: 'deleteEntiAction'
         },
-        toolbar: {
-            items: [{
-                    text: 'Reset Password',
-                    click: function () {
-                        return $.Deferred(function ($dfd) {
-                            var $selectedRows = $('#EntiTableContainer').jtable('selectedRows');
-                            $selectedRows.each(function () {
-                                var record = $(this).data('record');
-                                var userId = record.id;
-                                var name = record.username;
-
-                                $.ajax({
-                                    url: 'ResetPassword',
-                                    type: 'POST',
-                                    dataType: 'json',
-                                    data: record,
-                                    success: function (data) {
-                                        $dfd.resolve(data);
-                                        $("#dialog").dialog({
-//                                	  dialogClass: "alert",
-                                            modal: true,
-                                            buttons: [
-                                                {
-                                                    text: "Dismiss",
-                                                    click: function () {
-                                                        $(this).dialog("close");
-                                                    }
-                                                }
-                                            ],
-                                            open: function () {
-                                                $("#dialog").html("Resetting password for user <b>" + name + "</b><br/>was successfull!")
-                                            }
-                                        });
-                                    },
-                                    error: function () {
-                                        $dfd.reject();
-                                    }
-                                });
-                            }
-                            );
-                        })
-                    }
-                }]
-        },
+        
         fields: {
             id: {
                 key: true,
@@ -111,54 +68,48 @@ $(document).ready(function () {
                     return $img;
                 }
             },
-            username: {
-                title: 'Username',
+            descrizione: {
+                title: 'Descrizione',
                 width: '20%',
                 inputClass: 'validate[required]',
-                edit: true
-            },
-            password: {
-                title: 'Password',
-                type: 'password',
-                inputClass: 'validate[required]',
-                list: false,
-                edit: false,
+                list: true,
+                edit: true,
                 create: true
             },
-            userFirstname: {
-                title: 'Nome',
+            responsabile: {
+                title: 'Responsabile',
                 inputClass: 'validate[required]',
-                width: '30%',
-                edit: true
+                list: true,
+                edit: true,
+                create: true
             },
-            userLastname: {
-                title: 'Cognome',
-                inputClass: 'validate[required]',
-                width: '30%',
-                edit: true
-            },
-            userEmail: {
+            resp_email: {
                 title: 'Email',
+                inputClass: 'validate[required]',
+                width: '30%',
+                list: true,
+                edit: true,
+                create: true
+            },
+            resp_phone: {
+                title: 'Telefono',
+                inputClass: 'validate[required]',
+                width: '30%',
+                list: true,
+                edit: true,
+                create: true
+            },
+            provincia_ente: {
+                title: 'Provincia',
                 inputClass: 'validate[required,custom[email]]',
                 width: '20%',
                 inputWIdth: '200',
                 edit: true
-            },
-            userPhone: {
-                title: 'Telefono',
-                width: '20%',
-                edit: true
-            },
-            ente: {
-                title: 'Ente',
-                width: '20%',
-                edit: true,
-                options: 'Choose_Enti'
             }
         },
         //Initialize validation logic when a form is created
         formCreated: function (event, data) {
-            data.form.find('input[name=userEmail]').css('width', '200px');
+            data.form.find('input[name=resp_email]').css('width', '200px');
             data.form.parent().css('width', '400px');
             // data.form.parent().css('height','600px');
             //$(".jtable-input-field-container").slice(0,2).wrapAll("");
@@ -176,5 +127,5 @@ $(document).ready(function () {
             data.form.validationEngine('detach');
         }
     });
-    $('#UsersTableContainer').jtable('load');
+    $('#EntiTableContainer').jtable('load');
 });

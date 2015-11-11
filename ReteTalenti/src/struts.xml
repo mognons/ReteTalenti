@@ -147,6 +147,11 @@
                         <result type="json"></result>
                 </action>
                 
+                <action name="*EntiAction" class="com.action.EntiTableAction"
+                        method="{1}">
+                        <result type="json"></result>
+                </action>
+                
                 <action name="Choose_*" class="com.action.dropdownAction" method="{1}">
                         <result type="json"></result>
                 </action>
