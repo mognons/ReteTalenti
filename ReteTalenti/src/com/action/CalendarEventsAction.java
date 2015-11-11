@@ -22,6 +22,7 @@ import com.model.User;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
+
 public class CalendarEventsAction extends ActionSupport implements UserAware {
 
 	private static final long serialVersionUID = 8111120314704779336L;
@@ -30,8 +31,8 @@ public class CalendarEventsAction extends ActionSupport implements UserAware {
 	public String startParam, endParam, courseId, courseName, calendarColor,
 			startDate, message;
 	private int eventId;
-	
-	private List<String> selectedDays;
+
+        private List<String> selectedDays;
 	public CalendarDTO c;
 	private CalendarsDao calendarsDao = new CalendarsDao();
 	private ModulesDao modulesDao = new ModulesDao();
