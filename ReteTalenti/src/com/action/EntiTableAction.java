@@ -16,7 +16,7 @@ import com.opensymphony.xwork2.Action;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
 
-
+ 
 public class EntiTableAction extends ActionSupport implements UserAware {
 	private static final long serialVersionUID = 1L;
 	
