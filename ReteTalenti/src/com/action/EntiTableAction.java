@@ -142,7 +142,6 @@ public class EntiTableAction extends ActionSupport {
         this.id = id;
     }
 
-   
     public Ente getRecord() {
         return record;
     }
@@ -159,7 +158,6 @@ public class EntiTableAction extends ActionSupport {
         return result;
     }
 
-    
     public String getMessage() {
         return message;
     }
