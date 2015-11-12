@@ -4,6 +4,7 @@
 <head>
 </head>
 	<body>
-		<div class="main-footer">&copy;2015 - ACLI Verona - Developed by  <span class="light">5020-cinquantaventi</span></div>
+		<div class="main-footer">&copy;2015 - <a href="http://www.acliverona.it" target=2_new">ACLI Verona</a> - Developed by  
+		<a href="http://www.5020.it" target="_new">5020-cinquantaventi</a></div>
 	</body>
 </html>

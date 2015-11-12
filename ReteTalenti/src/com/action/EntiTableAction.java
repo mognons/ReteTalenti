@@ -25,6 +25,7 @@ public class EntiTableAction extends ActionSupport implements UserAware {
     private String descrizione, responsabile, resp_phone, resp_email;
 
     public String list() {
+    	jtSorting = "DESCRIZIONE ASC";
         try {
             // Fetch Data from Enti Table
             records = dao.getAllEnti(jtStartIndex, jtPageSize, jtSorting);

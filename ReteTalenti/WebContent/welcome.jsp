@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=US-ASCII"
-	pageEncoding="US-ASCII"%>
+<%@ page language="java" contentType="text/html; charset=US-ASCII" pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -23,7 +22,7 @@
 		if(mm<10){mm='0'+mm};
 		return (yyyy+"/"+mm+"/"+dd);	
 	}
-
+	
 	function loadClass() {
 		myIndex = $('input[name=groupsSelection]').filter(':checked').val();
 		selectedCourse = courses[myIndex];
@@ -70,7 +69,8 @@
 	<div class="site-container">
 		<div id="tabs">
 			<ul>
-				<li><a href="#today" onclick="resetJtable()">Today</a></li>
+				<li><a href="#today" onclick="resetJtable()">Oggi è il <s:date
+							name="currentDate" format="dd/MM/yyyy" /></a></li>
 				<s:if test="hasEvents">
 					<li><a href="#todoList" onclick="loadTodos()">ToDo list</a></li>
 				</s:if>
@@ -78,14 +78,10 @@
 					<li><a href="#classContainer" onclick="loadClass()">Class
 							Register</a></li>
 				</s:if>
-				<s:if test="hasEvents">
-					<li><a href="#DocumentsTableContainer"
-						onclick="loadDocuments()">Lesson's docs</a></li>
-				</s:if>
 			</ul>
 			<div id="today">
 				<div style="text-align: left; color: #2779AA;">
-					Welcome, <i> <s:property value="userFirstname" /> <s:property
+					Benvenuto, <i> <s:property value="userFirstname" /> <s:property
 							value="userLastname" />
 					</i> <br> Lorem ipsum, terque quaterque, in aeterna lux vivebat
 					homo homini lupus <br>

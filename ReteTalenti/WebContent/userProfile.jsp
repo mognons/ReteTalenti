@@ -7,35 +7,37 @@
 
 </head>
 <body>
-	<div class="content-container">
+	<div class="site-container">
 		<div id="tabs">
 			<ul>
-				<li><a href="#userprofile">User profile</a></li>
+				<li><a href="#userprofile">Profilo Utente</a></li>
 			</ul>
-			<div id="userprofile">
-				<h2>
-					Update profile for user <i> <s:property value="userFirstname"></s:property>
+			<div id="userprofile" align="left">
+				<h3>
+					Aggiornamento profilo per <i> <s:property value="userFirstname"></s:property>
 						<s:property value="userLastname"></s:property>
+						(<s:property value="username"></s:property>)
 					</i>
-				</h2>
+				</h3>
 				<h3 style="color: red">
 					<s:property value="errorMsg"></s:property>
 				</h3>
 				<s:form action="updateUser">
-					<s:textfield name="username" label="User" readonly="true"></s:textfield>
-					<s:textfield name="userFirstname" label="First Name"
+					<s:textfield name="userFirstname" label="Nome" required="true"
+						size="45"></s:textfield>
+					<s:textfield name="userLastname" label="Cognome" required="true"
+						size="45"></s:textfield>
+					<s:textfield name="userEmail" label="Indirizzo Email"
 						required="true" size="30"></s:textfield>
-					<s:textfield name="userLastname" label="Last Name" required="true"
-						size="30"></s:textfield>
-					<s:textfield name="userEmail" label="Email address" required="true"
-						size="30"></s:textfield>
-					<s:textfield name="oldPassword" label="Old password"
+					<s:textfield name="userPhone" label="Recapito telefonico"
+						required="true" size="30"></s:textfield>
+					<s:textfield name="oldPassword" label="Password precedente"
 						type="password" size="30"></s:textfield>
-					<s:textfield name="newPassword" label="New password"
+					<s:textfield name="newPassword" label="Nuova password"
 						type="password" size="30"></s:textfield>
-					<s:textfield name="newPassword2" label="Confirm new password"
+					<s:textfield name="newPassword2" label="Conferma nuova password"
 						type="password" size="30"></s:textfield>
-					<s:submit value="Update details"></s:submit>
+					<s:submit value="Aggiorna Profilo"></s:submit>
 				</s:form>
 			</div>
 		</div>

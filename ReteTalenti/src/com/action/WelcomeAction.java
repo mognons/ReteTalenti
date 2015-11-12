@@ -1,7 +1,7 @@
 package com.action;
  
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -25,6 +25,7 @@ public class WelcomeAction extends ActionSupport implements UserAware, ModelDriv
 	private CalendarsDao cDao = new CalendarsDao();
 	private List<CalendarDTO> todayEvents;
 	private Boolean hasEvents, hasTodos = false;
+	private Date currentDate;
 
     @Override
     public String execute() {
@@ -42,16 +43,16 @@ public class WelcomeAction extends ActionSupport implements UserAware, ModelDriv
     	// Unassigned courses to tutors (future)
     	// No class for courses
     	// Other checks
-    	System.out.println("Reading ResourceBundle");
+//    	System.out.println("Reading ResourceBundle");
     	// Lets check configuration
 		ResourceBundle rb = ResourceBundle.getBundle("com.properties.basicConfiguration");
 		Enumeration <String> keys = rb.getKeys();
 		while (keys.hasMoreElements()) {
 			String key = keys.nextElement();
 			String value = rb.getString(key);
-			System.out.println(key + ": " + value);
+//			System.out.println(key + ": " + value);
 		}
-		
+		setCurrentDate(new Date());
         return SUCCESS;
     }
      
@@ -100,6 +101,14 @@ public class WelcomeAction extends ActionSupport implements UserAware, ModelDriv
 
 	public void setHasTodos(Boolean hasTodos) {
 		this.hasTodos = hasTodos;
+	}
+
+	public Date getCurrentDate() {
+		return currentDate;
+	}
+
+	public void setCurrentDate(Date currentDate) {
+		this.currentDate = currentDate;
 	}
  
 }

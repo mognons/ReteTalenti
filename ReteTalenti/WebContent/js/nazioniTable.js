@@ -2,13 +2,13 @@ $(document).ready(function() {
 	$('#NazioniTableContainer').jtable({
 		title : 'Elenco Nazioni',
 		paging : true, //Enable paging
-        pageSize : 10, //Set page size (default: 10)           
+        pageSize : 15, //Set page size (default: 10)           
         sorting : false, //Enable sorting
         selecting: false, //Enable selecting
         multiselect: false, //Allow multiple selecting
         selectingCheckboxes: false, //Show checkboxes on first column
         selectOnRowClick: false, //Enable this to only select using checkboxes
-        pageSizeChangeArea: false,  
+        pageSizeChangeArea: true,  
 		actions : {
 			listAction : 'listNazioniAction',
 		},

@@ -14,7 +14,7 @@
 
 <style>
 .ui-menu {
-	width: 180px;
+	width: 220px;
 }
 a, a:visited, a:hover, a:active {
   color: inherit;
@@ -44,19 +44,22 @@ a, a:visited, a:hover, a:active {
 
 	<div style="position: relative; left: 0px; top: 0px; z-index: 10">
 		<ul id="verticalMenu">
-			<li>Anagrafica Assistiti
+			<li>Gestione Assistiti
 				<ul>
 					<li class="ui-state-disabled">Anagrafica Assistiti</li>
 					<li class="ui-state-disabled">Altro...</li>
 				</ul>
 			</li>
+			<li>-</li>
 			<li>Gestione Emporio
 				<ul>
 					<li class="ui-state-disabled">Candidatura Emporio</li>
 					<li class="ui-state-disabled">Inserimento Emporio</li>
+					<li class="ui-state-disabled">Rimozione Emporio</li>
 					<li class="ui-state-disabled">Altro...</li>
 				</ul>
 			</li>
+			<li>-</li>
 			<li>Gestione Eccedenze
 				<ul>
 					<li class="ui-state-disabled">Segnalazione Eccedenze</li>
@@ -72,12 +75,14 @@ a, a:visited, a:hover, a:active {
 					<li class="ui-state-disabled">Graduatoria Emporio</li>
 				</ul>
 			</li>
+			<li>-</li>
 			<s:if test="%{#isAdmin}">
 				<li>Sistema
 					<ul>
 						<li onclick="window.location='usersLink';">Gestione Utenti</li>
-						<li onclick="window.location='nazioniLink';">Tabella Nazioni</li>
 						<li onclick="window.location='entiLink';">Tabella Enti</li>	
+						<li onclick="window.location='nazioniLink';">Tabella Nazioni</li>
+						<li onclick="window.location='provinceLink';">Tabella Province</li>
 						<li class="ui-state-disabled" onclick="window.location='udmLink';">Tabella Unità Misura</li>	
 					</ul>
 				</li>

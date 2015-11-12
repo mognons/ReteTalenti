@@ -18,6 +18,10 @@ public class LinkAction extends ActionSupport implements UserAware, ModelDriven<
     public String enti() {
     	return "enti";
     }
+    
+    public String province() {
+    	return "province";
+    }
     public String report() {
     	return "report";
     }

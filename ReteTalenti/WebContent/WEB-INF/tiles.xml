@@ -24,8 +24,13 @@
 	</definition>
 	 
 	<definition name="/nazionitable.tiles" extends="baseLayout">
-		<put-attribute name="title" value="Gestione Tabella Nazioni" />
+		<put-attribute name="title" value="Lista Tabella Nazioni" />
 		<put-attribute name="body" value="/nazioniTable.jsp" />
+	</definition>
+ 
+	<definition name="/provincetable.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Lista Tabella Province" />
+		<put-attribute name="body" value="/provinceTable.jsp" />
 	</definition>
  
 	<definition name="/entitable.tiles" extends="baseLayout">

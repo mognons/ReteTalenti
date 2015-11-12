@@ -33,6 +33,7 @@
         	
  			<action name="*Link" class="com.action.LinkAction" method="{1}">
 				<result name="welcome" type="tiles">/welcome.tiles</result>
+				<result name="province" type="tiles">/provincetable.tiles</result>
 				<result name="nazioni" type="tiles">/nazionitable.tiles</result>
 				<result name="users" type="tiles">/userstable.tiles</result>
 				<result name="enti" type="tiles">/entitable.tiles</result>
@@ -113,6 +114,11 @@
                 </action>
                 
                 <action name="*NazioniAction" class="com.action.NazioniAction"
+                        method="{1}">
+                        <result type="json"></result>
+                </action>
+                
+                <action name="*ProvinceAction" class="com.action.ProvinceAction"
                         method="{1}">
                         <result type="json"></result>
                 </action>

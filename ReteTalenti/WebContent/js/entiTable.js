@@ -25,19 +25,19 @@ $(document).ready(function () {
             //CHILD TABLE DEFINITION FOR "GROUPS"
             Groups: {
                 title: '',
-                width: '5%',
+                width: '1%',
                 sorting: false,
                 edit: false,
                 create: false,
                 display: function (userData) {
                     //Create an image that will be used to open child table
-                    var $img = $('<img src="icons/myspace.png" width="24" height="24" title="Utenti del gruppo" />');
+                    var $img = $('<img align="center" src="icons/myspace.png" width="24" height="24" title="Utenti del gruppo" />');
                     //Open child table when user clicks the image
                     $img.click(function () {
                         $('#EntiTableContainer').jtable('openChildTable',
                                 $img.closest('tr'),
                                 {
-                                    title: 'Utenti del gruppo ' + userData.record.descrizione,
+                                    title: 'Utenti dell\'ente ' + userData.record.descrizione,
                                     actions: {
                                         listAction: 'UListUserAction?id=' + userData.record.id
                                     },

@@ -20,7 +20,7 @@
 							</s:if></a>
 					</h2>
 				</td>
-				<td align="right"><a href="home.action"><img
+				<td align="right"><a href="http://www.regione.veneto.it" target="_new"><img
 						alt="ReteTalenti" src="images/stemmacolore.png" height="75"
 						width="90"></a></td>
 			</tr>

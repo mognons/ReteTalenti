@@ -20,7 +20,6 @@ public class UsersDao {
 
 	private Connection dbConnection;
 	private PreparedStatement pStmt;
-	private Statement stmt;
 	private MD5 enc = new MD5();
 
 	public UsersDao() {

@@ -1,7 +1,6 @@
 package com.action;
 
 import java.util.Map;
-import javax.mail.*;
 import javax.mail.internet.*;
 import org.apache.struts2.interceptor.SessionAware;
 
