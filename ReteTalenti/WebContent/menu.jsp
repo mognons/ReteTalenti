@@ -76,8 +76,8 @@ a, a:visited, a:hover, a:active {
 				<li>Sistema
 					<ul>
 						<li onclick="window.location='usersLink';">Gestione Utenti</li>
-						<li class="ui-state-disabled">Tabella Nazioni</li>
-						<li class="ui-state-disabled">Tabella Unità Misura</li>	
+						<li onclick="window.location='nazioniLink';">Tabella Nazioni</li>
+						<li class="ui-state-disabled" onclick="window.location='udmLink';">Tabella Unità Misura</li>	
 						<li class="ui-state-disabled" onclick="window.location='usersLink';">Tabella Enti</li>	
 					</ul>
 				</li>

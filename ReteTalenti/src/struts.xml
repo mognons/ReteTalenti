@@ -33,12 +33,7 @@
         	
  			<action name="*Link" class="com.action.LinkAction" method="{1}">
 				<result name="welcome" type="tiles">/welcome.tiles</result>
-				<result name="courses" type="tiles">/coursestable.tiles</result>
-				<result name="table" type="tiles">/studenttable.tiles</result>
-				<result name="class_register" type="tiles">/classregister.tiles</result>
-				<result name="report" type="tiles">/report.tiles</result>
-				<result name="calendar" type="tiles">/calendar.tiles</result>
-				<result name="nowhere" type="tiles">/welcome.tiles</result>
+				<result name="nazioni" type="tiles">/nazionitable.tiles</result>
 				<result name="users" type="tiles">/userstable.tiles</result>
 				<result name="filemanager" type="tiles">/fm.tiles</result>
 				<result name="profile" type="tiles">/profile.tiles</result>
@@ -100,23 +95,7 @@
         	<global-results>
 	        	<result name="login" type="redirect">/home.action</result>
 	       	</global-results>
-        	
-        	
-                <action name="*CoursesAction" class="com.action.CoursesTableAction"
-                        method="{1}">
-                        <result type="json"></result>
-                </action>
-                
-                <action name="*StudentAction" class="com.action.StudentTableAction"
-                        method="{1}">
-                        <result type="json"></result>
-                </action>
-                
-                <action name="*ModulesAction" class="com.action.ModulesTableAction"
-                        method="{1}">
-                        <result type="json"></result>
-                </action>
-                
+        	                
                 <action name="*DocumentsAction" class="com.action.DocumentsTableAction"
                         method="{1}">
                         <result type="json"></result>
@@ -127,27 +106,13 @@
                         <result type="json"></result>
                 </action>
                 
-                <action name="*Groups" class="com.action.UsersGroupAction"
-                        method="{1}">
-                        <result type="json"></result>
-                </action>
-                
-                <action name="*ClassesAction" class="com.action.ClassesTableAction"
-                        method="{1}">
-                        <result type="json"></result>
-                </action>
-                
-                <action name="*MarksTableAction" class="com.action.MarksTableAction"
-                        method="{1}">
-                        <result type="json"></result>
-                </action>
-                
-                <action name="*classRegisterAction" class="com.action.classRegisterAction"
-                        method="{1}">
-                        <result type="json"></result>
-                </action>
                 
                 <action name="*EntiAction" class="com.action.EntiTableAction"
+                        method="{1}">
+                        <result type="json"></result>
+                </action>
+                
+                <action name="*NazioniAction" class="com.action.NazioniAction"
                         method="{1}">
                         <result type="json"></result>
                 </action>
@@ -159,15 +124,7 @@
                 <action name="ResetPassword" class="com.action.UsersTableAction" method="resetPassword">
                         <result type="json"></result>
                 </action>
-          
-                <action name="CloneCourse" class="com.action.CoursesTableAction" method="cloneCourse">
-                        <result type="json"></result>
-                </action>
-          
-         		<action name="CalendarEvents_*" class="com.action.CalendarEventsAction" method="{1}">
-                        <result type="json"></result>
-        		</action>
-        	
+                  	
            		<action name="uploadFile" class="com.utilities.uploadFile">
         			<result type="json"></result>
         		</action>
