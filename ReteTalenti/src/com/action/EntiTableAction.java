@@ -3,247 +3,217 @@ package com.action;
 import java.io.IOException;
 import java.util.List;
 
-
-import com.utilities.RandomString;
-import com.utilities.sendMail;
-import com.dao.CrudDao;
+import com.dao.EntiDao;
 import com.interceptor.UserAware;
 import com.model.Ente;
-import com.model.User;
-import com.opensymphony.xwork2.Action;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
 
- 
-public class EntiTableAction extends ActionSupport implements UserAware {
-	private static final long serialVersionUID = 1L;
-	
-	private CrudDao dao = new CrudDao();
+public class EntiTableAction extends ActionSupport {
 
-	private List<Ente> records;
-	private String result;
-	private String message;
-	private User record;
-	private int totalRecordCount,jtStartIndex,jtPageSize;
-	private String jtSorting;
-	//
-	private int id, ente;
-	private String userFirstname, userLastname, userEmail, username, userPhone, password;
+    private static final long serialVersionUID = 1L;
+    private EntiDao dao = new EntiDao();
 
-	public String list() {
-		try {
-			// Fetch Data from Enti Table
-			records = dao.getAllUsers();
-			result = "OK";
-			totalRecordCount = dao.getUsersRecordCount();
-			
-		} catch (Exception e) {
-			result = "ERROR";
-			message = e.getMessage();
-			System.err.println(e.getMessage());
-		}
-		return Action.SUCCESS;
-	}
+    private List<Ente> records;
+    private String result;
 
-	public String create() throws IOException {
-		User record = new User();
-		record.setUsername(username);
-		record.setPassword(password);
-		record.setUserFirstname(userFirstname);
-		record.setUserLastname(userLastname);
-		record.setUserEmail(userEmail);
-		record.setUsername(username);
-		record.setUserPhone(userPhone);
-		record.setEnte(ente);
-		if (dao.verifyUsername(username)) {
-			try {
-				System.out.println("Creating "+username);
-				dao.createUser(record);
-				result = "OK";
-			} catch (Exception e) {
-				message = e.getMessage();
-				System.err.println(e.getMessage());
-				result = "ERROR";
-			}
-		} else {
-			System.out.println("Username already exists");
-			message = "Impossibile creare un nuovo utente: username <b>" + username + "</b> già inserito";
-			result = "ERROR";
-		}
-		return SUCCESS;
-	}
+    private String message;
+    private Ente record;
+    private int totalRecordCount, jtStartIndex, jtPageSize;
+    private String jtSorting;
+    //
+    private int id;
+    private String descrizione, responsabile, resp_phone, resp_email, provincia_ente;
 
-	public String update() throws IOException {
-		User User = new User();
+    public String list() {
+        try {
+            // Fetch Data from Enti Table
+            records = dao.getAllEnti(jtStartIndex, jtPageSize, jtSorting);
+            result = "OK";
+            totalRecordCount = dao.getEntiRecordCount();
 
-		User.setUserFirstname(userFirstname);
-		User.setUserLastname(userLastname);
-		User.setUserEmail(userEmail);
-		User.setUsername(username);
-		User.setUserPhone(userPhone);
-		User.setEnte(ente);
-		System.out.println("Updating "+username);
+        } catch (Exception e) {
+            result = "ERROR";
+            message = e.getMessage();
+            System.err.println(e.getMessage());
+        }
+        return SUCCESS;
+    }
 
-		try {
-			// Update existing record
-			dao.updateUser(User);
-			result = "OK";
-		} catch (Exception e) {
-			result = "ERROR";
-			message = e.getMessage();
-			System.err.println(e.getMessage());
-		}
-		return Action.SUCCESS;
-	}
-	
+    public String create() throws IOException {
+        Ente record = new Ente();
+        record.setDescrizione(descrizione);
+        record.setResponsabile(responsabile);
+        record.setResp_email(resp_email);
+        record.setResp_phone(resp_phone);
+        record.setProvincia_ente(provincia_ente);
+        if (dao.verifyEnte(descrizione)) {
+            try {
+                System.out.println("Creating " + descrizione);
+                dao.createEnte(record);
+                result = "OK";
+            } catch (Exception e) {
+                message = e.getMessage();
+                System.err.println(e.getMessage());
+                result = "ERROR";
+            }
+        } else {
+            System.out.println("Descrizione already exists");
+            message = "Impossibile creare un nuovo ente: descrizione ente<b>" + descrizione + "</b> già inserita";
+            result = "ERROR";
+        }
+        return SUCCESS;
+    }
 
-	public String delete() throws IOException {
-		System.out.println("Deleting user " + id);
-		try {
-			// Update existing record
-			dao.deleteUser(id);
-			result = "OK";
-		} catch (Exception e) {
-			result = "ERROR";
-			message = e.getMessage();
-			System.err.println(e.getMessage());
-		}result = "OK";
-		return Action.SUCCESS;
-	}
+    public String update() throws IOException {
+        Ente ente = new Ente();
 
-	public int getTotalRecordCount() {
-		return totalRecordCount;
-	}
-	
-	public void setTotalRecordCount(int totalRecordCount) {
-		this.totalRecordCount = totalRecordCount;
-	}
-	
-	public int getJtStartIndex() {
-		return jtStartIndex;
-	}
-	
-	public void setJtStartIndex(int jtStartIndex) {
-		this.jtStartIndex = jtStartIndex;
-	}
-	
-	public void setJtPageSize(int jtPageSize) {
-		this.jtPageSize = jtPageSize;
-	}
-	
-	public int getJtPageSize() {
-		return jtPageSize;
-	}
-	
-	public String getJtSorting() {
-		return jtSorting;
-	}
-	
-	public void setJtSorting(String jtSorting) {
-		this.jtSorting = jtSorting;
-	}
-	
+        ente.setDescrizione(descrizione);
+        ente.setResponsabile(responsabile);
+        ente.setResp_email(resp_email);
+        ente.setResp_phone(resp_phone);
+        ente.setProvincia_ente(provincia_ente);
+        System.out.println("Updating " + descrizione);
 
-	public int getId() {
-		return id;
-	}
+        try {
+            // Update existing record
+            dao.updateEnte(ente);
+            result = "OK";
+        } catch (Exception e) {
+            result = "ERROR";
+            message = e.getMessage();
+            System.err.println(e.getMessage());
+        }
+        return SUCCESS;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public String delete() throws IOException {
+        System.out.println("Deleting descrizione " + id);
+        try {
+            // Update existing record
+            dao.deleteEnte(id);
+            result = "OK";
+        } catch (Exception e) {
+            result = "ERROR";
+            message = e.getMessage();
+            System.err.println(e.getMessage());
+        }
+        result = "OK";
+        return SUCCESS;
+    }
 
-	public String getUserFirstname() {
-		return userFirstname;
-	}
+    public int getTotalRecordCount() {
+        return totalRecordCount;
+    }
 
-	public void setUserFirstname(String userFirstname) {
-		this.userFirstname = userFirstname;
-	}
+    public void setTotalRecordCount(int totalRecordCount) {
+        this.totalRecordCount = totalRecordCount;
+    }
 
-	public String getUserLastname() {
-		return userLastname;
-	}
+    public int getJtStartIndex() {
+        return jtStartIndex;
+    }
 
-	public void setUserLastname(String userLastname) {
-		this.userLastname = userLastname;
-	}
+    public void setJtStartIndex(int jtStartIndex) {
+        this.jtStartIndex = jtStartIndex;
+    }
 
-	public String getUserEmail() {
-		return userEmail;
-	}
+    public void setJtPageSize(int jtPageSize) {
+        this.jtPageSize = jtPageSize;
+    }
 
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
-	}
+    public int getJtPageSize() {
+        return jtPageSize;
+    }
 
-	public User getRecord() {
-		return record;
-	}
+    public String getJtSorting() {
+        return jtSorting;
+    }
 
-	public void setRecord(User record) {
-		this.record = record;
-	}
+    public void setJtSorting(String jtSorting) {
+        this.jtSorting = jtSorting;
+    }
 
-	public List<User> getRecords() {
-		return records;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getResult() {
-		return result;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+   
+    public Ente getRecord() {
+        return record;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setRecord(Ente record) {
+        this.record = record;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    public List<Ente> getRecords() {
+        return records;
+    }
 
-	public void setRecords(List<User> records) {
-		this.records = records;
-	}
+    public String getResult() {
+        return result;
+    }
 
-	public void setResult(String result) {
-		this.result = result;
-	}
+    
+    public String getMessage() {
+        return message;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public void setRecords(List<Ente> records) {
+        this.records = records;
+    }
 
-	@Override
-	public void setUser(User user) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void setResult(String result) {
+        this.result = result;
+    }
 
-	public int getEnte() {
-		return ente;
-	}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-	public void setEnte(int ente) {
-		this.ente = ente;
-	}
+    public String getDescrizione() {
+        return descrizione;
+    }
 
-	public String getUserPhone() {
-		return userPhone;
-	}
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
 
-	public void setUserPhone(String userPhone) {
-		this.userPhone = userPhone;
-	}
+    public String getResponsabile() {
+        return responsabile;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setResponsabile(String responsabile) {
+        this.responsabile = responsabile;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getResp_phone() {
+        return resp_phone;
+    }
+
+    public void setResp_phone(String resp_phone) {
+        this.resp_phone = resp_phone;
+    }
+
+    public String getResp_email() {
+        return resp_email;
+    }
+
+    public void setResp_email(String resp_email) {
+        this.resp_email = resp_email;
+    }
+
+    public String getProvincia_ente() {
+        return provincia_ente;
+    }
+
+    public void setProvincia_ente(String provincia_ente) {
+        this.provincia_ente = provincia_ente;
+    }
 
 }

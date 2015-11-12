@@ -77,10 +77,10 @@ public class EntiDao {
             e1.printStackTrace();
         }
 
-        String deleteQuery = "DELETE FROM STUDENT WHERE STUDENTID = ?";
+        String deleteQuery = "DELETE FROM ENTI WHERE ID = ?";
         try {
             pStmt = dbConnection.prepareStatement(deleteQuery);
-            pStmt.setInt(1, studentId);
+            pStmt.setInt(1, enteId);
             pStmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -89,7 +89,7 @@ public class EntiDao {
     }
 
     public int getRecordCount() {
-        String countQuery = "SELECT COUNT(STUDENTID) AS TOTALREC FROM STUDENT";
+        String countQuery = "SELECT COUNT(ID) AS TOTALREC FROM ENTI";
         int result = 0;
         try {
             Statement stmt = dbConnection.createStatement();
@@ -103,8 +103,8 @@ public class EntiDao {
         return result;
     }
 
-    public int getUsersRecordCount() {
-        String countQuery = "SELECT COUNT(ID) AS TOTALREC FROM USERS";
+    public int getEntiRecordCount() {
+        String countQuery = "SELECT COUNT(ID) AS TOTALREC FROM ENTI";
         int result = 0;
         try {
             Statement stmt = dbConnection.createStatement();
@@ -119,7 +119,7 @@ public class EntiDao {
     }
 
     public int getNextID() {
-        String countQuery = "SELECT COALESCE(MAX(STUDENTID), COUNT(STUDENTID)) AS TT FROM STUDENT";
+        String countQuery = "SELECT COALESCE(MAX(ID), COUNT(ID)) AS TT FROM ENTI";
         int result = 0;
         try {
             Statement stmt = dbConnection.createStatement();
@@ -133,8 +133,8 @@ public class EntiDao {
         return result;
     }
 
-    public int getNextUserID() {
-        String countQuery = "SELECT COALESCE(MAX(ID), COUNT(ID)) AS TT FROM USERS";
+    public int getNextEntiID() {
+        String countQuery = "SELECT COALESCE(MAX(ID), COUNT(ID)) AS TT FROM ENTI";
         int result = 0;
         try {
             Statement stmt = dbConnection.createStatement();
@@ -148,103 +148,57 @@ public class EntiDao {
         return result;
     }
 
-    public List<Student> getAllStudents(int jtStartIndex, int jtPageSize,
+    public List<Ente> getAllEnti(int jtStartIndex, int jtPageSize,
             String jtSorting) {
-        List<Student> students = new ArrayList<Student>();
+        List<Ente> enti = new ArrayList<Ente>();
 
-        String query = "SELECT * FROM STUDENT " + "ORDER BY " + jtSorting + " "
+        String query = "SELECT * FROM ENTI " + "ORDER BY " + jtSorting + " "
                 + "LIMIT " + Integer.toString(jtPageSize) + " OFFSET "
                 + Integer.toString(jtStartIndex);
         try {
             Statement stmt = dbConnection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                Student student = new Student();
+                Ente ente = new Ente();
 
-                student.setStudentId(rs.getInt("STUDENTID"));
-                student.setName(rs.getString("NAME"));
-                student.setDepartment(rs.getString("DEPARTMENT"));
-                student.setEmailId(rs.getString("EMAIL"));
-                students.add(student);
+                ente.setId(rs.getInt("ID"));
+                ente.setDescrizione(rs.getString("DESCRIZIONE"));
+                ente.setResponsabile(rs.getString("RESPONSABILE"));
+                ente.setResp_email(rs.getString("RESP_EMAIL"));
+                ente.setResp_phone(rs.getString("RESP_PHONE"));
+                ente.setProvincia_ente(rs.getString("P"));
+                enti.add(ente);
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        return students;
+        return enti;
     }
 
-    public List<User> getAllUsers() {
-        List<User> users = new ArrayList<User>();
-
-        String query = "SELECT * FROM USERS ORDER BY ID";
-        try {
-            Statement stmt = dbConnection.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            while (rs.next()) {
-                User user = new User();
-
-                user.setId(rs.getInt("ID"));
-                user.setUsername(rs.getString("USERNAME"));
-                user.setUserFirstname(rs.getString("USERFIRSTNAME"));
-                user.setUserLastname(rs.getString("USERLASTNAME"));
-                user.setUserEmail(rs.getString("USEREMAIL"));
-                user.setUserPhone(rs.getString("USERPHONE"));
-                user.setEnte(rs.getInt("ENTE"));
-                users.add(user);
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-        return users;
-    }
-
-    public ResultSet getStudentsRS() {
-        String query = "SELECT * FROM STUDENT ORDER BY STUDENTID ";
-        try {
-            Statement stmt = dbConnection.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            return rs;
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-        return null;
-    }
-
-    public User getUser(String username) {
-        User user = new User();
-        List<Groups> groups = new ArrayList<Groups>();
-        System.out.println("Inside getUser with " + username);
-        String newQuery = "SELECT U.ID, U.USERNAME, U.USERFIRSTNAME, U.USERLASTNAME, "
-                + "U.USEREMAIL, U.USERPHONE, U.ENTE, E.DESCRIZIONE, G.GROUPID, G.GROUPNAME "
-                + "FROM USERS U ,USERGROUP UG , GROUPS G, ENTI E "
-                + "WHERE U.USERNAME=? AND "
-                + "U.ID = UG.USERID AND "
-                + "U.ENTE = E.ID AND "
-                + "G.GROUPID = UG.GROUPID";
+    public Ente getEnte(String descrizione) {
+        Ente ente = new Ente();
+//        List<Groups> groups = new ArrayList<Groups>();
+//        System.out.println("Inside getUser with " + username);
+        String newQuery = "SELECT E.ID, E.DESCRIZIONE, E.RESPONSABILE, E.RESP_EMAIL, "
+                + "E.RESP_PHONE, E.PROVINCIA_ENTE "
+                + "FROM ENTI E WHERE E.DESCRIZIONE=? ";
 
         try {
             pStmt = dbConnection.prepareStatement(newQuery);
-            pStmt.setString(1, username);
+            pStmt.setString(1, descrizione);
             ResultSet rs = pStmt.executeQuery();
             while (rs.next()) {
-                user.setId(rs.getInt(1));
-                user.setUsername(rs.getString(2));
-                user.setUserFirstname(rs.getString(3));
-                user.setUserLastname(rs.getString(4));
-                user.setUserEmail(rs.getString(5));
-                user.setUserPhone(rs.getString(6));
-                user.setEnte(rs.getInt(7));
-                user.setDescrizioneEnte(rs.getString(8));
-                Groups myGroup = new Groups();
-                myGroup.setGroupId(rs.getInt(9));
-                myGroup.setGroupName(rs.getString(10));
-                groups.add(myGroup);
+                ente.setId(rs.getInt(1));
+                ente.setDescrizione(rs.getString(2));
+                ente.setResponsabile(rs.getString(3));
+                ente.setResp_email(rs.getString(4));
+                ente.setResp_phone(rs.getString(5));
+                ente.setProvincia_ente(rs.getString(6));
             }
-            user.setGroups(groups);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        return user;
+        return ente;
     }
 
     public boolean verifyEnte(String descrizione) {
