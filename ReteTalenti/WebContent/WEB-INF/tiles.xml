@@ -23,11 +23,12 @@
 		<put-attribute name="body" value="/welcome.action" />
 	</definition>
 	 
-	<definition name="/studenttable.tiles" extends="baseLayout">
-		<put-attribute name="title" value="Students" />
-		<put-attribute name="body" value="/studentTable.jsp" />
+	<definition name="/nazionitable.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Gestione Tabella Nazioni" />
+		<put-attribute name="body" value="/nazioniTable.jsp" />
 	</definition>
-	<definition name="/userstable.tiles" extends="baseLayout">
+ 
+ 	<definition name="/userstable.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Users" />
 		<put-attribute name="body" value="/usersTable.jsp" />
 	</definition>

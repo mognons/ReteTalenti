@@ -31,6 +31,10 @@ public class LinkAction extends ActionSupport implements UserAware, ModelDriven<
     	return "users";
     }
     
+    public String nazioni() {
+    	return "nazioni";
+    }
+    
     public String courses() {
     	return "courses";
     }
