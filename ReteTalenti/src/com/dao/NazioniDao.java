@@ -19,11 +19,11 @@ public class NazioniDao {
 		dbConnection = DataAccessObject.getConnection();
 	}
 
-	public List<Nazione> getAllNazioni(int jtStartIndex, int jtPageSize) {
+	public List<Nazione> getAllNazioni(String jtStartIndex, String jtPageSize) {
 		List<Nazione> nazioni = new ArrayList<Nazione>();
 
-		String query = "SELECT * FROM NAZIONI ORDER BY DENOMINAZIONE " + "LIMIT " + Integer.toString(jtPageSize)
-				+ " OFFSET " + Integer.toString(jtStartIndex);
+		String query = "SELECT * FROM NAZIONI ORDER BY DENOMINAZIONE " + "LIMIT " + jtPageSize
+				+ " OFFSET " + jtStartIndex;
 		System.out.println(query);
 		
 		try {

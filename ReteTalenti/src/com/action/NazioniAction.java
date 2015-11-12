@@ -19,16 +19,18 @@ public class NazioniAction extends ActionSupport implements UserAware {
 	private String result;
 	private String message;
 	private User record;
-	private int totalRecordCount,jtStartIndex,jtPageSize;
+	private int totalRecordCount;
+	private String jtStartIndex,jtPageSize;
 	private String jtSorting;
 	//
 
 	public String list() {
+		System.out.println(jtStartIndex);
 		try {
 			// Fetch Data from User Table
+			totalRecordCount = dao.getCountNazioni();
 			records = dao.getAllNazioni(jtStartIndex, jtPageSize);
 			result = "OK";
-			totalRecordCount = dao.getCountNazioni();
 			
 		} catch (Exception e) {
 			result = "ERROR";
@@ -72,10 +74,10 @@ public class NazioniAction extends ActionSupport implements UserAware {
 	public void setTotalRecordCount(int totalRecordCount) {
 		this.totalRecordCount = totalRecordCount;
 	}
-	public int getJtPageSize() {
+	public String getJtPageSize() {
 		return jtPageSize;
 	}
-	public void setJtPageSize(int jtPageSize) {
+	public void setJtPageSize(String jtPageSize) {
 		this.jtPageSize = jtPageSize;
 	}
 	public String getJtSorting() {
@@ -83,6 +85,12 @@ public class NazioniAction extends ActionSupport implements UserAware {
 	}
 	public void setJtSorting(String jtSorting) {
 		this.jtSorting = jtSorting;
+	}
+	public String getJtStartIndex() {
+		return jtStartIndex;
+	}
+	public void setJtStartIndex(String jtStartIndex) {
+		this.jtStartIndex = jtStartIndex;
 	}
 
 

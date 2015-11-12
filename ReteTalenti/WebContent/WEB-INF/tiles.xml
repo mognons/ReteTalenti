@@ -28,6 +28,11 @@
 		<put-attribute name="body" value="/nazioniTable.jsp" />
 	</definition>
  
+	<definition name="/entitable.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Gestione Tabella Enti" />
+		<put-attribute name="body" value="/entiTable.jsp" />
+	</definition>
+ 
  	<definition name="/userstable.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Users" />
 		<put-attribute name="body" value="/usersTable.jsp" />

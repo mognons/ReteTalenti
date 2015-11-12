@@ -59,6 +59,25 @@ public class DropDownDao {
 		return options;
 	}
 	
+	public List<JSONObject> getAllProvince() {
+
+		ArrayList<JSONObject> options = new ArrayList<JSONObject>();
+		String query = "SELECT COD_PROVINCIA, DENOMINAZIONE FROM PROVINCE ORDER BY DENOMINAZIONE ";
+		try {
+			Statement stmt = dbConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				JSONObject option = new JSONObject();
+				option.put("Value", rs.getInt("COD_PROVINCIA"));
+				option.put("DisplayText", rs.getString("DENOMINAZIONE"));
+				options.add(option);
+			}
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return options;
+	}
+	
 
 	/* STUDENTS DROPDOWN */
 	public List<JSONObject> getAllStudents() {

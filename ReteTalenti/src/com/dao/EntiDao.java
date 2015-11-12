@@ -30,31 +30,40 @@ public class EntiDao {
         dbConnection = DataAccessObject.getConnection();
     }
 
-    public void createEnte(Ente ente) {
-        String insertEnteQuery = "INSERT INTO ENTI (DESCRIZIONE, RESPONSABILE, RESP_EMAIL, RESP_PHONE, PROVINCIA_ENTE) VALUES (?,?,?,?,?)";
+    public int createEnte(Ente ente) {
+    	int autoIncKeyFromFunc = -1;
+        String insertEnteQuery =  "INSERT INTO ENTI (DESCRIZIONE, RESPONSABILE, RESP_EMAIL, RESP_PHONE, PROVINCIA_ENTE) " +
+        							"VALUES (?,?,?,?,?)";
         try {
             pStmt = dbConnection.prepareStatement(insertEnteQuery);
             pStmt.setString(1, ente.getDescrizione());
             pStmt.setString(2, ente.getResponsabile());
             pStmt.setString(3, ente.getResp_email());
             pStmt.setString(4, ente.getResp_phone());
-            pStmt.setString(5, ente.getProvincia_ente());
+            pStmt.setInt(5, ente.getProvincia_ente());
             pStmt.executeUpdate();
-            pStmt.executeUpdate();
+            stmt = dbConnection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT LAST_INSERT_ID()");
+
+			if (rs.next()) {
+				autoIncKeyFromFunc = rs.getInt(1);
+				System.out.println("ID inserito: " + autoIncKeyFromFunc);
+			}
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
+		return autoIncKeyFromFunc;
     }
 
     public void updateEnte(Ente ente) {
-        String updateQuery = "UPDATE ENTE SET DESCRIZIONE=?, RESPONSABILE=?, RESP_EMAIL=?, RESP_PHONE=?, PROVINCIA_ENTE=? WHERE ID=?";
+        String updateQuery = "UPDATE ENTI SET DESCRIZIONE=?, RESPONSABILE=?, RESP_EMAIL=?, RESP_PHONE=?, PROVINCIA_ENTE=? WHERE ID=?";
         try {
             pStmt = dbConnection.prepareStatement(updateQuery);
             pStmt.setString(1, ente.getDescrizione());
             pStmt.setString(2, ente.getResponsabile());
             pStmt.setString(3, ente.getResp_email());
             pStmt.setString(4, ente.getResp_phone());
-            pStmt.setString(5, ente.getProvincia_ente());
+            pStmt.setInt(5, ente.getProvincia_ente());
             pStmt.setInt(6, ente.getId());
             pStmt.executeUpdate();
         } catch (SQLException e) {
@@ -62,21 +71,7 @@ public class EntiDao {
         }
     }
 
-    public int deleteEnte(int enteId) {
-        String query = "SELECT * FROM ENTI WHERE ID=?";
-        try {
-            pStmt = dbConnection.prepareStatement(query);
-            pStmt.setInt(1, enteId);
-            ResultSet rs = pStmt.executeQuery();
-            if (rs.next()) {
-                return -1;
-            }
-
-        } catch (SQLException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-
+    public void deleteEnte(int enteId) {
         String deleteQuery = "DELETE FROM ENTI WHERE ID = ?";
         try {
             pStmt = dbConnection.prepareStatement(deleteQuery);
@@ -85,7 +80,6 @@ public class EntiDao {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        return 0;
     }
 
     public int getRecordCount() {
@@ -166,7 +160,7 @@ public class EntiDao {
                 ente.setResponsabile(rs.getString("RESPONSABILE"));
                 ente.setResp_email(rs.getString("RESP_EMAIL"));
                 ente.setResp_phone(rs.getString("RESP_PHONE"));
-                ente.setProvincia_ente(rs.getString("P"));
+                ente.setProvincia_ente(rs.getInt("PROVINCIA_ENTE"));
                 enti.add(ente);
             }
         } catch (SQLException e) {
@@ -193,7 +187,7 @@ public class EntiDao {
                 ente.setResponsabile(rs.getString(3));
                 ente.setResp_email(rs.getString(4));
                 ente.setResp_phone(rs.getString(5));
-                ente.setProvincia_ente(rs.getString(6));
+                ente.setProvincia_ente(rs.getInt(6));
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());

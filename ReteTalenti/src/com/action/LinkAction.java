@@ -15,6 +15,9 @@ public class LinkAction extends ActionSupport implements UserAware, ModelDriven<
     	return "table";
     }
     
+    public String enti() {
+    	return "enti";
+    }
     public String report() {
     	return "report";
     }

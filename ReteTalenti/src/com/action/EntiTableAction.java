@@ -6,14 +6,13 @@ import java.util.List;
 import com.dao.EntiDao;
 import com.interceptor.UserAware;
 import com.model.Ente;
-import static com.opensymphony.xwork2.Action.SUCCESS;
+import com.model.User;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class EntiTableAction extends ActionSupport {
+public class EntiTableAction extends ActionSupport implements UserAware {
 
     private static final long serialVersionUID = 1L;
     private EntiDao dao = new EntiDao();
-
     private List<Ente> records;
     private String result;
 
@@ -22,8 +21,8 @@ public class EntiTableAction extends ActionSupport {
     private int totalRecordCount, jtStartIndex, jtPageSize;
     private String jtSorting;
     //
-    private int id;
-    private String descrizione, responsabile, resp_phone, resp_email, provincia_ente;
+    private int id, provincia_ente;
+    private String descrizione, responsabile, resp_phone, resp_email;
 
     public String list() {
         try {
@@ -40,8 +39,9 @@ public class EntiTableAction extends ActionSupport {
         return SUCCESS;
     }
 
+
     public String create() throws IOException {
-        Ente record = new Ente();
+        record = new Ente();
         record.setDescrizione(descrizione);
         record.setResponsabile(responsabile);
         record.setResp_email(resp_email);
@@ -50,34 +50,37 @@ public class EntiTableAction extends ActionSupport {
         if (dao.verifyEnte(descrizione)) {
             try {
                 System.out.println("Creating " + descrizione);
+                //record.setId(0);
                 dao.createEnte(record);
                 result = "OK";
             } catch (Exception e) {
                 message = e.getMessage();
+				System.err.println("Porcaccia EVA");
                 System.err.println(e.getMessage());
                 result = "ERROR";
             }
         } else {
-            System.out.println("Descrizione already exists");
-            message = "Impossibile creare un nuovo ente: descrizione ente<b>" + descrizione + "</b> già inserita";
+            System.out.println("Ente ESISTENTE!");
+            message = "Impossibile creare un nuovo ente: descrizione ente <b>" + descrizione + "</b> già inserita";
             result = "ERROR";
         }
         return SUCCESS;
     }
 
     public String update() throws IOException {
-        Ente ente = new Ente();
+        Ente record = new Ente();
 
-        ente.setDescrizione(descrizione);
-        ente.setResponsabile(responsabile);
-        ente.setResp_email(resp_email);
-        ente.setResp_phone(resp_phone);
-        ente.setProvincia_ente(provincia_ente);
+        record.setId(id);
+        record.setDescrizione(descrizione);
+        record.setResponsabile(responsabile);
+        record.setResp_email(resp_email);
+        record.setResp_phone(resp_phone);
+        record.setProvincia_ente(provincia_ente);
         System.out.println("Updating " + descrizione);
 
         try {
             // Update existing record
-            dao.updateEnte(ente);
+            dao.updateEnte(record);
             result = "OK";
         } catch (Exception e) {
             result = "ERROR";
@@ -206,12 +209,19 @@ public class EntiTableAction extends ActionSupport {
         this.resp_email = resp_email;
     }
 
-    public String getProvincia_ente() {
+    public int getProvincia_ente() {
         return provincia_ente;
     }
 
-    public void setProvincia_ente(String provincia_ente) {
+    public void setProvincia_ente(int provincia_ente) {
         this.provincia_ente = provincia_ente;
     }
+
+
+	@Override
+	public void setUser(User user) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

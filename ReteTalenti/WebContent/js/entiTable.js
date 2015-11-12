@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $('#EntiTableContainer').jtable({
-        title: 'Enti List',
+        title: 'Gestione Enti',
         paging: true, //Enable paging
         pageSize: 10, //Set page size (default: 10)           
         sorting: false, //Enable sorting
@@ -31,33 +31,37 @@ $(document).ready(function () {
                 create: false,
                 display: function (userData) {
                     //Create an image that will be used to open child table
-                    var $img = $('<img src="icons/myspace.png" width="24" height="24" title="Edit groups membership numbers" />');
+                    var $img = $('<img src="icons/myspace.png" width="24" height="24" title="Utenti del gruppo" />');
                     //Open child table when user clicks the image
                     $img.click(function () {
-                        $('#UsersTableContainer').jtable('openChildTable',
+                        $('#EntiTableContainer').jtable('openChildTable',
                                 $img.closest('tr'),
                                 {
-                                    title: 'Groups membership for ' + userData.record.username,
+                                    title: 'Utenti del gruppo ' + userData.record.descrizione,
                                     actions: {
-                                        listAction: 'listGroups?id=' + userData.record.id,
-                                        deleteAction: 'deleteGroups?id=' + userData.record.id,
-                                        createAction: 'createGroups?id=' + userData.record.id
+                                        listAction: 'UListUserAction?id=' + userData.record.id
                                     },
                                     fields: {
-                                        groupId: {
+                                        username: {
+                                        	title: 'Username',
                                             key: true,
                                             create: true,
                                             edit: false,
-                                            list: true,
-                                            options: 'Choose_Gruppi'
-//                                            type: 'hidden',
-//                                            defaultValue: userData.record.id
+                                            list: true
                                         },
-                                        groupName: {
+                                        userFirstname: {
+                                        	title: 'Nome',
                                             key: false,
                                             create: false,
                                             edit: false,
-                                            list: false
+                                            list: true
+                                        },
+                                        userLastname: {
+                                        	title: 'Cognome',
+                                            key: false,
+                                            create: false,
+                                            edit: false,
+                                            list: true
                                         }
                                     }
                                 }, function (data) { //opened handler
@@ -67,6 +71,10 @@ $(document).ready(function () {
                     //Return image to show on the person row
                     return $img;
                 }
+            },
+            id: {
+            	key: true,
+            	list: false
             },
             descrizione: {
                 title: 'Descrizione',
@@ -85,7 +93,7 @@ $(document).ready(function () {
             },
             resp_email: {
                 title: 'Email',
-                inputClass: 'validate[required]',
+                inputClass: 'validate[required,custom[email]]',
                 width: '30%',
                 list: true,
                 edit: true,
@@ -93,7 +101,7 @@ $(document).ready(function () {
             },
             resp_phone: {
                 title: 'Telefono',
-                inputClass: 'validate[required]',
+                inputClass: 'validate[required,custom[phone]]',
                 width: '30%',
                 list: true,
                 edit: true,
@@ -101,9 +109,8 @@ $(document).ready(function () {
             },
             provincia_ente: {
                 title: 'Provincia',
-                inputClass: 'validate[required,custom[email]]',
                 width: '20%',
-                inputWIdth: '200',
+                options: 'Choose_Province',
                 edit: true
             }
         },

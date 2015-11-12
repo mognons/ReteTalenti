@@ -62,6 +62,7 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 				result = "OK";
 			} catch (Exception e) {
 				message = e.getMessage();
+				System.err.println("Porcaccia EVA");
 				System.err.println(e.getMessage());
 				result = "ERROR";
 			}
@@ -113,10 +114,10 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 	}
 
 	public String delete() throws IOException {
-		System.out.println("Deleting user " + id);
+		System.out.println("Deleting user " + username);
 		try {
 			// Update existing record
-			dao.deleteUser(id);
+			dao.deleteUser(username);
 			result = "OK";
 		} catch (Exception e) {
 			result = "ERROR";
@@ -125,6 +126,21 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 		}result = "OK";
 		return Action.SUCCESS;
 	}
+	
+    public String UList() {
+        try {
+            // Fetch Data from Enti Table
+            records = dao.getUsersByEnte(id);
+            result = "OK";
+
+        } catch (Exception e) {
+            result = "ERROR";
+            message = e.getMessage();
+            System.err.println(e.getMessage());
+        }
+        return SUCCESS;
+    }
+
 
 	public int getTotalRecordCount() {
 		return totalRecordCount;

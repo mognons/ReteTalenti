@@ -272,6 +272,26 @@ public class UsersDao {
 		return groups;
 	}
 
+	public List<User> getUsersByEnte(int id) {
+		List<User> users = new ArrayList<User>();
+		String query = "SELECT * FROM USERS WHERE ENTE=" + Integer.toString(id);
+		try {
+			Statement stmt = dbConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				User user = new User();
+
+				user.setUsername(rs.getString("USERNAME"));
+				user.setUserFirstname(rs.getString("USERFIRSTNAME"));
+				user.setUserLastname(rs.getString("USERLASTNAME"));
+				users.add(user);
+			}
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return users;
+	}
+	
 	public Groups getGroupById(int groupId) {
 		Groups group = new Groups();
 		String query = "SELECT GROUPS.GROUPID, GROUPS.GROUPNAME FROM GROUPS"
@@ -303,11 +323,26 @@ public class UsersDao {
 		}
 	}
 
-	public void deleteUser(int userId) {
-		String deleteQuery = "DELETE FROM USERS WHERE ID=?";
+	public void deleteUser(String username) {
+		int tempId = 0;
+		String query = "SELECT ID FROM USERS WHERE USERNAME=?";		
+		try {
+			pStmt = dbConnection.prepareStatement(query);
+			pStmt.setString(1, username);
+			
+			ResultSet rs = pStmt.executeQuery();
+			
+			while (rs.next()) {
+				tempId = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		String deleteQuery = "DELETE FROM USERS WHERE USERNAME=?";
 		try {
 			pStmt = dbConnection.prepareStatement(deleteQuery);
-			pStmt.setInt(1, userId);
+			pStmt.setString(1, username);
 			pStmt.executeUpdate();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
@@ -315,7 +350,7 @@ public class UsersDao {
 		deleteQuery = "DELETE FROM USERGROUP WHERE USERID=?";
 		try {
 			pStmt = dbConnection.prepareStatement(deleteQuery);
-			pStmt.setInt(1, userId);
+			pStmt.setInt(1, tempId);
 			pStmt.executeUpdate();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());

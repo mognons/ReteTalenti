@@ -16,12 +16,12 @@ public class Ente {
     private String responsabile;
     private String resp_email;
     private String resp_phone;
-    private String provincia_ente;
+    private int provincia_ente;
 
     public Ente() {
     }
 
-    public Ente(Integer id, String descrizione, String responsabile, String resp_email, String resp_phone, String provincia_ente) {
+    public Ente(Integer id, String descrizione, String responsabile, String resp_email, String resp_phone, int provincia_ente) {
         this.id = id;
         this.descrizione = descrizione;
         this.responsabile = responsabile;
@@ -70,11 +70,11 @@ public class Ente {
         this.resp_phone = resp_phone;
     }
 
-    public String getProvincia_ente() {
+    public int getProvincia_ente() {
         return provincia_ente;
     }
 
-    public void setProvincia_ente(String provincia_ente) {
+    public void setProvincia_ente(int provincia_ente) {
         this.provincia_ente = provincia_ente;
     }
     

@@ -24,6 +24,14 @@ public class dropdownAction extends ActionSupport {
 		return Action.SUCCESS;
 	}
 
+	public String Province() {
+		options = new ArrayList<JSONObject> ();
+		options = dao.getAllProvince();
+		System.out.println("Inside getAllProvince()");
+		result = "OK";
+		return Action.SUCCESS;
+	}
+
 	public String Enti() {
 		options = new ArrayList<JSONObject> ();
 		options = dao.getAllEnti();
