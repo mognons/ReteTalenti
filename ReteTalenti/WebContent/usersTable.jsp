@@ -13,7 +13,17 @@
 <!-- User defined Jtable js file -->
 <script src="scripts/jquery.jtable.it.js" type="text/javascript"></script>
 <script src="js/usersTable.js" type="text/javascript"></script>
+<style>
+.rosso label {
+    font-weight: bold;
+}
+.rosso  {
+    color: #e32;
+    content: ' *';
+    display:inline;
+}
 
+</style>
 </head>
 <body>
 	<div id="dialog" title="System message"></div>

@@ -63,7 +63,7 @@ $(document).ready(function() {
             //CHILD TABLE DEFINITION FOR "GROUPS"
             Groups: {
                 title: '',
-                width: '5%',
+                width: '1%',
                 sorting: false,
                 edit: false,
                 create: false,
@@ -110,6 +110,7 @@ $(document).ready(function() {
 			username : {
 				key: true,
 				title : 'Username',
+				inputTitle : 'Username ' + '<span style="color:red">*</span>',
 				width : '5%',
 				inputClass: 'validate[required]',
 				edit : false,
@@ -117,6 +118,7 @@ $(document).ready(function() {
 			},
 			password : {
 				title : 'Password',
+				inputTitle : 'Password ' + '<span style="color:red">*</span>',
 				width : '0%',
 				inputClass: 'validate[required]',
 				list: false,
@@ -125,17 +127,20 @@ $(document).ready(function() {
 			},
 			userFirstname : {
 				title : 'Nome',
+				inputTitle : 'Nome ' + '<span style="color:red">*</span>',
 				inputClass: 'validate[required]',
 				width : '15%',
 				edit : true
 			},
 			userLastname : {
 				title : 'Cognome',
+				inputTitle : 'Cognome ' + '<span style="color:red">*</span>',
 				inputClass: 'validate[required]',
 				width : '15%',
 				edit : true
 			},
 			userEmail : {
+				inputTitle: 'Indirizzo Email ' + '<span style="color:red">*</span>',
 				title : 'Email',
 				inputClass: 'validate[required,custom[email]]',
 				width : '15%',
@@ -144,12 +149,14 @@ $(document).ready(function() {
 			},
 			userPhone : {
 				title : 'Telefono',
+				inputTitle : 'Numero di Telefono ' + '<span style="color:red">*</span>',
 				inputClass: 'validate[required]',
 				width : '15%',
 				edit : true
 			},
 			ente : {
 				title : 'Ente',
+				inputTitle : 'Scegliere un Ente ' + '<span style="color:red">*</span>',
 				width : '20%',
 				edit : true,
 				options: 'Choose_Enti'
@@ -158,9 +165,10 @@ $(document).ready(function() {
         //Initialize validation logic when a form is created
         formCreated: function (event, data) {
         	data.form.find('input[name=userEmail]').css('width','200px');
-        	data.form.parent().css('width','400px');
+            data.form.parent().css('width','400px');
         	// data.form.parent().css('height','600px');
         	//$(".jtable-input-field-container").slice(0,2).wrapAll("");
+        	//$(".jtable-input-field-container").slice(3,8).wrapAll("");
         	// Slice Parameters are Start Stop
         	//$(".jtable-input-field-container").slice(2,5).wrapAll("");
             data.form.validationEngine();
