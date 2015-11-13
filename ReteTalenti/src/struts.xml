@@ -99,6 +99,11 @@
 	        	<result name="login" type="redirect">/home.action</result>
 	       	</global-results>
         	                
+                <action name="*Groups" class="com.action.UsersGroupAction"
+                        method="{1}">
+                        <result type="json"></result>
+                </action>
+                
                 <action name="*DocumentsAction" class="com.action.DocumentsTableAction"
                         method="{1}">
                         <result type="json"></result>

@@ -69,13 +69,13 @@ $(document).ready(function() {
                 create: false,
                 display: function (userData) {
                     //Create an image that will be used to open child table
-                    var $img = $('<img src="icons/myspace.png" width="24" height="24" title="Edit groups membership numbers" />');
+                    var $img = $('<img align="center" src="icons/myspace.png" width="24" height="24" title="Gruppi di appartenenza" />');
                     //Open child table when user clicks the image
                     $img.click(function () {
                         $('#UsersTableContainer').jtable('openChildTable',
                                 $img.closest('tr'),
                                 {
-                                    title: 'Groups membership for ' + userData.record.username,
+                                    title: 'Sottoscrizione gruppi per ' + userData.record.username,
                                     actions: {
                                         listAction: 'listGroups?id=' + userData.record.id,
                                         deleteAction: 'deleteGroups?id=' + userData.record.id,
@@ -83,6 +83,7 @@ $(document).ready(function() {
                                     },
                                     fields: {
                                         groupId: {
+                                        	title: 'Gruppo Utenti',
                                             key: true,
                                             create: true,
                                             edit: false,
