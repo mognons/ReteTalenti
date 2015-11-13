@@ -83,7 +83,7 @@ a, a:visited, a:hover, a:active {
 						<li onclick="window.location='entiLink';">Tabella Enti</li>	
 						<li onclick="window.location='nazioniLink';">Tabella Nazioni</li>
 						<li onclick="window.location='provinceLink';">Tabella Province</li>
-						<li class="ui-state-disabled" onclick="window.location='udmLink';">Tabella Unità Misura</li>	
+						<li onclick="window.location='uni_misuraLink';">Tabella Unità Misura</li>	
 					</ul>
 				</li>
 			</s:if>

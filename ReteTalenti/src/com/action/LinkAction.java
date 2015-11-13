@@ -22,6 +22,11 @@ public class LinkAction extends ActionSupport implements UserAware, ModelDriven<
     public String province() {
     	return "province";
     }
+
+    public String uni_misura() {
+    	return "uni_misura";
+    }
+
     public String report() {
     	return "report";
     }
