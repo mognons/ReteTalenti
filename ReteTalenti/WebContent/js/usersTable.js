@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	$('#UsersTableContainer').jtable({
-		title : 'Users List',
+		title : 'Gestione Utenti ReteTalenti',
 		paging : true, //Enable paging
         pageSize : 10, //Set page size (default: 10)           
         sorting : false, //Enable sorting
@@ -165,7 +165,7 @@ $(document).ready(function() {
         //Initialize validation logic when a form is created
         formCreated: function (event, data) {
         	data.form.find('input[name=userEmail]').css('width','200px');
-            data.form.parent().css('width','400px');
+            data.form.parent().css('width','400px'); 
         	// data.form.parent().css('height','600px');
         	//$(".jtable-input-field-container").slice(0,2).wrapAll("");
         	//$(".jtable-input-field-container").slice(3,8).wrapAll("");

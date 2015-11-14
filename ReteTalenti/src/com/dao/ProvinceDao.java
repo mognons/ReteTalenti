@@ -49,7 +49,7 @@ public class ProvinceDao {
 		try {
 			PreparedStatement pStmt = dbConnection.prepareStatement(query);
 			pStmt.setInt(1, codice);
-			ResultSet rs = pStmt.executeQuery();
+			ResultSet rs = pStmt.executeQuery(query);
 			while (rs.next()) {
 				Provincia.setCod_provincia(rs.getInt("COD_PROVINCIA"));
 				Provincia.setDenominazione(rs.getString("DENOMINAZIONE"));

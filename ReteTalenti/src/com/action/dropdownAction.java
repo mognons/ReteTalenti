@@ -40,6 +40,14 @@ public class dropdownAction extends ActionSupport {
 		return Action.SUCCESS;
 	}
 
+	public String UDM() {
+		options = new ArrayList<JSONObject> ();
+		options = dao.getAllUDM();
+		System.out.println("Inside getAllUDM()");
+		result = "OK";
+		return Action.SUCCESS;
+	}
+
 
 	public String Students() {
 		options = new ArrayList<JSONObject> ();

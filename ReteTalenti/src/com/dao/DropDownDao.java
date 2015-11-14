@@ -58,6 +58,26 @@ public class DropDownDao {
 		}
 		return options;
 	}
+
+	public List<JSONObject> getAllUDM() {
+
+		ArrayList<JSONObject> options = new ArrayList<JSONObject>();
+		String query = "SELECT ID, CODICE, DESCRIZIONE FROM UNI_MISURA";
+		try {
+			Statement stmt = dbConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				JSONObject option = new JSONObject();
+				option.put("Value", rs.getInt("ID"));
+				option.put("DisplayText", rs.getString("CODICE") + " -" + rs.getString("DESCRIZIONE"));
+				options.add(option);
+			}
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return options;
+	}
+	
 	
 	public List<JSONObject> getAllProvince() {
 

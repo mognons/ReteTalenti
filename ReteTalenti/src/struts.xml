@@ -35,7 +35,8 @@
 				<result name="welcome" type="tiles">/welcome.tiles</result>
 				<result name="province" type="tiles">/provincetable.tiles</result>
 				<result name="nazioni" type="tiles">/nazionitable.tiles</result>
-				<result name="uni_misura" type="tiles">/uni_misura.tiles</result>
+				<result name="uni_misura" type="tiles">/uni_misuratable.tiles</result>
+				<result name="eccedenze" type="tiles">/eccedenzetable.tiles</result>
 				<result name="users" type="tiles">/userstable.tiles</result>
 				<result name="enti" type="tiles">/entitable.tiles</result>
 				<result name="filemanager" type="tiles">/fm.tiles</result>
@@ -115,6 +116,11 @@
                 </action>
                                 
                 <action name="*EntiAction" class="com.action.EntiTableAction"
+                        method="{1}">
+                        <result type="json"></result>
+                </action>
+                
+                <action name="*EccedenzeAction" class="com.action.EccedenzeTableAction"
                         method="{1}">
                         <result type="json"></result>
                 </action>

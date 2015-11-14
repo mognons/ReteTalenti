@@ -1,29 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=US-ASCII"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=US-ASCII" pageEncoding="utf-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<script type="text/JavaScript">
-	
-</script>
-
 </head>
-
-
 
 <style>
 .ui-menu {
 	width: 220px;
 }
-a, a:visited, a:hover, a:active {
-  color: inherit;
-}
-.special-link, .special-link:visited, .special-link:hover, .special-link:active {
-  color: inherit;
-}
 </style>
 
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#verticalMenu").menu()
+	});
+</script>
 
 <body>
 	<!-- Builds Auth switches  -->
@@ -62,7 +54,8 @@ a, a:visited, a:hover, a:active {
 			<li>-</li>
 			<li>Gestione Eccedenze
 				<ul>
-					<li class="ui-state-disabled">Segnalazione Eccedenze</li>
+					<li onclick="window.location='eccedenzeLink';">Segnalazione
+						Eccedenze</li>
 					<li class="ui-state-disabled">Prenotazione Ritiri</li>
 				</ul>
 			</li>
@@ -80,10 +73,12 @@ a, a:visited, a:hover, a:active {
 				<li>Sistema
 					<ul>
 						<li onclick="window.location='usersLink';">Gestione Utenti</li>
-						<li onclick="window.location='entiLink';">Tabella Enti</li>	
+						<li onclick="window.location='entiLink';">Tabella Enti</li>
 						<li onclick="window.location='nazioniLink';">Tabella Nazioni</li>
-						<li onclick="window.location='provinceLink';">Tabella Province</li>
-						<li onclick="window.location='uni_misuraLink';">Tabella Unità Misura</li>	
+						<li onclick="window.location='provinceLink';">Tabella
+							Province</li>
+						<li onclick="window.location='uni_misuraLink';">Tabella Unità
+							Misura</li>
 					</ul>
 				</li>
 			</s:if>
@@ -91,10 +86,6 @@ a, a:visited, a:hover, a:active {
 			<li><a href="Logout">Logout</a></li>
 		</ul>
 	</div>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#verticalMenu").menu()
-		});
-	</script>
+
 </body>
 </html>

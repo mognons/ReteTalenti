@@ -69,7 +69,7 @@ public class EntiTableAction extends ActionSupport implements UserAware {
     }
 
     public String update() throws IOException {
-        Ente record = new Ente();
+        record = new Ente();
 
         record.setId(id);
         record.setDescrizione(descrizione);

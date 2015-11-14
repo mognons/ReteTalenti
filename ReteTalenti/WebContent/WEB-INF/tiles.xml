@@ -23,12 +23,17 @@
 		<put-attribute name="body" value="/welcome.action" />
 	</definition>
 	 
+	<definition name="/eccedenzetable.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Gestione Eccedenze" />
+		<put-attribute name="body" value="/eccedenzeTable.jsp" />
+	</definition>
+ 
 	<definition name="/nazionitable.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Lista Tabella Nazioni" />
 		<put-attribute name="body" value="/nazioniTable.jsp" />
 	</definition>
  
-	<definition name="/uni_misura.tiles" extends="baseLayout">
+	<definition name="/uni_misuratable.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Gestione Tabella Unità di Misura" />
 		<put-attribute name="body" value="/uni_misuraTable.jsp" />
 	</definition>

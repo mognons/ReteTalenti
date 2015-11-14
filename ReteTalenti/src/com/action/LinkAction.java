@@ -27,6 +27,10 @@ public class LinkAction extends ActionSupport implements UserAware, ModelDriven<
     	return "uni_misura";
     }
 
+    public String eccedenze() {
+    	return "eccedenze";
+    }
+    
     public String report() {
     	return "report";
     }

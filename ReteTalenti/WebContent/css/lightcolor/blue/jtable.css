@@ -2,6 +2,13 @@
  * Created by Halil İbrahim Kalkan
  * http://www.jtable.org
  */
+ 
+div.row
+{
+float: left;
+width: 970px;
+}
+
 div.jtable-main-container {
   position: relative;
 }
@@ -185,10 +192,10 @@ form.jtable-dialog-form div.jtable-input-field-container {
   padding: 2px 0px 3px 0px;
   border-bottom: 1px solid #ddd;
 }
-form.jtable-dialog-form div.jtable-input-field-container {
+/* form.jtable-dialog-form div.jtable-input-field-container {
         float: left;
         margin-right: 20px;
-}
+} */
 form.jtable-dialog-form div.jtable-input-field-container:last-child {
   border: none;
 }
@@ -523,7 +530,3 @@ div.jtable-busy-message {
   border-color: #2B5177;
   background-color: #78B1ED;
 }
-form.jtable-dialog-form div.jtable-input-field-container {
-        float: left;
-        margin-right: 20px;
-    }
