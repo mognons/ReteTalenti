@@ -80,7 +80,7 @@ public class EccedenzeDao {
 						+ " OFFSET " + jtStartIndex;
 		try {
 			pStmt = dbConnection.prepareStatement(query);
-			pStmt.setInt(1, 2);
+			pStmt.setInt(1, user.getEnte());
 			ResultSet rs = pStmt.executeQuery();
 			while (rs.next()) {
 				Eccedenza eccedenza = new Eccedenza();

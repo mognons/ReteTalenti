@@ -125,6 +125,11 @@
                         <result type="json"></result>
                 </action>
                 
+                <action name="*ImpegniAction" class="com.action.ImpegniTableAction"
+                        method="{1}">
+                        <result type="json"></result>
+                </action>
+                
                 <action name="*NazioniAction" class="com.action.NazioniAction"
                         method="{1}">
                         <result type="json"></result>

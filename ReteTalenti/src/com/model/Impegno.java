@@ -7,9 +7,10 @@ public class Impegno {
 	int id_eccedenza; // this is eccedenza.id
 	int ente_richiedente; // this is ente.id
 	int qta_prenotata;
-	Date data_ritiro;
+	java.sql.Date data_ritiro;
+	String ora_ritiro;
 	boolean ritiro_effettuato;
-	Date timestamp;
+	java.util.Date timestamp;
 	String operatore; // this is user.username
 	public int getId() {
 		return id;
@@ -38,7 +39,7 @@ public class Impegno {
 	public Date getData_ritiro() {
 		return data_ritiro;
 	}
-	public void setData_ritiro(Date data_ritiro) {
+	public void setData_ritiro(java.sql.Date data_ritiro) {
 		this.data_ritiro = data_ritiro;
 	}
 	public boolean isRitiro_effettuato() {
@@ -58,6 +59,12 @@ public class Impegno {
 	}
 	public void setOperatore(String operatore) {
 		this.operatore = operatore;
+	}
+	public String getOra_ritiro() {
+		return ora_ritiro;
+	}
+	public void setOra_ritiro(String ora_ritiro) {
+		this.ora_ritiro = ora_ritiro;
 	}
 	
 	
