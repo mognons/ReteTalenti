@@ -70,6 +70,20 @@ public class ImpegniDao {
 		}
 	}
 
+	public void updateRitiroImpegno(Impegno impegno) {
+		String updateQuery = 	"UPDATE IMPEGNI SET " 
+								+ "RITIRO_EFFETTUATO=? " 
+								+ "WHERE ID=?";
+		try {
+			pStmt = dbConnection.prepareStatement(updateQuery);
+			pStmt.setBoolean(1, impegno.isRitiro_effettuato());
+			pStmt.setInt(2, impegno.getId());
+			pStmt.executeUpdate();
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+	}
+
 	public List<Impegno> getOwnImpegni(int jtStartIndex, int jtPageSize, String jtSorting, User user) {
 		List<Impegno> impegni = new ArrayList<Impegno>();
 		String query = 	"select * from impegni "
@@ -88,6 +102,7 @@ public class ImpegniDao {
 				impegno.setEnte_richiedente(rs.getInt("ENTE_RICHIEDENTE"));
 				impegno.setQta_prenotata(rs.getInt("QTA_PRENOTATA"));
 				impegno.setData_ritiro(rs.getDate("DATA_RITIRO"));
+				impegno.setOra_ritiro(rs.getString("ORA_RITIRO"));
 				impegno.setRitiro_effettuato(rs.getBoolean("RITIRO_EFFETTUATO"));
 				impegni.add(impegno);
 			}
@@ -127,13 +142,11 @@ public class ImpegniDao {
 	public List<Impegno> getAllImpegniByEccedenza(int jtStartIndex, int jtPageSize, String jtSorting, int eccedenza) {
 		List<Impegno> impegni = new ArrayList<Impegno>();
 		System.out.println("getAllImpegnyByEccedenza: " + eccedenza);
-		String query = 	"SELECT * FROM IMPEGNI WHERE ID_ECCEDENZA=?";
-		/*
-						+ "WHERE ID_ECCEDENZA=? "
+		String query = 	"SELECT * FROM IMPEGNI WHERE ID_ECCEDENZA = ? "
 						+ "ORDER BY " + jtSorting
 						+ " LIMIT " + jtPageSize
 						+ " OFFSET " + jtStartIndex;
-						*/
+		System.out.println(query);
 		try {
 			pStmt = dbConnection.prepareStatement(query);
 			pStmt.setInt(1, eccedenza);
@@ -145,6 +158,7 @@ public class ImpegniDao {
 				impegno.setEnte_richiedente(rs.getInt("ENTE_RICHIEDENTE"));
 				impegno.setQta_prenotata(rs.getInt("QTA_PRENOTATA"));
 				impegno.setData_ritiro(rs.getDate("DATA_RITIRO"));
+				impegno.setOra_ritiro(rs.getString("ORA_RITIRO"));
 				impegno.setRitiro_effettuato(rs.getBoolean("RITIRO_EFFETTUATO"));
 				impegni.add(impegno);
 			}

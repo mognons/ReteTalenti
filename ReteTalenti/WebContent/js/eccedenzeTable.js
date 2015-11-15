@@ -2,7 +2,7 @@
     $('#EccedenzeTableContainer').jtable({
         title: 'Gestione Eccedenze',
         paging: true, // Enable paging
-        pageSize: 10, // Set page size (default: 10)
+        pageSize: 15, // Set page size (default: 10)
         sorting: false, // Enable sorting
         selecting: true, // Enable selecting
         multiselect: false, // Allow multiple selecting
@@ -32,43 +32,58 @@
                 display: function (userData) {
                 	if (userData.record.qta == userData.record.qta_residua) {return '<center><b>-</b></center>';}
                     // Create an image that will be used to open child table
-                    var $img = $('<span align="CENTER"><img src="icons/Buy.png" width="16" height="16" title="Ritiri prenotati"/></span>');
+                    var $img = $('<span align="CENTER"><img src="icons/Delivery.png" width="16" height="16" title="Ritiri prenotati"/></span>');
                     // Open child table when user clicks the image
                     $img.click(function () {
                         $('#EccedenzeTableContainer').jtable('openChildTable',$img.closest('tr'),
                         {
                         	title: 'Prenotazioni per il ritiro di ' + userData.record.prodotto,
+                            paging: true, // Enable paging
+                            pageSize: 5, // Set page size (default: 10)
+                            pageSizeChangeArea: false,
                             actions: {
-                                listAction: 'listByEccedenzaImpegniAction?id_eccedenza=' + userData.record.id
+                                listAction: 'listByEccedenzaImpegniAction?id_eccedenza=' + userData.record.id,
+                                updateAction: 'updateRitiroImpegniAction?id_eccedenza=' + userData.record.id
                             },                                    
                             fields: {
                                 id: {
-                                	title: 'Ente',
+                                	title: 'Identificativo',
+                                	key: true,
                                     list: false
                                 },
                                 ente_richiedente: {
                                 	title: 'Ente',
 									options: 'Choose_Enti',
+                                    edit: false,
+                                    input: function (data) {
+                                    	return '<span>' + data.record.qta_prenotata + '</span>';
+                                    }
                                 },
                                 qta_prenotata: {
-                                	title: 'Quantit',
-                                    list: true
+                                	title: 'Quantità',
+                                    list: true,
+									edit: false
                                 },
                                 data_ritiro: {
                                 	title: 'Ritiro previsto',
                 					type: 'date',
                 					displayFormat: 'dd/mm/yy',
-                                    list: true
+                                    list: true,
+                                    edit: true,
+                                    input: function (data) {
+                                    	return '<span>' + data.record.data_ritiro + '</span>';
+                                    }
                                 },
                                 ora_ritiro: {
                                 	title: 'Orario Ritiro',
-                                    list: true
+                                    list: true,
+                                    edit: false
                                 },
                                 ritiro_effettuato: {
                                 	title: 'Ritiro effettuato',
                 					type: 'checkbox',
                 					defaultValue: false,
-                					values:  {false : 'No' ,true : 'S'},
+                					values:  {false : 'No' ,true : 'Sì'},
                                     list: true,
                                     edit: true
                                 }
@@ -111,7 +126,7 @@
                 create: true
             },
             qta: {
-                title: 'Quantit&aacute;',
+                title: 'Quantità',
                 inputTitle: 'Quantità' + ' <span style="color:red">*</span>',
                 inputClass: 'validate[required]',
                 width: '30%',

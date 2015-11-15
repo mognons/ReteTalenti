@@ -69,7 +69,7 @@ public class DropDownDao {
 			while (rs.next()) {
 				JSONObject option = new JSONObject();
 				option.put("Value", rs.getInt("ID"));
-				option.put("DisplayText", rs.getString("CODICE") + " -" + rs.getString("DESCRIZIONE"));
+				option.put("DisplayText", rs.getString("CODICE") + " - " + rs.getString("DESCRIZIONE"));
 				options.add(option);
 			}
 		} catch (SQLException e) {

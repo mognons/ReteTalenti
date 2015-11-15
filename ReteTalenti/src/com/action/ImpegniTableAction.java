@@ -26,7 +26,7 @@ public class ImpegniTableAction extends ActionSupport implements UserAware, Mode
     private String jtSorting;
     //
     private int id, id_eccedenza, ente_richiedente, qta_prenotata, qta_residua;
-    private String prodotto, operatore;
+    private String prodotto, operatore, ora_ritiro;
     private java.sql.Date scadenza, data_ritiro;
     private java.util.Date timestamp;
     private boolean ritiro_effettuato;
@@ -90,6 +90,7 @@ public class ImpegniTableAction extends ActionSupport implements UserAware, Mode
 
     public String update() throws IOException {
         record = new Impegno();
+        record.setId(id);
         record.setId_eccedenza(id_eccedenza);
         record.setEnte_richiedente(ente_richiedente);
         record.setQta_prenotata(qta_prenotata);
@@ -98,6 +99,27 @@ public class ImpegniTableAction extends ActionSupport implements UserAware, Mode
         try {
             // Update existing record
             dao.updateImpegno(record);
+            result = "OK";
+        } catch (Exception e) {
+            result = "ERROR";
+            message = e.getMessage();
+            System.err.println(e.getMessage());
+        }
+        return SUCCESS;
+    }
+
+    public String updateRitiro() throws IOException {
+        record = new Impegno();
+        record.setId(id);
+        record.setId_eccedenza(id_eccedenza);
+        record.setEnte_richiedente(ente_richiedente);
+        record.setQta_prenotata(qta_prenotata);
+        record.setOra_ritiro(ora_ritiro);
+        record.setData_ritiro(data_ritiro);
+        record.setRitiro_effettuato(ritiro_effettuato);
+        try {
+            // Update existing record
+            dao.updateRitiroImpegno(record);
             result = "OK";
         } catch (Exception e) {
             result = "ERROR";
@@ -312,6 +334,14 @@ public class ImpegniTableAction extends ActionSupport implements UserAware, Mode
 
 	public Impegno getRecord() {
 		return record;
+	}
+
+	public String getOra_ritiro() {
+		return ora_ritiro;
+	}
+
+	public void setOra_ritiro(String ora_ritiro) {
+		this.ora_ritiro = ora_ritiro;
 	}
 
 }
