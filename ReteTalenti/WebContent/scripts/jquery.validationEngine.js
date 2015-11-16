@@ -1203,18 +1203,18 @@
 			var p=rules[i + 1];
 			var fieldAlt = $(form.find("*[name='" + p.replace(/^#+/, '') + "']"));
 			var pdate;
-
+			/* MOGNONI Changed to deal with dates in EURO format */
 			if (p.toLowerCase() == "now") {
 				pdate = new Date();
 			} else if (undefined != fieldAlt.val()) {
 				if (fieldAlt.is(":disabled"))
 					return;
-				pdate = methods._parseDate(fieldAlt.val());
+				pdate = methods._parseEuroDate(fieldAlt.val());
 			} else {
-				pdate = methods._parseDate(p);
+				pdate = methods._parseEuroDate(p);
 			}
-			var vdate = methods._parseDate(field.val());
-
+			var vdate = methods._parseEuroDate(field.val());
+			/* MOGNONI End of Changes */
 			if (vdate > pdate ) {
 				var rule = options.allrules.past;
 				if (rule.alertText2) return rule.alertText + methods._dateToString(pdate) + rule.alertText2;
@@ -1237,17 +1237,18 @@
 			var fieldAlt = $(form.find("*[name='" + p.replace(/^#+/, '') + "']"));
 			var pdate;
 
+			/* MOGNONI changed parseData to parseEuroDate to use dd/mm/yyyy or dd-mm-yyyy format */
 			if (p.toLowerCase() == "now") {
 				pdate = new Date();
 			} else if (undefined != fieldAlt.val()) {
 				if (fieldAlt.is(":disabled"))
 					return;
-				pdate = methods._parseDate(fieldAlt.val());
+				pdate = methods._parseEuroDate(fieldAlt.val());
 			} else {
-				pdate = methods._parseDate(p);
+				pdate = methods._parseEuroDate(p);
 			}
-			var vdate = methods._parseDate(field.val());
-
+			var vdate = methods._parseEuroDate(field.val());
+			/* MOGNONI End of changes */
 			if (vdate < pdate ) {
 				var rule = options.allrules.future;
 				if (rule.alertText2)
@@ -1569,6 +1570,20 @@
 			return new Date(dateParts[0], (dateParts[1] - 1) ,dateParts[2]);
 		},
 		/**
+		* Parses an EURO date
+		* @param {String} d
+		*/
+		_parseEuroDate: function(d) {
+
+			var dateParts = d.split("-");
+			if(dateParts==d)
+				dateParts = d.split("/");
+			if(dateParts==d) {
+				dateParts = d.split(".");
+				return new Date(dateParts[2], (dateParts[1] - 1), dateParts[0]);
+			}
+			return new Date(dateParts[2], (dateParts[1] - 1) ,dateParts[0]);
+		},		/**
 		* Builds or updates a prompt with the given information
 		*
 		* @param {jqObject} field

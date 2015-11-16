@@ -5,7 +5,7 @@ import java.util.Map;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.model.User;
-import com.dao.*;
+import com.dao.UsersDao;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
  
@@ -13,14 +13,14 @@ public class LoginAction extends ActionSupport implements SessionAware, ModelDri
  
     private static final long serialVersionUID = -3369875299120377549L;
     private String errorMsg;
-    private CrudDao dao = new CrudDao();
+    private UsersDao dao = new UsersDao();
     private String cognome;
     private int openTab = 0;
  
     @Override
     public String execute() throws Exception {
         if (dao.verifyLogin(user.getUsername(), user.getPassword())) {
-            user = dao.getUser(user.getUsername());
+            user = dao.getUserData(user.getUsername());
             sessionAttributes.put("USER", user);
             errorMsg="";
             return SUCCESS;

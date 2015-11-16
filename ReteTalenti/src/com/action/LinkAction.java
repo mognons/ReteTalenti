@@ -31,6 +31,10 @@ public class LinkAction extends ActionSupport implements UserAware, ModelDriven<
     	return "eccedenze";
     }
     
+    public String impegni() {
+    	return "impegni";
+    }
+    
     public String report() {
     	return "report";
     }

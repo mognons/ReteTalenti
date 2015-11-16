@@ -210,18 +210,18 @@ public class UsersDao {
 		return users;
 	}
 
-	public User getUser(String username) {
+	public User getUserData(String username) {
 		User user = new User();
 		List<Groups> groups = new ArrayList<Groups>();
 		System.out.println("Inside getUser with " + username);
 		String newQuery = "SELECT U.ID, U.USERNAME, U.USERFIRSTNAME, U.USERLASTNAME, " + 
-						  "U.USEREMAIL, U.USERPHONE, U.ENTE, E.DESCRIZIONE, G.GROUPID, G.GROUPNAME " + 
-						  "FROM USERS U ,USERGROUP UG , GROUPS G, ENTI E " +
+						  "U.USEREMAIL, U.USERPHONE, U.ENTE, E.DESCRIZIONE, P.COD_PROVINCIA, G.GROUPID, G.GROUPNAME " + 
+						  "FROM USERS U ,USERGROUP UG , GROUPS G, ENTI E, PROVINCE P " +
 						  "WHERE U.USERNAME=? AND " +
 					 	  "U.ID = UG.USERID AND "+
 					 	  "U.ENTE = E.ID AND "+
+					 	  "E.PROVINCIA_ENTE = P.COD_PROVINCIA AND " +
 						  "G.GROUPID = UG.GROUPID";
-		
 		try {
 			pStmt = dbConnection.prepareStatement(newQuery);
 			pStmt.setString(1, username);
@@ -235,9 +235,10 @@ public class UsersDao {
 				user.setUserPhone(rs.getString(6));
 				user.setEnte(rs.getInt(7));
 				user.setDescrizioneEnte(rs.getString(8));
+				user.setProvinciaEnte(rs.getInt(9));
 				Groups myGroup = new Groups();
-				myGroup.setGroupId(rs.getInt(9));
-				myGroup.setGroupName(rs.getString(10));
+				myGroup.setGroupId(rs.getInt(10));
+				myGroup.setGroupName(rs.getString(11));
 				groups.add(myGroup);
 			}
 			user.setGroups(groups);

@@ -33,14 +33,16 @@ public class ImpegniDao {
 	public int createImpegno(Impegno impegno) {
 		int autoIncKeyFromFunc = -1;
 		String insertQuery = 	"INSERT INTO IMPEGNI "
-								+ "(ID_ECCEDENZA, QTA_PRENOTATA, DATA_RITIRO, RITIRO_EFFETTUATO, TIMESTAMP, OPERATORE) " 
-								+ "VALUES (?,?,?,0,NOW(),?)";
+								+ "(ID_ECCEDENZA, ENTE_RICHIEDENTE, QTA_PRENOTATA, DATA_RITIRO, ORA_RITIRO, RITIRO_EFFETTUATO, TIMESTAMP, OPERATORE) " 
+								+ "VALUES (?,?,?,?,?,0,NOW(),?)";
 		try {
 			pStmt = dbConnection.prepareStatement(insertQuery);
-			pStmt.setInt(1, impegno.getEnte_richiedente());
-			pStmt.setInt(2, impegno.getQta_prenotata());
-			pStmt.setTimestamp(3, (Timestamp) impegno.getData_ritiro());
-			pStmt.setString(4, impegno.getOperatore());
+			pStmt.setInt(1, impegno.getId_eccedenza());
+			pStmt.setInt(2, impegno.getEnte_richiedente());
+			pStmt.setInt(3, impegno.getQta_prenotata());
+			pStmt.setDate(4, impegno.getData_ritiro());
+			pStmt.setString(5, impegno.getOra_ritiro());
+			pStmt.setString(6, impegno.getOperatore());
 			pStmt.executeUpdate();
 			stmt = dbConnection.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT LAST_INSERT_ID()");
@@ -62,7 +64,7 @@ public class ImpegniDao {
 		try {
 			pStmt = dbConnection.prepareStatement(updateQuery);
 			pStmt.setInt(1, impegno.getQta_prenotata());
-			pStmt.setTimestamp(2, (Timestamp) impegno.getData_ritiro());
+			pStmt.setDate(2, impegno.getData_ritiro());
 			pStmt.setInt(3, impegno.getId());
 			pStmt.executeUpdate();
 		} catch (SQLException e) {
@@ -94,6 +96,36 @@ public class ImpegniDao {
 		try {
 			pStmt = dbConnection.prepareStatement(query);
 			pStmt.setInt(1, user.getEnte());
+			ResultSet rs = pStmt.executeQuery();
+			while (rs.next()) {
+				Impegno impegno = new Impegno();
+
+				impegno.setId(rs.getInt("ID"));
+				impegno.setEnte_richiedente(rs.getInt("ENTE_RICHIEDENTE"));
+				impegno.setQta_prenotata(rs.getInt("QTA_PRENOTATA"));
+				impegno.setData_ritiro(rs.getDate("DATA_RITIRO"));
+				impegno.setOra_ritiro(rs.getString("ORA_RITIRO"));
+				impegno.setRitiro_effettuato(rs.getBoolean("RITIRO_EFFETTUATO"));
+				impegni.add(impegno);
+			}
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return impegni;
+	}
+
+	public List<Impegno> getOwnImpegniByEccedenza(int jtStartIndex, int jtPageSize, String jtSorting, User user, int id_eccedenza) {
+		List<Impegno> impegni = new ArrayList<Impegno>();
+		String query = 	"select * from impegni "
+						+ "WHERE ENTE_RICHIEDENTE=? "
+						+ "AND ID_ECCEDENZA=? "
+						+ "ORDER BY " + jtSorting
+						+ " LIMIT " + jtPageSize
+						+ " OFFSET " + jtStartIndex;
+		try {
+			pStmt = dbConnection.prepareStatement(query);
+			pStmt.setInt(1, user.getEnte());
+			pStmt.setInt(2, id_eccedenza);
 			ResultSet rs = pStmt.executeQuery();
 			while (rs.next()) {
 				Impegno impegno = new Impegno();
@@ -194,6 +226,26 @@ public class ImpegniDao {
 		try {
 			pStmt = dbConnection.prepareStatement(query);
 			pStmt.setInt(1, user.getEnte());
+			ResultSet rs = pStmt.executeQuery();
+			while (rs.next()) {
+				totalRecord = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return totalRecord;
+	}
+
+	public int getCountOwnImpegniByEccedenza(User user, int id_eccedenza) {
+		int totalRecord = 0;
+
+		String query = 	"SELECT COUNT(*) FROM IMPEGNI " 
+						+ "WHERE ENTE_RICHIEDENTE=? "
+						+ "AND ID_ECCEDENZA=?";
+		try {
+			pStmt = dbConnection.prepareStatement(query);
+			pStmt.setInt(1, user.getEnte());
+			pStmt.setInt(2, id_eccedenza);
 			ResultSet rs = pStmt.executeQuery();
 			while (rs.next()) {
 				totalRecord = rs.getInt(1);

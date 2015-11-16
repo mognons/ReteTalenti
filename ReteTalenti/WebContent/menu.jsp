@@ -56,7 +56,7 @@
 				<ul>
 					<li onclick="window.location='eccedenzeLink';">Segnalazione
 						Eccedenze</li>
-					<li class="ui-state-disabled">Prenotazione Ritiri</li>
+					<li onclick="window.location='impegniLink';">Prenotazione Ritiri</li>
 				</ul>
 			</li>
 			<li>-</li>

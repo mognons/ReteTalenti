@@ -118,6 +118,67 @@ public class EccedenzeDao {
 		return totalRecord;
 	}
 
+	public List<Eccedenza> getAvailableEccedenze(int jtStartIndex, int jtPageSize, String jtSorting, User user) {
+		List<Eccedenza> eccedenze = new ArrayList<Eccedenza>();
+		String query = 	"SELECT * FROM ("
+						+ "SELECT ECC.*, (QTA-COALESCE(IMP.QTA_PRENOTATA,0))  QTA_RESIDUA FROM ECCEDENZE ECC " 
+						+ "LEFT JOIN (SELECT ID_ECCEDENZA, SUM(QTA_PRENOTATA) AS QTA_PRENOTATA FROM IMPEGNI "
+						+ "GROUP BY ID_ECCEDENZA ) IMP ON ECC.ID=IMP.ID_ECCEDENZA "
+						+ "INNER JOIN ENTI E ON E.ID=ECC.ENTE_CEDENTE "
+						+ "WHERE ENTE_CEDENTE<>? "
+						+ "AND PROVINCIA_ENTE=? "
+						+ "AND SCADENZA>=NOW() ) ECCE "
+						+ "WHERE QTA_RESIDUA <>0 "
+						+ "ORDER BY " + jtSorting
+						+ " LIMIT " + jtPageSize
+						+ " OFFSET " + jtStartIndex;
+		try {
+			pStmt = dbConnection.prepareStatement(query);
+			pStmt.setInt(1, user.getEnte());
+			pStmt.setInt(2, user.getProvinciaEnte());
+			ResultSet rs = pStmt.executeQuery();
+			while (rs.next()) {
+				Eccedenza eccedenza = new Eccedenza();
+
+				eccedenza.setId(rs.getInt("ID"));
+				eccedenza.setEnte_cedente(rs.getInt("ENTE_CEDENTE"));
+				eccedenza.setProdotto(rs.getString("PRODOTTO"));
+				eccedenza.setUdm(rs.getInt("UDM"));
+				eccedenza.setQta(rs.getInt("QTA"));
+				eccedenza.setScadenza(rs.getDate("SCADENZA"));
+				eccedenza.setQta_residua(rs.getInt("QTA_RESIDUA"));
+				eccedenze.add(eccedenza);
+			}
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return eccedenze;
+	}
+
+	public int getCountAvailableEccedenze(User user) {
+		int totalRecord = 0;
+
+		String query = 	"SELECT * FROM ("
+						+ "SELECT ECC.*, (QTA-COALESCE(IMP.QTA_PRENOTATA,0))  QTA_RESIDUA FROM ECCEDENZE ECC " 
+						+ "LEFT JOIN (SELECT ID_ECCEDENZA, SUM(QTA_PRENOTATA) AS QTA_PRENOTATA FROM IMPEGNI "
+						+ "GROUP BY ID_ECCEDENZA ) IMP ON ECC.ID=IMP.ID_ECCEDENZA "
+						+ "WHERE ENTE_CEDENTE<>? "
+						+ "AND SCADENZA>=NOW() "
+						+ ") ECCE "
+						+ "WHERE QTA_RESIDUA <>0 ";
+		try {
+			pStmt = dbConnection.prepareStatement(query);
+			pStmt.setInt(1, user.getEnte());
+			ResultSet rs = pStmt.executeQuery();
+			while (rs.next()) {
+				totalRecord = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return totalRecord;
+	}
+
 	public void deleteEccedenza(Eccedenza eccedenza) {
 
 		String deleteQuery = "DELETE FROM ECCEDENZE WHERE ID=?";

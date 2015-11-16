@@ -27,6 +27,11 @@
 		<put-attribute name="title" value="Gestione Eccedenze" />
 		<put-attribute name="body" value="/eccedenzeTable.jsp" />
 	</definition>
+	 
+	<definition name="/impegnitable.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Prenotazione ritiri" />
+		<put-attribute name="body" value="/impegniTable.jsp" />
+	</definition>
  
 	<definition name="/nazionitable.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Lista Tabella Nazioni" />

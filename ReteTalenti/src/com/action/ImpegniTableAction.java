@@ -33,8 +33,6 @@ public class ImpegniTableAction extends ActionSupport implements UserAware, Mode
     private User user = new User();
 
     public String listByEccedenza() {
-    	System.out.println("Eccedenza: " + id_eccedenza);
-    	System.out.println("Data Scadenza: " + scadenza);
     	jtSorting = "DATA_RITIRO ASC";
         try {
             // Fetch Data from Enti Table
@@ -66,14 +64,31 @@ public class ImpegniTableAction extends ActionSupport implements UserAware, Mode
         return SUCCESS;
     }
 
+    public String listOwnByEccedenza() {
+    	jtSorting = "DATA_RITIRO DESC";
+        try {
+            // Fetch Data from Enti Table
+            records = dao.getOwnImpegniByEccedenza(jtStartIndex, jtPageSize, jtSorting, user, id_eccedenza);
+            result = "OK";
+            totalRecordCount = dao.getCountOwnImpegniByEccedenza(user, id_eccedenza);
+
+        } catch (Exception e) {
+            result = "ERROR";
+            message = e.getMessage();
+            System.err.println(e.getMessage());
+        }
+        return SUCCESS;
+    }
+
 
     public String create() throws IOException {
         record = new Impegno();
         record.setId_eccedenza(id_eccedenza);
-        record.setEnte_richiedente(ente_richiedente);
+        record.setEnte_richiedente(user.getEnte());
         record.setQta_prenotata(qta_prenotata);
         record.setRitiro_effettuato(false);
         record.setData_ritiro(data_ritiro);
+        record.setOra_ritiro(ora_ritiro);
         record.setOperatore(user.getUsername());
             try {
                 System.out.println("Creating impegno for eccedenza id: " + id_eccedenza);
@@ -300,7 +315,7 @@ public class ImpegniTableAction extends ActionSupport implements UserAware, Mode
 		this.qta_prenotata = qta_prenotata;
 	}
 
-	public java.util.Date getData_ritiro() {
+	public java.sql.Date getData_ritiro() {
 		return data_ritiro;
 	}
 

@@ -45,13 +45,14 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
         return SUCCESS;
     }
 
-    public String listOthers() {
+    public String listAvailable() {
     	jtSorting = "PRODOTTO ASC";
         try {
             // Fetch Data from Enti Table
-            records = dao.getOwnEccedenze(jtStartIndex, jtPageSize, jtSorting, user);
+            records = dao.getAvailableEccedenze(jtStartIndex, jtPageSize, jtSorting, user);
+            System.out.println(user.getProvinciaEnte());
             result = "OK";
-            totalRecordCount = dao.getCountOwnEccedenze(user);
+            totalRecordCount = dao.getCountAvailableEccedenze(user);
 
         } catch (Exception e) {
             result = "ERROR";
@@ -61,13 +62,13 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
         return SUCCESS;
     }
 
-
     public String create() throws IOException {
         record = new Eccedenza();
         record.setEnte_cedente(user.getEnte());
         record.setProdotto(prodotto);
         record.setUdm(udm);
         record.setQta(qta);
+        record.setQta_residua(qta);
         record.setScadenza(scadenza);
         record.setOperatore(user.getUsername());
             try {
@@ -91,6 +92,7 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
         record.setProdotto(prodotto);
         record.setUdm(udm);
         record.setQta(qta);
+        record.setQta_residua(qta);
         record.setScadenza(scadenza);
         System.out.println("Updating eccedenza for " + prodotto);
 

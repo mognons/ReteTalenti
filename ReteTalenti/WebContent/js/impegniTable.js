@@ -1,6 +1,35 @@
 ﻿$(document).ready(function () {
-    $('#EccedenzeTableContainer').jtable({
-        title: 'Gestione Segnalazione Eccedenze',
+	function ISOtoEuro(d) {
+		d = d.substring(0,10);
+		var dateParts = d.split("-");
+		if(dateParts==d)
+			dateParts = d.split("/");
+		if(dateParts==d)
+			dateParts = d.split(".");
+		return (dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0]);
+	};
+	function heute() {
+		var today = new Date(); 
+		var dd = today.getDate(); 
+		var mm = today.getMonth()+1;//January is 0! 
+		var yyyy = today.getFullYear(); 
+		if(dd<10){dd='0'+dd}; 
+		if(mm<10){mm='0'+mm};
+		//return (yyyy+"/"+mm+"/"+dd);	
+		return (dd+"/"+mm+"/"+yyyy);
+	};
+	function tomorrow() {
+		var today = new Date((new Date()).valueOf() + 1000*3600*24);
+		var dd = today.getDate(); 
+		var mm = today.getMonth()+1;//January is 0! 
+		var yyyy = today.getFullYear(); 
+		if(dd<10){dd='0'+dd}; 
+		if(mm<10){mm='0'+mm};
+		//return (yyyy+"/"+mm+"/"+dd);	
+		return (dd+"/"+mm+"/"+yyyy);
+	};
+    $('#ImpegniTableContainer').jtable({
+        title: 'Gestione Prenotazione Eccedenze',
         paging: true, // Enable paging
         pageSize: 15, // Set page size (default: 10)
         sorting: false, // Enable sorting
@@ -12,10 +41,7 @@
         pageSizeChangeArea: false,
         openChildAsAccordion: true,
         actions: {
-            listAction: 'listOwnEccedenzeAction',
-            createAction: 'createEccedenzeAction',
-            updateAction: 'updateEccedenzeAction',
-            deleteAction: 'deleteEccedenzeAction'
+            listAction: 'listAvailableEccedenzeAction'
         },
         fields: {
             id: {
@@ -29,15 +55,14 @@
                 sorting: false,
                 edit: false,
                 create: false,
-                display: function (userData) {
-                	if (userData.record.qta == userData.record.qta_residua) {return '<center><b>-</b></center>';}
+                display: function (eccedenzaData) {
                     // Create an image that will be used to open child table
                     var $img = $('<span align="CENTER"><img src="icons/Delivery.png" width="16" height="16" title="Ritiri prenotati"/></span>');
                     // Open child table when user clicks the image
                     $img.click(function () {
-                        $('#EccedenzeTableContainer').jtable('openChildTable',$img.closest('tr'),
+                        $('#ImpegniTableContainer').jtable('openChildTable',$img.closest('tr'),
                         {
-                        	title: 'Prenotazioni per il ritiro di ' + userData.record.prodotto,
+                        	title: 'Prenotazioni per il ritiro di <i>' + eccedenzaData.record.prodotto+'</i>',
                             paging: true, // Enable paging
                             pageSize: 5, // Set page size (default: 10)
                             pageSizeChangeArea: false,
@@ -46,41 +71,10 @@
 							multiselect: false, 
 							selectingCheckboxes: true, 
 							selectOnRowClick: true,
-							toolbar: {
-								items: [
-								{
-									icon: 'icons/Delivery.png',
-									text: 'RITIRO EFFETTUATO',
-									click: function () {
-										return $.Deferred(function ($dfd) {
-											var $selectedRows = $('#EccedenzeTableContainer>.jtable-main-container>.jtable>tbody>.jtable-child-row .jtable-row-selected');
-											$selectedRows.each(function () {
-												var record = $(this).data('record');
-												console.log(record);
-												$.ajax({
-													url: 'updateRitiroImpegniAction', 
-													type: 'POST',
-													dataType: 'json',
-													data: {
-														record: record,
-														id: record.id,
-														ritiro_effettuato: true
-													},
-													success: function (data) {
-														$dfd.resolve(data);
-														$('.jtable-child-table-container').jtable('reload');
-													},
-													error: function () {
-														$dfd.reject();
-													}
-												});
-											}
-											);
-										})}
-								}
-								]},
                             actions: {
-                                listAction: 'listByEccedenzaImpegniAction?id_eccedenza=' + userData.record.id
+                                listAction: 'listOwnByEccedenzaImpegniAction?id_eccedenza=' + eccedenzaData.record.id,
+                                createAction: 'createImpegniAction?id_eccedenza=' + eccedenzaData.record.id,
+                                updateAction: 'listOwnImpegniAction?id_eccedenza=' + eccedenzaData.record.id
                             },                                    
                             fields: {
                                 id: {
@@ -89,29 +83,41 @@
                                     list: false
                                 },
                                 ente_richiedente: {
-                                	title: 'Ente Richiedente',
+                                	title: 'Ente',
 									options: 'Choose_Enti',
-                                    edit: false
-                                },
+									type: 'hidden',
+									edit: false,
+									create: false
+                                }                                	,
                                 qta_prenotata: {
                                 	title: 'Quantità',
+                                	inputTitle: 'Quantità' + ' <span style="color:red">*</span>',
                                     list: true,
-									edit: false
+									edit: true,
+									create: true,
+									defaultValue: eccedenzaData.record.qta_residua,
+                					inputClass: 'validate[required,min[1],max['
+                								+eccedenzaData.record.qta_residua +']'
+                                },
+                                data_scadenza: {
+                                	type: 'hidden',
+                                	defaultValue: ISOtoEuro(eccedenzaData.record.scadenza)
                                 },
                                 data_ritiro: {
                                 	title: 'Ritiro previsto',
+                                	inputTitle: 'Ritiro previsto' + ' <span style="color:red">*</span>',
                 					type: 'date',
                 					displayFormat: 'dd/mm/yy',
+                					inputClass: 'validate[required,future[now],past[data_scadenza]]',
+									defaultValue: tomorrow(),
                                     list: true,
-                                    edit: true,
-                                    input: function (data) {
-                                    	return '<span>' + data.record.data_ritiro + '</span>';
-                                    }
+                                    edit: true
                                 },
                                 ora_ritiro: {
                                 	title: 'Orario Ritiro',
-                                    list: true,
-                                    edit: false
+                                	inputTitle: 'Orario Ritiro'  + ' <span style="color:red">*</span>',
+                   					inputClass: 'validate[required,custom[timeh24]]',
+                                    list: true
                                 },
                                 ritiro_effettuato: {
                                 	title: 'Ritiro effettuato',
@@ -119,8 +125,31 @@
                 					defaultValue: false,
                 					values:  {false : 'No' ,true : 'Sì'},
                                     list: true,
-                                    edit: true
+                                    edit: false,
+                                    create: false
                                 }
+                            },
+                            recordsLoaded: function(event, data) {
+                            	  var rowCount = data.records.length;
+                            	  if (rowCount>=1){
+                            	     $('#ImpegniTableContainer').find('.jtable-toolbar-item.jtable-toolbar-item-add-record').remove();
+                            	  }
+                            },
+                            // Initialize validation logic when a form is created
+                            formCreated: function (event, data) {
+                                data.form.validationEngine();
+                                data.form.parent().css('width', '300px');
+
+                            },
+                            // Validate form when it is being submitted
+                            formSubmitting: function (event, data) {
+                                return data.form.validationEngine('validate');
+                            },
+                            // Dispose validation logic when form is closed
+                            formClosed: function (event, data) {
+                                data.form.validationEngine('hide');
+                                data.form.validationEngine('detach');
+                          	  	$('#ImpegniTableContainer').jtable('reload');
                             }
                         },
                         function (data) { // opened handler
@@ -137,19 +166,19 @@
             },
             ente_cedente: {
                 title: 'Ente Cedente',
-                width: '0%',
-                list: false,
+                width: '15%',
+                options: 'Choose_Enti',
+                width: '15%',
+                list: true,
                 edit: false,
                 create: false
             },
             prodotto: {
                 title: 'Prodotto',
-                width: '55%',
+                width: '45%',
                 inputTitle: 'Prodotto' + ' <span style="color:red">*</span>',
                 inputClass: 'validate[required]',
-                list: true,
-                edit: true,
-                create: true
+                list: true
             },
             udm: {
                 title: 'UDM',
@@ -162,31 +191,22 @@
             },
             qta: {
                 title: 'Quantità',
-                inputTitle: 'Quantità' + ' <span style="color:red">*</span>',
-                inputClass: 'validate[required]',
-                width: '10%',
+                width: '5%',
                 list: true,
                 edit: true,
                 create: true
             },
             qta_residua: {
-                title: 'Quantità Disp.',
-                inputTitle: 'Quantità Disponibile' + ' <span style="color:red">*</span>',
-                inputClass: 'validate[required]',
-                width: '10%',
-                list: true,
-                edit: false,
-                create: false
+                title: 'Disponibile',
+                width: '5%',
+                list: true
             },
             scadenza: {
                 title: 'Scadenza',
-                inputTitle: 'Scadenza' + ' <span style="color:red">*</span>',
                 type: 'date',
 				displayFormat: 'dd/mm/yy',
                 inputClass: 'validate[required]',
-                width: '10%',
-                edit: true,
-                create: true
+                width: '10%'
             }
         },
         rowInserted: function(event, data){
@@ -215,5 +235,5 @@
             data.form.validationEngine('detach');
         }
     });
-    $('#EccedenzeTableContainer').jtable('load');
+    $('#ImpegniTableContainer').jtable('load');
 });

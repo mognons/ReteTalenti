@@ -119,7 +119,7 @@
 
                         return (date.getFullYear() == year && date.getMonth() == (month - 1) && date.getDate() == day);
                     },
-                    "alertText": "* Data non corretta, è richeisto il formato AAAA-MM-GG"
+                    "alertText": "* Data non corretta, è richiesto il formato AAAA-MM-GG"
                 },
                 "ipv4": {
                     "regex": /^((([01]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))[.]){3}(([0-1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))$/,
@@ -195,6 +195,10 @@
                     "alertText2": "Formato richiesto: ",
                     "alertText3": "mm/gg/aaaa oo:mm:ss AM|PM oppure ",
                     "alertText4": "aaaa-mm-gg oo:mm:ss AM|PM"
+                },
+                "timeh24": {
+                    "regex": /^([01][0-9]|2[0-3]|[1-9]):([0-5][0-9]|[0-9])$/,
+                    "alertText": "* Formato richiesto: hh:mm"
                 }
             };
 

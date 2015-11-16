@@ -36,7 +36,7 @@ public class Impegno {
 	public void setQta_prenotata(int qta_prenotata) {
 		this.qta_prenotata = qta_prenotata;
 	}
-	public Date getData_ritiro() {
+	public java.sql.Date getData_ritiro() {
 		return data_ritiro;
 	}
 	public void setData_ritiro(java.sql.Date data_ritiro) {

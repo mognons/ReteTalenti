@@ -13,6 +13,7 @@ public class User {
 	private String userPhone;
 	private int ente;
 	private String descrizioneEnte;
+	private int provinciaEnte;
 	private List<Groups> groups;
         
 	public String getPassword() {
@@ -84,5 +85,13 @@ public class User {
 
 	public void setDescrizioneEnte(String descrizioneEnte) {
 		this.descrizioneEnte = descrizioneEnte;
+	}
+
+	public int getProvinciaEnte() {
+		return provinciaEnte;
+	}
+
+	public void setProvinciaEnte(int provinciaEnte) {
+		this.provinciaEnte = provinciaEnte;
 	}
 }
