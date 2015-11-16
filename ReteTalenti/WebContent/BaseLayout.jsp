@@ -14,8 +14,9 @@
 
 <!-- jQuery script file. -->
 <script src="scripts/jquery.js" type="text/javascript"></script>
-<script src="scripts/jquery-ui.min.js" type="text/javascript"></script>
-
+<script src="scripts/jquery-ui.js" type="text/javascript"></script>
+<meta charset="UTF-8">
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 </head>
