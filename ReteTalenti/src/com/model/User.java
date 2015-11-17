@@ -14,7 +14,7 @@ public class User {
 	private int ente;
 	private String descrizioneEnte;
 	private int provinciaEnte;
-	private List<Groups> groups;
+	private int groupId;
         
 	public String getPassword() {
 		return password;
@@ -55,14 +55,6 @@ public class User {
 		this.userEmail = userEmail;
 	}
 
-	public List<Groups> getGroups() {
-		return groups;
-	}
-
-	public void setGroups(List<Groups> groups) {
-		this.groups = groups;
-	}
-
 	public String getUserPhone() {
 		return userPhone;
 	}
@@ -93,5 +85,13 @@ public class User {
 
 	public void setProvinciaEnte(int provinciaEnte) {
 		this.provinciaEnte = provinciaEnte;
+	}
+
+	public int getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
 	}
 }

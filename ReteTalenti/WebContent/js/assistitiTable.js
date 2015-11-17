@@ -4,7 +4,8 @@
         paging: true, // Enable paging
         pageSize: 15, // Set page size (default: 10)
         sorting: false, // Enable sorting
-        selecting: true, // Enable selecting
+        defaultSorting : 'COD_FISCALE ASC', //Set default sorting
+        selecting: false, // Enable selecting
         multiselect: false, // Allow multiple selecting
         selectingCheckboxes: true, // Show checkboxes on first column
         selectOnRowClick: false, // Enable this to only select using
@@ -42,19 +43,20 @@
 							selectingCheckboxes: true, 
 							selectOnRowClick: true,
                             actions: {
-                                listAction: 'listNucleiFamiliariAction?cf_assistito_nf=' + userData.record.codice_fiscale,
-                                createAction: 'createNucleiFamiliariAction?cf_assistito_nf=' + userData.record.codice_fiscale,
-                                updateAction: 'updateNucleiFamiliariAction?cf_assistito_nf=' + userData.record.codice_fiscale,
-                                deleteAction: 'deleteNucleiFamiliariAction?cf_assistito_nf=' + userData.record.codice_fiscale
+                                listAction: 'listNucleiFamiliariAction?cf_assistito_nf=' + userData.record.cod_fiscale,
+                                createAction: 'createNucleiFamiliariAction?cf_assistito_nf=' + userData.record.cod_fiscale,
+                                updateAction: 'updateNucleiFamiliariAction?cf_assistito_nf=' + userData.record.cod_fiscale,
+                                deleteAction: 'deleteNucleiFamiliariAction?cf_assistito_nf=' + userData.record.cod_fiscale
                             },                                    
                             fields: {
                                 codice_fiscale: {
                                 	title: 'Codice Fiscale',
                                 	key: true,
                                     inputTitle: 'Codice Fiscale' + ' <span style="color:red">*</span>',
-                                    inputClass: 'validate[required]',
+                                    inputClass: 'validate[required,funcCall[checkCF]]',
                                     width: '10%',
-                                    list: true
+                                    list: true,
+                                    create: true
                                 },
                                 nome: {
                                     key: true,
@@ -62,7 +64,9 @@
                                     inputTitle: 'Nome' + ' <span style="color:red">*</span>',
                                     inputClass: 'validate[required]',
                                     width: '10%',
-                                    list: true
+                                    list: true,
+                                    edit: true,
+                                    create: true
                                 },
                                 cognome: {
                                     key: true,
@@ -70,7 +74,9 @@
                                     inputTitle: 'Cognome' + ' <span style="color:red">*</span>',
                                     inputClass: 'validate[required]',
                                     width: '20%',
-                                    list: true
+                                    list: true,
+                                    edit: true,
+                                    create: true
                                 },
                                 data_nascita: {
                                 	title: 'Data Nascita',
@@ -85,8 +91,24 @@
                                 	options: { 	'C': 'Coniuge',
                                 				'F': 'Figlio/a', 
                                 				'N': 'Convinvente' },
-                                    list: true
+                                    list: true,
+                                    edit: true,
+                                    create: true
                                 }
+                            },        
+                            formCreated: function (event, data) {
+                                data.form.validationEngine('attach',{promptPosition : "bottomLeft", scroll: false});
+                                data.form.find('input[name=nome]').css('width', '200px');
+                                data.form.find('input[name=cognome]').css('width', '200px');
+                            },
+                            // Validate form when it is being submitted
+                            formSubmitting: function (event, data) {
+                                return data.form.validationEngine('validate');
+                            },
+                            // Dispose validation logic when form is closed
+                            formClosed: function (event, data) {
+                                data.form.validationEngine('hide');
+                                data.form.validationEngine('detach');
                             }
                         },
                         function (data) { // opened handler
@@ -108,10 +130,10 @@
                 key: true,
                 title: 'Codice Fiscale',
                 inputTitle: 'Codice Fiscale' + ' <span style="color:red">*</span>',
-                inputClass: 'validate[required]',
+                inputClass: 'validate[required],funcCall[checkCF]',
                 width: '10%',
                 list: true,
-                edit: true,
+                edit: false,
                 create: true
             },
             nome: {
@@ -215,7 +237,7 @@
             permesso_soggiorno: {
             	title: 'Permesso Soggiorno',
 				type: 'checkbox',
-				defaultValue: ' ',
+				defaultValue: 'N',
 				values:  {'N' : 'No' ,'S' : 'Sì'},
                 list: true,
                 edit: true
@@ -254,28 +276,15 @@
         },
         // Initialize validation logic when a form is created
         formCreated: function (event, data) {
-            $(".jtable-input-field-container").slice(0,1).wrapAll('<div class="col1"/>');
-            $(".jtable-input-field-container").slice(1,2).wrapAll('<div class="col2"/>');
-            $(".jtable-input-field-container").slice(2,3).wrapAll('<div class="col1"/>');
-            $(".jtable-input-field-container").slice(3,4).wrapAll('<div class="col2"/>');
-            $(".jtable-input-field-container").slice(4,5).wrapAll('<div class="col1"/>');
-            $(".jtable-input-field-container").slice(5,6).wrapAll('<div class="col2"/>');
-            $(".jtable-input-field-container").slice(6,7).wrapAll('<div class="col1"/>');
-            $(".jtable-input-field-container").slice(7,8).wrapAll('<div class="col2"/>');
-            $(".jtable-input-field-container").slice(8,9).wrapAll('<div class="col1"/>');
-            $(".jtable-input-field-container").slice(9,10).wrapAll('<div class="col2"/>');
-            $(".jtable-input-field-container").slice(10,11).wrapAll('<div class="col1"/>');
-            $(".jtable-input-field-container").slice(11,12).wrapAll('<div class="col2"/>');
-            $(".jtable-input-field-container").slice(12,13).wrapAll('<div class="col1"/>');
-            $(".jtable-input-field-container").slice(13,14).wrapAll('<div class="col2"/>');
-            $(".jtable-input-field-container").slice(14,15).wrapAll('<div class="col1"/>');
-            $(".jtable-input-field-container").slice(15,16).wrapAll('<div class="col2"/>');
-            $(".jtable-input-field-container").slice(16,17).wrapAll('<div class="col1"/>');
-            $(".jtable-input-field-container").slice(17,18).wrapAll('<div class="col2"/>');
-            data.form.find('input[name=nome]').css('width', '300px');
-            //data.form.find('input[name=dummy]').css('width', '0px');
-            data.form.find('input[name=cognome]').css('width', '300px');
-            data.form.validationEngine();
+            data.form.find('input[name=nome]').css('width', '200px');
+            data.form.find('input[name=cognome]').css('width', '200px');
+            data.form.find('input[name=citta_residenza]').css('width', '200px');
+            data.form.find('input[name=num_documento]').css('width', '200px');
+            data.form.find('input[name=email]').css('width', '200px');
+            data.form.find('select[name=nazionalita]').css('width', '150px');
+            data.form.children(':lt(8)').wrapAll('<div class="col1"/>');
+            data.form.children(':gt(0)').wrapAll('<div class="col2"/>');
+            data.form.validationEngine('attach',{promptPosition : "bottomLeft", scroll: false});
         },
         // Validate form when it is being submitted
         formSubmitting: function (event, data) {
@@ -291,7 +300,7 @@
     $('#LoadRecordsButton').click(function (e) {
         e.preventDefault();
         $('#AssistitiTableContainer').jtable('load', {
-            codice_fiscale: $('#codice_fiscale').val(),
+            cf_search: $('#cf_search').val(),
             cognome_search: $('#cognome_search').val()
         });
     });

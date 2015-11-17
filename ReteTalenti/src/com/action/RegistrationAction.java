@@ -4,7 +4,7 @@ import java.util.Map;
 import javax.mail.internet.*;
 import org.apache.struts2.interceptor.SessionAware;
 
-import com.dao.CrudDao;
+import com.dao.UsersDao;
 import com.model.User;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
@@ -15,7 +15,7 @@ public class RegistrationAction extends ActionSupport implements SessionAware,
 
 	private static final long serialVersionUID = -3394545299120377549L;
 	private String errorMsg;
-	private CrudDao dao = new CrudDao();
+	private UsersDao dao = new UsersDao();
 	private int openTab = 1;
 
 	public void validate() {

@@ -31,6 +31,10 @@
             	<result>/header.jsp</result>
         	</action>
         	
+        	<action name="showCFDetails" class="com.action.ShowCFDetailsAction">
+            	<result>/showCFDetails.jsp</result>
+        	</action>
+        	
  			<action name="*Link" class="com.action.LinkAction" method="{1}">
 				<result name="welcome" type="tiles">/welcome.tiles</result>
 				<result name="province" type="tiles">/provincetable.tiles</result>

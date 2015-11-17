@@ -60,53 +60,6 @@ $(document).ready(function() {
             }]
         },
 		fields : {
-            //CHILD TABLE DEFINITION FOR "GROUPS"
-            Groups: {
-                title: '',
-                width: '1%',
-                sorting: false,
-                edit: false,
-                create: false,
-                display: function (userData) {
-                    //Create an image that will be used to open child table
-                    var $img = $('<img align="center" src="icons/myspace.png" width="24" height="24" title="Gruppi di appartenenza" />');
-                    //Open child table when user clicks the image
-                    $img.click(function () {
-                        $('#UsersTableContainer').jtable('openChildTable',
-                                $img.closest('tr'),
-                                {
-                                    title: 'Sottoscrizione gruppi per ' + userData.record.username,
-                                    actions: {
-                                        listAction: 'listGroups?id=' + userData.record.id,
-                                        deleteAction: 'deleteGroups?id=' + userData.record.id,
-                                        createAction: 'createGroups?id=' + userData.record.id
-                                    },
-                                    fields: {
-                                        groupId: {
-                                        	title: 'Gruppo Utenti',
-                                            key: true,
-                                            create: true,
-                                            edit: false,
-                                            list: true,
-                                            options: 'Choose_Gruppi'
-//                                            type: 'hidden',
-//                                            defaultValue: userData.record.id
-                                        },
-                                        groupName: {
-                                            key: false,
-                                            create: false,
-                                            edit: false,
-                                            list: false
-                                        }
-                                    }
-                                }, function (data) { //opened handler
-                                    data.childTable.jtable('load');
-                                });
-                    });
-                    //Return image to show on the person row
-                    return $img;
-                }
-            },
 			username : {
 				key: true,
 				title : 'Username',
@@ -119,7 +72,6 @@ $(document).ready(function() {
 			password : {
 				title : 'Password',
 				inputTitle : 'Password ' + '<span style="color:red">*</span>',
-				width : '0%',
 				inputClass: 'validate[required]',
 				list: false,
 				edit : false,
@@ -150,7 +102,7 @@ $(document).ready(function() {
 				title : 'Telefono',
 				inputTitle : 'Numero di Telefono ' + '<span style="color:red">*</span>',
 				inputClass: 'validate[required]',
-				width : '15%',
+				width : '7%',
 				edit : true
 			},
 			ente : {
@@ -159,7 +111,15 @@ $(document).ready(function() {
 				width : '20%',
 				edit : true,
 				options: 'Choose_Enti'
-			}
+			},
+			groupId: {
+            	title: 'Gruppo Utenti',
+				width : '23%',
+                create: true,
+                edit: true,
+                list: true,
+                options: 'Choose_Gruppi'
+            },
 		},
         //Initialize validation logic when a form is created
         formCreated: function (event, data) {

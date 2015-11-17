@@ -14,11 +14,8 @@
 <body>
 	<div class="site-container">
 		<div class="main-header" style="position: relative">
-			<h1>
-				<a href="./welcome.action">Main<span class="light">Menu</span></a>
-			</h1>
 			<h2>
-				Welcome,  <s:property value="output"></s:property>  
+				Errore,  <%= request.getParameter("errorMessage") %> 
 			</h2>
 		</div>
 	</div>

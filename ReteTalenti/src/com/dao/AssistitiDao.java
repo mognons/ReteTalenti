@@ -95,27 +95,26 @@ public class AssistitiDao {
 	}
 	
 	public List<Assistito> getAllAssistiti(int jtStartIndex, int jtPageSize, String jtSorting, User user) {
+		if (jtSorting==null)
+			jtSorting = "COD_FISCALE ASC";
 		
 		List<Assistito> assistiti = new ArrayList<Assistito>();
 		String whereCondition1 = "AND 1=1 ";
-		List<Groups> gruppiUtente = new ArrayList<Groups>();
-		gruppiUtente = user.getGroups();
-		Iterator<Groups> it = gruppiUtente.iterator();
-		while (it.hasNext()) {
-			// INSERT EVENTS
-			Groups gruppo = it.next();
-			int groupId = gruppo.getGroupId();
-			if (groupId==3) 
-				whereCondition1 = "AND ENTE_ASSISTENTE=" + user.getEnte() + " ";
-		}
-		System.out.println(whereCondition1);
-		
-		String query = 	"SELECT * FROM assistiti " 
+		String whereCondition2 = "AND 1=1 ";
+		if (user.getGroupId()==3) 
+			whereCondition1 = "AND ENTE_ASSISTENTE=" + user.getEnte() + " ";
+		else if (user.getGroupId()==2) 
+			whereCondition2 = "AND PROVINCIA_ENTE=" + user.getProvinciaEnte() + " ";
+
+		String query = 	"SELECT * FROM ASSISTITI A "
+						+ "LEFT JOIN ENTI E ON A.ENTE_ASSISTENTE=E.ID "
 						+ "WHERE 1=1 "
-						+ whereCondition1
+						+ whereCondition1 + " "
+						+ whereCondition2 + " "
 						+ "ORDER BY " + jtSorting + " "
 						+ "LIMIT " + Integer.toString(jtPageSize) + " OFFSET "
 						+ Integer.toString(jtStartIndex);
+		 
 		try {
 			pStmt = dbConnection.prepareStatement(query);
 			//pStmt.setInt(1, user.getEnte());
@@ -157,12 +156,22 @@ public class AssistitiDao {
 	
 	public int getCountAssistiti(User user) {
 		int totalRecord = 0;
-
-		String query = 	"SELECT COUNT(*) FROM ASSISTITI " 
-						+ "WHERE NOME=?";
+		String whereCondition1 = "AND 1=1 ";
+		String whereCondition2 = "AND 1=1 ";
+		if (user.getGroupId()==3) 
+			whereCondition1 = "AND ENTE_ASSISTENTE=" + user.getEnte() + " ";
+		else if (user.getGroupId()==2) 
+			whereCondition2 = "AND PROVINCIA_ENTE=" + user.getProvinciaEnte() + " ";
+		System.out.println(whereCondition1);
+		System.out.println(whereCondition2);
+		
+		String query = 	"SELECT COUNT(*) FROM ASSISTITI A "
+						+ "LEFT JOIN ENTI E ON A.ENTE_ASSISTENTE=E.ID "
+						+ "WHERE 1=1 "
+						+ whereCondition1 + " "
+						+ whereCondition2;
 		try {
 			pStmt = dbConnection.prepareStatement(query);
-			pStmt.setInt(1, user.getEnte());
 			ResultSet rs = pStmt.executeQuery();
 			while (rs.next()) {
 				totalRecord = rs.getInt(1);

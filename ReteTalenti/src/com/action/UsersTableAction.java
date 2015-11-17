@@ -27,7 +27,7 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 	private int totalRecordCount,jtStartIndex,jtPageSize;
 	private String jtSorting;
 	//
-	private int id, ente;
+	private int id, ente, groupId;
 	private String userFirstname, userLastname, userEmail, username, userPhone, password;
 
 	public String list() {
@@ -55,6 +55,7 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 		record.setUsername(username);
 		record.setUserPhone(userPhone);
 		record.setEnte(ente);
+		record.setGroupId(groupId);
 		if (dao.verifyUsername(username)) {
 			try {
 				System.out.println("Creating "+username);
@@ -83,6 +84,7 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 		record.setUserEmail(userEmail);
 		record.setUserPhone(userPhone);
 		record.setEnte(ente);
+		record.setGroupId(groupId);
 		System.out.println("Updating "+username);
 
 		try {
@@ -275,6 +277,14 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public int getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
 	}
 
 }

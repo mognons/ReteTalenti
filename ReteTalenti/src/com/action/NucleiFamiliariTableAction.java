@@ -1,277 +1,152 @@
 package com.action;
 
 import java.io.IOException;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
-import com.dao.EccedenzeDao;
+import com.dao.NucleiFamiliariDao;
 import com.interceptor.UserAware;
-import com.model.Eccedenza;
+import com.model.NucleoFamiliare;
 import com.model.User;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
 public class NucleiFamiliariTableAction extends ActionSupport implements UserAware, ModelDriven<User> {
 
-    private static final long serialVersionUID = 1L;
-    private EccedenzeDao dao = new EccedenzeDao();
-    private List<Eccedenza> records;
-    private String result;
+	private static final long serialVersionUID = 1L;
+	private NucleiFamiliariDao dao = new NucleiFamiliariDao();
+	private List<NucleoFamiliare> records;
+	private String result;
 
-    private String message;
-    private Eccedenza record;
-    private int totalRecordCount, jtStartIndex, jtPageSize;
-    private String jtSorting;
-    //
-    private int id, ente_cedente, udm, qta, qta_residua;
-    private String prodotto, operatore;
-    private java.sql.Date scadenza;
-    private java.util.Date timestamp;
-    private User user = new User();
+	private String message;
+	private NucleoFamiliare record;
+	private int totalRecordCount, jtStartIndex, jtPageSize;
+	private String jtSorting;
+	//
+	private String codice_fiscale, cf_assistito_nf, nome, cognome, sesso, tipo_parentela;
+	private Date data_nascita;
+	private User user = new User();
 
-    public String list() {
-    	jtSorting = "PRODOTTO ASC";
-        try {
-            // Fetch Data from Enti Table
-            records = dao.getOwnEccedenze(jtStartIndex, jtPageSize, jtSorting, user);
-            result = "OK";
-            totalRecordCount = dao.getCountOwnEccedenze(user);
+	public String list() {
+		jtSorting = "COGNOME ASC";
+		System.out.println("cf_assistito " + cf_assistito_nf);
+		try {
+			records = dao.getAllConviventi(jtStartIndex, jtPageSize, jtSorting, cf_assistito_nf);
+			result = "OK";
+			totalRecordCount = dao.getCountConviventi(cf_assistito_nf);
 
-        } catch (Exception e) {
-            result = "ERROR";
-            message = e.getMessage();
-            System.err.println(e.getMessage());
-        }
-        return SUCCESS;
-    }
+		} catch (Exception e) {
+			result = ERROR;
+			message = e.getMessage();
+			System.err.println(e.getMessage());
+		}
+		return SUCCESS;
+	}
 
-    public String create() throws IOException {
-        record = new Eccedenza();
-        record.setEnte_cedente(user.getEnte());
-        record.setProdotto(prodotto);
-        record.setUdm(udm);
-        record.setQta(qta);
-        record.setQta_residua(qta);
-        record.setScadenza(scadenza);
-        record.setOperatore(user.getUsername());
-            try {
-                System.out.println("Creating eccedenza for " + prodotto);
-                record.setId(dao.createEccedenza(record));
-                result = "OK";
-            } catch (Exception e) {
-                message = e.getMessage();
-				System.err.println("Porcaccia EVA");
-                System.err.println(e.getMessage());
-                result = "ERROR";
-            }
-        return SUCCESS;
-    }
+	public String create() throws IOException {
+		record = new NucleoFamiliare();
+		record.setCodice_fiscale(codice_fiscale);
+		record.setNome(nome);
+		record.setCognome(cognome);
+		record.setData_nascita(data_nascita);
+		record.setSesso(sesso);
+		record.setTipo_parentela(tipo_parentela);
+		record.setCf_assistito_nf(cf_assistito_nf);
 
-    public String update() throws IOException {
-        record = new Eccedenza();
+		try {
+			dao.createConvivente(record);
+			result = "OK";
+		} catch (Exception e) {
+			message = e.getMessage();
+			System.err.println(e.getMessage());
+			result = "ERROR";
+		}
+		return SUCCESS;
+	}
 
-        record.setId(id);
-        record.setEnte_cedente(ente_cedente);
-        record.setProdotto(prodotto);
-        record.setUdm(udm);
-        record.setQta(qta);
-        record.setQta_residua(qta);
-        record.setScadenza(scadenza);
-        System.out.println("Updating eccedenza for " + prodotto);
+	public String update() throws IOException {
+		record = new NucleoFamiliare();
+		record.setCodice_fiscale(codice_fiscale);
+		record.setNome(nome);
+		record.setCognome(cognome);
+		record.setData_nascita(data_nascita);
+		record.setSesso(sesso);
+		record.setTipo_parentela(tipo_parentela);
+		record.setCf_assistito_nf(cf_assistito_nf);
+		try {
+			// Update existing record
+			dao.updateConvivente(record);
+			result = "OK";
+		} catch (Exception e) {
+			result = "ERROR";
+			message = e.getMessage();
+			System.err.println(e.getMessage());
+		}
+		return SUCCESS;
+	}
 
-        try {
-            // Update existing record
-            dao.updateEccedenza(record);
-            result = "OK";
-        } catch (Exception e) {
-            result = "ERROR";
-            message = e.getMessage();
-            System.err.println(e.getMessage());
-        }
-        return SUCCESS;
-    }
+	public String delete() throws IOException {
+		record = new NucleoFamiliare();
+		record.setCodice_fiscale(cf_assistito_nf);
+		try {
+			dao.deleteConvivente(record);
+			result = "OK";
+		} catch (Exception e) {
+			result = "ERROR";
+			message = e.getMessage();
+			System.err.println(e.getMessage());
+		}
+		result = "OK";
+		return SUCCESS;
+	}
 
-    public String delete() throws IOException {
-        System.out.println("Deleting eccedenza " + id);
-        record = new Eccedenza();
-        record.setId(id);
-        try {
-            dao.deleteEccedenza(record);
-            result = "OK";
-        } catch (Exception e) {
-            result = "ERROR";
-            message = e.getMessage();
-            System.err.println(e.getMessage());
-        }
-        result = "OK";
-        return SUCCESS;
-    }
-
-    
 	@Override
 	public void setUser(User user) {
-		// TODO Auto-generated method stub
 		this.user = user;
 	}
-
-
-	public List<Eccedenza> getRecords() {
-		return records;
-	}
-
-
-	public void setRecords(List<Eccedenza> records) {
-		this.records = records;
-	}
-
 
 	public String getResult() {
 		return result;
 	}
 
-
 	public void setResult(String result) {
 		this.result = result;
 	}
-
 
 	public String getMessage() {
 		return message;
 	}
 
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-
-	public Eccedenza getRecord() {
-		return record;
-	}
-
-
-	public void setRecord(Eccedenza record) {
-		this.record = record;
-	}
-
-
 	public int getTotalRecordCount() {
 		return totalRecordCount;
 	}
-
 
 	public void setTotalRecordCount(int totalRecordCount) {
 		this.totalRecordCount = totalRecordCount;
 	}
 
-
 	public int getJtStartIndex() {
 		return jtStartIndex;
 	}
-
 
 	public void setJtStartIndex(int jtStartIndex) {
 		this.jtStartIndex = jtStartIndex;
 	}
 
-
 	public int getJtPageSize() {
 		return jtPageSize;
 	}
-
 
 	public void setJtPageSize(int jtPageSize) {
 		this.jtPageSize = jtPageSize;
 	}
 
-
 	public String getJtSorting() {
 		return jtSorting;
 	}
 
-
 	public void setJtSorting(String jtSorting) {
 		this.jtSorting = jtSorting;
-	}
-
-
-	public int getId() {
-		return id;
-	}
-
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-
-	public int getEnte_cedente() {
-		return ente_cedente;
-	}
-
-
-	public void setEnte_cedente(int ente_cedente) {
-		this.ente_cedente = ente_cedente;
-	}
-
-
-	public int getUdm() {
-		return udm;
-	}
-
-
-	public void setUdm(int udm) {
-		this.udm = udm;
-	}
-
-
-	public int getQta() {
-		return qta;
-	}
-
-
-	public void setQta(int qta) {
-		this.qta = qta;
-	}
-
-
-	public String getProdotto() {
-		return prodotto;
-	}
-
-
-	public void setProdotto(String prodotto) {
-		this.prodotto = prodotto;
-	}
-
-
-	public Date getScadenza() {
-		return scadenza;
-	}
-
-
-	public void setScadenza(java.sql.Date scadenza) {
-		this.scadenza = scadenza;
-	}
-
-
-	public String getOperatore() {
-		return operatore;
-	}
-
-
-	public void setOperatore(String operatore) {
-		this.operatore = operatore;
-	}
-
-
-	public Date getTimestamp() {
-		return timestamp;
-	}
-
-
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
 	}
 
 	@Override
@@ -280,12 +155,84 @@ public class NucleiFamiliariTableAction extends ActionSupport implements UserAwa
 		return null;
 	}
 
-	public int getQta_residua() {
-		return qta_residua;
+	public List<NucleoFamiliare> getRecords() {
+		return records;
 	}
 
-	public void setQta_residua(int qta_residua) {
-		this.qta_residua = qta_residua;
+	public void setRecords(List<NucleoFamiliare> records) {
+		this.records = records;
+	}
+
+	public NucleoFamiliare getRecord() {
+		return record;
+	}
+
+	public void setRecord(NucleoFamiliare record) {
+		this.record = record;
+	}
+
+	public String getCodice_fiscale() {
+		return codice_fiscale;
+	}
+
+	public void setCodice_fiscale(String codice_fiscale) {
+		this.codice_fiscale = codice_fiscale;
+	}
+
+	public String getCf_assistito_nf() {
+		return cf_assistito_nf;
+	}
+
+	public void setCf_assistito_nf(String cf_assistito_nf) {
+		this.cf_assistito_nf = cf_assistito_nf;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getCognome() {
+		return cognome;
+	}
+
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
+	}
+
+	public String getSesso() {
+		return sesso;
+	}
+
+	public void setSesso(String sesso) {
+		this.sesso = sesso;
+	}
+
+	public String getTipo_parentela() {
+		return tipo_parentela;
+	}
+
+	public void setTipo_parentela(String tipo_parentela) {
+		this.tipo_parentela = tipo_parentela;
+	}
+
+	public java.sql.Date getData_nascita() {
+		return data_nascita;
+	}
+
+	public void setData_nascita(java.sql.Date data_nascita) {
+		this.data_nascita = data_nascita;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 }

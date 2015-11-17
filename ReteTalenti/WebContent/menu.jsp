@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=US-ASCII" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=US-ASCII"
+	pageEncoding="utf-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -19,26 +20,25 @@
 
 <body>
 	<!-- Builds Auth switches  -->
-	<s:iterator value="groups">
-		<s:if test="%{groupId == 1}">
-			<s:set var="isAdmin" value="%{'true'}" />
-		</s:if>
-		<s:elseif test="%{groupId == 2}">
-			<s:set var="isAdminEnte" value="%{'true'}" />
-		</s:elseif>
-		<s:elseif test="%{groupId == 3}">
-			<s:set var="isUser" value="%{'true'}" />
-		</s:elseif>
-		<s:elseif test="%{groupId == 4}">
-			<s:set var="isRegione" value="%{'true'}" />
-		</s:elseif>
-	</s:iterator>
+	<s:if test="%{groupId == 1}">
+		<s:set var="isAdmin" value="%{'true'}" />
+	</s:if>
+	<s:elseif test="%{groupId == 2}">
+		<s:set var="isAdminEnte" value="%{'true'}" />
+	</s:elseif>
+	<s:elseif test="%{groupId == 3}">
+		<s:set var="isUser" value="%{'true'}" />
+	</s:elseif>
+	<s:elseif test="%{groupId == 4}">
+		<s:set var="isRegione" value="%{'true'}" />
+	</s:elseif>
 
 	<div style="position: relative; left: 0px; top: 0px; z-index: 10">
 		<ul id="verticalMenu">
 			<li>Gestione Assistiti
 				<ul>
-					<li onclick="window.location='assistitiLink';">Anagrafica Assistiti</li>
+					<li onclick="window.location='assistitiLink';">Anagrafica
+						Assistiti</li>
 					<li class="ui-state-disabled">Altro...</li>
 				</ul>
 			</li>
@@ -56,7 +56,8 @@
 				<ul>
 					<li onclick="window.location='eccedenzeLink';">Segnalazione
 						Eccedenze</li>
-					<li onclick="window.location='impegniLink';">Prenotazione Ritiri</li>
+					<li onclick="window.location='impegniLink';">Prenotazione
+						Ritiri</li>
 				</ul>
 			</li>
 			<li>-</li>

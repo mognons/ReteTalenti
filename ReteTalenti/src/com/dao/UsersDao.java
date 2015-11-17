@@ -28,8 +28,8 @@ public class UsersDao {
 
 	public void createUser(User user) {
 		String insertUserQuery =  "INSERT INTO USERS (ID, USERNAME, "
-								+ "USERFIRSTNAME, USERLASTNAME, USEREMAIL, PASSWORD, USERPHONE, ENTE) VALUES (?,?,?,?,?,?,?,?)";
-		String inserUserGroupQuery = "INSERT INTO USERGROUP (USERID, GROUPID) VALUES (?, 3)";
+								+ "USERFIRSTNAME, USERLASTNAME, USEREMAIL, PASSWORD, USERPHONE, ENTE, GROUPID) "
+								+ "VALUES (?,?,?,?,?,?,?,?,?)";
 		if (verifyUsername(user.getUsername())) {
 			try {
 				int nextUserId = getNextUserID();
@@ -42,9 +42,7 @@ public class UsersDao {
 				pStmt.setString(6, enc.crypt(user.getPassword()));
 				pStmt.setString(7, user.getUserPhone());
 				pStmt.setInt(8, user.getEnte());
-				pStmt.executeUpdate();
-				pStmt = dbConnection.prepareStatement(inserUserGroupQuery);
-				pStmt.setInt(1, nextUserId);
+				pStmt.setInt(9, user.getGroupId());
 				pStmt.executeUpdate();
 			} catch (SQLException e) {
 				System.err.println(e.getMessage());
@@ -58,8 +56,8 @@ public class UsersDao {
 	public void updateUserFull(User user) {
 		String updateQuery = 
 				"UPDATE USERS SET  "
-				+ "PASSWORD=?, USERFIRSTNAME=?, USERLASTNAME=?, USEREMAIL=?, USERPHONE=?, ENTE=?"
-				+ " WHERE USERNAME=?";
+				+ "PASSWORD=?, USERFIRSTNAME=?, USERLASTNAME=?, USEREMAIL=?, USERPHONE=?, ENTE=?, GROUPID=? "
+				+ "WHERE USERNAME=?";
 		try {
 			pStmt = dbConnection.prepareStatement(updateQuery);
 			pStmt.setString(1, enc.crypt(user.getPassword()));
@@ -69,6 +67,7 @@ public class UsersDao {
 			pStmt.setString(5, user.getUserPhone());
 			pStmt.setInt(6, user.getEnte());
 			pStmt.setString(7, user.getUsername());
+			pStmt.setInt(8, user.getGroupId());
 			pStmt.executeUpdate();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
@@ -78,7 +77,7 @@ public class UsersDao {
 	public void updateUser(User user) {
 		String updateQuery = 
 				"UPDATE USERS SET"
-				+ " USERFIRSTNAME=?, USERLASTNAME=?, USEREMAIL=?, USERPHONE=?, ENTE=?"
+				+ " USERFIRSTNAME=?, USERLASTNAME=?, USEREMAIL=?, USERPHONE=?, ENTE=?, GROUPID=? "
 				+ " WHERE USERNAME=?";
 		try {
 			pStmt = dbConnection.prepareStatement(updateQuery);
@@ -88,6 +87,7 @@ public class UsersDao {
 			pStmt.setString(4, user.getUserPhone());
 			pStmt.setInt(5, user.getEnte());
 			pStmt.setString(6, user.getUsername());
+			pStmt.setInt(7, user.getGroupId());
 			pStmt.executeUpdate();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
@@ -149,9 +149,8 @@ public class UsersDao {
 		if (username.isEmpty() || password.isEmpty()) {
 			throw new Exception("No valid credential given");
 		} else {
-			String countQuery = "SELECT ID FROM USERS U, USERGROUP UG " +
-								"WHERE U.ID = UG.USERID " + // Added to enforce user must belong to group(s) in order to login
-								"AND USERNAME=? AND PASSWORD=?";
+			String countQuery = "SELECT ID FROM USERS " +
+								"WHERE USERNAME=? AND PASSWORD=?";
 			try {
 				pStmt = dbConnection.prepareStatement(countQuery);
 				pStmt.setString(1, username);
@@ -202,6 +201,7 @@ public class UsersDao {
 				user.setUserEmail(rs.getString("USEREMAIL"));
 				user.setUserPhone(rs.getString("USERPHONE"));
 				user.setEnte(rs.getInt("ENTE"));
+				user.setGroupId(rs.getInt("GROUPID"));
 				users.add(user);
 			}
 		} catch (SQLException e) {
@@ -212,16 +212,13 @@ public class UsersDao {
 
 	public User getUserData(String username) {
 		User user = new User();
-		List<Groups> groups = new ArrayList<Groups>();
 		System.out.println("Inside getUser with " + username);
 		String newQuery = "SELECT U.ID, U.USERNAME, U.USERFIRSTNAME, U.USERLASTNAME, " + 
-						  "U.USEREMAIL, U.USERPHONE, U.ENTE, E.DESCRIZIONE, P.COD_PROVINCIA, G.GROUPID, G.GROUPNAME " + 
-						  "FROM USERS U ,USERGROUP UG , GROUPS G, ENTI E, PROVINCE P " +
+						  "U.USEREMAIL, U.USERPHONE, U.ENTE, E.DESCRIZIONE, P.COD_PROVINCIA, U.GROUPID " + 
+						  "FROM USERS U, ENTI E, PROVINCE P " +
 						  "WHERE U.USERNAME=? AND " +
-					 	  "U.ID = UG.USERID AND "+
 					 	  "U.ENTE = E.ID AND "+
-					 	  "E.PROVINCIA_ENTE = P.COD_PROVINCIA AND " +
-						  "G.GROUPID = UG.GROUPID";
+					 	  "E.PROVINCIA_ENTE = P.COD_PROVINCIA";
 		try {
 			pStmt = dbConnection.prepareStatement(newQuery);
 			pStmt.setString(1, username);
@@ -236,12 +233,8 @@ public class UsersDao {
 				user.setEnte(rs.getInt(7));
 				user.setDescrizioneEnte(rs.getString(8));
 				user.setProvinciaEnte(rs.getInt(9));
-				Groups myGroup = new Groups();
-				myGroup.setGroupId(rs.getInt(10));
-				myGroup.setGroupName(rs.getString(11));
-				groups.add(myGroup);
+				user.setGroupId(rs.getInt(10));
 			}
-			user.setGroups(groups);
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}

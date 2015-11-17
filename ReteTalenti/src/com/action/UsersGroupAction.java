@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.*;
 
 import com.dao.CrudDao;
+import com.dao.UsersDao;
 import com.model.*;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
@@ -12,7 +13,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class UsersGroupAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	
-	private CrudDao dao = new CrudDao();
+	private UsersDao dao = new UsersDao();
 
 	private List<Groups> records;
 	private String result;

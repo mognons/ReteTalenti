@@ -30,7 +30,6 @@ public class WelcomeAction extends ActionSupport implements UserAware, ModelDriv
     @Override
     public String execute() {
     	setTodayEvents(new ArrayList<CalendarDTO>());
-    	setUserGroups(user.getGroups());
     	DateTime dt = new DateTime();
     	DateTimeFormatter fmt = ISODateTimeFormat.date();
     	String today = fmt.print(dt);

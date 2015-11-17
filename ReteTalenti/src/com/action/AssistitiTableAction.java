@@ -37,6 +37,9 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
 //
 
     private static final long serialVersionUID = 1L;
+    private String cf_search, cognome_search;
+    private String origin, errorMsg;
+    Boolean status;
     private String cod_fiscale;
     private String nome;
     private String cognome;
@@ -75,6 +78,7 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
     public String list() {
         try {
             // Fetch Data from Assistiti Table
+        	System.out.println("cf_search: " + cf_search + " cognome_search: " +cognome_search);
             records = dao.getAllAssistiti(jtStartIndex, jtPageSize, jtSorting, user);
             result = "OK";
             totalRecordCount = dao.getCountAssistiti(user);
@@ -87,7 +91,7 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
         return SUCCESS;
     }
     
-    public String searchAssistiti(String cod_fiscale, String cognome_search) {
+    public String searchAssistiti(String cf_search, String cognome_search) {
         try {
             // Fetch Data from Assistiti Table
             //records = dao.getAssistitiSearch(cod_fiscale, cognome_search);
@@ -102,7 +106,14 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
         return SUCCESS;
         
     }
-
+    
+    public String checkCFIsUnique() {
+    	errorMsg = "Mi sa che non funziona nemmeno un poco...";
+    	origin = "MASTER";
+    	status = false;
+    	return SUCCESS;
+    }
+    
     public String create() throws IOException {
         
         // ***************** formattazione date... all'occorrenza **********************
@@ -514,7 +525,6 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
 
     @Override
     public void setUser(User user) {
-        // TODO Auto-generated method stub
     	this.user = user;
     }
 
@@ -524,8 +534,47 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
 
 	@Override
 	public User getModel() {
-		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public String getErrorMsg() {
+		return errorMsg;
+	}
+
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
+	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+
+	public String getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
+
+	public String getCf_search() {
+		return cf_search;
+	}
+
+	public void setCf_search(String cf_search) {
+		this.cf_search = cf_search;
+	}
+
+	public String getCognome_search() {
+		return cognome_search;
+	}
+
+	public void setCognome_search(String cognome_search) {
+		this.cognome_search = cognome_search;
 	}
 
 }
