@@ -114,10 +114,6 @@
                 edit: true,
                 create: true
             },
-            dummy: {
-            	title: '',
-            	edit: 'true',
-            },
             nome: {
                 title: 'Nome',
                 inputTitle: 'Nome' + ' <span style="color:red">*</span>',
