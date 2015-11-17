@@ -109,7 +109,7 @@ ul {
   padding: 0px 10px;
 }
 ul > li {
-  background: url('images/Home/bullet.png') no-repeat 0px 1px transparent;
+/*   background: url('images/Home/bullet.png') no-repeat 0px 1px transparent; */
   margin: 2px 0px;
   padding: 0px 0px 0px 22px;
 }
@@ -119,7 +119,7 @@ ul > li ul {
   padding: 1px 0px;
 }
 ul > li ul li {
-  background: url('images/Home/bullet.png') no-repeat 0px 1px transparent;
+/*   background: url('images/Home/bullet.png') no-repeat 0px 1px transparent; */
   margin: 2px;
   padding: 0px 0px 0px 22px;
 }

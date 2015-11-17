@@ -98,59 +98,18 @@ public class DropDownDao {
 		return options;
 	}
 	
-
-	/* STUDENTS DROPDOWN */
-	public List<JSONObject> getAllStudents() {
-
-		ArrayList<JSONObject> options = new ArrayList<JSONObject>();
-		String query = "SELECT STUDENTID, NAME, DEPARTMENT FROM STUDENT ORDER BY NAME, DEPARTMENT";
-		try {
-			Statement stmt = dbConnection.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-			while (rs.next()) {
-				JSONObject option = new JSONObject();
-				option.put("Value", rs.getInt("STUDENTID"));
-				option.put("DisplayText", rs.getString("NAME")+" ("+rs.getString("DEPARTMENT") + ")");
-				options.add(option);
-			}
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-		}
-		return options;
-	}
 	
-	/* COURSES DROPDOWN */
-	public List<JSONObject> getAllCourses() {
+	public List<JSONObject> getAllNazioni() {
 
 		ArrayList<JSONObject> options = new ArrayList<JSONObject>();
-		String query = "SELECT COURSEID, NAME FROM COURSES ORDER BY NAME";
+		String query = "SELECT CODICE, DENOMINAZIONE FROM NAZIONI ORDER BY DENOMINAZIONE ";
 		try {
 			Statement stmt = dbConnection.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
 				JSONObject option = new JSONObject();
-				option.put("Value", rs.getInt("COURSEID"));
-				option.put("DisplayText", rs.getString("NAME"));
-				options.add(option);
-			}
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-		}
-		return options;
-	}
-	
-	/* COURSES DROPDOWN */
-	public List<JSONObject> getActiveCourses() {
-
-		ArrayList<JSONObject> options = new ArrayList<JSONObject>();
-		String query = "SELECT COURSEID, NAME FROM COURSES ORDER BY NAME WHERE ISACTIVE=TRUE";
-		try {
-			Statement stmt = dbConnection.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-			while (rs.next()) {
-				JSONObject option = new JSONObject();
-				option.put("Value", rs.getInt("COURSEID"));
-				option.put("DisplayText", rs.getString("NAME"));
+				option.put("Value", rs.getString("CODICE"));
+				option.put("DisplayText", rs.getString("DENOMINAZIONE"));
 				options.add(option);
 			}
 		} catch (SQLException e) {

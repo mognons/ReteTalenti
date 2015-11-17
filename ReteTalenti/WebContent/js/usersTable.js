@@ -144,7 +144,6 @@ $(document).ready(function() {
 				title : 'Email',
 				inputClass: 'validate[required,custom[email]]',
 				width : '15%',
-				inputWIdth: '200',
 				edit : true
 			},
 			userPhone : {

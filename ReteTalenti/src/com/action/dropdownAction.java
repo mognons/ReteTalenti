@@ -48,22 +48,14 @@ public class dropdownAction extends ActionSupport {
 		return Action.SUCCESS;
 	}
 
-
-	public String Students() {
+	public String Nazioni() {
 		options = new ArrayList<JSONObject> ();
-		options = dao.getAllStudents();
-		System.out.println("Inside getAllStudents()");
+		options = dao.getAllNazioni();
+		System.out.println("Inside getAllNazioni()");
 		result = "OK";
 		return Action.SUCCESS;
 	}
 
-	public String Courses() {
-		options = new ArrayList<JSONObject> ();
-		options = dao.getAllCourses();
-		System.out.println("Inside getAllCourse()");
-		result = "OK";
-		return Action.SUCCESS;
-	}
 
 	public String getResult() {
 		return result;

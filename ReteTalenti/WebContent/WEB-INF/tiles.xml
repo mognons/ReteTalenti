@@ -33,6 +33,11 @@
 		<put-attribute name="body" value="/impegniTable.jsp" />
 	</definition>
  
+	<definition name="/assistititable.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Anagrafica Assisti" />
+		<put-attribute name="body" value="/assistitiTable.jsp" />
+	</definition>
+ 
 	<definition name="/nazionitable.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Lista Tabella Nazioni" />
 		<put-attribute name="body" value="/nazioniTable.jsp" />

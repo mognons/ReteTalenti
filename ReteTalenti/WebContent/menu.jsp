@@ -20,17 +20,17 @@
 <body>
 	<!-- Builds Auth switches  -->
 	<s:iterator value="groups">
-		<s:if test="%{groupName.contains('Amministratori Sistema')}">
+		<s:if test="%{groupId == 1}">
 			<s:set var="isAdmin" value="%{'true'}" />
 		</s:if>
-		<s:elseif test="%{groupName.contains('Amministratori Ente')}">
+		<s:elseif test="%{groupId == 2}">
 			<s:set var="isAdminEnte" value="%{'true'}" />
 		</s:elseif>
-		<s:elseif test="%{groupName.contains('Operatori Ente')}">
+		<s:elseif test="%{groupId == 3}">
 			<s:set var="isUser" value="%{'true'}" />
 		</s:elseif>
-		<s:elseif test="%{groupName.contains('Students')}">
-			<s:set var="isStudent" value="%{'true'}" />
+		<s:elseif test="%{groupId == 4}">
+			<s:set var="isRegione" value="%{'true'}" />
 		</s:elseif>
 	</s:iterator>
 
@@ -38,7 +38,7 @@
 		<ul id="verticalMenu">
 			<li>Gestione Assistiti
 				<ul>
-					<li class="ui-state-disabled">Anagrafica Assistiti</li>
+					<li onclick="window.location='assistitiLink';">Anagrafica Assistiti</li>
 					<li class="ui-state-disabled">Altro...</li>
 				</ul>
 			</li>

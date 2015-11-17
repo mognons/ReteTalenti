@@ -38,6 +38,7 @@
 				<result name="uni_misura" type="tiles">/uni_misuratable.tiles</result>
 				<result name="eccedenze" type="tiles">/eccedenzetable.tiles</result>
 				<result name="impegni" type="tiles">/impegnitable.tiles</result>
+				<result name="assistiti" type="tiles">/assistititable.tiles</result>
 				<result name="users" type="tiles">/userstable.tiles</result>
 				<result name="enti" type="tiles">/entitable.tiles</result>
 				<result name="filemanager" type="tiles">/fm.tiles</result>
@@ -127,6 +128,16 @@
                 </action>
                 
                 <action name="*ImpegniAction" class="com.action.ImpegniTableAction"
+                        method="{1}">
+                        <result type="json"></result>
+                </action>
+                
+                <action name="*AssistitiAction" class="com.action.NucleiFamiliariTableAction"
+                        method="{1}">
+                        <result type="json"></result>
+                </action>
+                
+                <action name="*NucleiFamiliariAction" class="com.action.NucleiFamiliariTableAction"
                         method="{1}">
                         <result type="json"></result>
                 </action>
