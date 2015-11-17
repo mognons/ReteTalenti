@@ -169,7 +169,7 @@
                 edit: true,
                 create: true
             },
-            nazionalità: {
+            nazionalita: {
             	title: 'Nazionalità',
             	options: 'Choose_Nazioni',
             	list: false,
@@ -216,7 +216,7 @@
             	title: 'Permesso Soggiorno',
 				type: 'checkbox',
 				defaultValue: ' ',
-				values:  {' ' : 'No' ,'x' : 'Sì'},
+				values:  {'N' : 'No' ,'S' : 'Sì'},
                 list: true,
                 edit: true
             },
@@ -237,17 +237,17 @@
 				create: true,
 				list: false
             },
-            numero_documento: {
+            num_documento: {
                 title: 'Numero Documento',
                 inputTitle: 'Numero Documento' + ' <span style="color:red">*</span>',
-                inputClass: 'validate[required,custom[phone]]',
+                inputClass: 'validate[required]',
                 list: false,
                 edit: true,
                 create: true
             }
         },
         rowInserted: function(event, data){
-        	if (recordObfuscation(data.record.ente_cedente)) {
+        	if (recordObfuscation(data.record.ente_assistente)) {
               data.row.find('.jtable-edit-command-button').hide();
               data.row.find('.jtable-delete-command-button').hide();
             }

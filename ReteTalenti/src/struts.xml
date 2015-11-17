@@ -132,7 +132,7 @@
                         <result type="json"></result>
                 </action>
                 
-                <action name="*AssistitiAction" class="com.action.NucleiFamiliariTableAction"
+                <action name="*AssistitiAction" class="com.action.AssistitiTableAction"
                         method="{1}">
                         <result type="json"></result>
                 </action>

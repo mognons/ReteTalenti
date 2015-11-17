@@ -5,22 +5,24 @@
  */
 package com.action;
 
+import com.dao.AssistitiDao;
 import com.interceptor.UserAware;
 import com.model.Assistito;
 import com.model.User;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
+
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import static jdk.nashorn.internal.runtime.Debug.id;
 
 /**
  *
  * @author gminardi
  */
-public class AssistitiTableAction extends ActionSupport implements UserAware {
+public class AssistitiTableAction extends ActionSupport implements UserAware, ModelDriven<User>{
 
     private AssistitiDao dao = new AssistitiDao();
     
@@ -73,9 +75,9 @@ public class AssistitiTableAction extends ActionSupport implements UserAware {
     public String list() {
         try {
             // Fetch Data from Assistiti Table
-            records = dao.getAllAssistiti(jtStartIndex, jtPageSize, jtSorting.toUpperCase());
+            records = dao.getAllAssistiti(jtStartIndex, jtPageSize, jtSorting, user);
             result = "OK";
-            totalRecordCount = dao.getRecordCount();
+            totalRecordCount = dao.getCountAssistiti(user);
 
         } catch (Exception e) {
             result = "ERROR";
@@ -88,7 +90,7 @@ public class AssistitiTableAction extends ActionSupport implements UserAware {
     public String searchAssistiti(String cod_fiscale, String cognome_search) {
         try {
             // Fetch Data from Assistiti Table
-            records = dao.getAssistitiSearch(cod_fiscale, cognome_search);
+            //records = dao.getAssistitiSearch(cod_fiscale, cognome_search);
             result = "OK";
            
         } catch (Exception e) {
@@ -123,7 +125,6 @@ public class AssistitiTableAction extends ActionSupport implements UserAware {
         record.setData_nascita(data_nascita);
         
         //naz è il CODICE nazione varchar(4)
-        nazionalita = dao.getNazionalita(denominazione);
         record.setNazionalita(nazionalita);
         
         record.setIndirizzo_residenza(indirizzo_residenza);
@@ -131,7 +132,6 @@ public class AssistitiTableAction extends ActionSupport implements UserAware {
         record.setCap(cap);
         
         //provincia è il COD_PROVINCIA INT(11)
-        provincia = dao.getCod_Provincia(sigla_autom);//naz è il CODICE nazione
         record.setProvincia(provincia);
         record.setPermesso_soggiorno(permesso_soggiorno);
         record.setTelefono(telefono);
@@ -139,7 +139,6 @@ public class AssistitiTableAction extends ActionSupport implements UserAware {
         record.setNum_documento(num_documento);
         
         //ente_assistente è l'ID INT(11) della tabella ENTI
-        ente_assistente=dao.getEnte_Assistente(descrizione);
         record.setEnte_assistente(ente_assistente);
         
         record.setData_inserimento(data_inserimento);
@@ -516,7 +515,17 @@ public class AssistitiTableAction extends ActionSupport implements UserAware {
     @Override
     public void setUser(User user) {
         // TODO Auto-generated method stub
-
+    	this.user = user;
     }
+
+	public User getUser() {
+		return user;
+	}
+
+	@Override
+	public User getModel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
