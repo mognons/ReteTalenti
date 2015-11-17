@@ -43,21 +43,21 @@ $(document).ready(function () {
                                     },
                                     fields: {
                                         username: {
-                                        	title: 'Username',
+                                            title: 'Username',
                                             key: true,
                                             create: true,
                                             edit: false,
                                             list: true
                                         },
                                         userFirstname: {
-                                        	title: 'Nome',
+                                            title: 'Nome',
                                             key: false,
                                             create: false,
                                             edit: false,
                                             list: true
                                         },
                                         userLastname: {
-                                        	title: 'Cognome',
+                                            title: 'Cognome',
                                             key: false,
                                             create: false,
                                             edit: false,
@@ -73,8 +73,8 @@ $(document).ready(function () {
                 }
             },
             id: {
-            	key: true,
-            	list: false
+                key: true,
+                list: false
             },
             descrizione: {
                 title: 'Descrizione',
@@ -118,10 +118,10 @@ $(document).ready(function () {
         formCreated: function (event, data) {
             data.form.find('input[name=resp_email]').css('width', '200px');
             data.form.parent().css('width', '400px');
-            // data.form.parent().css('height','600px');
-            //$(".jtable-input-field-container").slice(0,2).wrapAll("");
-            // Slice Parameters are Start Stop
-            //$(".jtable-input-field-container").slice(2,5).wrapAll("");
+            data.form.parent().css('height', '600px');
+            $(".jtable-input-field-container").slice(0, 2).wrapAll("");
+            //Slice Parameters are Start Stop
+            $(".jtable-input-field-container").slice(3, 5).wrapAll("");
             data.form.validationEngine();
         },
         //Validate form when it is being submitted
