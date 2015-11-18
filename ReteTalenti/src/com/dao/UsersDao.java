@@ -66,8 +66,8 @@ public class UsersDao {
 			pStmt.setString(4, user.getUserEmail());
 			pStmt.setString(5, user.getUserPhone());
 			pStmt.setInt(6, user.getEnte());
-			pStmt.setString(7, user.getUsername());
-			pStmt.setInt(8, user.getGroupId());
+			pStmt.setString(8, user.getUsername());
+			pStmt.setInt(7, user.getGroupId());
 			pStmt.executeUpdate();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
@@ -86,8 +86,8 @@ public class UsersDao {
 			pStmt.setString(3, user.getUserEmail());
 			pStmt.setString(4, user.getUserPhone());
 			pStmt.setInt(5, user.getEnte());
-			pStmt.setString(6, user.getUsername());
-			pStmt.setInt(7, user.getGroupId());
+			pStmt.setString(7, user.getUsername());
+			pStmt.setInt(6, user.getGroupId());
 			pStmt.executeUpdate();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());

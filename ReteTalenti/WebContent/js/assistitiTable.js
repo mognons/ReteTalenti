@@ -88,7 +88,7 @@
                                 	title: 'Legame',
                                 	options: { 	'C': 'Coniuge',
                                 				'F': 'Figlio/a', 
-                                				'N': 'Convinvente' },
+                                				'N': 'Convivente' },
                                     list: true,
                                     edit: true,
                                     create: true
@@ -141,7 +141,7 @@
                 create: false,
                 display: function (userData) {
                     // Create an image that will be used to open child table
-                    var $img = $('<span align="CENTER"><img src="icons/Notes.png" width="16" height="16" title="Nucleo familiare"/></span>');
+                    var $img = $('<span align="CENTER"><img src="icons/Notes.png" width="16" height="16" title="Annotazioni"/></span>');
                     // Open child table when user clicks the image
                     $img.click(function () {
                         $('#AssistitiTableContainer').jtable('openChildTable',$img.closest('tr'),
@@ -153,9 +153,9 @@
 					        defaultSorting : 'DATA_NOTE DESC', //Set default sorting
                             actions: {
                                 listAction: 'listNoteAction?cf_assistito_note=' + userData.record.cod_fiscale ,
-                                updateAction: 'updateNoteAction?cf_assistito_note=' + userData.record.cod_fiscale /*,
-                                createAction: 'createNucleiFamiliariAction?cf_assistito_nf=' + userData.record.cod_fiscale,
-                                deleteAction: 'deleteNucleiFamiliariAction?cf_assistito_nf=' + userData.record.cod_fiscale*/
+/*                                updateAction: 'updateNoteAction?cf_assistito_note=' + userData.record.cod_fiscale, */
+                                createAction: 'createNoteAction?cf_assistito_note=' + userData.record.cod_fiscale,
+                                deleteAction: 'deleteNoteAction?cf_assistito_nf=' + userData.record.cod_fiscale
                             },                                    
                             fields: {
                                 id: {
@@ -163,27 +163,33 @@
                                 	key: true,
                                     list: false
                                 },
+                                operatore: {
+                                	title: 'Operatore',
+                                	options: 'Choose_Utenti',
+                                	list: true,
+                                	edit: false,
+                                	create: false
+                                },
                                 data_note: {
-                                	title: 'Data inserimento ',
+                                	title: 'Data ins.',
                     				type: 'date',
                     				displayFormat: 'dd/mm/yy',
-                    				width: '10%',
+                    				width: '7%',
                                     list: true,
                                     edit: false,
                                     create: false
-
                                 },
                                 note_libere: {
-                                    title: 'Note',
+                                    title: 'Nota',
                                     inputTitle: 'Note' + ' <span style="color:red">*</span>',
                                     inputClass: 'validate[required]',
                                     width: '90%',
                                     input: function (data) {
                                     	console.log(data);
                                         if (data.value) {
-                                            return '<textarea name="note_libere" readonly rows="4" cols="50">' + data.value + '"</textarea>';
+                                            return '<textarea name="note_libere" readonly rows="4" cols="50">' + data.value + '</textarea>';
                                         } else {
-                                            return '<textarea name="note_libere" rows="4" cols="50">' + data.value + '"</textarea>';
+                                            return '<textarea name="note_libere" rows="4" cols="50"></textarea>';
                                         }
                                     },
                                     list: true,

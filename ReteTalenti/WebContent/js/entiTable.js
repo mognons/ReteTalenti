@@ -112,16 +112,20 @@ $(document).ready(function () {
                 width: '20%',
                 options: 'Choose_Province',
                 edit: true
+            },
+            ente_emporio: {
+                title: 'Gest. Emporio',
+                width: '5%',
+				type: 'checkbox',
+				defaultValue: false,
+				values:  {false : 'No' ,true : 'Sì'},
+edit: true
             }
         },
         //Initialize validation logic when a form is created
         formCreated: function (event, data) {
+            data.form.find('input[name=responsabile]').css('width', '200px');
             data.form.find('input[name=resp_email]').css('width', '200px');
-            data.form.parent().css('width', '400px');
-            data.form.parent().css('height', '600px');
-            $(".jtable-input-field-container").slice(0, 2).wrapAll("");
-            //Slice Parameters are Start Stop
-            $(".jtable-input-field-container").slice(3, 5).wrapAll("");
             data.form.validationEngine();
         },
         //Validate form when it is being submitted

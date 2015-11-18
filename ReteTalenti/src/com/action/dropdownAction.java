@@ -16,6 +16,14 @@ public class dropdownAction extends ActionSupport {
 	
 	private List<JSONObject> options;
 
+	public String Utenti() {
+		options = new ArrayList<JSONObject> ();
+		options = dao.getAllUsers();
+		System.out.println("Inside getAllUsers()");
+		result = "OK";
+		return Action.SUCCESS;
+	}
+
 	public String Gruppi() {
 		options = new ArrayList<JSONObject> ();
 		options = dao.getAllGroups();

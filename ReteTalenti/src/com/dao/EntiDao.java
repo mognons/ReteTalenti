@@ -7,10 +7,6 @@ package com.dao;
 
 import com.jdbc.DataAccessObject;
 import com.model.Ente;
-import com.model.Groups;
-import com.model.Student;
-import com.model.User;
-import com.utilities.MD5;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,16 +20,14 @@ public class EntiDao {
     private Connection dbConnection;
     private PreparedStatement pStmt;
     private Statement stmt;
-    private MD5 enc = new MD5();
-
     public EntiDao() {
         dbConnection = DataAccessObject.getConnection();
     }
 
     public int createEnte(Ente ente) {
     	int autoIncKeyFromFunc = -1;
-        String insertEnteQuery =  "INSERT INTO ENTI (DESCRIZIONE, RESPONSABILE, RESP_EMAIL, RESP_PHONE, PROVINCIA_ENTE) " +
-        							"VALUES (?,?,?,?,?)";
+        String insertEnteQuery =  "INSERT INTO ENTI (DESCRIZIONE, RESPONSABILE, RESP_EMAIL, RESP_PHONE, PROVINCIA_ENTE, ENTE_EMPORIO) " +
+        							"VALUES (?,?,?,?,?,?)";
         try {
             pStmt = dbConnection.prepareStatement(insertEnteQuery);
             pStmt.setString(1, ente.getDescrizione());
@@ -41,6 +35,7 @@ public class EntiDao {
             pStmt.setString(3, ente.getResp_email());
             pStmt.setString(4, ente.getResp_phone());
             pStmt.setInt(5, ente.getProvincia_ente());
+            pStmt.setBoolean(6, ente.getEnte_emporio());
             pStmt.executeUpdate();
             stmt = dbConnection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT LAST_INSERT_ID()");
@@ -56,7 +51,9 @@ public class EntiDao {
     }
 
     public void updateEnte(Ente ente) {
-        String updateQuery = "UPDATE ENTI SET DESCRIZIONE=?, RESPONSABILE=?, RESP_EMAIL=?, RESP_PHONE=?, PROVINCIA_ENTE=? WHERE ID=?";
+        String updateQuery = 	"UPDATE ENTI SET DESCRIZIONE=?, RESPONSABILE=?, RESP_EMAIL=?, "
+        						+ "RESP_PHONE=?, PROVINCIA_ENTE=?, ENTE_EMPORIO=?  "
+        						+ "WHERE ID=?";
         try {
             pStmt = dbConnection.prepareStatement(updateQuery);
             pStmt.setString(1, ente.getDescrizione());
@@ -64,7 +61,8 @@ public class EntiDao {
             pStmt.setString(3, ente.getResp_email());
             pStmt.setString(4, ente.getResp_phone());
             pStmt.setInt(5, ente.getProvincia_ente());
-            pStmt.setInt(6, ente.getId());
+            pStmt.setBoolean(6, ente.getEnte_emporio());
+            pStmt.setInt(7, ente.getId());
             pStmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -82,21 +80,6 @@ public class EntiDao {
         }
     }
 
-    public int getRecordCount() {
-        String countQuery = "SELECT COUNT(ID) AS TOTALREC FROM ENTI";
-        int result = 0;
-        try {
-            Statement stmt = dbConnection.createStatement();
-            ResultSet rs = stmt.executeQuery(countQuery);
-            while (rs.next()) {
-                result = rs.getInt("TOTALREC");
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-        return result;
-    }
-
     public int getEntiRecordCount() {
         String countQuery = "SELECT COUNT(ID) AS TOTALREC FROM ENTI";
         int result = 0;
@@ -105,36 +88,6 @@ public class EntiDao {
             ResultSet rs = stmt.executeQuery(countQuery);
             while (rs.next()) {
                 result = rs.getInt("TOTALREC");
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-        return result;
-    }
-
-    public int getNextID() {
-        String countQuery = "SELECT COALESCE(MAX(ID), COUNT(ID)) AS TT FROM ENTI";
-        int result = 0;
-        try {
-            Statement stmt = dbConnection.createStatement();
-            ResultSet rs = stmt.executeQuery(countQuery);
-            while (rs.next()) {
-                result = rs.getInt("TT") + 1;
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-        return result;
-    }
-
-    public int getNextEntiID() {
-        String countQuery = "SELECT COALESCE(MAX(ID), COUNT(ID)) AS TT FROM ENTI";
-        int result = 0;
-        try {
-            Statement stmt = dbConnection.createStatement();
-            ResultSet rs = stmt.executeQuery(countQuery);
-            while (rs.next()) {
-                result = rs.getInt("TT") + 1;
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -161,6 +114,7 @@ public class EntiDao {
                 ente.setResp_email(rs.getString("RESP_EMAIL"));
                 ente.setResp_phone(rs.getString("RESP_PHONE"));
                 ente.setProvincia_ente(rs.getInt("PROVINCIA_ENTE"));
+                ente.setEnte_emporio(rs.getBoolean("ENTE_EMPORIO"));
                 enti.add(ente);
             }
         } catch (SQLException e) {
@@ -171,9 +125,7 @@ public class EntiDao {
 
     public Ente getEnte(int id_ente) {
         Ente ente = new Ente();
-        String newQuery = "SELECT E.ID, E.DESCRIZIONE, E.RESPONSABILE, E.RESP_EMAIL, "
-                + "E.RESP_PHONE, E.PROVINCIA_ENTE "
-                + "FROM ENTI E WHERE E.ID=? ";
+        String newQuery = "SELECT * FROM ENTI WHERE ID=? ";
 
         try {
             pStmt = dbConnection.prepareStatement(newQuery);
@@ -186,6 +138,7 @@ public class EntiDao {
                 ente.setResp_email(rs.getString(4));
                 ente.setResp_phone(rs.getString(5));
                 ente.setProvincia_ente(rs.getInt(6));
+                ente.setEnte_emporio(rs.getBoolean(7));
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -208,5 +161,4 @@ public class EntiDao {
         }
         return (result == 0);
     }
-
 }

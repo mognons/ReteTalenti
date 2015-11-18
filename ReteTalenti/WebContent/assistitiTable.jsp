@@ -49,12 +49,11 @@
 			return options.allrules.codicefiscale.alertText;
 		} else {
 			ajaxData = CFIsUnique(codiceFiscale);
-			console.log(ajaxData);
 			if (ajaxData.status) {
 				openDialog(ajaxData); // Codice già inserito in RT
 				return options.allrules.codicefiscale.alertText;
 			} else {
-				return null;
+				return;
 			}	
 		}
 	};
@@ -73,7 +72,7 @@
 				ajaxCallData = data;
 			},
 			error : function() {
-				ajaxCallData = [{status:false,errorMsg: 'Ajax Error'}];
+				ajaxCallData = [{status:false}];
 				alert('Ajax error');
 			}
 		})

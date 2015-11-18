@@ -21,6 +21,25 @@ public class DropDownDao {
 	}
 
 /* GROUPS DROPDOWN */
+	public List<JSONObject> getAllUsers() {
+
+		ArrayList<JSONObject> options = new ArrayList<JSONObject>();
+		String query = "SELECT ID, USERNAME FROM USERS";
+		try {
+			Statement stmt = dbConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				JSONObject option = new JSONObject();
+				option.put("Value", rs.getInt("ID"));
+				option.put("DisplayText", rs.getString("USERNAME"));
+				options.add(option);
+			}
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return options;
+	}
+	
 	public List<JSONObject> getAllGroups() {
 
 		ArrayList<JSONObject> options = new ArrayList<JSONObject>();

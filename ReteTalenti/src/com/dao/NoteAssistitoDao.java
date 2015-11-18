@@ -14,44 +14,41 @@ import java.sql.Statement;
 public class NoteAssistitoDao {
 
 	private Connection dbConnection;
-	private PreparedStatement pStmt,pQuery;
+	private PreparedStatement pStmt;
 	private Statement stmt;
 	
 	public NoteAssistitoDao() {
 		dbConnection = DataAccessObject.getConnection();
 	}
 
-	public void updateDocuments(Documents documents) {
+	public void updateNotaAssistito(NoteAssistito nota) {
 		String updateQuery;
-		updateQuery = 	"UPDATE DOCUMENTS SET " + 
-						"NAME=?, DOCUMENTPATH=? " + 
-						"WHERE COURSEID=? AND MODULEID=? AND DOCUMENTID=?";
+		updateQuery = 	"UPDATE NOTE_ASSISTITI SET " + 
+						"NOTE_LIBERE=? " + 
+						"WHERE ID=?";
 
 		try {
 			pStmt = dbConnection.prepareStatement(updateQuery);
-			pStmt.setString(1, documents.getName());
-			pStmt.setString(2, documents.getDocumentPath());
-			pStmt.setInt(3, documents.getCourseId());
-			pStmt.setInt(4, documents.getModuleId());
-			pStmt.setInt(5, documents.getDocumentId());
+			pStmt.setString(1, nota.getNote_libere());
+			pStmt.setInt(2, nota.getId());
 			pStmt.executeUpdate();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
 	}	
 	
-	public int addDocuments(Documents documents) throws Exception {
+	public int addNotaAssistito(NoteAssistito nota) throws Exception {
 		int autoIncKeyFromFunc = -1;
 		
-		String insertQuery = "INSERT INTO DOCUMENTS (COURSEID, MODULEID, NAME, DOCUMENTPATH) " +
-				 "VALUES (?,?,?,?)";
+		String insertQuery = "INSERT INTO NOTE_ASSISTITI "
+							+ "(NOTE_LIBERE, DATA_NOTE, CF_ASSISTITO_NOTE, OPERATORE) "
+							+ "VALUES (?,NOW(),?,?)";
 			try {
 				pStmt = dbConnection.prepareStatement(insertQuery);
 				stmt = dbConnection.createStatement();
-				pStmt.setInt(1, documents.getCourseId());
-				pStmt.setInt(2, documents.getModuleId());
-				pStmt.setString(3, documents.getName());
-				pStmt.setString(4,  documents.getDocumentPath());
+				pStmt.setString(1, nota.getNote_libere());
+				pStmt.setString(2, nota.getCf_assistito_note());
+				pStmt.setInt(3,  nota.getOperatore());
 				pStmt.executeUpdate();
 				
 				ResultSet rs = stmt.executeQuery("SELECT LAST_INSERT_ID()");
@@ -73,46 +70,27 @@ public class NoteAssistitoDao {
 	}	
 	
 
-	public String deleteDocuments(Documents documents) throws Exception {
-		String documentPath = null;
-		String deleteQuery = "DELETE FROM DOCUMENTS  " + 
-							 "WHERE COURSEID=? AND MODULEID=? AND DOCUMENTID=?";
-		String query = "SELECT DOCUMENTPATH FROM DOCUMENTS  " + 
-				 "WHERE COURSEID=? AND MODULEID=? AND DOCUMENTID=?";
+	public void deleteNotaAssistito(NoteAssistito nota) throws Exception {
+		String deleteQuery = "DELETE FROM NOTE_ASSISTITI  " + 
+							 "WHERE ID=?";
 		try {
 			pStmt = dbConnection.prepareStatement(deleteQuery);
-			pQuery = dbConnection.prepareStatement(query);
-			pStmt.setInt(1, documents.getCourseId());
-			pStmt.setInt(2, documents.getModuleId());
-			pStmt.setInt(3, documents.getDocumentId());
-			pQuery.setInt(1, documents.getCourseId());
-			pQuery.setInt(2, documents.getModuleId());
-			pQuery.setInt(3, documents.getDocumentId());
-			ResultSet rs = pQuery.executeQuery();
-			System.out.println(pQuery.toString());
-			if (rs.next()) {
-				documentPath = rs.getString(1);
-		    } else {
-		    	documentPath = "FAILED";
-		        throw new Exception("Focca la bindella");
-		    }
+			pStmt.setInt(1, nota.getId());
 			pStmt.executeUpdate();
-
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
-		return documentPath;
+		return;
 	}	
 		
 	public List<NoteAssistito> getNoteAssistito(int jtStartIndex, int jtPageSize, String cf_assistito_note) {
 		List<NoteAssistito> note = new ArrayList<NoteAssistito>();
 
-		String query = "SELECT * FROM NOTE_ASSISTITI WHERE CF_ASSISTITO_NOTE=? ORDER BY DATA_NOTE DESC";
+		String query = "SELECT * FROM NOTE_ASSISTITI WHERE CF_ASSISTITO_NOTE=? ORDER BY DATA_NOTE DESC, ID DESC";
 		try {			
 			pStmt = dbConnection.prepareStatement(query);
 			pStmt.setString(1, cf_assistito_note);
 			ResultSet rs = pStmt.executeQuery();
-			System.out.println(pStmt.toString());
 			while (rs.next()) {
 				NoteAssistito nota = new NoteAssistito();
 
@@ -129,6 +107,4 @@ public class NoteAssistitoDao {
 		}
 		return note;
 	}
-
-
 }

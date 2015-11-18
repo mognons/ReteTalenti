@@ -1,5 +1,6 @@
 package com.action;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,10 +52,15 @@ public class NoteTableAction extends ActionSupport implements UserAware {
 	}
 
 	public String create() {
-
+		java.util.Date oggi = new java.util.Date();
+		record = new NoteAssistito();
+		record.setNote_libere(note_libere);
+		record.setCf_assistito_note(cf_assistito_note);
+		record.setOperatore(user.getId());
+		record.setData_note(new java.sql.Date(oggi.getTime()));
 		try {
 			// Create new record
-			//record.setDocumentId(dao.addDocuments(record));
+			record.setId(dao.addNotaAssistito(record));
 			result = "OK";
 		} catch (Exception e) {	
 			result = "ERROR";
@@ -74,7 +80,7 @@ public class NoteTableAction extends ActionSupport implements UserAware {
 		
 		try {
 			// Create new record
-			//dao.updateDocuments(record);
+			dao.updateNotaAssistito(record);;
 			result = "OK";
 		} catch (Exception e) {	
 			result = "ERROR";
@@ -85,6 +91,16 @@ public class NoteTableAction extends ActionSupport implements UserAware {
 	}
 
 	public String delete() {
+		record = new NoteAssistito();
+		record.setId(id);
+		try {
+			dao.deleteNotaAssistito(record);;
+			result = "OK";
+		} catch (Exception e) {	
+			result = "ERROR";
+			message = e.getMessage();
+			System.err.println("Error:" + e.getMessage());
+		}
 		return Action.SUCCESS;
 	}
 

@@ -23,6 +23,8 @@ public class EntiTableAction extends ActionSupport implements UserAware {
     //
     private int id, provincia_ente;
     private String descrizione, responsabile, resp_phone, resp_email;
+    private Boolean ente_emporio;
+    private User user = new User();
 
     public String list() {
     	jtSorting = "DESCRIZIONE ASC";
@@ -48,15 +50,14 @@ public class EntiTableAction extends ActionSupport implements UserAware {
         record.setResp_email(resp_email);
         record.setResp_phone(resp_phone);
         record.setProvincia_ente(provincia_ente);
+        record.setEnte_emporio(ente_emporio);
         if (dao.verifyEnte(descrizione)) {
             try {
                 System.out.println("Creating " + descrizione);
-                //record.setId(0);
-                dao.createEnte(record);
+                record.setId(dao.createEnte(record));
                 result = "OK";
             } catch (Exception e) {
                 message = e.getMessage();
-				System.err.println("Porcaccia EVA");
                 System.err.println(e.getMessage());
                 result = "ERROR";
             }
@@ -77,6 +78,7 @@ public class EntiTableAction extends ActionSupport implements UserAware {
         record.setResp_email(resp_email);
         record.setResp_phone(resp_phone);
         record.setProvincia_ente(provincia_ente);
+        record.setEnte_emporio(ente_emporio);
         System.out.println("Updating " + descrizione);
 
         try {
@@ -221,8 +223,17 @@ public class EntiTableAction extends ActionSupport implements UserAware {
 
 	@Override
 	public void setUser(User user) {
-		// TODO Auto-generated method stub
-		
+		this.user = user;
+	}
+
+
+	public Boolean getEnte_emporio() {
+		return ente_emporio;
+	}
+
+
+	public void setEnte_emporio(Boolean ente_emporio) {
+		this.ente_emporio = ente_emporio;
 	}
 
 }

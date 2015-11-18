@@ -104,7 +104,7 @@ public class AssistitiDao {
 		return cfFound;	
 	}
 	
-	public List<Assistito> getAllAssistiti(int jtStartIndex, int jtPageSize, String jtSorting, User user, String cf_search) {
+	public List<Assistito> getAllAssistiti(int jtStartIndex, int jtPageSize, String jtSorting, User user, String cf_search, String cognome_search) {
 		if (jtSorting==null)
 			jtSorting = "COD_FISCALE ASC";
 		
@@ -112,12 +112,15 @@ public class AssistitiDao {
 		String whereCondition1 = "AND 1=1 ";
 		String whereCondition2 = "AND 1=1 ";
 		String whereCondition3 = "AND 1=1 ";
+		String whereCondition4 = "AND 1=1 ";
 		if (user.getGroupId()==3) 
 			whereCondition1 = "AND ENTE_ASSISTENTE=" + user.getEnte() + " ";
 		else if (user.getGroupId()==2) 
 			whereCondition2 = "AND PROVINCIA_ENTE=" + user.getProvinciaEnte() + " ";
 		if (cf_search!=null || cf_search!="")
 			whereCondition3 = "AND COD_FISCALE LIKE '" + cf_search + "%' ";
+		if (cognome_search!=null || cognome_search!="")
+			whereCondition4 = "AND COGNOME LIKE '" + cognome_search + "%' ";
 
 		String query = 	"SELECT * FROM ASSISTITI A "
 						+ "LEFT JOIN ENTI E ON A.ENTE_ASSISTENTE=E.ID "
@@ -125,6 +128,7 @@ public class AssistitiDao {
 						+ whereCondition1 + " "
 						+ whereCondition2 + " "
 						+ whereCondition3 + " "
+						+ whereCondition4 + " "
 						+ "ORDER BY " + jtSorting + " "
 						+ "LIMIT " + Integer.toString(jtPageSize) + " OFFSET "
 						+ Integer.toString(jtStartIndex);
@@ -168,24 +172,28 @@ public class AssistitiDao {
 		return assistiti;
 	}
 	
-	public int getCountAssistiti(User user, String cf_search) {
+	public int getCountAssistiti(User user, String cf_search, String cognome_search) {
 		int totalRecord = 0;
 		String whereCondition1 = "AND 1=1 ";
 		String whereCondition2 = "AND 1=1 ";
 		String whereCondition3 = "AND 1=1 ";
+		String whereCondition4 = "AND 1=1 ";
 		if (user.getGroupId()==3) 
 			whereCondition1 = "AND ENTE_ASSISTENTE=" + user.getEnte() + " ";
 		else if (user.getGroupId()==2) 
 			whereCondition2 = "AND PROVINCIA_ENTE=" + user.getProvinciaEnte() + " ";
 		if (cf_search!=null || cf_search!="")
 			whereCondition3 = "AND COD_FISCALE LIKE '" + cf_search + "%' ";
+		if (cognome_search!=null || cognome_search!="")
+			whereCondition4 = "AND COGNOME LIKE '" + cognome_search + "%' ";
 		
 		String query = 	"SELECT COUNT(*) FROM ASSISTITI A "
 						+ "LEFT JOIN ENTI E ON A.ENTE_ASSISTENTE=E.ID "
 						+ "WHERE 1=1 "
 						+ whereCondition1 + " "
 						+ whereCondition2
-						+ whereCondition3;
+						+ whereCondition3
+						+ whereCondition4;
 		try {
 			pStmt = dbConnection.prepareStatement(query);
 			ResultSet rs = pStmt.executeQuery();

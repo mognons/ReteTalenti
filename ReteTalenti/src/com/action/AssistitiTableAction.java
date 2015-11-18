@@ -39,7 +39,7 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
 
     private static final long serialVersionUID = 1L;
     private String cf_search, cognome_search;
-    private String origin, errorMsg;
+    private String origin;
     Boolean status;
     private String cod_fiscale;
     private String nome;
@@ -80,9 +80,9 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
         try {
             // Fetch Data from Assistiti Table
         	System.out.println("cf_search: " + cf_search + " cognome_search: " +cognome_search);
-            records = dao.getAllAssistiti(jtStartIndex, jtPageSize, jtSorting, user, cf_search);
+            records = dao.getAllAssistiti(jtStartIndex, jtPageSize, jtSorting, user, cf_search, cognome_search);
             result = "OK";
-            totalRecordCount = dao.getCountAssistiti(user, cf_search);
+            totalRecordCount = dao.getCountAssistiti(user, cf_search, cognome_search);
 
         } catch (Exception e) {
             result = "ERROR";
@@ -525,14 +525,6 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
 	@Override
 	public User getModel() {
 		return null;
-	}
-
-	public String getErrorMsg() {
-		return errorMsg;
-	}
-
-	public void setErrorMsg(String errorMsg) {
-		this.errorMsg = errorMsg;
 	}
 
 	public Boolean getStatus() {

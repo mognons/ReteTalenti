@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.model;
 
 /**
@@ -17,18 +12,8 @@ public class Ente {
     private String resp_email;
     private String resp_phone;
     private int provincia_ente;
+    private Boolean ente_emporio;
 
-    public Ente() {
-    }
-
-    public Ente(Integer id, String descrizione, String responsabile, String resp_email, String resp_phone, int provincia_ente) {
-        this.id = id;
-        this.descrizione = descrizione;
-        this.responsabile = responsabile;
-        this.resp_email = resp_email;
-        this.resp_phone = resp_phone;
-        this.provincia_ente = provincia_ente;
-    }
 
     public Integer getId() {
         return id;
@@ -77,5 +62,13 @@ public class Ente {
     public void setProvincia_ente(int provincia_ente) {
         this.provincia_ente = provincia_ente;
     }
+
+	public Boolean getEnte_emporio() {
+		return ente_emporio;
+	}
+
+	public void setEnte_emporio(Boolean ente_emporio) {
+		this.ente_emporio = ente_emporio;
+	}
     
 }

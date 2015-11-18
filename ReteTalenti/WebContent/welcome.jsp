@@ -53,7 +53,6 @@
 		$("#tabs").tabs({
 			active : openTab
 		});
-		alert(today());
 		// Groups
 		var userGroups = [];
 		<s:iterator value="groups">

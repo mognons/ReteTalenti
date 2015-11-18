@@ -52,7 +52,7 @@ public class NucleiFamiliariTableAction extends ActionSupport implements UserAwa
 		record.setSesso(sesso);
 		record.setTipo_parentela(tipo_parentela);
 		record.setCf_assistito_nf(cf_assistito_nf);
-
+		System.out.println("Create Convivente "+ record.getCognome());
 		try {
 			dao.createConvivente(record);
 			result = "OK";
