@@ -22,7 +22,6 @@ public class WelcomeAction extends ActionSupport implements UserAware, ModelDriv
  
     private static final long serialVersionUID = 8111120314704779336L;
 	private List<Groups> userGroups = new ArrayList<Groups>();
-	private CalendarsDao cDao = new CalendarsDao();
 	private List<CalendarDTO> todayEvents;
 	private Boolean hasEvents, hasTodos = false;
 	private Date currentDate;
@@ -33,16 +32,9 @@ public class WelcomeAction extends ActionSupport implements UserAware, ModelDriv
     	DateTime dt = new DateTime();
     	DateTimeFormatter fmt = ISODateTimeFormat.date();
     	String today = fmt.print(dt);
-    	todayEvents = cDao.retrieveEvents(-1, today, today);
+    	todayEvents = new ArrayList<CalendarDTO>();
     	if (todayEvents.size() != 0)
     		hasEvents = true;
-    	// Start checking for future tasks
-    	// Incoming courses needing schedule
-    	// Incoming courses needing completion
-    	// Unassigned courses to tutors (future)
-    	// No class for courses
-    	// Other checks
-//    	System.out.println("Reading ResourceBundle");
     	// Lets check configuration
 		ResourceBundle rb = ResourceBundle.getBundle("com.properties.basicConfiguration");
 		Enumeration <String> keys = rb.getKeys();

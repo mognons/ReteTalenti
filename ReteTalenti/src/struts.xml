@@ -146,6 +146,11 @@
                         <result type="json"></result>
                 </action>
                 
+                <action name="*NoteAction" class="com.action.NoteTableAction"
+                        method="{1}">
+                        <result type="json"></result>
+                </action>
+                
                 <action name="*NazioniAction" class="com.action.NazioniAction"
                         method="{1}">
                         <result type="json"></result>

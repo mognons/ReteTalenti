@@ -45,16 +45,16 @@
 		var codiceFiscale = field.val();
 		var valido = validaCodiceFiscale(codiceFiscale);
 		var ajaxData = "";
-		if (!valido) {
-			// this allows the use of i18 for the error msgs
+		if (!valido) { // Validità formale NON verificata
 			return options.allrules.codicefiscale.alertText;
 		} else {
 			ajaxData = CFIsUnique(codiceFiscale);
-			if (ajaxData.errorMsg !='') {
-				openDialog(ajaxData);
+			console.log(ajaxData);
+			if (ajaxData.status) {
+				openDialog(ajaxData); // Codice già inserito in RT
 				return options.allrules.codicefiscale.alertText;
 			} else {
-				return "";
+				return null;
 			}	
 		}
 	};
@@ -67,7 +67,7 @@
 			async : false,
 			dataType : 'json',
 			data : {
-				fieldValue : cf
+				cf_search : cf
 			},
 			success : function(data) {
 				ajaxCallData = data;
@@ -84,6 +84,12 @@
 		// Ritorna TRUE se l'ente passato da jTable, record per record, è diverso dall'ente di appartenenza dell'utente, impedendo
 		// quindi la modifica o cancellazione del record stesso
 		return (!(ente == enteUtente) || (gruppoUtente==1));
+	};
+
+	function addRecordObfuscation() {
+		// Ritorna TRUE se l'ente passato da jTable, record per record, è diverso dall'ente di appartenenza dell'utente, impedendo
+		// quindi la modifica o cancellazione del record stesso
+		return (gruppoUtente==1);
 	};
 
 	function validaCodiceFiscale(cf) {
@@ -111,11 +117,25 @@
 			return false;
 		return true;
 	};
-
+	
+	function openPage(page) {
+		var popup = document.getElementById('modalDialogBox');
+		popup.src = page;
+//		popup.src = "showCFDetails.action?codice_fiscale="+ errorMessage.errorMsg+"&origin="+ errorMessage.origin;
+		(function() {
+			$('#pop-up').dialog({
+				modal : true,
+				resizable : false,
+				draggable : false,
+				width : '800',
+				height : '600',
+				title : 'Prova'
+			});
+		})();
+	};
 	function openDialog(errorMessage) {
 		var popup = document.getElementById('modalDialogBox');
-//		popup.src = "error.jsp?errorMessage=" + errorMessage.errorMsg;
-		popup.src = "showCFDetails.action?codice_fiscale="+ errorMessage.errorMsg+"&origin="+ errorMessage.origin;
+		popup.src = "showCFDetails.action?codice_fiscale="+ errorMessage.cf_search+"&origin="+ errorMessage.origin;
 		(function() {
 			$('#pop-up').dialog({
 				modal : true,

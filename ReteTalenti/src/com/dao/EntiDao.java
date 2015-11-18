@@ -169,17 +169,15 @@ public class EntiDao {
         return enti;
     }
 
-    public Ente getEnte(String descrizione) {
+    public Ente getEnte(int id_ente) {
         Ente ente = new Ente();
-//        List<Groups> groups = new ArrayList<Groups>();
-//        System.out.println("Inside getUser with " + username);
         String newQuery = "SELECT E.ID, E.DESCRIZIONE, E.RESPONSABILE, E.RESP_EMAIL, "
                 + "E.RESP_PHONE, E.PROVINCIA_ENTE "
-                + "FROM ENTI E WHERE E.DESCRIZIONE=? ";
+                + "FROM ENTI E WHERE E.ID=? ";
 
         try {
             pStmt = dbConnection.prepareStatement(newQuery);
-            pStmt.setString(1, descrizione);
+            pStmt.setInt(1, id_ente);
             ResultSet rs = pStmt.executeQuery();
             while (rs.next()) {
                 ente.setId(rs.getInt(1));

@@ -108,7 +108,32 @@ public class NucleiFamiliariDao {
 		return totalRecord;
 	}
 	
-	
+	public NucleoFamiliare getConvivente(String cod_fiscale) {
+		
+		NucleoFamiliare convivente = new NucleoFamiliare();
+		
+		String query = 	"SELECT * FROM NUCLEO_FAMILIARE " 
+						+ "WHERE CODICE_FISCALE=?";
+		try {
+			pStmt = dbConnection.prepareStatement(query);
+			pStmt.setString(1, cod_fiscale);
+			System.out.println(pStmt.toString());
+			ResultSet rs = pStmt.executeQuery();
+			while (rs.next()) {
+
+				convivente.setCodice_fiscale(rs.getString("CODICE_FISCALE"));
+				convivente.setNome(rs.getString("NOME"));
+				convivente.setCognome(rs.getString("COGNOME"));
+				convivente.setSesso(rs.getString("SESSO"));
+				convivente.setData_nascita(rs.getDate("DATA_NASCITA"));
+				convivente.setTipo_parentela(rs.getString("TIPO_PARENTELA"));
+				convivente.setCf_assistito_nf(cod_fiscale);
+			}
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return convivente;
+	}
 	
 	public void deleteConvivente(NucleoFamiliare convivente) {
 

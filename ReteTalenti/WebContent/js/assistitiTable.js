@@ -59,7 +59,6 @@
                                     create: true
                                 },
                                 nome: {
-                                    key: true,
                                     title: 'Nome',
                                     inputTitle: 'Nome' + ' <span style="color:red">*</span>',
                                     inputClass: 'validate[required]',
@@ -69,7 +68,6 @@
                                     create: true
                                 },
                                 cognome: {
-                                    key: true,
                                     title: 'Cognome',
                                     inputTitle: 'Cognome' + ' <span style="color:red">*</span>',
                                     inputClass: 'validate[required]',
@@ -91,6 +89,103 @@
                                 	options: { 	'C': 'Coniuge',
                                 				'F': 'Figlio/a', 
                                 				'N': 'Convinvente' },
+                                    list: true,
+                                    edit: true,
+                                    create: true
+                                }
+                            },        
+                            formCreated: function (event, data) {
+                                data.form.validationEngine('attach',{promptPosition : "bottomLeft", scroll: false});
+                                data.form.find('input[name=nome]').css('width', '200px');
+                                data.form.find('input[name=cognome]').css('width', '200px');
+                            },
+                            // Validate form when it is being submitted
+                            formSubmitting: function (event, data) {
+                                return data.form.validationEngine('validate');
+                            },
+                            // Dispose validation logic when form is closed
+                            formClosed: function (event, data) {
+                                data.form.validationEngine('hide');
+                                data.form.validationEngine('detach');
+                            }
+                        },
+                        function (data) { // opened handler
+                        	data.childTable.jtable('load');
+                        }
+                        );
+                    });
+                    return $img;
+                }
+            },
+            idb: {  // Accesso alla form (pop-up) di calcolo dell'indice di bisogno
+                title: '',
+                width: '1%',
+                edit: false,
+                create: false,
+                display: function (userData) {
+                    // Create an image that will be used to open child table
+                    var $img = $('<span align="CENTER"><img src="icons/Dollar.png" width="16" height="16" title="Calcolo IDB"/></span>');
+                    // Open Foreign Form
+                    $img.click(function () {
+                    	openPop();
+                    });
+                    return $img;
+                }
+            },
+            // CHILD TABLE DEFINITION FOR "NOTE ASSISTITO"
+            note: {
+                title: '',
+                width: '1%',
+                sorting: false,
+                edit: false,
+                create: false,
+                display: function (userData) {
+                    // Create an image that will be used to open child table
+                    var $img = $('<span align="CENTER"><img src="icons/Notes.png" width="16" height="16" title="Nucleo familiare"/></span>');
+                    // Open child table when user clicks the image
+                    $img.click(function () {
+                        $('#AssistitiTableContainer').jtable('openChildTable',$img.closest('tr'),
+                        {
+                        	title: 'Annotazioni per ' + userData.record.nome + ' ' + userData.record.cognome,
+                            paging: true, // Enable paging
+                            pageSize: 5, // Set page size (default: 10)
+                            pageSizeChangeArea: false,
+					        defaultSorting : 'DATA_NOTE DESC', //Set default sorting
+                            actions: {
+                                listAction: 'listNoteAction?cf_assistito_note=' + userData.record.cod_fiscale ,
+                                updateAction: 'updateNoteAction?cf_assistito_note=' + userData.record.cod_fiscale /*,
+                                createAction: 'createNucleiFamiliariAction?cf_assistito_nf=' + userData.record.cod_fiscale,
+                                deleteAction: 'deleteNucleiFamiliariAction?cf_assistito_nf=' + userData.record.cod_fiscale*/
+                            },                                    
+                            fields: {
+                                id: {
+                                	title: '',
+                                	key: true,
+                                    list: false
+                                },
+                                data_note: {
+                                	title: 'Data inserimento ',
+                    				type: 'date',
+                    				displayFormat: 'dd/mm/yy',
+                    				width: '10%',
+                                    list: true,
+                                    edit: false,
+                                    create: false
+
+                                },
+                                note_libere: {
+                                    title: 'Note',
+                                    inputTitle: 'Note' + ' <span style="color:red">*</span>',
+                                    inputClass: 'validate[required]',
+                                    width: '90%',
+                                    input: function (data) {
+                                    	console.log(data);
+                                        if (data.value) {
+                                            return '<textarea name="note_libere" readonly rows="4" cols="50">' + data.value + '"</textarea>';
+                                        } else {
+                                            return '<textarea name="note_libere" rows="4" cols="50">' + data.value + '"</textarea>';
+                                        }
+                                    },
                                     list: true,
                                     edit: true,
                                     create: true
@@ -268,6 +363,11 @@
                 create: true
             }
         },
+        recordsLoaded: function(event, data) {
+      	  if (addRecordObfuscation()) {
+      	     $('#AssistitiTableContainer').find('.jtable-toolbar-item.jtable-toolbar-item-add-record').remove();
+      	  }
+        },
         rowInserted: function(event, data){
         	if (recordObfuscation(data.record.ente_assistente)) {
               data.row.find('.jtable-edit-command-button').hide();
@@ -310,7 +410,7 @@
         $('#codice_fiscale').val('');
         $('#cognome_search').val('');
         $('#AssistitiTableContainer').jtable('load', {
-            codice_fiscale: $('#codice_fiscale').val(),
+            cf_search: $('#codice_fiscale').val(),
             cognome_search: $('#cognome_search').val()
         });
     });

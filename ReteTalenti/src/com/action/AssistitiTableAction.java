@@ -8,6 +8,7 @@ package com.action;
 import com.dao.AssistitiDao;
 import com.interceptor.UserAware;
 import com.model.Assistito;
+import com.model.Tuple;
 import com.model.User;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
@@ -79,9 +80,9 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
         try {
             // Fetch Data from Assistiti Table
         	System.out.println("cf_search: " + cf_search + " cognome_search: " +cognome_search);
-            records = dao.getAllAssistiti(jtStartIndex, jtPageSize, jtSorting, user);
+            records = dao.getAllAssistiti(jtStartIndex, jtPageSize, jtSorting, user, cf_search);
             result = "OK";
-            totalRecordCount = dao.getCountAssistiti(user);
+            totalRecordCount = dao.getCountAssistiti(user, cf_search);
 
         } catch (Exception e) {
             result = "ERROR";
@@ -90,27 +91,21 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
         }
         return SUCCESS;
     }
-    
-    public String searchAssistiti(String cf_search, String cognome_search) {
-        try {
-            // Fetch Data from Assistiti Table
-            //records = dao.getAssistitiSearch(cod_fiscale, cognome_search);
-            result = "OK";
-           
-        } catch (Exception e) {
-            result = "ERROR";
-            message = e.getMessage();
-            System.err.println(e.getMessage());
-        }    
-        
-        return SUCCESS;
-        
-    }
+   
     
     public String checkCFIsUnique() {
-    	errorMsg = "Mi sa che non funziona nemmeno un poco...";
-    	origin = "MASTER";
-    	status = false;
+    	Tuple risultato = new Tuple();
+    	risultato = dao.verifyCF(cf_search);
+    	if (risultato.getStringa1()==null) {
+    		status = false;
+    	} else {
+    		status = true;
+    		origin = risultato.getStringa2();
+        	if (origin=="MASTER")
+        		cod_fiscale = cf_search;
+        	else
+        		cod_fiscale = origin;
+    	}
     	return SUCCESS;
     }
     
@@ -150,13 +145,8 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
         record.setNum_documento(num_documento);
         
         //ente_assistente è l'ID INT(11) della tabella ENTI
-        record.setEnte_assistente(ente_assistente);
-        
-        record.setData_inserimento(data_inserimento);
-        record.setData_fine_assistenza(data_fine_assistenza);
-        record.setData_candidatura(data_candidatura);
-        record.setData_accettazione(data_accettazione);
-        record.setData_dismissione(data_dismissione);
+        record.setEnte_assistente(user.getEnte());
+       
         
         //operatore è l'ID dello username attivo
         operatore=user.getId();
