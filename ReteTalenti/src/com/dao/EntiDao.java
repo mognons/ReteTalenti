@@ -20,6 +20,7 @@ public class EntiDao {
     private Connection dbConnection;
     private PreparedStatement pStmt;
     private Statement stmt;
+    
     public EntiDao() {
         dbConnection = DataAccessObject.getConnection();
     }

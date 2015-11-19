@@ -20,7 +20,7 @@ $(document).ready(function () {
         fields: {
             id: {
                 key: true,
-                list: false,
+                list: false
             },
             //CHILD TABLE DEFINITION FOR "GROUPS"
             Groups: {
