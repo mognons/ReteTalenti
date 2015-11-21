@@ -36,7 +36,7 @@ public class AssistitiDao {
 			pStmt.setString(1,assistito.getNome());
 			pStmt.setString(2,assistito.getCognome());
 			pStmt.setString(3,assistito.getSesso());
-			pStmt.setString(4,assistito.getStato_civile());
+			pStmt.setInt(4,assistito.getStato_civile());
 			pStmt.setString(5,assistito.getLuogo_nascita());
 			pStmt.setDate(6, assistito.getData_nascita());
 			pStmt.setString(7,assistito.getNazionalita());
@@ -68,7 +68,7 @@ public class AssistitiDao {
 			pStmt.setString(1, assistito.getNome());
 			pStmt.setString(2, assistito.getCognome());
 			pStmt.setString(3, assistito.getSesso());
-			pStmt.setString(4, assistito.getStato_civile());
+			pStmt.setInt(4, assistito.getStato_civile());
 			pStmt.setString(5, assistito.getLuogo_nascita());
 			pStmt.setDate(6, assistito.getData_nascita());
 			pStmt.setString(7, assistito.getNazionalita());
@@ -124,6 +124,9 @@ public class AssistitiDao {
 
 		String query = 	"SELECT * FROM ASSISTITI A "
 						+ "LEFT JOIN ENTI E ON A.ENTE_ASSISTENTE=E.ID "
+						+ "LEFT JOIN PROVINCE P ON A.PROVINCIA=P.COD_PROVINCIA "
+						+ "LEFT JOIN NAZIONI N ON A.NAZIONALITA=N.CODICE "
+						+ "LEFT JOIN STATI_CIVILI S ON A.STATO_CIVILE=S.ID "
 						+ "WHERE 1=1 "
 						+ whereCondition1 + " "
 						+ whereCondition2 + " "
@@ -144,25 +147,30 @@ public class AssistitiDao {
 				assistito.setNome(rs.getString("NOME"));
 				assistito.setCognome(rs.getString("COGNOME"));
 				assistito.setSesso(rs.getString("SESSO"));
-				assistito.setStato_civile(rs.getString("STATO_CIVILE"));
+				assistito.setStato_civile(rs.getInt("STATO_CIVILE"));
+				assistito.setDesc_stato_civile(rs.getString("S.DESCRIZIONE"));
 				assistito.setLuogo_nascita(rs.getString("LUOGO_NASCITA"));
 				assistito.setData_nascita(rs.getDate("DATA_NASCITA"));
 				assistito.setNazionalita(rs.getString("NAZIONALITA"));
+				assistito.setDenominazione(rs.getString("DENOMINAZIONE"));
 				assistito.setIndirizzo_residenza(rs.getString("INDIRIZZO_RESIDENZA"));
 				assistito.setCitta_residenza(rs.getString("CITTA_RESIDENZA"));
 				assistito.setCap(rs.getString("CAP"));
 				assistito.setProvincia(rs.getInt("PROVINCIA"));
+				assistito.setSigla_autom(rs.getString("SIGLA_AUTOM"));
 				assistito.setPermesso_soggiorno(rs.getString("PERMESSO_SOGGIORNO"));
 				assistito.setTelefono(rs.getString("TELEFONO"));
 				assistito.setEmail(rs.getString("EMAIL"));
 				assistito.setNum_documento(rs.getString("NUM_DOCUMENTO"));
 				assistito.setEnte_assistente(rs.getInt("ENTE_ASSISTENTE"));
+				assistito.setDescrizione(rs.getString("DESCRIZIONE"));
 				assistito.setData_inserimento(rs.getDate("DATA_INSERIMENTO"));
 				assistito.setData_fine_assistenza(rs.getDate("DATA_FINE_ASSISTENZA"));
 				assistito.setData_candidatura(rs.getDate("DATA_CANDIDATURA"));
 				assistito.setData_accettazione(rs.getDate("DATA_ACCETTAZIONE"));
 				assistito.setData_dismissione(rs.getDate("DATA_DISMISSIONE"));
 				assistito.setOperatore(rs.getInt("OPERATORE"));
+				assistito.setPunteggio_idb(rs.getInt("PUNTEGGIO_IDB"));
 				assistiti.add(assistito);
 			
 			}
@@ -210,6 +218,9 @@ public class AssistitiDao {
 		Assistito assistito = null;
 		String query = 	"SELECT * FROM ASSISTITI A "
 						+ "LEFT JOIN ENTI E ON A.ENTE_ASSISTENTE=E.ID "
+						+ "LEFT JOIN PROVINCE P ON A.PROVINCIA=P.COD_PROVINCIA "
+						+ "LEFT JOIN NAZIONI N ON A.NAZIONALITA=N.CODICE "
+						+ "LEFT JOIN STATI_CIVILI S ON A.STATO_CIVILE=S.ID "
 						+ "WHERE COD_FISCALE=?";
 		try {
 			pStmt = dbConnection.prepareStatement(query);
@@ -222,25 +233,30 @@ public class AssistitiDao {
 				assistito.setNome(rs.getString("NOME"));
 				assistito.setCognome(rs.getString("COGNOME"));
 				assistito.setSesso(rs.getString("SESSO"));
-				assistito.setStato_civile(rs.getString("STATO_CIVILE"));
+				assistito.setStato_civile(rs.getInt("STATO_CIVILE"));
+				assistito.setDesc_stato_civile(rs.getString("S.DESCRIZIONE"));
 				assistito.setLuogo_nascita(rs.getString("LUOGO_NASCITA"));
 				assistito.setData_nascita(rs.getDate("DATA_NASCITA"));
 				assistito.setNazionalita(rs.getString("NAZIONALITA"));
+				assistito.setDenominazione(rs.getString("DENOMINAZIONE"));
 				assistito.setIndirizzo_residenza(rs.getString("INDIRIZZO_RESIDENZA"));
 				assistito.setCitta_residenza(rs.getString("CITTA_RESIDENZA"));
 				assistito.setCap(rs.getString("CAP"));
 				assistito.setProvincia(rs.getInt("PROVINCIA"));
+				assistito.setSigla_autom(rs.getString("SIGLA_AUTOM"));
 				assistito.setPermesso_soggiorno(rs.getString("PERMESSO_SOGGIORNO"));
 				assistito.setTelefono(rs.getString("TELEFONO"));
 				assistito.setEmail(rs.getString("EMAIL"));
 				assistito.setNum_documento(rs.getString("NUM_DOCUMENTO"));
 				assistito.setEnte_assistente(rs.getInt("ENTE_ASSISTENTE"));
+				assistito.setDescrizione(rs.getString("DESCRIZIONE"));
 				assistito.setData_inserimento(rs.getDate("DATA_INSERIMENTO"));
 				assistito.setData_fine_assistenza(rs.getDate("DATA_FINE_ASSISTENZA"));
 				assistito.setData_candidatura(rs.getDate("DATA_CANDIDATURA"));
 				assistito.setData_accettazione(rs.getDate("DATA_ACCETTAZIONE"));
 				assistito.setData_dismissione(rs.getDate("DATA_DISMISSIONE"));
 				assistito.setOperatore(rs.getInt("OPERATORE"));
+				assistito.setPunteggio_idb(rs.getInt("PUNTEGGIO_IDB"));
 			}
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());

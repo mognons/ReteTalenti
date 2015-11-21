@@ -120,18 +120,43 @@
 	function openPage(page) {
 		var popup = document.getElementById('modalDialogBox');
 		popup.src = page;
-//		popup.src = "showCFDetails.action?codice_fiscale="+ errorMessage.errorMsg+"&origin="+ errorMessage.origin;
 		(function() {
 			$('#pop-up').dialog({
 				modal : true,
 				resizable : false,
 				draggable : false,
 				width : '800',
-				height : '600',
-				title : 'Prova'
+				height : '400',
+				title : 'Calcolo punteggio Indice di Bisogno'
 			});
 		})();
 	};
+
+	function showSchedaAssistito(page) {
+		var popup = document.getElementById('modalDialogBox');
+		popup.src = page;
+		(function() {
+			$('#pop-up').dialog({
+				modal : true,
+				resizable : false,
+				draggable : false,
+				scrollable: true,
+				width : '1024',
+				height : '800',
+				title : 'Scheda Anagrafica',
+			    buttons: {
+			    	"Chiudi": function() {
+			    		$('#pop-up').dialog("close"); 
+			    	},
+			    	"Stampa": function() {
+			    		window.frames["modalDialogBox"].print(); 
+			    	} 
+				} 
+			});
+		})();
+	};
+
+	
 	function openDialog(errorMessage) {
 		var popup = document.getElementById('modalDialogBox');
 		popup.src = "showCFDetails.action?codice_fiscale="+ errorMessage.cf_search+"&origin="+ errorMessage.origin;
@@ -142,7 +167,8 @@
 				draggable : false,
 				width : '800',
 				height : '600',
-				title : 'Codice Fiscale già inserito in Rete Talenti'
+				title : 'Codice Fiscale già inserito in Rete Talenti',
+			    buttons: { "Chiudi": function() { $(this).dialog("close"); } } 
 			});
 		})();
 	};

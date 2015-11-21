@@ -17,19 +17,20 @@ public class Assistito {
     private String nome;
     private String cognome;
     private String sesso;
-    private String stato_civile;
+    private int stato_civile;
+    private String desc_stato_civile; // da TAB.STATI_CIVILI
     private String luogo_nascita;
     private Date data_nascita;
 
     private String nazionalita;
-    private String denominazione;
+    private String denominazione; // da TAB.NAZIONI
 
     private String indirizzo_residenza;
     private String citta_residenza;
     private String cap;
 
     private int provincia;
-    private String sigla_autom;
+    private String sigla_autom; // da TAB.PROVINCE
 
     private String permesso_soggiorno;
     private String telefono;
@@ -37,7 +38,9 @@ public class Assistito {
     private String num_documento;
 
     private int ente_assistente;
-    private String descrizione;
+    private String descrizione; // da TAB.ENTI
+    
+    private int punteggio_idb;
 
     private Date data_inserimento;
     private Date data_fine_assistenza;
@@ -83,11 +86,11 @@ public class Assistito {
         this.sesso = sesso;
     }
 
-    public String getStato_civile() {
+    public int getStato_civile() {
         return stato_civile;
     }
 
-    public void setStato_civile(String stato_civile) {
+    public void setStato_civile(int stato_civile) {
         this.stato_civile = stato_civile;
     }
 
@@ -266,5 +269,21 @@ public class Assistito {
     public void setUsername(String username) {
         this.username = username;
     }
+
+	public String getDesc_stato_civile() {
+		return desc_stato_civile;
+	}
+
+	public void setDesc_stato_civile(String desc_stato_civile) {
+		this.desc_stato_civile = desc_stato_civile;
+	}
+
+	public int getPunteggio_idb() {
+		return punteggio_idb;
+	}
+
+	public void setPunteggio_idb(int punteggio_idb) {
+		this.punteggio_idb = punteggio_idb;
+	}
     
 }

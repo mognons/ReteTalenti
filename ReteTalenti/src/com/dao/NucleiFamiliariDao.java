@@ -29,7 +29,7 @@ public class NucleiFamiliariDao {
 			pStmt.setString(3, convivente.getCognome());
 			pStmt.setString(4, convivente.getSesso());
 			pStmt.setDate(5, convivente.getData_nascita());
-			pStmt.setString(6, convivente.getTipo_parentela());
+			pStmt.setInt(6, convivente.getTipo_parentela());
 			pStmt.setString(7, convivente.getCf_assistito_nf());
 			pStmt.executeUpdate();
 		} catch (SQLException e) {
@@ -50,7 +50,7 @@ public class NucleiFamiliariDao {
 			pStmt.setString(2, convivente.getCognome());
 			pStmt.setString(3, convivente.getSesso());
 			pStmt.setDate(4, convivente.getData_nascita());
-			pStmt.setString(5, convivente.getTipo_parentela());
+			pStmt.setInt(5, convivente.getTipo_parentela());
 			pStmt.setString(6, convivente.getCodice_fiscale());
 			pStmt.executeUpdate();
 		} catch (SQLException e) {
@@ -62,7 +62,8 @@ public class NucleiFamiliariDao {
 		
 		List<NucleoFamiliare> NucleoFamiliare = new ArrayList<NucleoFamiliare>();
 		
-		String query = 	"SELECT * FROM NUCLEO_FAMILIARE " 
+		String query = 	"SELECT * FROM NUCLEO_FAMILIARE N " 
+						+ "LEFT JOIN GRADI_PARENTELA G ON N.TIPO_PARENTELA=G.ID "
 						+ "WHERE CF_ASSISTITO_NF=?"
 						+ "ORDER BY " + jtSorting + " "
 						+ "LIMIT " + Integer.toString(jtPageSize) + " OFFSET "
@@ -79,8 +80,9 @@ public class NucleiFamiliariDao {
 				convivente.setCognome(rs.getString("COGNOME"));
 				convivente.setSesso(rs.getString("SESSO"));
 				convivente.setData_nascita(rs.getDate("DATA_NASCITA"));
-				convivente.setTipo_parentela(rs.getString("TIPO_PARENTELA"));
+				convivente.setTipo_parentela(rs.getInt("TIPO_PARENTELA"));
 				convivente.setCf_assistito_nf(cod_fiscale);
+				convivente.setDesc_tipo_parentela(rs.getString("DESCRIZIONE"));
 				NucleoFamiliare.add(convivente);
 			
 			}
@@ -112,7 +114,8 @@ public class NucleiFamiliariDao {
 		
 		NucleoFamiliare convivente = new NucleoFamiliare();
 		
-		String query = 	"SELECT * FROM NUCLEO_FAMILIARE " 
+		String query = 	"SELECT * FROM NUCLEO_FAMILIARE N " 
+						+ "LEFT JOIN GRADI_PARENTELA G ON N.TIPO_PARENTELA=G.ID "
 						+ "WHERE CODICE_FISCALE=?";
 		try {
 			pStmt = dbConnection.prepareStatement(query);
@@ -126,8 +129,9 @@ public class NucleiFamiliariDao {
 				convivente.setCognome(rs.getString("COGNOME"));
 				convivente.setSesso(rs.getString("SESSO"));
 				convivente.setData_nascita(rs.getDate("DATA_NASCITA"));
-				convivente.setTipo_parentela(rs.getString("TIPO_PARENTELA"));
+				convivente.setTipo_parentela(rs.getInt("TIPO_PARENTELA"));
 				convivente.setCf_assistito_nf(cod_fiscale);
+				convivente.setDesc_tipo_parentela(rs.getString("DESCRIZIONE"));
 			}
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());

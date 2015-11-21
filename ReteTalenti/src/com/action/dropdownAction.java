@@ -16,6 +16,22 @@ public class dropdownAction extends ActionSupport {
 	
 	private List<JSONObject> options;
 
+	public String StatiCivili() {
+		options = new ArrayList<JSONObject> ();
+		options = dao.getAllStatiCivili();
+		System.out.println("Inside getAllStatiCivili()");
+		result = "OK";
+		return Action.SUCCESS;
+	}
+
+	public String GradiParentela() {
+		options = new ArrayList<JSONObject> ();
+		options = dao.getAllGradiParentela();
+		System.out.println("Inside getAllGradiParentela()");
+		result = "OK";
+		return Action.SUCCESS;
+	}
+
 	public String Utenti() {
 		options = new ArrayList<JSONObject> ();
 		options = dao.getAllUsers();

@@ -8,8 +8,7 @@
         selecting: false, // Enable selecting
         multiselect: false, // Allow multiple selecting
         selectingCheckboxes: true, // Show checkboxes on first column
-        selectOnRowClick: false, // Enable this to only select using
-									// checkboxes
+        selectOnRowClick: false, // Enable this to only select using checkboxes
         pageSizeChangeArea: false,
         openChildAsAccordion: true,
         actions: {
@@ -85,10 +84,8 @@
                                     create: true
                                 },
                                 tipo_parentela: {
-                                	title: 'Legame',
-                                	options: { 	'C': 'Coniuge',
-                                				'F': 'Figlio/a', 
-                                				'N': 'Convivente' },
+                                	title: 'Relazione',
+                                	options: 'Choose_GradiParentela',
                                     list: true,
                                     edit: true,
                                     create: true
@@ -122,12 +119,14 @@
                 width: '1%',
                 edit: false,
                 create: false,
-                display: function (userData) {
+                display: function (assistito) {
                     // Create an image that will be used to open child table
                     var $img = $('<span align="CENTER"><img src="icons/Dollar.png" width="16" height="16" title="Calcolo IDB"/></span>');
                     // Open Foreign Form
                     $img.click(function () {
-                    	openPop();
+                    	openPage('getDataIDBAction.action?cf_assistito_ib=' + assistito.record.cod_fiscale
+                    			+ '&nome=' + assistito.record.nome
+                    			+ '&cognome=' + assistito.record.cognome);
                     });
                     return $img;
                 }
@@ -185,7 +184,6 @@
                                     inputClass: 'validate[required]',
                                     width: '90%',
                                     input: function (data) {
-                                    	console.log(data);
                                         if (data.value) {
                                             return '<textarea name="note_libere" readonly rows="4" cols="50">' + data.value + '</textarea>';
                                         } else {
@@ -230,6 +228,14 @@
             cod_fiscale: {
                 key: true,
                 title: 'Codice Fiscale',
+                display: function(data) {
+                	var page = "'ShowSchedaAssistito?codice_fiscale="+ data.record.cod_fiscale + "'";
+					html = '<a href="javascript:showSchedaAssistito(' + page + ')'  
+					+ '" target="_blank">' 
+					+ data.record.cod_fiscale 
+					+ '</a>';
+					return html;
+				},
                 inputTitle: 'Codice Fiscale' + ' <span style="color:red">*</span>',
                 inputClass: 'validate[required],funcCall[checkCF]',
                 width: '10%',
@@ -269,6 +275,7 @@
                 inputTitle: 'Stato Civile' + ' <span style="color:red">*</span>',
                 inputClass: 'validate[required]',
                 width: '20%',
+                options: 'Choose_StatiCivili',
                 list: false,
                 edit: true,
                 create: true
@@ -321,7 +328,6 @@
                 title: 'CAP',
                 inputTitle: 'CAP' + ' <span style="color:red">*</span>',
                 inputClass: 'validate[required]',
-                width: '20%',
                 list: false,
                 edit: true,
                 create: true
@@ -336,12 +342,19 @@
                 create: true
             },
             permesso_soggiorno: {
-            	title: 'Permesso Soggiorno',
+            	title: 'Perm. Sogg.',
+            	width: '7%',
 				type: 'checkbox',
 				defaultValue: 'N',
 				values:  {'N' : 'No' ,'S' : 'Sì'},
                 list: true,
                 edit: true
+            },
+            punteggio_idb: {
+            	title: 'IdB',
+            	width: '7%',
+                list: true,
+                edit: false
             },
             telefono: {
                 title: 'Telefono',

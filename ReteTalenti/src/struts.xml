@@ -32,7 +32,16 @@
         	</action>
         	
         	<action name="showCFDetails" class="com.action.ShowCFDetailsAction">
-            	<result>/showCFDetails.jsp</result>
+            	<result name="success">/showCFDetails.jsp</result>
+        	</action>
+        	
+        	<action name="ShowSchedaAssistito" class="com.action.ShowSchedaAssistitoAction">
+            	<result name="success">/showAnagDetails.jsp</result>
+        	</action>
+        	
+        	<action name="*IDBAction" class="com.action.IndiceBisognoAction" method="{1}">
+        	    <result name="success">/indiceBisogno.jsp</result>
+        	    <result name="error">/error.jsp</result>
         	</action>
         	
  			<action name="*Link" class="com.action.LinkAction" method="{1}">
@@ -71,6 +80,7 @@
         	    <result name="input" type="tiles">/login.tiles</result>
         	    <result name="error">/error.jsp</result>
         	</action>
+
 
         	<action name="welcome" class="com.action.WelcomeAction">
         	    <result name="success">welcome.jsp</result>

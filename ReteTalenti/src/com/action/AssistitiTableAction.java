@@ -45,7 +45,6 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
     private String nome;
     private String cognome;
     private String sesso;
-    private String stato_civile;
     private String luogo_nascita;
     private Date data_nascita;
 
@@ -56,7 +55,7 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
     private String citta_residenza;
     private String cap;
 
-    private int provincia;
+    private int provincia, stato_civile;
     private String sigla_autom;
 
     private String permesso_soggiorno;
@@ -67,6 +66,7 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
     private int ente_assistente; //fk ID della tabella enti INT(11)
     private String descrizione;
 
+    private int punteggio_idb;
     private Date data_inserimento;
     private Date data_fine_assistenza;
     private Date data_candidatura;
@@ -329,11 +329,11 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
         this.sesso = sesso;
     }
 
-    public String getStato_civile() {
+    public int getStato_civile() {
         return stato_civile;
     }
 
-    public void setStato_civile(String stato_civile) {
+    public void setStato_civile(int stato_civile) {
         this.stato_civile = stato_civile;
     }
 
@@ -557,6 +557,16 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
 
 	public void setCognome_search(String cognome_search) {
 		this.cognome_search = cognome_search;
+	}
+
+
+	public int getPunteggio_idb() {
+		return punteggio_idb;
+	}
+
+
+	public void setPunteggio_idb(int punteggio_idb) {
+		this.punteggio_idb = punteggio_idb;
 	}
 
 }

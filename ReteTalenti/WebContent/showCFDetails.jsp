@@ -13,11 +13,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-<div class="site-container">
+<div class="ui-tabs-panel ui-widget-content ui-corner-bottom">
 		<s:if test="(convivente.nome!=null)">
 			<h3>Convivente</h3>
 			<table>
 				<tbody>
+					<tr>
+						<td>Codice Fiscale</td>
+						<td><s:property value="%{convivente.cf_assistito_nf}"/></td>
+					</tr>
 					<tr>
 						<td>Nome</td>
 						<td><s:property value="%{convivente.nome}"/></td>
@@ -28,7 +32,7 @@
 					</tr>
 					<tr>
 						<td>Parentela</td>
-						<td><s:property value="%{convivente.tipo_parentela}"/></td>
+						<td><s:property value="%{convivente.desc_tipo_parentela}"/></td>
 					</tr>
 					<tr>
 						<td>Data di Nascita</td>
@@ -39,6 +43,12 @@
 			<h3>Assistito</h3>
 			<table>
 				<tbody>
+					<s:if test="(convivente.nome!=null)">
+						<tr>
+							<td>Codice Fiscale</td>
+							<td><s:property value="%{assistito.cod_fiscale}"/></td>
+						</tr>
+						</s:if>
 					<tr>
 						<td>Nome</td>
 						<td><s:property value="%{assistito.nome}"/></td>

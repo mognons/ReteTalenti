@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.action;
 
 import com.dao.IndiceBisognoDao;
@@ -19,15 +14,13 @@ import java.util.List;
  *
  * @author gminardi
  */
-public class IndiceBisognoTableAction extends ActionSupport implements UserAware {
+public class IndiceBisognoAction extends ActionSupport implements UserAware {
     
     private static final long serialVersionUID = 1L;
     private IndiceBisognoDao dao = new IndiceBisognoDao();
-    private List<IndiceBisogno> records;
     private String result;
     private String message;
-    private IndiceBisogno record;
-    private int totalRecordCount, jtStartIndex, jtPageSize;
+    private IndiceBisogno recordIDB;
     private String jtSorting;
     //
     private int id;
@@ -45,109 +38,81 @@ public class IndiceBisognoTableAction extends ActionSupport implements UserAware
     private int spese_imp_punti;
     private int urgenza_punti;
     private int totalepunti;
-    private String cf_assistito_ib;
+    private String cf_assistito_ib, nome, cognome;
     private Date data_inserimento;
     
     private User user = new User();
     
-    public String list() {
-        jtSorting = "DESCRIZIONE ASC";
-        try {
-            // Fetch Data from Indici Bisogno
-            records = dao.getAllIndiciBisogno(jtStartIndex, jtPageSize, jtSorting);
-            result = "OK";
-            totalRecordCount = dao.getIndiciBisognoRecordCount();
-            
-        } catch (Exception e) {
-            result = "ERROR";
-            message = e.getMessage();
-            System.err.println(e.getMessage());
-        }
-        return SUCCESS;
+    public String getData() {
+    	recordIDB = dao.getIndiceBisogno(cf_assistito_ib);
+    	if (recordIDB!=null) {
+    		System.out.println("Found " + recordIDB.getCf_assistito_ib());
+    	} else {
+			recordIDB.setIsee_euro(0);
+			recordIDB.setCc_euro(0);
+			recordIDB.setCa_euro(0);
+			recordIDB.setCs_euro(0);
+			recordIDB.setStato_disoc(0);
+			recordIDB.setSpese_imp(0);
+			recordIDB.setUrgenza(0);
+			recordIDB.setId(0);
+			recordIDB.setIsee_punti(0);
+			recordIDB.setEntrate_nc_punti(0);
+			recordIDB.setStato_disoc_punti(0);
+			recordIDB.setSpese_imp_punti(0);
+			recordIDB.setUrgenza_punti(0);
+			recordIDB.setTotalepunti(0);
+			recordIDB.setCf_assistito_ib(cf_assistito_ib);
+    	}
+         return SUCCESS;
     }
-    
-    public String create() throws IOException {
-        
-        record = new IndiceBisogno();
-        record.setIsee_euro(isee_euro);
-        record.setCa_euro(ca_euro);
-        record.setCc_euro(cc_euro);
-        record.setCs_euro(cs_euro);
-//        record.setData_inserimento(data_inserimento);
-        record.setSpese_imp(spese_imp);
-        record.setStato_disoc(stato_disoc);
-        record.setUrgenza(urgenza);
-        
-        record.setIsee_punti(isee_punti);
-        record.setEntrate_nc_punti(entrate_nc_punti);
-        record.setStato_disoc_punti(stato_disoc_punti);
-        record.setSpese_imp_punti(spese_imp_punti);
-        record.setUrgenza_punti(urgenza_punti);
-        record.setTotalepunti(totalepunti);
-        
-        record.setCf_assistito_ib(cf_assistito_ib);
-        
-        try {
-            System.out.println("Creating " + cf_assistito_ib);
-            record.setId(dao.createIndiceBisogno(record));
-            result = "OK";
-        } catch (Exception e) {
-            message = e.getMessage();
-            System.err.println(e.getMessage());
-            result = "ERROR";
-        }
-        
-        return SUCCESS;
-    }
+
     
     public String update() throws IOException {
-        
-        record = new IndiceBisogno();
-        
-        record.setIsee_euro(isee_euro);
-        record.setCa_euro(ca_euro);
-        record.setCc_euro(cc_euro);
-        record.setCs_euro(cs_euro);
-        record.setSpese_imp(spese_imp);
-        record.setStato_disoc(stato_disoc);
-        record.setUrgenza(urgenza);
-        
-        record.setEntrate_nc_punti(entrate_nc_punti);
-        record.setSpese_imp_punti(spese_imp_punti);
-        record.setStato_disoc_punti(stato_disoc_punti);
-        record.setUrgenza_punti(urgenza_punti);
-        record.setIsee_punti(isee_punti);
-        record.setTotalepunti(totalepunti);
-           
-        
         System.out.println("Updating " + cf_assistito_ib);
-        
-        try {
-            // Update existing record
-            dao.updateIndiceBisogno(record);
-            result = "OK";
-        } catch (Exception e) {
-            result = "ERROR";
-            message = e.getMessage();
-            System.err.println(e.getMessage());
+        System.out.println("Totale Punti: " + totalepunti);
+        System.out.println("Cognome e Nome: " + cognome + " " + nome);
+        System.out.println("ID: "+ id);
+        recordIDB = new IndiceBisogno();
+        recordIDB.setId(id);
+        recordIDB.setIsee_euro(isee_euro);
+        recordIDB.setCa_euro(ca_euro);
+        recordIDB.setCc_euro(cc_euro);
+        recordIDB.setCs_euro(cs_euro);
+        recordIDB.setSpese_imp(spese_imp);
+        recordIDB.setStato_disoc(stato_disoc);
+        recordIDB.setUrgenza(urgenza);
+        recordIDB.setCf_assistito_ib(cf_assistito_ib);
+        recordIDB.setEntrate_nc_punti(entrate_nc_punti);
+        recordIDB.setSpese_imp_punti(spese_imp_punti);
+        recordIDB.setStato_disoc_punti(stato_disoc_punti);
+        recordIDB.setUrgenza_punti(urgenza_punti);
+        recordIDB.setIsee_punti(isee_punti);
+        recordIDB.setTotalepunti(totalepunti);
+        if (id==0) {
+            try {
+                // Insert INTO recordIDB
+                recordIDB.setId(dao.createIndiceBisogno(recordIDB));
+                result = "OK";
+            } catch (Exception e) {
+                result = "ERROR";
+                message = e.getMessage();
+                System.err.println(e.getMessage());
+            }
+        } else {
+            try {
+                // Update existing recordIDB
+                dao.updateIndiceBisogno(recordIDB);
+                result = "OK";
+            } catch (Exception e) {
+                result = "ERROR";
+                message = e.getMessage();
+                System.err.println(e.getMessage());
+            }
         }
         return SUCCESS;
     }
     
-    public String delete() throws IOException {
-        System.out.println("Deleting descrizione " + cf_assistito_ib);
-        try {
-            // Update existing record
-            dao.deleteIndiceBisogno(id);
-            result = "OK";
-        } catch (Exception e) {
-            result = "ERROR";
-            message = e.getMessage();
-            System.err.println(e.getMessage());
-        }
-        result = "OK";
-        return SUCCESS;
-    }
     
     @Override
     public void setUser(User user) {
@@ -162,13 +127,6 @@ public class IndiceBisognoTableAction extends ActionSupport implements UserAware
         this.dao = dao;
     }
     
-    public List<IndiceBisogno> getRecords() {
-        return records;
-    }
-    
-    public void setRecords(List<IndiceBisogno> records) {
-        this.records = records;
-    }
     
     public String getMessage() {
         return message;
@@ -178,38 +136,14 @@ public class IndiceBisognoTableAction extends ActionSupport implements UserAware
         this.message = message;
     }
     
-    public IndiceBisogno getRecord() {
-        return record;
+    public IndiceBisogno getrecordIDB() {
+        return recordIDB;
     }
     
-    public void setRecord(IndiceBisogno record) {
-        this.record = record;
+    public void setrecordIDB(IndiceBisogno recordIDB) {
+        this.recordIDB = recordIDB;
     }
-    
-    public int getTotalRecordCount() {
-        return totalRecordCount;
-    }
-    
-    public void setTotalRecordCount(int totalRecordCount) {
-        this.totalRecordCount = totalRecordCount;
-    }
-    
-    public int getJtStartIndex() {
-        return jtStartIndex;
-    }
-    
-    public void setJtStartIndex(int jtStartIndex) {
-        this.jtStartIndex = jtStartIndex;
-    }
-    
-    public int getJtPageSize() {
-        return jtPageSize;
-    }
-    
-    public void setJtPageSize(int jtPageSize) {
-        this.jtPageSize = jtPageSize;
-    }
-    
+        
     public String getJtSorting() {
         return jtSorting;
     }
@@ -354,5 +288,39 @@ public class IndiceBisognoTableAction extends ActionSupport implements UserAware
     public void setResult(String result) {
         this.result = result;
     }
+
+	public User getUser() {
+		return user;
+	}
+
+
+	public IndiceBisogno getRecordIDB() {
+		return recordIDB;
+	}
+
+
+	public void setRecordIDB(IndiceBisogno recordIDB) {
+		this.recordIDB = recordIDB;
+	}
+
+
+	public String getNome() {
+		return nome;
+	}
+
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+
+	public String getCognome() {
+		return cognome;
+	}
+
+
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
+	}
     
 }

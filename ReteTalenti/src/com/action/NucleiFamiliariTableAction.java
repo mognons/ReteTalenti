@@ -15,15 +15,16 @@ public class NucleiFamiliariTableAction extends ActionSupport implements UserAwa
 
 	private static final long serialVersionUID = 1L;
 	private NucleiFamiliariDao dao = new NucleiFamiliariDao();
+	// jTable
 	private List<NucleoFamiliare> records;
 	private String result;
-
 	private String message;
 	private NucleoFamiliare record;
 	private int totalRecordCount, jtStartIndex, jtPageSize;
 	private String jtSorting;
 	//
-	private String codice_fiscale, cf_assistito_nf, nome, cognome, sesso, tipo_parentela;
+	private String codice_fiscale, cf_assistito_nf, nome, cognome, sesso;
+	int tipo_parentela;
 	private Date data_nascita;
 	private User user = new User();
 
@@ -211,11 +212,11 @@ public class NucleiFamiliariTableAction extends ActionSupport implements UserAwa
 		this.sesso = sesso;
 	}
 
-	public String getTipo_parentela() {
+	public int getTipo_parentela() {
 		return tipo_parentela;
 	}
 
-	public void setTipo_parentela(String tipo_parentela) {
+	public void setTipo_parentela(int tipo_parentela) {
 		this.tipo_parentela = tipo_parentela;
 	}
 
