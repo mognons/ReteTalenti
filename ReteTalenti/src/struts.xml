@@ -51,6 +51,7 @@
 				<result name="uni_misura" type="tiles">/uni_misuratable.tiles</result>
 				<result name="eccedenze" type="tiles">/eccedenzetable.tiles</result>
 				<result name="impegni" type="tiles">/impegnitable.tiles</result>
+				<result name="ritiri" type="tiles">/ritiritable.tiles</result>
 				<result name="assistiti" type="tiles">/assistititable.tiles</result>
 				<result name="users" type="tiles">/userstable.tiles</result>
 				<result name="enti" type="tiles">/entitable.tiles</result>
@@ -116,11 +117,6 @@
 	        	<result name="login" type="redirect">/home.action</result>
 	       	</global-results>
         	                
-                <action name="*Groups" class="com.action.UsersGroupAction"
-                        method="{1}">
-                        <result type="json"></result>
-                </action>
-                
                 <action name="*DocumentsAction" class="com.action.DocumentsTableAction"
                         method="{1}">
                         <result type="json"></result>
@@ -142,6 +138,11 @@
                 </action>
                 
                 <action name="*ImpegniAction" class="com.action.ImpegniTableAction"
+                        method="{1}">
+                        <result type="json"></result>
+                </action>
+                
+                <action name="*RitiriAction" class="com.action.RitiriTableAction"
                         method="{1}">
                         <result type="json"></result>
                 </action>

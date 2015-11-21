@@ -48,22 +48,6 @@ public class ImpegniTableAction extends ActionSupport implements UserAware, Mode
         return SUCCESS;
     }
 
-    public String listOwn() {
-    	jtSorting = "DATA_RITIRO DESC";
-        try {
-            // Fetch Data from Enti Table
-            records = dao.getOwnImpegni(jtStartIndex, jtPageSize, jtSorting, user);
-            result = "OK";
-            totalRecordCount = dao.getCountOwnImpegni(user);
-
-        } catch (Exception e) {
-            result = "ERROR";
-            message = e.getMessage();
-            System.err.println(e.getMessage());
-        }
-        return SUCCESS;
-    }
-
     public String listOwnByEccedenza() {
     	jtSorting = "DATA_RITIRO DESC";
         try {

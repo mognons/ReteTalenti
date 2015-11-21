@@ -33,6 +33,11 @@
 		<put-attribute name="body" value="/impegniTable.jsp" />
 	</definition>
  
+	<definition name="/ritiritable.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Visualizzazione ritiri prenotati" />
+		<put-attribute name="body" value="/ritiriTable.jsp" />
+	</definition>
+ 
 	<definition name="/assistititable.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Anagrafica Assisti" />
 		<put-attribute name="body" value="/assistitiTable.jsp" />

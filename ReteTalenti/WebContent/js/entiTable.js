@@ -1,4 +1,4 @@
-$(document).ready(function () {
+﻿$(document).ready(function () {
     $('#EntiTableContainer').jtable({
         title: 'Gestione Enti',
         paging: true, //Enable paging

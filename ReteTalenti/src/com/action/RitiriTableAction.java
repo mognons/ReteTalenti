@@ -1,0 +1,243 @@
+package com.action;
+
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+
+import com.dao.EccedenzeDao;
+import com.dao.ImpegniDao;
+import com.interceptor.UserAware;
+import com.model.Eccedenza;
+import com.model.Impegno;
+import com.model.Ritiro;
+import com.model.User;
+import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
+
+public class RitiriTableAction extends ActionSupport implements UserAware, ModelDriven<User> {
+
+    private static final long serialVersionUID = 1L;
+    private ImpegniDao dao = new ImpegniDao();
+    private List<Ritiro> records;
+    private String result;
+
+    private String message;
+    private Ritiro record;
+    private int totalRecordCount, jtStartIndex, jtPageSize;
+    private String jtSorting;
+    //
+    private int id, ente_cedente, qta_prenotata, qta_residua;
+    private String prodotto, operatore, ora_ritiro;
+    private java.sql.Date scadenza, data_ritiro;
+    private java.util.Date timestamp;
+    private boolean ritiro_effettuato;
+    private User user = new User();
+
+
+    public String list() {
+    	jtSorting = "DATA_RITIRO ASC";
+        try {
+            // Fetch Data from Enti Table
+            records = dao.getOwnImpegni(jtStartIndex, jtPageSize, jtSorting, user);
+            result = "OK";
+            totalRecordCount = dao.getCountOwnImpegni(user);
+
+        } catch (Exception e) {
+            result = "ERROR";
+            message = e.getMessage();
+            System.err.println(e.getMessage());
+        }
+        return SUCCESS;
+    }
+    
+	@Override
+	public void setUser(User user) {
+		// TODO Auto-generated method stub
+		this.user = user;
+	}
+
+
+	public String getResult() {
+		return result;
+	}
+
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+
+	public String getMessage() {
+		return message;
+	}
+
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+
+	public int getTotalRecordCount() {
+		return totalRecordCount;
+	}
+
+
+	public void setTotalRecordCount(int totalRecordCount) {
+		this.totalRecordCount = totalRecordCount;
+	}
+
+
+	public int getJtStartIndex() {
+		return jtStartIndex;
+	}
+
+
+	public void setJtStartIndex(int jtStartIndex) {
+		this.jtStartIndex = jtStartIndex;
+	}
+
+
+	public int getJtPageSize() {
+		return jtPageSize;
+	}
+
+
+	public void setJtPageSize(int jtPageSize) {
+		this.jtPageSize = jtPageSize;
+	}
+
+
+	public String getJtSorting() {
+		return jtSorting;
+	}
+
+
+	public void setJtSorting(String jtSorting) {
+		this.jtSorting = jtSorting;
+	}
+
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public String getProdotto() {
+		return prodotto;
+	}
+
+
+	public void setProdotto(String prodotto) {
+		this.prodotto = prodotto;
+	}
+
+
+	public Date getScadenza() {
+		return scadenza;
+	}
+
+
+	public void setScadenza(java.sql.Date scadenza) {
+		this.scadenza = scadenza;
+	}
+
+
+	public String getOperatore() {
+		return operatore;
+	}
+
+
+	public void setOperatore(String operatore) {
+		this.operatore = operatore;
+	}
+
+
+	public Date getTimestamp() {
+		return timestamp;
+	}
+
+
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	@Override
+	public User getModel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int getQta_residua() {
+		return qta_residua;
+	}
+
+	public void setQta_residua(int qta_residua) {
+		this.qta_residua = qta_residua;
+	}
+
+	public int getQta_prenotata() {
+		return qta_prenotata;
+	}
+
+	public void setQta_prenotata(int qta_prenotata) {
+		this.qta_prenotata = qta_prenotata;
+	}
+
+	public java.sql.Date getData_ritiro() {
+		return data_ritiro;
+	}
+
+	public void setData_ritiro(java.sql.Date data_ritiro) {
+		this.data_ritiro = data_ritiro;
+	}
+
+	public boolean isRitiro_effettuato() {
+		return ritiro_effettuato;
+	}
+
+	public void setRitiro_effettuato(boolean ritiro_effettuato) {
+		this.ritiro_effettuato = ritiro_effettuato;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public String getOra_ritiro() {
+		return ora_ritiro;
+	}
+
+	public void setOra_ritiro(String ora_ritiro) {
+		this.ora_ritiro = ora_ritiro;
+	}
+
+	public List<Ritiro> getRecords() {
+		return records;
+	}
+
+	public void setRecords(List<Ritiro> records) {
+		this.records = records;
+	}
+
+	public Ritiro getRecord() {
+		return record;
+	}
+
+	public void setRecord(Ritiro record) {
+		this.record = record;
+	}
+
+	public int getEnte_cedente() {
+		return ente_cedente;
+	}
+
+	public void setEnte_cedente(int ente_cedente) {
+		this.ente_cedente = ente_cedente;
+	}
+
+}

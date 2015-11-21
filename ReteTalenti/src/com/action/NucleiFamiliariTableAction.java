@@ -46,7 +46,7 @@ public class NucleiFamiliariTableAction extends ActionSupport implements UserAwa
 
 	public String create() throws IOException {
 		record = new NucleoFamiliare();
-		record.setCodice_fiscale(codice_fiscale);
+		record.setCodice_fiscale(codice_fiscale.toUpperCase());
 		record.setNome(nome);
 		record.setCognome(cognome);
 		record.setData_nascita(data_nascita);
@@ -67,7 +67,7 @@ public class NucleiFamiliariTableAction extends ActionSupport implements UserAwa
 
 	public String update() throws IOException {
 		record = new NucleoFamiliare();
-		record.setCodice_fiscale(codice_fiscale);
+		record.setCodice_fiscale(codice_fiscale.toUpperCase());
 		record.setNome(nome);
 		record.setCognome(cognome);
 		record.setData_nascita(data_nascita);

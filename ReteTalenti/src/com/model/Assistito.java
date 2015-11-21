@@ -46,6 +46,7 @@ public class Assistito {
     private Date data_fine_assistenza;
     private Date data_candidatura;
     private Date data_accettazione;
+    private Date data_scadenza;
     private Date data_dismissione;
 
     private int operatore;
@@ -284,6 +285,14 @@ public class Assistito {
 
 	public void setPunteggio_idb(int punteggio_idb) {
 		this.punteggio_idb = punteggio_idb;
+	}
+
+	public Date getData_scadenza() {
+		return data_scadenza;
+	}
+
+	public void setData_scadenza(Date data_scadenza) {
+		this.data_scadenza = data_scadenza;
 	}
     
 }

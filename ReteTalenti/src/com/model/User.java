@@ -14,6 +14,7 @@ public class User {
 	private int ente;
 	private String descrizioneEnte;
 	private int provinciaEnte;
+	private Boolean enteEmporio;
 	private int groupId;
         
 	public String getPassword() {
@@ -93,5 +94,13 @@ public class User {
 
 	public void setGroupId(int groupId) {
 		this.groupId = groupId;
+	}
+
+	public Boolean getEnteEmporio() {
+		return enteEmporio;
+	}
+
+	public void setEnteEmporio(Boolean enteEmporio) {
+		this.enteEmporio = enteEmporio;
 	}
 }

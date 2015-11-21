@@ -16,7 +16,6 @@
 <!-- User defined Jtable js file -->
 <script src="scripts/jquery.jtable.it.js" type="text/javascript"></script>
 
-<meta charset="UTF-8">
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
 
 <style>
@@ -28,7 +27,7 @@
 
 .col2 {
 	float: right;
-	padding: 5px 5px 5px 10px;
+	padding: 8px 5px 5px 10px;
 	width: 45%;
 }
 </style>
@@ -54,7 +53,7 @@
 				return options.allrules.codicefiscale.alertText;
 			} else {
 				return;
-			}	
+			}
 		}
 	};
 
@@ -72,7 +71,9 @@
 				ajaxCallData = data;
 			},
 			error : function() {
-				ajaxCallData = [{status:false}];
+				ajaxCallData = [ {
+					status : false
+				} ];
 				alert('Ajax error');
 			}
 		})
@@ -82,13 +83,11 @@
 	function recordObfuscation(ente) {
 		// Ritorna TRUE se l'ente passato da jTable, record per record, è diverso dall'ente di appartenenza dell'utente, impedendo
 		// quindi la modifica o cancellazione del record stesso
-		return (!(ente == enteUtente) || (gruppoUtente==1));
+		return (!(ente == enteUtente) || (gruppoUtente == 1));
 	};
 
 	function addRecordObfuscation() {
-		// Ritorna TRUE se l'ente passato da jTable, record per record, è diverso dall'ente di appartenenza dell'utente, impedendo
-		// quindi la modifica o cancellazione del record stesso
-		return (gruppoUtente==1);
+		return (gruppoUtente == 1);
 	};
 
 	function validaCodiceFiscale(cf) {
@@ -116,7 +115,7 @@
 			return false;
 		return true;
 	};
-	
+
 	function openPage(page) {
 		var popup = document.getElementById('modalDialogBox');
 		popup.src = page;
@@ -140,26 +139,26 @@
 				modal : true,
 				resizable : false,
 				draggable : false,
-				scrollable: true,
+				scrollable : true,
 				width : '1024',
 				height : '800',
 				title : 'Scheda Anagrafica',
-			    buttons: {
-			    	"Chiudi": function() {
-			    		$('#pop-up').dialog("close"); 
-			    	},
-			    	"Stampa": function() {
-			    		window.frames["modalDialogBox"].print(); 
-			    	} 
-				} 
+				buttons : {
+					"Chiudi" : function() {
+						$('#pop-up').dialog("close");
+					},
+					"Stampa" : function() {
+						window.frames["modalDialogBox"].print();
+					}
+				}
 			});
 		})();
 	};
 
-	
 	function openDialog(errorMessage) {
 		var popup = document.getElementById('modalDialogBox');
-		popup.src = "showCFDetails.action?codice_fiscale="+ errorMessage.cf_search+"&origin="+ errorMessage.origin;
+		popup.src = "showCFDetails.action?codice_fiscale="
+				+ errorMessage.cf_search + "&origin=" + errorMessage.origin;
 		(function() {
 			$('#pop-up').dialog({
 				modal : true,
@@ -168,7 +167,11 @@
 				width : '800',
 				height : '600',
 				title : 'Codice Fiscale già inserito in Rete Talenti',
-			    buttons: { "Chiudi": function() { $(this).dialog("close"); } } 
+				buttons : {
+					"Chiudi" : function() {
+						$(this).dialog("close");
+					}
+				}
 			});
 		})();
 	};
@@ -179,10 +182,8 @@
 	<div id="filtering"
 		class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
 		<form>
-			Codice Fiscale <input type="text" name="cf_search"
-				id="cf_search" /> 
-			Cognome <input type="text"
-				name="cognome_search" id="cognome_search" />
+			Codice Fiscale <input type="text" name="cf_search" id="cf_search" />
+			Cognome <input type="text" name="cognome_search" id="cognome_search" />
 			<button type="submit" id="LoadRecordsButton">Ricerca</button>
 			<button type="submit" id="ResetsButton">Tutti</button>
 		</form>
@@ -190,8 +191,32 @@
 	<div id="pop-up" style="display: none;">
 		<iframe style="width: 98%; height: 98%;" id="modalDialogBox" src=""></iframe>
 	</div>
-	<div id="dialog" title="System message"></div>
+	<div id="dialog" title="Informazione dal sistema"></div>
 	<div id="AssistitiTableContainer"></div>
+	<div id="dialog-form" title="Create Course Calendar" class="ui-widget">
+		<form action="#">
+			<fieldset>
+				<div id="errorMessage"></div>
+				<label for="startDate">Start date</label>
+				<input type="text"
+					name="startDate" id="startDate"
+					class="text ui-widget-content ui-corner-all"> 
+				<input
+					type="hidden" id="courseId" name="courseId" /> 
+				<label
+					for="colorSelect">Choose events color</label> 
+				<input type='text'
+					name="colorSelect" id="colorSelect"> 
+				<input type="hidden"
+					id="calendarColor" name="calendarColor" value="#dfe3ee"> 
+				<input
+					type="hidden" id="courseName" name="courseName">
+				<!-- Allow form submission with keyboard without duplicating the dialog button -->
+				<input type="submit" tabindex="-1"
+					style="position: absolute; top: -1000px">
+			</fieldset>
+		</form>
+	</div>
 	<script src="js/assistitiTable.js" type="text/javascript"></script>
 </body>
 </html>

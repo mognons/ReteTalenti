@@ -18,6 +18,7 @@ import com.interceptor.UserAware;
 import com.jdbc.DataAccessObject;
 import com.model.Eccedenza;
 import com.model.Impegno;
+import com.model.Ritiro;
 import com.model.User;
 
 public class ImpegniDao {
@@ -86,10 +87,14 @@ public class ImpegniDao {
 		}
 	}
 
-	public List<Impegno> getOwnImpegni(int jtStartIndex, int jtPageSize, String jtSorting, User user) {
-		List<Impegno> impegni = new ArrayList<Impegno>();
-		String query = 	"select * from impegni "
+	public List<Ritiro> getOwnImpegni(int jtStartIndex, int jtPageSize, String jtSorting, User user) {
+		List<Ritiro> ritiri = new ArrayList<Ritiro>();
+		String query = 	"SELECT * FROM IMPEGNI I "
+						+ "INNER JOIN ECCEDENZE Z ON Z.ID=I.ID_ECCEDENZA "
+						+ "INNER JOIN ENTI E ON E.ID=Z.ENTE_CEDENTE "
+						+ "INNER JOIN UNI_MISURA U ON Z.UDM = U.ID "
 						+ "WHERE ENTE_RICHIEDENTE=? "
+						+ "AND RITIRO_EFFETTUATO IS FALSE "
 						+ "ORDER BY " + jtSorting
 						+ " LIMIT " + jtPageSize
 						+ " OFFSET " + jtStartIndex;
@@ -98,20 +103,23 @@ public class ImpegniDao {
 			pStmt.setInt(1, user.getEnte());
 			ResultSet rs = pStmt.executeQuery();
 			while (rs.next()) {
-				Impegno impegno = new Impegno();
+				Ritiro ritiro = new Ritiro();
 
-				impegno.setId(rs.getInt("ID"));
-				impegno.setEnte_richiedente(rs.getInt("ENTE_RICHIEDENTE"));
-				impegno.setQta_prenotata(rs.getInt("QTA_PRENOTATA"));
-				impegno.setData_ritiro(rs.getDate("DATA_RITIRO"));
-				impegno.setOra_ritiro(rs.getString("ORA_RITIRO"));
-				impegno.setRitiro_effettuato(rs.getBoolean("RITIRO_EFFETTUATO"));
-				impegni.add(impegno);
+				ritiro.setId(rs.getInt("I.ID"));
+				ritiro.setEnte_cedente(rs.getInt("ENTE_CEDENTE"));
+				ritiro.setProdotto(rs.getString("PRODOTTO"));
+				ritiro.setDesc_ente_cedente(rs.getString("E.DESCRIZIONE"));
+				ritiro.setDesc_udm(rs.getString("CODICE"));
+				ritiro.setQta_prenotata(rs.getInt("QTA_PRENOTATA"));
+				ritiro.setData_ritiro(rs.getDate("DATA_RITIRO"));
+				ritiro.setOra_ritiro(rs.getString("ORA_RITIRO"));
+				ritiro.setRitiro_effettuato(rs.getBoolean("RITIRO_EFFETTUATO"));
+				ritiri.add(ritiro);
 			}
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
-		return impegni;
+		return ritiri;
 	}
 
 	public List<Impegno> getOwnImpegniByEccedenza(int jtStartIndex, int jtPageSize, String jtSorting, User user, int id_eccedenza) {

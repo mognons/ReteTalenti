@@ -20,11 +20,26 @@
 td.dato {
 	font-weight:bold;
 }
+
+h1 {
+  	border-bottom: 1px solid gray;
+	padding: 1px 10px 1px 5px;
+	margin-bottom: 3px;
+}
+table {
+	padding: 1px 1px 1px 1px;
+}
+
+th {
+	text-align: left;
+    color: gray;
+	font-style: italic;
+}
 </style>
 </head>
 <body>
 	<div class="site-container">
-		<h2><s:property value="assistito.descrizione" /></h2>
+		<h1>Dati Anagrafici</h1>
 		<table>
 			<tbody>
 				<tr>
@@ -63,11 +78,10 @@ td.dato {
 				</tr>
 				<tr>
 					<td class="label">Residenza</td>
-				</tr>
-				<tr>
 					<td class="dato"><s:property value="%{assistito.indirizzo_residenza}" /></td>
 				</tr>
 				<tr>
+					<td></td>
 					<td class="dato"><s:property value="%{assistito.cap}" /> - <s:property value="%{assistito.citta_residenza}"/>
 						(<s:property value="%{assistito.sigla_autom}"/>)
 					</td>
@@ -80,26 +94,59 @@ td.dato {
 								value="%{assistito.email}" /></a></td>
 				</tr>
 				<tr>
-					<td>DATA INSERIMENTO</td>
+					<td class="label">Assistito da</td>
+					<td class="dato"><s:property value="assistito.descrizione" /></td>
+					<td class="label">dal</td>
 					<td class="dato"><s:date name="assistito.data_inserimento" format="dd/MM/yyyy"/></td>
+					<s:if test="assistito.data_fine_assistenza">
+						<td class="label">al</td>
+						<td class="dato"><s:date name="assistito.data_fine_assistenza"  format="dd/MM/yyyy"/></td>
+					</s:if>
 				</tr>
+				<s:if test="assistito.data_candidatura||assistito.data_accettazione||assistito.data_dismissione">
 				<tr>
-					<td>DATA FINE ASSISTENZA</td>
-					<td class="dato"><s:property value="%{assistito.data_fine_assistenza}" /></td>
+					<td class="label">Candidatura Emporio</td>
+					<td class="dato"><s:date name="assistito.data_candidatura" format="dd/MM/yyyy"/></td>
+					<td class="label">Accettato il </td>
+					<td class="dato"><s:date name="assistito.data_accettazione" format="dd/MM/yyyy"/></td>
+					<td class="label">Terminato il </td>
+					<td class="dato"><s:date name="assistito.data_dismissione" format="dd/MM/yyyy"/></td>
 				</tr>
-				<tr>
-					<td>DATA CANDIDATURA</td>
-					<td class="dato"><s:property value="%{assistito.data_candidatura}" /></td>
-				</tr>
-				<tr>
-					<td>DATA DISMISSIONE</td>
-					<td class="dato"><s:property value="%{assistito.data_dismissione}" /></td>
-				</tr>
+				</s:if>
 			</tbody>
 		</table>
 
+		<s:if test="(conviventi.size()!=0)">
+			<h1>Stato di famiglia</h1>
+			<table>
+				<thead>
+					<tr>
+						<th>Nome</th>
+						<th>Cognome</th>
+						<th>Codice fiscale</th>
+						<th>Data di nascita</th>
+						<th>Sesso</th>
+						<th>Relazione</th>
+					</tr>
+				</thead>
+				<s:iterator value="conviventi">
+					<tr>
+						<td><s:property value="nome" /></td>
+						<td><s:property value="cognome" /></td>
+						<td><s:property value="codice_fiscale"/></td>
+						<td><s:date name="data_nascita" format="dd/MM/yyyy"/></td>
+						<td><s:if test='sesso=="M"'>Maschio</s:if>
+							<s:elseif test='sesso=="F"'>Femmina</s:elseif>
+							<s:else>Non specificato</s:else>	
+						</td>
+						<td><s:property value="desc_tipo_parentela" /></td>
+					</tr>
+				</s:iterator>
+			</table>
+		</s:if>
+
 		<s:if test="note.size()!=0">
-			<h3>Note</h3>
+			<h1>Note</h1>
 			<table>
 				<thead>
 					<tr>
@@ -115,33 +162,7 @@ td.dato {
 				</s:iterator>
 			</table>
 		</s:if>
-
-		<s:if test="(conviventi.size()!=0)">
-			<h3>Stato di famiglia</h3>
-			<table>
-				<thead>
-					<tr>
-						<th align="left">Nome</th>
-						<th>Cognome</th>
-						<th>Data Di Nascita</th>
-						<th>Sesso</th>
-						<th>Relazione</th>
-					</tr>
-				</thead>
-				<s:iterator value="conviventi">
-					<tr>
-						<td><s:property value="nome" /></td>
-						<td><s:property value="cognome" /></td>
-						<td><s:date name="data_nascita" format="dd/MM/yyyy"/></td>
-						<td><s:if test='sesso=="M"'>Maschio</s:if>
-							<s:elseif test='sesso=="F"'>Femmina</s:elseif>
-							<s:else>Non specificato</s:else>	
-						</td>
-						<td><s:property value="desc_tipo_parentela" /></td>
-					</tr>
-				</s:iterator>
-			</table>
-		</s:if>
+		
 	</div>
 </body>
 </html>

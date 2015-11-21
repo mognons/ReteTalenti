@@ -19,6 +19,9 @@ public class LoginAction extends ActionSupport implements SessionAware, ModelDri
  
     @Override
     public String execute() throws Exception {
+    	if (user.getUsername() == null)
+    		return INPUT;
+    	
         if (dao.verifyLogin(user.getUsername(), user.getPassword())) {
             user = dao.getUserData(user.getUsername());
             sessionAttributes.put("USER", user);
@@ -31,15 +34,16 @@ public class LoginAction extends ActionSupport implements SessionAware, ModelDri
         }
     }
 	public void validate() {
-		if (user.getUsername().length() == 0) {
-			addFieldError( "username", "Field is required." );
+		if (user.getUsername() != null) {
+	    	if (user.getUsername().length() == 0) {
+				addFieldError( "username", "Field is required." );
+			}
+			if (user.getPassword().length() == 0) {
+				addFieldError( "password", "Field is required." );
+			}
 		}
-		if (user.getPassword().length() == 0) {
-			addFieldError( "password", "Field is required." );
-		}
-
-		
 	} 
+	
     private User user = new User();
     private Map<String, Object> sessionAttributes = null;
  

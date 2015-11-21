@@ -1,22 +1,166 @@
 ﻿$(document).ready(function () {
+	// CUT HERE
+	var courseRecord;
+	function generateCalendar() {
+		var courseId = $("#courseId").val(); 
+		var courseName = $("#courseName").val(); 
+		var calendarColor = $("#calendarColor").val();
+		var startDate = $("#startDate").val();
+		var selected = [];
+		$("#days :checked").each(function() {
+			selected.push($(this).val());
+		});
+		$.Deferred(function ($dfd) {
+			$.ajax({
+				traditional: true, // THIS IS MANDATORY FOR ARRAYS
+				url: 'CalendarEvents_generateCalendar',
+				type: 'POST',
+				dataType: 'json',
+				data: {
+					courseId: courseId,
+					courseName: courseName,
+					calendarColor: calendarColor,
+					startDate: startDate,
+					selectedDays: selected
+				},
+				success: function (data) {
+					$dfd.resolve(data);
+					if (data.message) {
+						console.log(data.message);
+						$('#errorMessage').html("<h3>"+data.message+"</h3	>");
+					} else {
+						dialog.dialog("close");	
+					};
+				},
+				error: function () {
+					alert("si è rotto");
+					$dfd.reject();
+				}
+			});
+		});
+	};
+	var dialog = $("#dialog-form").dialog({
+		title: "Generate new calendar: previous events will be deleted",
+		autoOpen : false,
+		height : 450,
+		width : 400,
+		modal : true,
+		buttons : {
+			"Generate Events" : generateCalendar,
+			Cancel : function() {
+				dialog.dialog("close");
+			}
+		},
+		close : function() {
+			form[0].reset();
+			// allFields.removeClass("ui-state-error");
+		}
+	});
+	var form = dialog.find( "form" ).on( "submit", function( event ) {
+		event.preventDefault();
+		addUser();
+	});
+	// CUT HERE
     $('#AssistitiTableContainer').jtable({
         title: 'Gestione Anagrafica Assistiti',
         paging: true, // Enable paging
         pageSize: 15, // Set page size (default: 10)
         sorting: false, // Enable sorting
         defaultSorting : 'COD_FISCALE ASC', //Set default sorting
-        selecting: false, // Enable selecting
+        selecting: true, // Enable selecting
         multiselect: false, // Allow multiple selecting
         selectingCheckboxes: true, // Show checkboxes on first column
-        selectOnRowClick: false, // Enable this to only select using checkboxes
+        selectOnRowClick: true, // Enable this to only select using checkboxes
         pageSizeChangeArea: false,
         openChildAsAccordion: true,
         actions: {
             listAction: 'listAssistitiAction',
             createAction: 'createAssistitiAction',
             updateAction: 'updateAssistitiAction',
-            deleteAction: 'deleteAssistitAction'
+            deleteAction: 'deleteAssistitiAction'
         },
+		toolbar: {
+			items: [{
+				text: 'Ri-attiva',
+				icon: 'icons/Green%20pin.png',
+				click: function () {
+					return $.Deferred(function ($dfd) {
+						var $selectedRows = $('#AssistitiTableContainer').jtable('selectedRows');
+						$selectedRows.each(function () {
+							var record = $(this).data('record');
+							$.ajax({
+								url: 'CloneCourse',
+								type: 'POST',
+								dataType: 'json',
+								data: record,
+								success: function (data) {
+									$dfd.resolve(data);
+									$("#dialog").dialog({
+										modal: true,
+										buttons: [
+										   {
+											   text: "Dismiss",
+										       click: function() {
+										       	  $( this ).dialog( "close" );
+										       }
+										   }
+										],
+								        open: function(){
+								        	  $("#dialog").html("Course succesfully cloned!")
+								        }
+									});
+									$('#AssistitiTableContainer').jtable('reload');
+								},
+								error: function () {
+									$dfd.reject();
+								}
+							});
+						}
+						);
+					})}
+			},
+			{
+				text: 'Trasferimento',
+				icon: 'icons/Forward.png',
+				click: function () {
+					var $selectedRows = $('#AssistitiTableContainer').jtable('selectedRows');
+					$selectedRows.each(function () {
+						courseRecord = $(this).data('record');
+						var name = courseRecord.name;
+						var startDate = courseRecord.startDate;
+						if (!courseRecord.courseActive) {
+							$("#dialog").dialog({
+								modal: true,
+								buttons: [
+								          {
+								        	  text: "Dismiss",
+								        	  click: function() {
+								        		  $(this).dialog( "close" );
+								        	  }
+								          }
+								          ],
+								          open: function(){
+								        	  $("#dialog").html("Selected course is <b>NOT</b> active." +
+								        	  "<br>Calendar generation must be performed only on active courses")
+								          }
+							});
+						} else {
+							if (startDate.substr(0,5)=="/Date") {
+								tempDate = startDate.substr(6,13)
+								myDate = new Date(parseInt(tempDate));
+								startDate = myDate.toISOString();
+							}
+							$('#dialog-form').find('input[name="startDate"]').val(startDate.substr(0,10));
+							$('#dialog-form').find('input[name="courseName"]').val(courseRecord.name);
+							$('#dialog-form').find('input[name="name"]').val(name);
+							$('#dialog-form').find('input[name="courseId"]').val(courseRecord.courseId);
+							dialog.dialog( "open" );
+						}
+					}); // End of EACH
+				}
+			}
+			]
+        }, // END OF TOOLBAR
         fields: {
             // CHILD TABLE DEFINITION FOR "NUCLEO FAMILIARE"
             nucleo_familiare: {
@@ -83,6 +227,15 @@
                                     edit: true,
                                     create: true
                                 },
+                                sesso: {
+                                	title: 'Sesso',
+                                	options: { 	'M': 'Maschio',
+                        						'F': 'Femmina', 
+                        						'-': 'Altro' },
+                                    list: true,
+                                    edit: true,
+                                    create: true
+                                },
                                 tipo_parentela: {
                                 	title: 'Relazione',
                                 	options: 'Choose_GradiParentela',
@@ -104,7 +257,18 @@
                             formClosed: function (event, data) {
                                 data.form.validationEngine('hide');
                                 data.form.validationEngine('detach');
-                            }
+                            }, 
+                            recordsLoaded: function(event, data) {
+                          	  if (userData.record.data_fine_assistenza) {
+                          	     $('#AssistitiTableContainer').find('.jtable-toolbar-item.jtable-toolbar-item-add-record').remove();
+                          	  }
+                            },
+                            rowInserted: function(event, data){
+	                         	if (userData.record.data_fine_assistenza) {
+	                                data.row.find('.jtable-edit-command-button').hide();
+	                                data.row.find('.jtable-delete-command-button').hide();
+	                            }
+	                        }
                         },
                         function (data) { // opened handler
                         	data.childTable.jtable('load');
@@ -194,7 +358,18 @@
                                     edit: true,
                                     create: true
                                 }
-                            },        
+                            }, 
+                            recordsLoaded: function(event, data) {
+                            	  if (userData.record.data_fine_assistenza) {
+                            	     $('#AssistitiTableContainer').find('.jtable-toolbar-item.jtable-toolbar-item-add-record').remove();
+                            	  }
+                              },
+                            rowInserted: function(event, data){
+	                         	if (userData.record.data_fine_assistenza) {
+	                                data.row.find('.jtable-edit-command-button').hide();
+	                                data.row.find('.jtable-delete-command-button').hide();
+	                              }
+	                        },
                             formCreated: function (event, data) {
                                 data.form.validationEngine('attach',{promptPosition : "bottomLeft", scroll: false});
                                 data.form.find('input[name=nome]').css('width', '200px');
@@ -229,11 +404,15 @@
                 key: true,
                 title: 'Codice Fiscale',
                 display: function(data) {
-                	var page = "'ShowSchedaAssistito?codice_fiscale="+ data.record.cod_fiscale + "'";
-					html = '<a href="javascript:showSchedaAssistito(' + page + ')'  
-					+ '" target="_blank">' 
-					+ data.record.cod_fiscale 
-					+ '</a>';
+                	if (recordObfuscation(data.record.ente_assistente)) {
+                		html = data.record.cod_fiscale;
+                	} else {
+	                	var page = "'ShowSchedaAssistito?codice_fiscale="+ data.record.cod_fiscale + "'";
+						html = '<a href="javascript:showSchedaAssistito(' + page + ')'  
+						+ '" target="_blank">' 
+						+ data.record.cod_fiscale 
+						+ '</a>';
+                	}
 					return html;
 				},
                 inputTitle: 'Codice Fiscale' + ' <span style="color:red">*</span>',
@@ -248,6 +427,13 @@
                 inputTitle: 'Nome' + ' <span style="color:red">*</span>',
                 inputClass: 'validate[required]',
                 width: '10%',
+                display: function(data) {
+                	if (data.record.data_fine_assistenza!=null) {
+                		return '<span style="color:red; font-style: italic;" >'+  data.record.nome + '</span>';
+                	} else {
+                		return data.record.nome;
+                	}
+                },
                 list: true,
                 edit: true,
                 create: true
@@ -257,6 +443,13 @@
                 inputTitle: 'Cognome' + ' <span style="color:red">*</span>',
                 inputClass: 'validate[required]',
                 width: '20%',
+                display: function(data) {
+                	if (data.record.data_fine_assistenza!=null) {
+                		return '<span style="color:red; font-style: italic;" >'+  data.record.cognome + '</span>';
+                	} else {
+                		return data.record.cognome;
+                	}
+                },
                 list: true,
                 edit: true,
                 create: true
@@ -352,9 +545,18 @@
             },
             punteggio_idb: {
             	title: 'IdB',
-            	width: '7%',
+            	inputTitle: 'Indice di bisogno',
+            	width: '5%',
                 list: true,
-                edit: false
+                edit: true,
+                input: function(data) {
+                    if (!data.formType=="create") {
+                		html='<input style="text-align:right; background-color: #F2F5F7;" size="3" readonly value="'+  data.record.punteggio_idb + '"/>';
+                	} else {
+                		html='<input style="text-align:right; background-color: #F2F5F7;" size="3" readonly value="0"/>';
+                	}
+                	return html;
+				},
             },
             telefono: {
                 title: 'Telefono',
@@ -380,6 +582,36 @@
                 list: false,
                 edit: true,
                 create: true
+            },
+            data_fine_assistenza: {
+            	type: 'date',
+                list: false,
+                edit: false,
+                create: false
+            },
+            data_inserimento: {
+            	type: 'date',
+                list: false,
+                edit: false,
+                create: false
+            },
+            data_candidatura: {
+            	type: 'date',
+                list: false,
+                edit: false,
+                create: false
+            },
+            data_accettazione: {
+            	type: 'date',
+                list: false,
+                edit: false,
+                create: false
+            },
+            data_dismissione: {
+            	type: 'date',
+                list: false,
+                edit: false,
+                create: false
             }
         },
         recordsLoaded: function(event, data) {
@@ -388,7 +620,7 @@
       	  }
         },
         rowInserted: function(event, data){
-        	if (recordObfuscation(data.record.ente_assistente)) {
+        	if (recordObfuscation(data.record.ente_assistente) || (data.record.data_fine_assistenza)) {
               data.row.find('.jtable-edit-command-button').hide();
               data.row.find('.jtable-delete-command-button').hide();
             }
@@ -401,7 +633,7 @@
             data.form.find('input[name=num_documento]').css('width', '200px');
             data.form.find('input[name=email]').css('width', '200px');
             data.form.find('select[name=nazionalita]').css('width', '150px');
-            data.form.children(':lt(8)').wrapAll('<div class="col1"/>');
+            data.form.children(':lt(9)').wrapAll('<div class="col1"/>');
             data.form.children(':gt(0)').wrapAll('<div class="col2"/>');
             data.form.validationEngine('attach',{promptPosition : "bottomLeft", scroll: false});
         },

@@ -33,7 +33,7 @@
         paging: true, // Enable paging
         pageSize: 15, // Set page size (default: 10)
         sorting: false, // Enable sorting
-        selecting: true, // Enable selecting
+        selecting: false, // Enable selecting
         multiselect: false, // Allow multiple selecting
         selectingCheckboxes: true, // Show checkboxes on first column
         selectOnRowClick: false, // Enable this to only select using
@@ -88,7 +88,7 @@
 									type: 'hidden',
 									edit: false,
 									create: false
-                                }                                	,
+                                },
                                 qta_prenotata: {
                                 	title: 'Quantità',
                                 	inputTitle: 'Quantità' + ' <span style="color:red">*</span>',

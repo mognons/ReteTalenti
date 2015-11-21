@@ -23,7 +23,7 @@ import java.util.List;
  *
  * @author gminardi
  */
-public class AssistitiTableAction extends ActionSupport implements UserAware, ModelDriven<User>{
+public class CandidatureTableAction extends ActionSupport implements UserAware, ModelDriven<User>{
 
     private AssistitiDao dao = new AssistitiDao();
     
@@ -71,7 +71,6 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
     private Date data_fine_assistenza;
     private Date data_candidatura;
     private Date data_accettazione;
-    private Date data_scadenza;
     private Date data_dismissione;
 
     private int operatore;
@@ -190,7 +189,6 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
         record.setData_fine_assistenza(data_fine_assistenza);
         record.setData_candidatura(data_candidatura);
         record.setData_accettazione(data_accettazione);
-        record.setData_scadenza(data_scadenza);
         record.setData_dismissione(data_dismissione);
         record.setOperatore(operatore);
         
@@ -568,16 +566,6 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
 
 	public void setPunteggio_idb(int punteggio_idb) {
 		this.punteggio_idb = punteggio_idb;
-	}
-
-
-	public Date getData_scadenza() {
-		return data_scadenza;
-	}
-
-
-	public void setData_scadenza(Date data_scadenza) {
-		this.data_scadenza = data_scadenza;
 	}
 
 }

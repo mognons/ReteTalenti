@@ -35,20 +35,15 @@
 
 	<div style="position: relative; left: 0px; top: 0px; z-index: 10">
 		<ul id="verticalMenu">
-			<li>Gestione Assistiti
-				<ul>
-					<li onclick="window.location='assistitiLink';">Anagrafica
-						Assistiti</li>
-					<li class="ui-state-disabled">Altro...</li>
-				</ul>
+			<li onclick="window.location='assistitiLink';">Gestione Assistiti
 			</li>
 			<li>-</li>
 			<li>Gestione Emporio
 				<ul>
 					<li class="ui-state-disabled">Candidatura Emporio</li>
-					<li class="ui-state-disabled">Inserimento Emporio</li>
 					<li class="ui-state-disabled">Rimozione Emporio</li>
-					<li class="ui-state-disabled">Altro...</li>
+					<li <s:if test="!(enteEmporio)" >class="ui-state-disabled"</s:if>>Inserimento Emporio</li>
+					<li >Altro...</li>
 				</ul>
 			</li>
 			<li>-</li>
@@ -58,28 +53,27 @@
 						Eccedenze</li>
 					<li onclick="window.location='impegniLink';">Prenotazione
 						Ritiri</li>
+					<li onclick="window.location='ritiriLink';">Elenco Ritiri Prenotati</li>
 				</ul>
 			</li>
 			<li>-</li>
 			<li>Report
 				<ul>
+					<li class="ui-state-disabled">Elenco Assistiti</li>
 					<li class="ui-state-disabled">Elenco Eccedenze</li>
 					<li class="ui-state-disabled">Elenco Prenotazioni</li>
-					<li class="ui-state-disabled">Elenco Assistiti</li>
 					<li class="ui-state-disabled">Graduatoria Emporio</li>
 				</ul>
 			</li>
-			<li>-</li>
 			<s:if test="%{#isAdmin}">
+				<li>-</li>
 				<li>Sistema
 					<ul>
 						<li onclick="window.location='usersLink';">Gestione Utenti</li>
 						<li onclick="window.location='entiLink';">Tabella Enti</li>
 						<li onclick="window.location='nazioniLink';">Tabella Nazioni</li>
-						<li onclick="window.location='provinceLink';">Tabella
-							Province</li>
-						<li onclick="window.location='uni_misuraLink';">Tabella Unità
-							Misura</li>
+						<li onclick="window.location='provinceLink';">Tabella Province</li>
+						<li onclick="window.location='uni_misuraLink';">Tabella Unità Misura</li>
 					</ul>
 				</li>
 			</s:if>

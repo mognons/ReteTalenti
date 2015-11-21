@@ -214,7 +214,7 @@ public class UsersDao {
 		User user = new User();
 		System.out.println("Inside getUser with " + username);
 		String newQuery = "SELECT U.ID, U.USERNAME, U.USERFIRSTNAME, U.USERLASTNAME, " + 
-						  "U.USEREMAIL, U.USERPHONE, U.ENTE, E.DESCRIZIONE, P.COD_PROVINCIA, U.GROUPID " + 
+						  "U.USEREMAIL, U.USERPHONE, U.ENTE, E.DESCRIZIONE, E.ENTE_EMPORIO, P.COD_PROVINCIA, U.GROUPID " + 
 						  "FROM USERS U, ENTI E, PROVINCE P " +
 						  "WHERE U.USERNAME=? AND " +
 					 	  "U.ENTE = E.ID AND "+
@@ -232,8 +232,9 @@ public class UsersDao {
 				user.setUserPhone(rs.getString(6));
 				user.setEnte(rs.getInt(7));
 				user.setDescrizioneEnte(rs.getString(8));
-				user.setProvinciaEnte(rs.getInt(9));
-				user.setGroupId(rs.getInt(10));
+				user.setEnteEmporio(rs.getBoolean(9));
+				user.setProvinciaEnte(rs.getInt(10));
+				user.setGroupId(rs.getInt(11));
 			}
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
@@ -303,19 +304,6 @@ public class UsersDao {
 		return group;
 	}
 
-	public void addUserGroup(UserGroup userGroup) throws Exception {
-		String insertQuery = "INSERT INTO USERGROUP(USERID,GROUPID) VALUES (?,?)";
-		try {
-			pStmt = dbConnection.prepareStatement(insertQuery);
-			pStmt.setInt(1, userGroup.getUserId());
-			pStmt.setInt(2, userGroup.getGroupId());
-			pStmt.executeUpdate();
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-			throw new Exception(e.getMessage());
-		}
-	}
-
 	public void deleteUser(String username) {
 		int tempId = 0;
 		String query = "SELECT ID FROM USERS WHERE USERNAME=?";		
@@ -349,19 +337,4 @@ public class UsersDao {
 			System.err.println(e.getMessage());
 		}
 	}
-	
-	
-	public void deleteUserGroup(int userId, int groupId) {
-		String deleteQuery = "DELETE FROM USERGROUP WHERE USERID=? AND GROUPID=?";
-		try {
-			pStmt = dbConnection.prepareStatement(deleteQuery);
-			pStmt.setInt(1, userId);
-			pStmt.setInt(2, groupId);
-			pStmt.executeUpdate();
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-		}
-	}
-
-
 }

@@ -29,8 +29,8 @@ public class AssistitiDao {
 										+ "LUOGO_NASCITA,DATA_NASCITA,NAZIONALITA,INDIRIZZO_RESIDENZA, "
 										+ "CITTA_RESIDENZA,CAP,PROVINCIA,PERMESSO_SOGGIORNO,TELEFONO,EMAIL, "
 										+ "NUM_DOCUMENTO,ENTE_ASSISTITI,DATA_INSERIMENTO,DATA_FINE_ASSISTENZA, "
-										+ "DATA_CANDIDATURA,DATA_ACCETTAZIONE,DATA_DISMISSIONE,OPERATORE) "
-										+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW(),null,null,null,null,?)";
+										+ "DATA_CANDIDATURA,DATA_ACCETTAZIONE,DATA_SCADENZA, DATA_DISMISSIONE,OPERATORE) "
+										+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW(),null,null,null,null,null,?)";
 		try {
 			pStmt = dbConnection.prepareStatement(insertAssistitoQuery);
 			pStmt.setString(1,assistito.getNome());
@@ -168,6 +168,7 @@ public class AssistitiDao {
 				assistito.setData_fine_assistenza(rs.getDate("DATA_FINE_ASSISTENZA"));
 				assistito.setData_candidatura(rs.getDate("DATA_CANDIDATURA"));
 				assistito.setData_accettazione(rs.getDate("DATA_ACCETTAZIONE"));
+				assistito.setData_scadenza(rs.getDate("DATA_SCADENZA"));
 				assistito.setData_dismissione(rs.getDate("DATA_DISMISSIONE"));
 				assistito.setOperatore(rs.getInt("OPERATORE"));
 				assistito.setPunteggio_idb(rs.getInt("PUNTEGGIO_IDB"));
@@ -254,6 +255,7 @@ public class AssistitiDao {
 				assistito.setData_fine_assistenza(rs.getDate("DATA_FINE_ASSISTENZA"));
 				assistito.setData_candidatura(rs.getDate("DATA_CANDIDATURA"));
 				assistito.setData_accettazione(rs.getDate("DATA_ACCETTAZIONE"));
+				assistito.setData_scadenza(rs.getDate("DATA_SCADENZA"));
 				assistito.setData_dismissione(rs.getDate("DATA_DISMISSIONE"));
 				assistito.setOperatore(rs.getInt("OPERATORE"));
 				assistito.setPunteggio_idb(rs.getInt("PUNTEGGIO_IDB"));
@@ -268,7 +270,8 @@ public class AssistitiDao {
 	
 	public void deleteAssistito(Assistito assistito) {
 
-		String deleteQuery = "DELETE FROM ASSISTITI WHERE COD_FISCALE=?";
+		String deleteQuery = "UPDATE ASSISTITI SET DATA_FINE_ASSISTENZA=NOW() "
+							+ "WHERE COD_FISCALE=?";
 		try {
 			pStmt = dbConnection.prepareStatement(deleteQuery);
 			pStmt.setString(1, assistito.getCod_fiscale());

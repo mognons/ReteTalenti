@@ -8,16 +8,22 @@
 	<div class="main-header" style="position: relative">
 		<table border="0" width="100%">
 			<tr>
-				<td width="20%" ><a href="home.action"><img
+				<td style="vertical-align:bottom" width="15%" ><a href="home.action"><img
 						alt="ReteTalenti" src="images/logoReteTalenti.png" height="75"
 						width="160"></a></td>
-				<td width="400%">
+				<td style="vertical-align:bottom" width="40%">
 					<h2>
-						<a href="profileLink"><s:property value="user.userFirstname"></s:property>
-							<s:property value="user.userLastname"></s:property> <s:if
-								test="user.ente">
-					 		- <s:property value="user.descrizioneEnte"></s:property>
-							</s:if></a>
+						<a href="profileLink">
+							<span style="color:#FFF2B3; font-size:larger;">
+								<s:property value="user.userFirstname"></s:property>
+								<s:property value="user.userLastname"></s:property>
+							</span>
+							<s:if test="user.ente">
+					 			<span style="color:#F3971F; font-size:smaller;">
+					 				<s:property value="user.descrizioneEnte"/>
+					 			</span>
+							</s:if>
+						</a>
 					</h2>
 				</td>
 				<td align="right"><a href="http://www.regione.veneto.it" target="_new"><img
