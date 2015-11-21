@@ -9,8 +9,7 @@
 
 <!-- Import Javascript files for validation engine (in Head section of HTML) -->
 <script type="text/javascript" src="scripts/jquery.validationEngine.js"></script>
-<script type="text/javascript"
-	src="scripts/jquery.validationEngine-it.js"></script>
+<script type="text/javascript" src="scripts/jquery.validationEngine-it.js"></script>
 <script src="scripts/jquery.jtable.js" type="text/javascript"></script>
 
 <!-- User defined Jtable js file -->
@@ -30,16 +29,122 @@
 	padding: 8px 5px 5px 10px;
 	width: 45%;
 }
+
+input.text {
+	margin-bottom: 12px;
+	width: 50%;
+	padding: .4em;
+}
+
+label {
+  display: block;
+  margin: 30px 0 0 0;
+}
+
+select {
+  width: 300px;
+}
+
+textarea {
+  width: 300px;
+}
+
+.overflow {
+  height: 200px;
+}
+
+fieldset {
+	padding: 0;
+	border: 0;
+	margin-top: 25px;
+}
+
+.ui-dialog .ui-state-error {
+	padding: .3em;
+}
+ #days { margin-top: 2em; }
+ 
+.searchButton {
+	-moz-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #378de5));
+	background:-moz-linear-gradient(top, #79bbff 5%, #378de5 100%);
+	background:-webkit-linear-gradient(top, #79bbff 5%, #378de5 100%);
+	background:-o-linear-gradient(top, #79bbff 5%, #378de5 100%);
+	background:-ms-linear-gradient(top, #79bbff 5%, #378de5 100%);
+	background:linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#378de5',GradientType=0);
+	background-color:#79bbff;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #84bbf3;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	font-weight:bold;
+	font-style:italic;
+	padding:3px 20px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #528ecc;
+}
+.searchButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #378de5), color-stop(1, #79bbff));
+	background:-moz-linear-gradient(top, #378de5 5%, #79bbff 100%);
+	background:-webkit-linear-gradient(top, #378de5 5%, #79bbff 100%);
+	background:-o-linear-gradient(top, #378de5 5%, #79bbff 100%);
+	background:-ms-linear-gradient(top, #378de5 5%, #79bbff 100%);
+	background:linear-gradient(to bottom, #378de5 5%, #79bbff 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#378de5', endColorstr='#79bbff',GradientType=0);
+	background-color:#378de5;
+}
+.searchButton:active {
+	position:relative;
+	top:1px;
+}
+
+
+
 </style>
 
 <script type="text/JavaScript">
+	function ISOtoEuro(d) {
+		d = d.substring(0,10);
+		var dateParts = d.split("-");
+		if(dateParts==d)
+			dateParts = d.split("/");
+		if(dateParts==d)
+			dateParts = d.split(".");
+		return (dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0]);
+	};
+	function heute() {
+		var today = new Date(); 
+		var dd = today.getDate(); 
+		var mm = today.getMonth()+1;//January is 0! 
+		var yyyy = today.getFullYear(); 
+		if(dd<10){dd='0'+dd}; 
+		if(mm<10){mm='0'+mm};
+		//return (yyyy+"/"+mm+"/"+dd);	
+		return (dd+"/"+mm+"/"+yyyy);
+	};
+	function tomorrow() {
+		var today = new Date((new Date()).valueOf() + 1000*3600*24);
+		var dd = today.getDate(); 
+		var mm = today.getMonth()+1;//January is 0! 
+		var yyyy = today.getFullYear(); 
+		if(dd<10){dd='0'+dd}; 
+		if(mm<10){mm='0'+mm};
+		//return (yyyy+"/"+mm+"/"+dd);	
+		return (dd+"/"+mm+"/"+yyyy);
+	};
 	// Groups
 	var enteUtente = '<s:property value="ente"/>';
 	var gruppoUtente = '<s:property value="groupId"/>';
 
-	function loadTodos() {
-
-	};
+	
 	function checkCF(field, rules, i, options) {
 		var codiceFiscale = field.val();
 		var valido = validaCodiceFiscale(codiceFiscale);
@@ -129,6 +234,10 @@
 				title : 'Calcolo punteggio Indice di Bisogno'
 			});
 		})();
+        $('#AssistitiTableContainer').jtable('load', {
+            cf_search: $('#cf_search').val(),
+            cognome_search: $('#cognome_search').val()
+        });
 	};
 
 	function showSchedaAssistito(page) {
@@ -175,17 +284,41 @@
 			});
 		})();
 	};
+	$(document).ready(function () {
+	// Caricamento OPTIONS della SELECT da backend e senza STRUTTO!
+	var opzioni = [];
+	var select = document.getElementById("enteDestinazione");
+	var el = document.createElement("option");
+//     el.textContent = "Ente di destinazione";
+//     el.value = "-1";
+//     select.appendChild(el);
+
+	$.getJSON('Choose_Enti', function(data) {
+		$(data.options).each(function() {
+			opzioni.push({
+				value : $(this).attr('Value'),
+				text : $(this).attr('DisplayText')
+			});
+			el = document.createElement("option");
+	        el.textContent = $(this).attr('DisplayText');
+	        el.value = $(this).attr('Value');
+	        select.appendChild(el);
+		})
+	});
+	});
+	// FINE ESPERIMENTO
 </script>
 
 </head>
 <body>
-	<div id="filtering"
-		class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-		<form>
-			Codice Fiscale <input type="text" name="cf_search" id="cf_search" />
-			Cognome <input type="text" name="cognome_search" id="cognome_search" />
-			<button type="submit" id="LoadRecordsButton">Ricerca</button>
-			<button type="submit" id="ResetsButton">Tutti</button>
+	<div id="filtering" class="ui-tabs-panel ui-widget-content ui-corner-bottom" align="LEFT">
+		<form >
+			<span class="jtable-title-text">Codice Fiscale</span>
+			<input type="text" name="cf_search" id="cf_search" />
+			<span class="jtable-title-text">Cognome</span>
+			<input type="text" name="cognome_search" id="cognome_search" />
+			<input type="button" class="searchButton" id="LoadRecordsButton" value="Ricerca"/>
+			<input type="button" class="searchButton" id="ResetButton" value="Tutti"/>
 		</form>
 	</div>
 	<div id="pop-up" style="display: none;">
@@ -193,30 +326,42 @@
 	</div>
 	<div id="dialog" title="Informazione dal sistema"></div>
 	<div id="AssistitiTableContainer"></div>
-	<div id="dialog-form" title="Create Course Calendar" class="ui-widget">
+	
+	<div id="dialog-form" title="Trasferimento Assistito" class="ui-widget">
 		<form action="#">
 			<fieldset>
 				<div id="errorMessage"></div>
-				<label for="startDate">Start date</label>
+				<label for="startDate">Data trasferimento</label>
 				<input type="text"
 					name="startDate" id="startDate"
-					class="text ui-widget-content ui-corner-all"> 
-				<input
-					type="hidden" id="courseId" name="courseId" /> 
-				<label
-					for="colorSelect">Choose events color</label> 
-				<input type='text'
-					name="colorSelect" id="colorSelect"> 
-				<input type="hidden"
-					id="calendarColor" name="calendarColor" value="#dfe3ee"> 
-				<input
-					type="hidden" id="courseName" name="courseName">
+					class="text ui-widget-content ui-corner-all">
+				<label for="enteDestinazione">Scegliere un'ente</label> 
+				<select name="enteDestinazione" id="enteDestinazione" class="text ui-widget-content ui-corner-all"></select>
+				<label for="motivazione">Indicare la motivazione</label> 
+				<textarea rows="4" cols="50"
+					name="motivazione" id="motivazione"
+					class="text ui-widget-content ui-corner-all"></textarea>	
+				<input type="hidden" id="codice_fiscale" name="codice_fiscale" value="codice_fiscale"> 
+				<input type="hidden" id="enteProvenienza" name="enteProvenienza" value="enteProvenienza">
+				<input type="hidden" id="courseId" name="courseId" /> 
 				<!-- Allow form submission with keyboard without duplicating the dialog button -->
 				<input type="submit" tabindex="-1"
 					style="position: absolute; top: -1000px">
 			</fieldset>
 		</form>
 	</div>
+		<script>
+		$(function() {
+			$("#startDate").datepicker({
+				dateFormat: 'dd/mm/yy',
+				beforeShowDay: $.datepicker.noWeekends,
+				firstDay: 1
+			});
+		});
+	  	$(function() {
+			$( "#speed" ).selectmenu();
+		});
+	</script>
 	<script src="js/assistitiTable.js" type="text/javascript"></script>
 </body>
 </html>

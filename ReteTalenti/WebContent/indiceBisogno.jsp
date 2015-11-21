@@ -24,11 +24,17 @@
 <script type="text/JavaScript">
 
 var formMode = 'CALC';
+
 $(document).ready(function() {
 	$('#calcoloIDB').validationEngine('attach',{promptPosition : "bottomLeft", scroll: false});
 	$('#calcoloIDB').submit(function () {
 	});
 });
+
+function resetMode() {
+	formMode = 'CALC';
+	$('#submitButton').val("Calcola");
+};
 
 function go() {
 	var event = jQuery.Event( "submit" );
@@ -45,7 +51,6 @@ function go() {
 			$('#submitButton').val("Aggiorna");
 		}
 	}
-
 };
 
 function calcoloPunteggio() {
@@ -193,7 +198,7 @@ input[readonly] {
 					<td><input name="isee_euro"
 						value="<s:property value="%{recordIDB.isee_euro}"/>"
 						class="validate[required,custom[integer]]"
-						onChange="formMode = 'CALC';" /></td>
+						onChange="resetMode()" /></td>
 					<td>---</td>
 					<td ALIGN="right"><input name="isee_punti" readonly size="2"
 						value="<s:property value="%{recordIDB.isee_punti}"/>" style="text-align:right;"/></td>
@@ -203,30 +208,30 @@ input[readonly] {
 						documentate</td>
 					<td><input name="cc_euro"
 						value="<s:property value="%{recordIDB.cc_euro}"/>"
-						class="validate[required,custom[integer]]" /></td>
+						class="validate[required,custom[integer]]" onChange="resetMode()"/></td>
 				</tr>
 				<tr>
 					<td style="font-weight: bold;">3. Contributo affitto regione
 						per spese documentate</td>
 					<td><input name="ca_euro"
 						value="<s:property value="%{recordIDB.ca_euro}"/>"
-						class="validate[required,custom[integer]]" /></td>
+						class="validate[required,custom[integer]]" onChange="resetMode()"/></td>
 				</tr>
 				<tr>
 					<td style="font-weight: bold;">4. Contributo spot privato
 						sociale per spese documentate</td>
 					<td><input name="cs_euro"
 						value="<s:property value="%{recordIDB.cs_euro}"/>"
-						class="validate[required,custom[integer]]" /></td>
+						class="validate[required,custom[integer]]" onChange="resetMode()"/></td>
 					<td>---</td>
 					<td ALIGN="right"><input name="entrate_nc_punti" readonly
 						size="2"
-						value="<s:property value="%{recordIDB.entrate_nc_punti}"/>" style="text-align:right;"/></td>
+						value="<s:property value="%{recordIDB.entrate_nc_punti}"/>"  style="text-align:right;"/></td>
 				</tr>
 				<tr>
 					<td style="font-weight: bold;">5. Stato di disoccupazione di
 						lunga durata (mesi)</td>
-					<td><select name="stato_disoc">
+					<td><select name="stato_disoc" onChange="resetMode()">
 							<option
 								<s:if test="(recordIDB.stato_disoc==1)">selected="selected"</s:if>
 								value="1">1-3 mesi</option>
@@ -252,7 +257,7 @@ input[readonly] {
 						straordinarie"</td>
 					<td><input name="spese_imp"
 						value="<s:property value="%{recordIDB.spese_imp}"/>"
-						class="validate[required,custom[integer]]" /></td>
+						class="validate[required,custom[integer]]" onChange="resetMode()"/></td>
 					<td>---</td>
 					<td ALIGN="right"><input name="spese_imp_punti" readonly
 						size="2"
@@ -261,7 +266,7 @@ input[readonly] {
 				<tr>
 					<td style="font-weight: bold;">7. Carattere di urgenza e
 						condizione socio-economica"</td>
-					<td><select name="urgenza">
+					<td><select name="urgenza" onChange="resetMode()">
 							<option
 								<s:if test="(recordIDB.urgenza==0)">selected="selected"</s:if>
 								value="0">Situazione cronica</option>

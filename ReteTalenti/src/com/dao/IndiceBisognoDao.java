@@ -11,9 +11,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -23,13 +20,12 @@ public class IndiceBisognoDao {
 
     private Connection dbConnection;
     private PreparedStatement pStmt;
-    private Statement stmt;
-
     public IndiceBisognoDao() {
         dbConnection = DataAccessObject.getConnection();
     }
 
     public void updateAssistito(String codice_fiscale, int idb) {
+    	System.err.println("CF: " + codice_fiscale + " IDB: " + idb);
     	String update = "UPDATE ASSISTITI "
     					+ "SET PUNTEGGIO_IDB=? "
     					+ "WHERE COD_FISCALE=?";
@@ -44,8 +40,7 @@ public class IndiceBisognoDao {
         }
     }
     
-    public int createIndiceBisogno(IndiceBisogno indiceBisogno) throws Exception {
-        int autoIncKeyFromFunc = -1;
+    public void createIndiceBisogno(IndiceBisogno indiceBisogno) throws Exception {
         String insert = "INSERT INTO INDICI_BISOGNO (ISEE_EURO, CC_EURO, CA_EURO, CS_EURO, STATO_DISOC, SPESE_IMP, "
                 + "URGENZA, ISEE_PUNTI, ENTRATE_NC_PUNTI, STATO_DISOC_PUNTI, SPESE_IMP_PUNTI, URGENZA_PUNTI, TOTALEPUNTI, "
                 + "CF_ASSISTITO_IB, DATA_INSERIMENTO) "
@@ -68,19 +63,13 @@ public class IndiceBisognoDao {
             pStmt.setString(14, indiceBisogno.getCf_assistito_ib());
 
             pStmt.executeUpdate();
-            
-			ResultSet rs = stmt.executeQuery("SELECT LAST_INSERT_ID()");
 			updateAssistito(indiceBisogno.getCf_assistito_ib(), indiceBisogno.getTotalepunti());
-			if (rs.next()) {
-				autoIncKeyFromFunc = rs.getInt(1);
-			} else {
-				throw new Exception("Focca la bindella");
-			}
 
         } catch (SQLException e) {
+        	System.err.println("Errore in create IDB");
             System.err.println(e.getMessage());
         }
-        return autoIncKeyFromFunc;
+        return;
     }
 
     public void updateIndiceBisogno(IndiceBisogno indiceBisogno) {
@@ -146,5 +135,4 @@ public class IndiceBisognoDao {
         }
         return indicebisogno;
     }
-
 }

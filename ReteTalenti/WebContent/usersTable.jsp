@@ -12,7 +12,7 @@
 
 <!-- User defined Jtable js file -->
 <script src="scripts/jquery.jtable.it.js" type="text/javascript"></script>
-<script src="js/usersTable.js" type="text/javascript"></script>
+
 <style>
 .rosso label {
     font-weight: bold;
@@ -24,9 +24,16 @@
 }
 
 </style>
+
+<script type="text/JavaScript">
+	// Groups
+	var enteUtente = '<s:property value="ente"/>';
+	var gruppoUtente = '<s:property value="groupId"/>';
+</script>
 </head>
 <body>
 	<div id="dialog" title="System message"></div>
 	<div id="UsersTableContainer"></div>
+	<script src="js/usersTable.js" type="text/javascript"></script>
 </body>
 </html>

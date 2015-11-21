@@ -71,6 +71,7 @@ $(document).ready(function() {
 			},
 			password : {
 				title : 'Password',
+				type: 'password',
 				inputTitle : 'Password ' + '<span style="color:red">*</span>',
 				inputClass: 'validate[required]',
 				list: false,
@@ -101,16 +102,17 @@ $(document).ready(function() {
 			userPhone : {
 				title : 'Telefono',
 				inputTitle : 'Numero di Telefono ' + '<span style="color:red">*</span>',
-				inputClass: 'validate[required]',
+				inputClass: 'validate[required,custom[phone]]',
 				width : '7%',
 				edit : true
 			},
 			ente : {
 				title : 'Ente',
 				inputTitle : 'Scegliere un Ente ' + '<span style="color:red">*</span>',
+				defaultValue: enteUtente,
 				width : '20%',
 				edit : true,
-				options: 'Choose_Enti'
+				options: 'Choose_Enti',
 			},
 			groupId: {
             	title: 'Gruppo Utenti',
@@ -123,14 +125,10 @@ $(document).ready(function() {
 		},
         //Initialize validation logic when a form is created
         formCreated: function (event, data) {
+        	data.form.find('input[name=userFirstname]').css('width','200px');
+        	data.form.find('input[name=userLastname]').css('width','200px');
         	data.form.find('input[name=userEmail]').css('width','200px');
-            data.form.parent().css('width','400px'); 
-        	// data.form.parent().css('height','600px');
-        	//$(".jtable-input-field-container").slice(0,2).wrapAll("");
-        	//$(".jtable-input-field-container").slice(3,8).wrapAll("");
-        	// Slice Parameters are Start Stop
-        	//$(".jtable-input-field-container").slice(2,5).wrapAll("");
-            data.form.validationEngine();
+            data.form.validationEngine('attach',{promptPosition : "bottomLeft", scroll: false});
         },
         //Validate form when it is being submitted
         formSubmitting: function (event, data) {

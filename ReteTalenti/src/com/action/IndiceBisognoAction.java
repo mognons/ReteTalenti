@@ -45,7 +45,7 @@ public class IndiceBisognoAction extends ActionSupport implements UserAware {
     
     public String getData() {
     	recordIDB = dao.getIndiceBisogno(cf_assistito_ib);
-    	if (recordIDB!=null) {
+    	if (recordIDB.getCf_assistito_ib() != null) {
     		System.out.println("Found " + recordIDB.getCf_assistito_ib());
     	} else {
 			recordIDB.setIsee_euro(0);
@@ -92,12 +92,12 @@ public class IndiceBisognoAction extends ActionSupport implements UserAware {
         if (id==0) {
             try {
                 // Insert INTO recordIDB
-                recordIDB.setId(dao.createIndiceBisogno(recordIDB));
+                dao.createIndiceBisogno(recordIDB);
                 result = "OK";
             } catch (Exception e) {
                 result = "ERROR";
                 message = e.getMessage();
-                System.err.println(e.getMessage());
+                System.err.println("Eccezione a riga 100: IndiceBisognoAction");
             }
         } else {
             try {

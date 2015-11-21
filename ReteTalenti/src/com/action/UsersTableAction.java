@@ -20,6 +20,7 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 	
 	private UsersDao dao = new UsersDao();
 
+	private User loggedUser = new User();
 	private List<User> records;
 	private String result;
 	private String message;
@@ -33,9 +34,14 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 	public String list() {
 		try {
 			// Fetch Data from User Table
-			records = dao.getAllUsers();
+			if (loggedUser.getGroupId() != 1) { // NOT a SysAdmin...
+				records = dao.getOwnUsers(loggedUser);
+				totalRecordCount = dao.getCountOwnUsers(loggedUser);
+			} else {
+				records = dao.getAllUsers();
+				totalRecordCount = dao.getUsersRecordCount();
+			}
 			result = "OK";
-			totalRecordCount = dao.getUsersRecordCount();
 			
 		} catch (Exception e) {
 			result = "ERROR";
@@ -250,9 +256,8 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 	}
 
 	@Override
-	public void setUser(User user) {
-		// TODO Auto-generated method stub
-		
+	public void setUser(User loggedUser) {
+		this.loggedUser = loggedUser;
 	}
 
 	public int getEnte() {

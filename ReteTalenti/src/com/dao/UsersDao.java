@@ -210,6 +210,52 @@ public class UsersDao {
 		return users;
 	}
 
+	public List<User> getOwnUsers(User loggedUser) { // Solo gli utenti di un dato ente
+		List<User> users = new ArrayList<User>();
+
+		String query = 	"SELECT * FROM USERS "
+						+"WHERE ENTE=? "
+						+"ORDER BY USERNAME";
+		try {
+			PreparedStatement pStmt = dbConnection.prepareStatement(query);
+			pStmt.setInt(1, loggedUser.getEnte());
+			ResultSet rs = pStmt.executeQuery();
+			while (rs.next()) {
+				User user = new User();
+
+				user.setId(rs.getInt("ID"));
+				user.setUsername(rs.getString("USERNAME"));
+				user.setUserFirstname(rs.getString("USERFIRSTNAME"));
+				user.setUserLastname(rs.getString("USERLASTNAME"));
+				user.setUserEmail(rs.getString("USEREMAIL"));
+				user.setUserPhone(rs.getString("USERPHONE"));
+				user.setEnte(rs.getInt("ENTE"));
+				user.setGroupId(rs.getInt("GROUPID"));
+				users.add(user);
+			}
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return users;
+	}
+
+	public int getCountOwnUsers(User loggedUser) { // Solo gli utenti di un dato ente
+		int totalRecords = 0;
+		String query = 	"SELECT COUNT(*) FROM USERS "
+						+"WHERE ENTE=? ";
+		try {
+			PreparedStatement pStmt = dbConnection.prepareStatement(query);
+			pStmt.setInt(1, loggedUser.getEnte());
+			ResultSet rs = pStmt.executeQuery();
+			while (rs.next()) {
+				totalRecords = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return totalRecords;
+	}
+
 	public User getUserData(String username) {
 		User user = new User();
 		System.out.println("Inside getUser with " + username);

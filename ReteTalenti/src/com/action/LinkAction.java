@@ -35,6 +35,10 @@ public class LinkAction extends ActionSupport implements UserAware, ModelDriven<
     	return "impegni";
     }
     
+    public String candidature() {
+    	return "candidature";
+    }
+    
     public String ritiri() {
     	return "ritiri";
     }

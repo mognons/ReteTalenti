@@ -39,8 +39,13 @@
 	</definition>
  
 	<definition name="/assistititable.tiles" extends="baseLayout">
-		<put-attribute name="title" value="Anagrafica Assisti" />
+		<put-attribute name="title" value="Anagrafica Assistiti" />
 		<put-attribute name="body" value="/assistitiTable.jsp" />
+	</definition>
+ 
+	<definition name="/candidaturetable.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Candidatura Emporio" />
+		<put-attribute name="body" value="/candidatureTable.jsp" />
 	</definition>
  
 	<definition name="/nazionitable.tiles" extends="baseLayout">

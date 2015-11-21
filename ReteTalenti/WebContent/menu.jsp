@@ -35,12 +35,14 @@
 
 	<div style="position: relative; left: 0px; top: 0px; z-index: 10">
 		<ul id="verticalMenu">
-			<li onclick="window.location='assistitiLink';">Gestione Assistiti
+			<li <s:if test="(enteEmporio)" >class="ui-state-disabled"</s:if> 
+				onclick="window.location='assistitiLink';">Gestione Assistiti
 			</li>
 			<li>-</li>
 			<li>Gestione Emporio
 				<ul>
-					<li class="ui-state-disabled">Candidatura Emporio</li>
+					<li  <s:if test="(enteEmporio || groupId > 2)" >class="ui-state-disabled"</s:if>
+						onclick="window.location='candidatureLink';">Candidatura Emporio</li>
 					<li class="ui-state-disabled">Rimozione Emporio</li>
 					<li <s:if test="!(enteEmporio)" >class="ui-state-disabled"</s:if>>Inserimento Emporio</li>
 					<li >Altro...</li>
@@ -62,18 +64,20 @@
 					<li class="ui-state-disabled">Elenco Assistiti</li>
 					<li class="ui-state-disabled">Elenco Eccedenze</li>
 					<li class="ui-state-disabled">Elenco Prenotazioni</li>
-					<li class="ui-state-disabled">Graduatoria Emporio</li>
+					<li class="ui-state-disabled">Graduatoria Provinciale Emporio</li>
 				</ul>
 			</li>
-			<s:if test="%{#isAdmin}">
+			<s:if test="(#isAdmin || #isAdminEnte)">
 				<li>-</li>
 				<li>Sistema
 					<ul>
 						<li onclick="window.location='usersLink';">Gestione Utenti</li>
-						<li onclick="window.location='entiLink';">Tabella Enti</li>
-						<li onclick="window.location='nazioniLink';">Tabella Nazioni</li>
-						<li onclick="window.location='provinceLink';">Tabella Province</li>
-						<li onclick="window.location='uni_misuraLink';">Tabella Unità Misura</li>
+						<s:if test="(#isAdmin)">
+							<li onclick="window.location='entiLink';">Tabella Enti</li>
+							<li onclick="window.location='nazioniLink';">Tabella Nazioni</li>
+							<li onclick="window.location='provinceLink';">Tabella Province</li>
+							<li onclick="window.location='uni_misuraLink';">Tabella Unità Misura</li>
+						</s:if>
 					</ul>
 				</li>
 			</s:if>

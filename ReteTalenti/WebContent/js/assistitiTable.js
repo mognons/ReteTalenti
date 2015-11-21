@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 	// CUT HERE
-	var courseRecord;
+	var assistito;
 	function generateCalendar() {
 		var courseId = $("#courseId").val(); 
 		var courseName = $("#courseName").val(); 
@@ -26,7 +26,6 @@
 				success: function (data) {
 					$dfd.resolve(data);
 					if (data.message) {
-						console.log(data.message);
 						$('#errorMessage').html("<h3>"+data.message+"</h3	>");
 					} else {
 						dialog.dialog("close");	
@@ -70,7 +69,7 @@
         selecting: true, // Enable selecting
         multiselect: false, // Allow multiple selecting
         selectingCheckboxes: true, // Show checkboxes on first column
-        selectOnRowClick: true, // Enable this to only select using checkboxes
+        selectOnRowClick: false, // Enable this to only select using checkboxes
         pageSizeChangeArea: false,
         openChildAsAccordion: true,
         actions: {
@@ -83,6 +82,8 @@
 			items: [{
 				text: 'Ri-attiva',
 				icon: 'icons/Green%20pin.png',
+				cssClass: 'RIAT',
+				tooltip: 'Riattivazione di un assistito con assistenza scaduta',
 				click: function () {
 					return $.Deferred(function ($dfd) {
 						var $selectedRows = $('#AssistitiTableContainer').jtable('selectedRows');
@@ -122,38 +123,32 @@
 			{
 				text: 'Trasferimento',
 				icon: 'icons/Forward.png',
+				tooltip: 'Inizia la procedura di trasferimento di un assistito ad altro ente',
+				cssClass: 'TRAS',
 				click: function () {
 					var $selectedRows = $('#AssistitiTableContainer').jtable('selectedRows');
 					$selectedRows.each(function () {
-						courseRecord = $(this).data('record');
-						var name = courseRecord.name;
-						var startDate = courseRecord.startDate;
-						if (!courseRecord.courseActive) {
+						assistito = $(this).data('record');
+						var name = assistito.name;
+						var startDate = assistito.startDate;
+						if (assistito.data_fine_assistenza) {
 							$("#dialog").dialog({
 								modal: true,
-								buttons: [
-								          {
-								        	  text: "Dismiss",
-								        	  click: function() {
-								        		  $(this).dialog( "close" );
-								        	  }
-								          }
-								          ],
-								          open: function(){
-								        	  $("#dialog").html("Selected course is <b>NOT</b> active." +
-								        	  "<br>Calendar generation must be performed only on active courses")
-								          }
+								buttons: [{
+					        	  text: "Chiudi",
+						        	  click: function() {
+						        		  $(this).dialog( "close" );
+						        	  }
+						          }],
+						        open: function(){
+						        	  $("#dialog").html("Operazione <b>non</b> consentita per questo assistito")
+						        }
 							});
 						} else {
-							if (startDate.substr(0,5)=="/Date") {
-								tempDate = startDate.substr(6,13)
-								myDate = new Date(parseInt(tempDate));
-								startDate = myDate.toISOString();
-							}
-							$('#dialog-form').find('input[name="startDate"]').val(startDate.substr(0,10));
-							$('#dialog-form').find('input[name="courseName"]').val(courseRecord.name);
-							$('#dialog-form').find('input[name="name"]').val(name);
-							$('#dialog-form').find('input[name="courseId"]').val(courseRecord.courseId);
+							$('#dialog-form').find('input[name="startDate"]').val(tomorrow());
+							$('#dialog-form').find('input[name="codice_fiscale"]').val(assistito.cod_fiscale);
+							$('#dialog-form').find('input[name="enteProvenienza"]').val(enteUtente);
+							$('#dialog-form').find('input[name="motivazione"]').val("Motivo del trasferimento");
 							dialog.dialog( "open" );
 						}
 					}); // End of EACH
@@ -169,14 +164,15 @@
                 sorting: false,
                 edit: false,
                 create: false,
-                display: function (userData) {
+                display: function (assistito) {
+                	if (assistito.record.data_fine_assistenza != null) {return '<center><b>-</b></center>';}
                     // Create an image that will be used to open child table
                     var $img = $('<span align="CENTER"><img src="icons/People.png" width="16" height="16" title="Nucleo familiare"/></span>');
                     // Open child table when user clicks the image
                     $img.click(function () {
                         $('#AssistitiTableContainer').jtable('openChildTable',$img.closest('tr'),
                         {
-                        	title: 'Nucleo familiare di ' + userData.record.nome + ' ' + userData.record.cognome,
+                        	title: 'Nucleo familiare di ' + assistito.record.nome + ' ' + assistito.record.cognome,
                             paging: true, // Enable paging
                             pageSize: 5, // Set page size (default: 10)
                             pageSizeChangeArea: false,
@@ -186,10 +182,10 @@
 							selectingCheckboxes: true, 
 							selectOnRowClick: true,
                             actions: {
-                                listAction: 'listNucleiFamiliariAction?cf_assistito_nf=' + userData.record.cod_fiscale,
-                                createAction: 'createNucleiFamiliariAction?cf_assistito_nf=' + userData.record.cod_fiscale,
-                                updateAction: 'updateNucleiFamiliariAction?cf_assistito_nf=' + userData.record.cod_fiscale,
-                                deleteAction: 'deleteNucleiFamiliariAction?cf_assistito_nf=' + userData.record.cod_fiscale
+                                listAction: 'listNucleiFamiliariAction?cf_assistito_nf=' + assistito.record.cod_fiscale,
+                                createAction: 'createNucleiFamiliariAction?cf_assistito_nf=' + assistito.record.cod_fiscale,
+                                updateAction: 'updateNucleiFamiliariAction?cf_assistito_nf=' + assistito.record.cod_fiscale,
+                                deleteAction: 'deleteNucleiFamiliariAction?cf_assistito_nf=' + assistito.record.cod_fiscale
                             },                                    
                             fields: {
                                 codice_fiscale: {
@@ -259,12 +255,12 @@
                                 data.form.validationEngine('detach');
                             }, 
                             recordsLoaded: function(event, data) {
-                          	  if (userData.record.data_fine_assistenza) {
+                          	  if (assistito.record.data_fine_assistenza) {
                           	     $('#AssistitiTableContainer').find('.jtable-toolbar-item.jtable-toolbar-item-add-record').remove();
                           	  }
                             },
                             rowInserted: function(event, data){
-	                         	if (userData.record.data_fine_assistenza) {
+	                         	if (assistito.record.data_fine_assistenza) {
 	                                data.row.find('.jtable-edit-command-button').hide();
 	                                data.row.find('.jtable-delete-command-button').hide();
 	                            }
@@ -284,8 +280,10 @@
                 edit: false,
                 create: false,
                 display: function (assistito) {
+                	if (assistito.record.data_fine_assistenza != null) {return '<center><b>-</b></center>';}
+
                     // Create an image that will be used to open child table
-                    var $img = $('<span align="CENTER"><img src="icons/Dollar.png" width="16" height="16" title="Calcolo IDB"/></span>');
+                	var $img = $('<span align="CENTER"><img src="icons/Dollar.png" width="16" height="16" title="Calcolo IDB"/></span>');
                     // Open Foreign Form
                     $img.click(function () {
                     	openPage('getDataIDBAction.action?cf_assistito_ib=' + assistito.record.cod_fiscale
@@ -302,23 +300,24 @@
                 sorting: false,
                 edit: false,
                 create: false,
-                display: function (userData) {
+                display: function (assistito) {
+                	if (assistito.record.data_fine_assistenza != null) {return '<center><b>-</b></center>';}
                     // Create an image that will be used to open child table
                     var $img = $('<span align="CENTER"><img src="icons/Notes.png" width="16" height="16" title="Annotazioni"/></span>');
                     // Open child table when user clicks the image
                     $img.click(function () {
                         $('#AssistitiTableContainer').jtable('openChildTable',$img.closest('tr'),
                         {
-                        	title: 'Annotazioni per ' + userData.record.nome + ' ' + userData.record.cognome,
+                        	title: 'Annotazioni per ' + assistito.record.nome + ' ' + assistito.record.cognome,
                             paging: true, // Enable paging
                             pageSize: 5, // Set page size (default: 10)
                             pageSizeChangeArea: false,
 					        defaultSorting : 'DATA_NOTE DESC', //Set default sorting
                             actions: {
-                                listAction: 'listNoteAction?cf_assistito_note=' + userData.record.cod_fiscale ,
-/*                                updateAction: 'updateNoteAction?cf_assistito_note=' + userData.record.cod_fiscale, */
-                                createAction: 'createNoteAction?cf_assistito_note=' + userData.record.cod_fiscale,
-                                deleteAction: 'deleteNoteAction?cf_assistito_nf=' + userData.record.cod_fiscale
+                                listAction: 'listNoteAction?cf_assistito_note=' + assistito.record.cod_fiscale ,
+/*                                updateAction: 'updateNoteAction?cf_assistito_note=' + assistito.record.cod_fiscale, */
+                                createAction: 'createNoteAction?cf_assistito_note=' + assistito.record.cod_fiscale,
+                                deleteAction: 'deleteNoteAction?cf_assistito_nf=' + assistito.record.cod_fiscale
                             },                                    
                             fields: {
                                 id: {
@@ -360,12 +359,12 @@
                                 }
                             }, 
                             recordsLoaded: function(event, data) {
-                            	  if (userData.record.data_fine_assistenza) {
+                            	  if (assistito.record.data_fine_assistenza) {
                             	     $('#AssistitiTableContainer').find('.jtable-toolbar-item.jtable-toolbar-item-add-record').remove();
                             	  }
                               },
                             rowInserted: function(event, data){
-	                         	if (userData.record.data_fine_assistenza) {
+	                         	if (assistito.record.data_fine_assistenza) {
 	                                data.row.find('.jtable-edit-command-button').hide();
 	                                data.row.find('.jtable-delete-command-button').hide();
 	                              }
@@ -618,7 +617,11 @@
       	  if (addRecordObfuscation()) {
       	     $('#AssistitiTableContainer').find('.jtable-toolbar-item.jtable-toolbar-item-add-record').remove();
       	  }
-        },
+     	  if (gruppoUtente>2) {
+       	     $('#AssistitiTableContainer').find('.jtable-toolbar-item.TRAS').remove();
+      	     $('#AssistitiTableContainer').find('.jtable-toolbar-item.RIAT').remove();
+      	         	  }
+         },
         rowInserted: function(event, data){
         	if (recordObfuscation(data.record.ente_assistente) || (data.record.data_fine_assistenza)) {
               data.row.find('.jtable-edit-command-button').hide();
@@ -658,10 +661,10 @@
 
     $('#ResetButton').click(function (e) {
         e.preventDefault();
-        $('#codice_fiscale').val('');
-        $('#cognome_search').val('');
+        $('#codice_fiscale').val(null);
+        $('#cognome_search').val(null);
         $('#AssistitiTableContainer').jtable('load', {
-            cf_search: $('#codice_fiscale').val(),
+            cf_search: $('#cf_search').val(),
             cognome_search: $('#cognome_search').val()
         });
     });

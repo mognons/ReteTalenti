@@ -78,7 +78,7 @@
             },
             descrizione: {
                 title: 'Descrizione',
-                width: '20%',
+                width: '15%',
                 inputClass: 'validate[required]',
                 list: true,
                 edit: true,
@@ -86,6 +86,7 @@
             },
             responsabile: {
                 title: 'Responsabile',
+                width: '25%',
                 inputClass: 'validate[required]',
                 list: true,
                 edit: true,
@@ -94,7 +95,7 @@
             resp_email: {
                 title: 'Email',
                 inputClass: 'validate[required,custom[email]]',
-                width: '30%',
+                width: '20%',
                 list: true,
                 edit: true,
                 create: true
@@ -102,7 +103,7 @@
             resp_phone: {
                 title: 'Telefono',
                 inputClass: 'validate[required,custom[phone]]',
-                width: '30%',
+                width: '10%',
                 list: true,
                 edit: true,
                 create: true
@@ -114,19 +115,21 @@
                 edit: true
             },
             ente_emporio: {
-                title: 'Gest. Emporio',
-                width: '5%',
+                title: 'Emporio',
+                width: '10%',
 				type: 'checkbox',
 				defaultValue: false,
 				values:  {false : 'No' ,true : 'Sì'},
-edit: true
+				edit: true,
+				create: true
             }
         },
         //Initialize validation logic when a form is created
         formCreated: function (event, data) {
+            data.form.find('input[name=descrizione]').css('width', '200px');
             data.form.find('input[name=responsabile]').css('width', '200px');
             data.form.find('input[name=resp_email]').css('width', '200px');
-            data.form.validationEngine();
+            data.form.validationEngine('attach',{promptPosition : "bottomLeft", scroll: false});
         },
         //Validate form when it is being submitted
         formSubmitting: function (event, data) {
