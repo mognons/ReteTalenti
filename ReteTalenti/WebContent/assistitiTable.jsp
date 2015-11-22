@@ -317,7 +317,7 @@ fieldset {
 			<input type="text" name="cf_search" id="cf_search" />
 			<span class="jtable-title-text">Cognome</span>
 			<input type="text" name="cognome_search" id="cognome_search" />
-			<input type="button" class="searchButton" id="LoadRecordsButton" value="Ricerca"/>
+			<input type="submit" class="searchButton" id="LoadRecordsButton" value="Ricerca"/>
 			<input type="button" class="searchButton" id="ResetButton" value="Tutti"/>
 		</form>
 	</div>

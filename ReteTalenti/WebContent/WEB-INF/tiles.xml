@@ -48,6 +48,11 @@
 		<put-attribute name="body" value="/candidatureTable.jsp" />
 	</definition>
  
+	<definition name="/rimozioneEmporiotable.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Rimozione Assistiti da Emporio" />
+		<put-attribute name="body" value="/rimozioneEmporioTable.jsp" />
+	</definition>
+ 
 	<definition name="/nazionitable.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Lista Tabella Nazioni" />
 		<put-attribute name="body" value="/nazioniTable.jsp" />

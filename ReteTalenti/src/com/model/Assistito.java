@@ -48,7 +48,8 @@ public class Assistito {
     private Date data_accettazione;
     private Date data_scadenza;
     private Date data_dismissione;
-
+    private int emporio;
+    private String desc_emporio;
     private int operatore;
     private String username;
 
@@ -293,6 +294,22 @@ public class Assistito {
 
 	public void setData_scadenza(Date data_scadenza) {
 		this.data_scadenza = data_scadenza;
+	}
+
+	public int getEmporio() {
+		return emporio;
+	}
+
+	public void setEmporio(int emporio) {
+		this.emporio = emporio;
+	}
+
+	public String getDesc_emporio() {
+		return desc_emporio;
+	}
+
+	public void setDesc_emporio(String desc_emporio) {
+		this.desc_emporio = desc_emporio;
 	}
     
 }

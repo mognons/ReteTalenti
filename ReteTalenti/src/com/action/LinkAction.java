@@ -43,6 +43,10 @@ public class LinkAction extends ActionSupport implements UserAware, ModelDriven<
     	return "ritiri";
     }
     
+    public String rimozioneEmporio() {
+    	return "rimozioneEmporio";
+    }
+    
     public String assistiti() {
     	return "assistiti";
     }

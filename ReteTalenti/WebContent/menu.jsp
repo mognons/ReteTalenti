@@ -35,17 +35,22 @@
 
 	<div style="position: relative; left: 0px; top: 0px; z-index: 10">
 		<ul id="verticalMenu">
-			<li <s:if test="(enteEmporio)" >class="ui-state-disabled"</s:if> 
-				onclick="window.location='assistitiLink';">Gestione Assistiti
+			<li <s:if test="(enteEmporio)" >class="ui-state-disabled"</s:if>>Gestione Assistiti
+				<ul>
+					<li <s:if test="(enteEmporio)" >class="ui-state-disabled"</s:if> 
+						onclick="window.location='assistitiLink';">Anagrafica Assistiti</li>
+					<li <s:if test="(enteEmporio || groupId > 2)" >class="ui-state-disabled"</s:if>
+						onclick="window.location='candidatureLink';">Candidatura Emporio</li>
+					<li <s:if test="(enteEmporio || groupId > 2)" >class="ui-state-disabled"</s:if>
+						onclick="window.location='rimozioneEmporioLink';">Rimozione Emporio</li>
+				</ul>
 			</li>
 			<li>-</li>
-			<li>Gestione Emporio
+			<li <s:if test="!(enteEmporio)" >class="ui-state-disabled"</s:if>>Gestione Emporio  
 				<ul>
-					<li  <s:if test="(enteEmporio || groupId > 2)" >class="ui-state-disabled"</s:if>
-						onclick="window.location='candidatureLink';">Candidatura Emporio</li>
+					<li class="ui-state-disabled">Accettazione Emporio</li>
+					<li class="ui-state-disabled">Anagrafica Emporio</li>
 					<li class="ui-state-disabled">Rimozione Emporio</li>
-					<li <s:if test="!(enteEmporio)" >class="ui-state-disabled"</s:if>>Inserimento Emporio</li>
-					<li >Altro...</li>
 				</ul>
 			</li>
 			<li>-</li>

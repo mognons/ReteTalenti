@@ -6,6 +6,7 @@
 package com.action;
 
 import com.dao.AssistitiDao;
+import com.action.NoteTableAction;
 import com.interceptor.UserAware;
 import com.model.Assistito;
 import com.model.Tuple;
@@ -35,6 +36,7 @@ public class EmporioTableAction extends ActionSupport implements UserAware, Mode
     private String jtSorting;
 
     private User user = new User();
+    private NoteTableAction noteAction;
 //
 
     private static final long serialVersionUID = 1L;
@@ -62,11 +64,12 @@ public class EmporioTableAction extends ActionSupport implements UserAware, Mode
     private String telefono;
     private String email;
     private String num_documento;
+    private String accettazione, scadenza;
 
     private int ente_assistente; //fk ID della tabella enti INT(11)
     private String descrizione;
 
-    private int punteggio_idb;
+    private int punteggio_idb, emporio;
     private Date data_inserimento;
     private Date data_fine_assistenza;
     private Date data_candidatura;
@@ -107,6 +110,21 @@ public class EmporioTableAction extends ActionSupport implements UserAware, Mode
         return SUCCESS;
     }
    
+    public String inseriti() {
+        try {
+            // Fetch Data from Assistiti Table
+        	System.out.println("Getting inseriti...");
+            records = dao.getInseriti(jtStartIndex, jtPageSize, jtSorting, user);
+            result = "OK";
+            totalRecordCount = dao.getCountInseriti(user);
+        } catch (Exception e) {
+            result = "ERROR";
+            message = e.getMessage();
+            System.err.println(e.getMessage());
+        }
+        return SUCCESS;
+    }
+   
     public String candida() throws IOException {
         System.out.println("Candidatura assistito con codice fiscale " + cod_fiscale);
         record = new Assistito();
@@ -121,11 +139,10 @@ public class EmporioTableAction extends ActionSupport implements UserAware, Mode
         }
         result = "OK";
         return SUCCESS;
-        
     }
 
     public String rimuoviCandidatura() throws IOException {
-        System.out.println("Candidatura assistito con codice fiscale " + cod_fiscale);
+        System.out.println("Rimozione candidatura assistito con codice fiscale " + cod_fiscale);
         record = new Assistito();
         record.setCod_fiscale(cod_fiscale);
         try {
@@ -141,6 +158,66 @@ public class EmporioTableAction extends ActionSupport implements UserAware, Mode
         
     }
 
+    public String EmporioOut() throws IOException {
+        System.out.println("Rimozione da EMPORIO per assistito con codice fiscale " + cod_fiscale);
+        record = new Assistito();
+        record.setCod_fiscale(cod_fiscale);
+        noteAction = new NoteTableAction();
+        String nota = 	"Rimosso dall'emporio (accettato il "
+						+ accettazione 
+						+ " fino al " + 
+						scadenza + ")";
+        try {
+            dao.rimuoviEmporioAssistito(record);
+            noteAction.annotazione(cod_fiscale, nota);
+            result = "OK";
+        } catch (Exception e) {
+            result = "ERROR";
+            message = e.getMessage();
+            System.err.println(e.getMessage());
+        }
+        result = "OK";
+        return SUCCESS;
+        
+    }
+
+    public String EmporioIn() throws IOException {
+        System.out.println("Inserimento in EMPORIO per assistito con codice fiscale " + cod_fiscale);
+        record = new Assistito();
+        record.setCod_fiscale(cod_fiscale);
+        record.setEmporio(emporio);
+        record.setData_accettazione(data_accettazione);
+        record.setData_scadenza(data_scadenza);
+        System.err.println("dopo la record.set....");
+        String nota = 	"Inserito in emporio dal " + 
+        				dateToString(data_accettazione) 
+        				+ " al " + 
+        				dateToString(data_scadenza);
+        System.out.println(nota);
+        try {
+            dao.inserisciEmporioAssistito(record);
+            noteAction.annotazione(cod_fiscale, nota);
+            result = "OK";
+        } catch (Exception e) {
+            result = "ERROR";
+            message = e.getMessage();
+            System.err.println(e.getMessage());
+        }
+        result = "OK";
+        return SUCCESS;
+    }
+
+    public String dateToString(Date indate) {
+    	String dateString = null;
+    	SimpleDateFormat sdfr = new SimpleDateFormat("dd/MMM/yyyy");
+    	try {
+    		dateString = sdfr.format(indate);
+    	} catch (Exception ex ) {
+    		System.out.println(ex);
+    	}
+    	return dateString;
+    }
+    
     public AssistitiDao getDao() {
         return dao;
     }
@@ -493,6 +570,30 @@ public class EmporioTableAction extends ActionSupport implements UserAware, Mode
 
 	public void setData_scadenza(Date data_scadenza) {
 		this.data_scadenza = data_scadenza;
+	}
+
+	public int getEmporio() {
+		return emporio;
+	}
+
+	public void setEmporio(int emporio) {
+		this.emporio = emporio;
+	}
+
+	public String getAccettazione() {
+		return accettazione;
+	}
+
+	public void setAccettazione(String accettazione) {
+		this.accettazione = accettazione;
+	}
+
+	public String getScadenza() {
+		return scadenza;
+	}
+
+	public void setScadenza(String scadenza) {
+		this.scadenza = scadenza;
 	}
 
 }

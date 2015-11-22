@@ -22,12 +22,16 @@ public class DropDownDao {
 
 /* GROUPS DROPDOWN */
 	public List<JSONObject> getAllUsers() {
-
 		ArrayList<JSONObject> options = new ArrayList<JSONObject>();
 		String query = "SELECT ID, USERNAME FROM USERS";
 		try {
 			Statement stmt = dbConnection.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
+			JSONObject firstOption = new JSONObject();
+			firstOption.put("Value", 0);
+			firstOption.put("DisplayText", "SYSTEM");
+			options.add(firstOption);
+
 			while (rs.next()) {
 				JSONObject option = new JSONObject();
 				option.put("Value", rs.getInt("ID"));

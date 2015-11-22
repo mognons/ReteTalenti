@@ -104,6 +104,19 @@ public class NoteTableAction extends ActionSupport implements UserAware {
 		return Action.SUCCESS;
 	}
 
+	public void annotazione(String codice_fiscale, String nota) {
+		System.err.println("System auto annotation for CF: "+ codice_fiscale);
+		NoteAssistito annotazione = new NoteAssistito();
+		annotazione.setCf_assistito_note(codice_fiscale);
+		annotazione.setNote_libere(nota);
+		annotazione.setOperatore(0);
+		try {
+			dao.addNotaAssistito(annotazione);
+		} catch (Exception e) {	
+			System.err.println("Error:" + e.getMessage());
+		}		
+		return;
+	}
 
 	@Override
 	public void setUser(User user) {
