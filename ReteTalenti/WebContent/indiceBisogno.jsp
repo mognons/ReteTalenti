@@ -170,7 +170,7 @@ select {
 
 </style>
 </head>
-<body>
+<body bgcolor="#F2F5F7">
 	<div class="ui-tabs-panel ui-widget-content ui-corner-bottom">
 		<s:set var="codice_fiscale" value="recordIDB.cf_assistito_ib" />
 		<span style="color: #2D89EF; font-weight: bold; font-size: 14pt;">Soggetto:

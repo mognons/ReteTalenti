@@ -109,7 +109,22 @@ public class EmporioTableAction extends ActionSupport implements UserAware, Mode
         }
         return SUCCESS;
     }
-   
+    
+    public String candidatiProvincia() {
+        try {
+            // Fetch Data from Assistiti Table
+        	System.out.println("Getting candidati provincia ...");
+            records = dao.getCandidatiProvincia(jtStartIndex, jtPageSize, jtSorting, user, cf_search, cognome_search);
+            result = "OK";
+            totalRecordCount = dao.getCountCandidatiProvincia(user, cf_search, cognome_search);
+        } catch (Exception e) {
+            result = "ERROR";
+            message = e.getMessage();
+            System.err.println(e.getMessage());
+        }
+        return SUCCESS;
+    }
+      
     public String inseriti() {
         try {
             // Fetch Data from Assistiti Table
@@ -185,15 +200,15 @@ public class EmporioTableAction extends ActionSupport implements UserAware, Mode
         System.out.println("Inserimento in EMPORIO per assistito con codice fiscale " + cod_fiscale);
         record = new Assistito();
         record.setCod_fiscale(cod_fiscale);
-        record.setEmporio(emporio);
+        record.setEmporio(user.getEnte());
         record.setData_accettazione(data_accettazione);
         record.setData_scadenza(data_scadenza);
-        System.err.println("dopo la record.set....");
-        String nota = 	"Inserito in emporio dal " + 
+        noteAction = new NoteTableAction();
+        String nota = 	"Accettato dall'emporio " + user.getDescrizioneEnte()
+        				+ " dal " + 
         				dateToString(data_accettazione) 
         				+ " al " + 
         				dateToString(data_scadenza);
-        System.out.println(nota);
         try {
             dao.inserisciEmporioAssistito(record);
             noteAction.annotazione(cod_fiscale, nota);

@@ -54,6 +54,9 @@
 				<result name="ritiri" type="tiles">/ritiritable.tiles</result>
 				<result name="candidature" type="tiles">/candidaturetable.tiles</result>
 				<result name="rimozioneEmporio" type="tiles">/rimozioneEmporiotable.tiles</result>
+				<result name="accettazioneEmporio" type="tiles">/accettazioneEmporio.tiles</result>
+				<result name="anagraficaEmporio" type="tiles">/anagraficaEmporio.tiles</result>
+				<result name="dismissioneEmporio" type="tiles">/dismissioneEmporio.tiles</result>
 				<result name="assistiti" type="tiles">/assistititable.tiles</result>
 				<result name="users" type="tiles">/userstable.tiles</result>
 				<result name="enti" type="tiles">/entitable.tiles</result>
@@ -96,8 +99,8 @@
         	
         	<action name="*Report" class="com.action.ReportAction" method="{1}">
         		<result type="stream">
-        			<param name="contentDisposition">attachment;filename="${filename}"</param>
         			<param name="contentType">application/vnd.ms-excel</param>
+        			<param name="contentDisposition">attachment;filename="${filename}"</param>
         			<param name="inputName">excelStream</param>
         			<param name="bufferSize">1024</param>
 				</result>

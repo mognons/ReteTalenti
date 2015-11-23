@@ -14,6 +14,8 @@
 
 <!-- User defined Jtable js file -->
 <script src="scripts/jquery.jtable.it.js" type="text/javascript"></script>
+<script type="text/javascript" src="scripts/jquery.validationEngine.js"></script>
+<script type="text/javascript" src="scripts/jquery.validationEngine-it.js"></script>
 
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
 
@@ -106,7 +108,11 @@ fieldset {
 	top:1px;
 }
 
-
+h1 {
+  	border-bottom: 1px solid gray;
+	padding: 1px 10px 1px 5px;
+	margin-bottom: 3px;
+}
 
 </style>
 
@@ -230,7 +236,7 @@ fieldset {
 				resizable : false,
 				draggable : false,
 				width : '800',
-				height : '400',
+				height : '385',
 				title : 'Calcolo punteggio Indice di Bisogno'
 			});
 		})();
@@ -284,29 +290,11 @@ fieldset {
 			});
 		})();
 	};
+	
 	$(document).ready(function () {
-	// Caricamento OPTIONS della SELECT da backend e senza STRUTTO!
-	var opzioni = [];
-	var select = document.getElementById("enteDestinazione");
-	var el = document.createElement("option");
-//     el.textContent = "Ente di destinazione";
-//     el.value = "-1";
-//     select.appendChild(el);
+		// console.log(_GET);
+	});
 
-	$.getJSON('Choose_Enti', function(data) {
-		$(data.options).each(function() {
-			opzioni.push({
-				value : $(this).attr('Value'),
-				text : $(this).attr('DisplayText')
-			});
-			el = document.createElement("option");
-	        el.textContent = $(this).attr('DisplayText');
-	        el.value = $(this).attr('Value');
-	        select.appendChild(el);
-		})
-	});
-	});
-	// FINE ESPERIMENTO
 </script>
 
 </head>
@@ -322,28 +310,24 @@ fieldset {
 		</form>
 	</div>
 	<div id="pop-up" style="display: none;">
-		<iframe style="width: 98%; height: 98%; background-color: #F2F5F7;" id="modalDialogBox" src=""></iframe>
+		<iframe style="width: 98%; height: 98%;" id="modalDialogBox" src=""></iframe>
 	</div>
 	<div id="dialog" title="Informazione dal sistema"></div>
-	<div id="AssistitiTableContainer"></div>
+	<div id="EmporioTableContainer"></div>
 	
-	<div id="dialog-form" title="Trasferimento Assistito" class="ui-widget">
+	<div id="dialog-form" title="Accettazione Assistito" class="ui-widget">
 		<form action="#">
 			<fieldset>
 				<div id="errorMessage"></div>
-				<label for="startDate">Data trasferimento</label>
+				<label for="startDate">Dal</label>
 				<input type="text"
 					name="startDate" id="startDate"
 					class="text ui-widget-content ui-corner-all">
-				<label for="enteDestinazione">Scegliere un'ente</label> 
-				<select name="enteDestinazione" id="enteDestinazione" class="text ui-widget-content ui-corner-all"></select>
-				<label for="motivazione">Indicare la motivazione</label> 
-				<textarea rows="4" cols="50"
-					name="motivazione" id="motivazione"
-					class="text ui-widget-content ui-corner-all"></textarea>	
+				<label for="endDate">Al</label>
+				<input type="text"
+					name="endDate" id="endDate"
+					class="text ui-widget-content ui-corner-all">
 				<input type="hidden" id="codice_fiscale" name="codice_fiscale" value="codice_fiscale"> 
-				<input type="hidden" id="enteProvenienza" name="enteProvenienza" value="enteProvenienza">
-				<input type="hidden" id="courseId" name="courseId" /> 
 				<!-- Allow form submission with keyboard without duplicating the dialog button -->
 				<input type="submit" tabindex="-1"
 					style="position: absolute; top: -1000px">
@@ -357,11 +341,16 @@ fieldset {
 				beforeShowDay: $.datepicker.noWeekends,
 				firstDay: 1
 			});
+			$("#endDate").datepicker({
+				dateFormat: 'dd/mm/yy',
+				beforeShowDay: $.datepicker.noWeekends,
+				firstDay: 1
+			});
 		});
 	  	$(function() {
 			$( "#speed" ).selectmenu();
 		});
 	</script>
-	<script src="js/assistitiTable.js" type="text/javascript"></script>
+	<script src="js/emporioAccettazioneTable.js" type="text/javascript"></script>
 </body>
 </html>

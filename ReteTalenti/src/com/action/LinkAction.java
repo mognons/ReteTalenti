@@ -10,6 +10,17 @@ public class LinkAction extends ActionSupport implements UserAware, ModelDriven<
     private static final long serialVersionUID = 8111129314704779336L;
     private User user;
     
+    public String accettazioneEmporio() {
+    	return "accettazioneEmporio";
+    }
+     
+    public String anagraficaEmporio() {
+    	return "anagraficaEmporio";
+    }
+     
+    public String dismissioneEmporio() {
+    	return "dismissioneEmporio";
+    }
      
     public String table() {
     	return "table";

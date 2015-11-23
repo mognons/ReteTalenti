@@ -23,6 +23,21 @@
 		<put-attribute name="body" value="/welcome.action" />
 	</definition>
 	 
+	<definition name="/accettazioneEmporio.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Accettazione Emporio" />
+		<put-attribute name="body" value="/emporioAccettazioneTable.jsp" />
+	</definition>
+	 
+	<definition name="/anagraficaEmporio.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Anagrafica Emporio" />
+		<put-attribute name="body" value="/emporioAnagraficaTable.jsp" />
+	</definition>
+	 
+	<definition name="/dismissioneEmporio.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Dimissione da Emporio" />
+		<put-attribute name="body" value="/emporioDismissioneTable.jsp" />
+	</definition>
+	 
 	<definition name="/eccedenzetable.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Gestione Eccedenze" />
 		<put-attribute name="body" value="/eccedenzeTable.jsp" />

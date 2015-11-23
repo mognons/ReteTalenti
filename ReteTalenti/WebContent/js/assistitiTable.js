@@ -2,6 +2,7 @@
 	// CUT HERE
 	var assistito;
 	function generateCalendar() {
+		return; // ELIMINARE DA PRODUZIONE DOPO IMPLEMENTAZIONE METODO
 		var courseId = $("#courseId").val(); 
 		var courseName = $("#courseName").val(); 
 		var calendarColor = $("#calendarColor").val();
@@ -38,14 +39,15 @@
 			});
 		});
 	};
+	
 	var dialog = $("#dialog-form").dialog({
-		title: "Generate new calendar: previous events will be deleted",
+		title: "Trasferimento Assistito ad altro Ente",
 		autoOpen : false,
 		height : 450,
 		width : 400,
 		modal : true,
 		buttons : {
-			"Generate Events" : generateCalendar,
+			"Trasferisci" : generateCalendar,
 			Cancel : function() {
 				dialog.dialog("close");
 			}
@@ -408,7 +410,8 @@
                 	} else {
 	                	var page = "'ShowSchedaAssistito?codice_fiscale="+ data.record.cod_fiscale + "'";
 						html = '<a href="javascript:showSchedaAssistito(' + page + ')'  
-						+ '" target="_blank">' 
+//						+ ';" target="_blank">' 
+						+ ';" >' 
 						+ data.record.cod_fiscale 
 						+ '</a>';
                 	}

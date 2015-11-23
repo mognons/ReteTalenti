@@ -48,9 +48,9 @@
 			<li>-</li>
 			<li <s:if test="!(enteEmporio)" >class="ui-state-disabled"</s:if>>Gestione Emporio  
 				<ul>
-					<li class="ui-state-disabled">Accettazione Emporio</li>
-					<li class="ui-state-disabled">Anagrafica Emporio</li>
-					<li class="ui-state-disabled">Rimozione Emporio</li>
+					<li onclick="window.location='accettazioneEmporioLink';">Accettazione Emporio</li>
+					<li onclick="window.location='anagraficaEmporioLink';">Anagrafica Emporio</li>
+					<li onclick="window.location='dismissioneEmporioLink';">Dimissione Emporio</li>
 				</ul>
 			</li>
 			<li>-</li>
@@ -66,7 +66,7 @@
 			<li>-</li>
 			<li>Report
 				<ul>
-					<li class="ui-state-disabled">Elenco Assistiti</li>
+					<li onclick="window.location='anagraficaCompletaLink';">Elenco Assistiti</li>
 					<li class="ui-state-disabled">Elenco Eccedenze</li>
 					<li class="ui-state-disabled">Elenco Prenotazioni</li>
 					<li class="ui-state-disabled">Graduatoria Provinciale Emporio</li>

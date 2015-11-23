@@ -20,6 +20,13 @@
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
 
 <style>
+h1 {
+  	border-top: 1px solid gray;
+  	border-bottom: 1px solid gray;
+	padding: 20px 20px 20px 20px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
 </style>
 
 <script type="text/JavaScript">
@@ -78,6 +85,7 @@
 <body>
 	<div id="dialog" title="Informazione dal sistema"></div>
 	<div id="GraduatoriaTableContainer"></div>
+	<h1></h1>
 	<div id="CandidatiTableContainer"></div>
 </body>
 </html>
