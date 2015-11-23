@@ -230,7 +230,7 @@ fieldset {
 				resizable : false,
 				draggable : false,
 				width : '800',
-				height : '400',
+				height : '385',
 				title : 'Calcolo punteggio Indice di Bisogno'
 			});
 		})();

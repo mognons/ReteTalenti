@@ -51,6 +51,10 @@ public class LinkAction extends ActionSupport implements UserAware, ModelDriven<
     	return "assistiti";
     }
     
+    public String anagraficaCompleta() {
+    	return "anagraficaCompleta";
+    }
+    
     public String report() {
     	return "report";
     }

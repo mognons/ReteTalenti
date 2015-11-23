@@ -86,15 +86,11 @@ function calcoloPunteggio() {
 	else if (entrate_nc > 7000){entrate_nc_punti=-8;}
 
 //*************** CALCOLO SPESE IMPREVISTE 
-	if (spese_imp >= 1 && spese_imp<=500) {spese_imp_punti=-1;}
-	else if (spese_imp >= 501 && spese_imp<=1000){spese_imp_punti=-2;}
-	else if (spese_imp >= 1001 && spese_imp<=2000){spese_imp_punti=-3;}
-	else if (spese_imp > 2000){spese_imp_punti=-4;}
+	if (spese_imp >= 1 && spese_imp<=500) {spese_imp_punti=1;}
+	else if (spese_imp >= 501 && spese_imp<=1000){spese_imp_punti=2;}
+	else if (spese_imp >= 1001 && spese_imp<=2000){spese_imp_punti=3;}
+	else if (spese_imp > 2000){spese_imp_punti=4;}
 	
-	if (spese_imp === 0) {spese_imp_punti=1;}
-	else if (spese_imp===1) {spese_imp_punti=2;}
-	else if (spese_imp===2) {spese_imp_punti=3;}
-	else if (spese_imp===3) {spese_imp_punti=4;}
 //*************** CALCOLO URGENZA *************************************	
 	urgenza_punti = urgenza;
 	stato_disoc_punti = stato_disoc;
@@ -167,6 +163,11 @@ input[readonly] {
 	border: none;
 	font-weight: bold;
 }
+
+select {
+  width: 150px;
+}
+
 </style>
 </head>
 <body>
@@ -190,16 +191,16 @@ input[readonly] {
 				</tr>
 				<tr valign="top">
 					<td colspan="2" style="font-weight: bold;">DATI RICHIESTI</td>
-					<td colspan="2" ALIGN="left" style="font-weight: bold;">CALCOLO
-						PUNTEGGIO</td>
+					<td colspan="2" ALIGN="left" style="font-weight: bold;">PUNTEGGIO</td>
 				</tr>
 				<tr>
 					<td style="font-weight: bold;">1. ISEE - Valore in EURO</td>
 					<td><input name="isee_euro"
+						style="text-align:right;" 
 						value="<s:property value="%{recordIDB.isee_euro}"/>"
 						class="validate[required,custom[integer]]"
 						onChange="resetMode()" /></td>
-					<td>---</td>
+					<td></td>
 					<td ALIGN="right"><input name="isee_punti" readonly size="2"
 						value="<s:property value="%{recordIDB.isee_punti}"/>" style="text-align:right;"/></td>
 				</tr>
@@ -207,6 +208,7 @@ input[readonly] {
 					<td style="font-weight: bold;">2. Contributo Comune per spese
 						documentate</td>
 					<td><input name="cc_euro"
+						style="text-align:right;" 
 						value="<s:property value="%{recordIDB.cc_euro}"/>"
 						class="validate[required,custom[integer]]" onChange="resetMode()"/></td>
 				</tr>
@@ -214,6 +216,7 @@ input[readonly] {
 					<td style="font-weight: bold;">3. Contributo affitto regione
 						per spese documentate</td>
 					<td><input name="ca_euro"
+						style="text-align:right;" 
 						value="<s:property value="%{recordIDB.ca_euro}"/>"
 						class="validate[required,custom[integer]]" onChange="resetMode()"/></td>
 				</tr>
@@ -221,9 +224,10 @@ input[readonly] {
 					<td style="font-weight: bold;">4. Contributo spot privato
 						sociale per spese documentate</td>
 					<td><input name="cs_euro"
+						style="text-align:right;" 
 						value="<s:property value="%{recordIDB.cs_euro}"/>"
 						class="validate[required,custom[integer]]" onChange="resetMode()"/></td>
-					<td>---</td>
+					<td></td>
 					<td ALIGN="right"><input name="entrate_nc_punti" readonly
 						size="2"
 						value="<s:property value="%{recordIDB.entrate_nc_punti}"/>"  style="text-align:right;"/></td>
@@ -248,7 +252,7 @@ input[readonly] {
 								<s:if test="(recordIDB.stato_disoc==5)">selected="selected"</s:if>
 								value="5">Mai percepita</option>
 					</select></td>
-					<td>---</td>
+					<td></td>
 					<td ALIGN="right"><input name="stato_disoc_punti" readonly
 						size="2"
 						value="<s:property value="%{recordIDB.stato_disoc_punti}"/>" style="text-align:right;"/></td>
@@ -256,9 +260,10 @@ input[readonly] {
 					<td style="font-weight: bold;">6. Spese impreviste e
 						straordinarie"</td>
 					<td><input name="spese_imp"
+						style="text-align:right;" 
 						value="<s:property value="%{recordIDB.spese_imp}"/>"
 						class="validate[required,custom[integer]]" onChange="resetMode()"/></td>
-					<td>---</td>
+					<td></td>
 					<td ALIGN="right"><input name="spese_imp_punti" readonly
 						size="2"
 						value="<s:property value="%{recordIDB.spese_imp_punti}"/>" style="text-align:right;"/></td>
@@ -278,15 +283,15 @@ input[readonly] {
 								value="2">Miglioramento scarso</option>
 							<option
 								<s:if test="(recordIDB.urgenza==3)">selected="selected"</s:if>
-								value="3">Miglioramento qualche</option>
+								value="3">Miglioramento medio</option>
 							<option
 								<s:if test="(recordIDB.urgenza==4)">selected="selected"</s:if>
-								value="4">Miglioramento discrete</option>
+								value="4">Miglioramento discret0</option>
 							<option
 								<s:if test="(recordIDB.urgenza==5)">selected="selected"</s:if>
-								value="5">Miglioramento ottime</option>
+								value="5">Miglioramento ottimo</option>
 					</select></td>
-					<td>---</td>
+					<td></td>
 					<td ALIGN="right"><input name="urgenza_punti" readonly
 						size="2" value="<s:property value="%{recordIDB.urgenza_punti}"/>" style="text-align:right;"/></td>
 				</tr>
