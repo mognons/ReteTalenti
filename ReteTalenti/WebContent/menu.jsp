@@ -66,7 +66,9 @@
 			<li>-</li>
 			<li>Report
 				<ul>
-					<li onclick="window.location='anagraficaCompletaLink';">Elenco Assistiti</li>
+					<li onclick="window.location='anagraficaCompletaReport.action';">Elenco Assistiti</li>
+					<li onclick="window.location='anagraficaEnteUserReport.action';">Elenco Assistiti per Ente operatore</li>
+					<li onclick="window.location='anagraficaXProvinciaEnteUserReport.action';">Elenco Assistiti per Provincia Ente operatore</li>
 					<li class="ui-state-disabled">Elenco Eccedenze</li>
 					<li class="ui-state-disabled">Elenco Prenotazioni</li>
 					<li class="ui-state-disabled">Graduatoria Provinciale Emporio</li>

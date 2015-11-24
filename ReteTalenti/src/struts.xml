@@ -2,204 +2,204 @@
 <!DOCTYPE struts PUBLIC
 "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-		<package name="default" extends="struts-default">
-			<result-types>
-				<result-type name="tiles"
-					class="org.apache.struts2.views.tiles.TilesResult" />
-			</result-types>
-			<interceptors>
-            	<interceptor name="authentication" 
-            		class="com.interceptor.AuthenticationInterceptor">
-            	</interceptor>
-            	<interceptor-stack name="authStack">
-            	    <interceptor-ref name="authentication"></interceptor-ref>
-            	    <interceptor-ref name="defaultStack"></interceptor-ref>
-            	</interceptor-stack>
-        	</interceptors>
+    <package name="default" extends="struts-default">
+        <result-types>
+            <result-type name="tiles"
+                                             class="org.apache.struts2.views.tiles.TilesResult" />
+        </result-types>
+        <interceptors>
+            <interceptor name="authentication" 
+                             class="com.interceptor.AuthenticationInterceptor">
+            </interceptor>
+            <interceptor-stack name="authStack">
+                <interceptor-ref name="authentication"></interceptor-ref>
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
  
-        	<default-interceptor-ref name="authStack"></default-interceptor-ref>
+        <default-interceptor-ref name="authStack"></default-interceptor-ref>
  
- 	       	<global-results>
-	        	<result name="login" type="tiles">/login.tiles</result>
-	       	</global-results>
+        <global-results>
+            <result name="login" type="tiles">/login.tiles</result>
+        </global-results>
 	       	
-        	<action name="home">
-            	<result type="tiles">/welcome.tiles</result>
-        	</action>
+        <action name="home">
+            <result type="tiles">/welcome.tiles</result>
+        </action>
 
-        	<action name="header" class="com.action.HeaderAction">
-            	<result>/header.jsp</result>
-        	</action>
+        <action name="header" class="com.action.HeaderAction">
+            <result>/header.jsp</result>
+        </action>
         	
-        	<action name="showCFDetails" class="com.action.ShowCFDetailsAction">
-            	<result name="success">/showCFDetails.jsp</result>
-        	</action>
+        <action name="showCFDetails" class="com.action.ShowCFDetailsAction">
+            <result name="success">/showCFDetails.jsp</result>
+        </action>
         	
-        	<action name="ShowSchedaAssistito" class="com.action.ShowSchedaAssistitoAction">
-            	<result name="success">/showAnagDetails.jsp</result>
-        	</action>
+        <action name="ShowSchedaAssistito" class="com.action.ShowSchedaAssistitoAction">
+            <result name="success">/showAnagDetails.jsp</result>
+        </action>
         	
-        	<action name="*IDBAction" class="com.action.IndiceBisognoAction" method="{1}">
-        	    <result name="success">/indiceBisogno.jsp</result>
-        	    <result name="error">/error.jsp</result>
-        	</action>
+        <action name="*IDBAction" class="com.action.IndiceBisognoAction" method="{1}">
+            <result name="success">/indiceBisogno.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
         	
- 			<action name="*Link" class="com.action.LinkAction" method="{1}">
-				<result name="welcome" type="tiles">/welcome.tiles</result>
-				<result name="province" type="tiles">/provincetable.tiles</result>
-				<result name="nazioni" type="tiles">/nazionitable.tiles</result>
-				<result name="uni_misura" type="tiles">/uni_misuratable.tiles</result>
-				<result name="eccedenze" type="tiles">/eccedenzetable.tiles</result>
-				<result name="impegni" type="tiles">/impegnitable.tiles</result>
-				<result name="ritiri" type="tiles">/ritiritable.tiles</result>
-				<result name="candidature" type="tiles">/candidaturetable.tiles</result>
-				<result name="rimozioneEmporio" type="tiles">/rimozioneEmporiotable.tiles</result>
-				<result name="accettazioneEmporio" type="tiles">/accettazioneEmporio.tiles</result>
-				<result name="anagraficaEmporio" type="tiles">/anagraficaEmporio.tiles</result>
-				<result name="dismissioneEmporio" type="tiles">/dismissioneEmporio.tiles</result>
-				<result name="assistiti" type="tiles">/assistititable.tiles</result>
-				<result name="users" type="tiles">/userstable.tiles</result>
-				<result name="enti" type="tiles">/entitable.tiles</result>
-				<result name="filemanager" type="tiles">/fm.tiles</result>
-				<result name="profile" type="tiles">/profile.tiles</result>
-				<result name="anagraficaCompleta" type="redirect">/anagraficaCompletaReport.action</result>
-			</action>
+        <action name="*Link" class="com.action.LinkAction" method="{1}">
+            <result name="welcome" type="tiles">/welcome.tiles</result>
+            <result name="province" type="tiles">/provincetable.tiles</result>
+            <result name="nazioni" type="tiles">/nazionitable.tiles</result>
+            <result name="uni_misura" type="tiles">/uni_misuratable.tiles</result>
+            <result name="eccedenze" type="tiles">/eccedenzetable.tiles</result>
+            <result name="impegni" type="tiles">/impegnitable.tiles</result>
+            <result name="ritiri" type="tiles">/ritiritable.tiles</result>
+            <result name="candidature" type="tiles">/candidaturetable.tiles</result>
+            <result name="rimozioneEmporio" type="tiles">/rimozioneEmporiotable.tiles</result>
+            <result name="accettazioneEmporio" type="tiles">/accettazioneEmporio.tiles</result>
+            <result name="anagraficaEmporio" type="tiles">/anagraficaEmporio.tiles</result>
+            <result name="dismissioneEmporio" type="tiles">/dismissioneEmporio.tiles</result>
+            <result name="assistiti" type="tiles">/assistititable.tiles</result>
+            <result name="users" type="tiles">/userstable.tiles</result>
+            <result name="enti" type="tiles">/entitable.tiles</result>
+            <result name="filemanager" type="tiles">/fm.tiles</result>
+            <result name="profile" type="tiles">/profile.tiles</result>
+        </action>
 			
-        	<action name="login" class="com.action.LoginAction">
-        	    <interceptor-ref name="defaultStack"></interceptor-ref>
-        	    <result name="success" type="tiles">/welcome.tiles</result>
-        	    <result name="input" type="tiles">/login.tiles</result>
-        	</action>
+        <action name="login" class="com.action.LoginAction">
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="success" type="tiles">/welcome.tiles</result>
+            <result name="input" type="tiles">/login.tiles</result>
+        </action>
 
-        	<action name="Logout" class="com.action.LogoutAction">
-        		<result name="input" type="tiles">/login.tiles</result>
-        	</action>
+        <action name="Logout" class="com.action.LogoutAction">
+            <result name="input" type="tiles">/login.tiles</result>
+        </action>
         	
-        	<action name="updateUser" class="com.action.UpdateProfileAction">
-        	    <result name="success" type="tiles">/welcome.tiles</result>
-        	    <result name="input" type="tiles">/profile.tiles</result>
-        	    <result name="error" type="tiles">/profile.tiles</result>
-        	</action>
+        <action name="updateUser" class="com.action.UpdateProfileAction">
+            <result name="success" type="tiles">/welcome.tiles</result>
+            <result name="input" type="tiles">/profile.tiles</result>
+            <result name="error" type="tiles">/profile.tiles</result>
+        </action>
         	
-        	<action name="RegistrationAction" class="com.action.RegistrationAction">
-        	    <interceptor-ref name="defaultStack"></interceptor-ref>
-        	    <result name="success" type="tiles">/welcome.tiles</result>
-        	    <result name="input" type="tiles">/login.tiles</result>
-        	    <result name="error">/error.jsp</result>
-        	</action>
+        <action name="RegistrationAction" class="com.action.RegistrationAction">
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="success" type="tiles">/welcome.tiles</result>
+            <result name="input" type="tiles">/login.tiles</result>
+            <result name="error">/error.jsp</result>
+        </action>
 
 
-        	<action name="welcome" class="com.action.WelcomeAction">
-        	    <result name="success">welcome.jsp</result>
-        	</action>
+        <action name="welcome" class="com.action.WelcomeAction">
+            <result name="success">welcome.jsp</result>
+        </action>
         	
-        	<action name="menu" class="com.action.MenuAction">
-        	    <result name="success">menu.jsp</result>
-        	</action>
+        <action name="menu" class="com.action.MenuAction">
+            <result name="success">menu.jsp</result>
+        </action>
         	
-        	<action name="*Report" class="com.action.ReportAction" method="{1}">
-        		<result type="stream">
-        			<param name="contentType">application/vnd.ms-excel</param>
-        			<param name="contentDisposition">attachment;filename="${filename}"</param>
-        			<param name="inputName">excelStream</param>
-        			<param name="bufferSize">1024</param>
-				</result>
-        	</action>
-        </package>
+        <action name="*Report" class="com.action.ReportAction" method="{1}">
+            <result name ="success" type="stream">
+                <param name="contentType">application/vnd.ms-excel</param>
+                <param name="contentDisposition">attachment;filename="${filename}"</param>
+                <param name="inputName">excelStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
+            <result name="error" type="tiles">/reporterror.tiles</result>
+        </action>
+    </package>
         
-        <package name="jtable" extends="json-default">
-			<interceptors>
-            	<interceptor name="authentication" 
-            		class="com.interceptor.AuthenticationInterceptor">
-            	</interceptor>
-            	<interceptor-stack name="authStack">
-            	    <interceptor-ref name="authentication"></interceptor-ref>
-            	    <interceptor-ref name="defaultStack"></interceptor-ref>
-            	</interceptor-stack>
-        	</interceptors>
+    <package name="jtable" extends="json-default">
+        <interceptors>
+            <interceptor name="authentication" 
+                             class="com.interceptor.AuthenticationInterceptor">
+            </interceptor>
+            <interceptor-stack name="authStack">
+                <interceptor-ref name="authentication"></interceptor-ref>
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
  
-        	<default-interceptor-ref name="authStack"></default-interceptor-ref>
-        	<global-results>
-	        	<result name="login" type="redirect">/home.action</result>
-	       	</global-results>
+        <default-interceptor-ref name="authStack"></default-interceptor-ref>
+        <global-results>
+            <result name="login" type="redirect">/home.action</result>
+        </global-results>
         	                
-                <action name="*DocumentsAction" class="com.action.DocumentsTableAction"
+        <action name="*DocumentsAction" class="com.action.DocumentsTableAction"
                         method="{1}">
-                        <result type="json"></result>
-                </action>
+            <result type="json"></result>
+        </action>
                 
-                <action name="*UserAction" class="com.action.UsersTableAction"
+        <action name="*UserAction" class="com.action.UsersTableAction"
                         method="{1}">
-                        <result type="json"></result>
-                </action>
+            <result type="json"></result>
+        </action>
                                 
-                <action name="*EntiAction" class="com.action.EntiTableAction"
+        <action name="*EntiAction" class="com.action.EntiTableAction"
                         method="{1}">
-                        <result type="json"></result>
-                </action>
+            <result type="json"></result>
+        </action>
                 
-                <action name="*EccedenzeAction" class="com.action.EccedenzeTableAction"
+        <action name="*EccedenzeAction" class="com.action.EccedenzeTableAction"
                         method="{1}">
-                        <result type="json"></result>
-                </action>
+            <result type="json"></result>
+        </action>
                 
-                <action name="*ImpegniAction" class="com.action.ImpegniTableAction"
+        <action name="*ImpegniAction" class="com.action.ImpegniTableAction"
                         method="{1}">
-                        <result type="json"></result>
-                </action>
+            <result type="json"></result>
+        </action>
                 
-                <action name="*RitiriAction" class="com.action.RitiriTableAction"
+        <action name="*RitiriAction" class="com.action.RitiriTableAction"
                         method="{1}">
-                        <result type="json"></result>
-                </action>
+            <result type="json"></result>
+        </action>
                 
-                <action name="*AssistitiAction" class="com.action.AssistitiTableAction"
+        <action name="*AssistitiAction" class="com.action.AssistitiTableAction"
                         method="{1}">
-                        <result type="json"></result>
-                </action>
+            <result type="json"></result>
+        </action>
                 
-                <action name="*NucleiFamiliariAction" class="com.action.NucleiFamiliariTableAction"
+        <action name="*NucleiFamiliariAction" class="com.action.NucleiFamiliariTableAction"
                         method="{1}">
-                        <result type="json"></result>
-                </action>
+            <result type="json"></result>
+        </action>
                 
-                <action name="*EmporioAction" class="com.action.EmporioTableAction"
+        <action name="*EmporioAction" class="com.action.EmporioTableAction"
                         method="{1}">
-                        <result type="json"></result>
-                </action>
+            <result type="json"></result>
+        </action>
                 
-                <action name="*NoteAction" class="com.action.NoteTableAction"
+        <action name="*NoteAction" class="com.action.NoteTableAction"
                         method="{1}">
-                        <result type="json"></result>
-                </action>
+            <result type="json"></result>
+        </action>
                 
-                <action name="*NazioniAction" class="com.action.NazioniAction"
+        <action name="*NazioniAction" class="com.action.NazioniAction"
                         method="{1}">
-                        <result type="json"></result>
-                </action>
+            <result type="json"></result>
+        </action>
                 
-                <action name="*Uni_misuraAction" class="com.action.Uni_misuraTableAction"
+        <action name="*Uni_misuraAction" class="com.action.Uni_misuraTableAction"
                         method="{1}">
-                        <result type="json"></result>
-                </action>
+            <result type="json"></result>
+        </action>
                 
-                <action name="*ProvinceAction" class="com.action.ProvinceAction"
+        <action name="*ProvinceAction" class="com.action.ProvinceAction"
                         method="{1}">
-                        <result type="json"></result>
-                </action>
+            <result type="json"></result>
+        </action>
                 
-                <action name="Choose_*" class="com.action.dropdownAction" method="{1}">
-                        <result type="json"></result>
-                </action>
+        <action name="Choose_*" class="com.action.dropdownAction" method="{1}">
+            <result type="json"></result>
+        </action>
                                                                 
-                <action name="ResetPassword" class="com.action.UsersTableAction" method="resetPassword">
-                        <result type="json"></result>
-                </action>
+        <action name="ResetPassword" class="com.action.UsersTableAction" method="resetPassword">
+            <result type="json"></result>
+        </action>
                   	
-           		<action name="uploadFile" class="com.utilities.uploadFile">
-        			<result type="json"></result>
-        		</action>
+        <action name="uploadFile" class="com.utilities.uploadFile">
+            <result type="json"></result>
+        </action>
         		
-        </package>
+    </package>
         
 </struts>

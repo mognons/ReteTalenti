@@ -103,10 +103,6 @@
 		<put-attribute name="body" value="/classRegister.jsp" />
 	</definition>
 	
-	<definition name="/report.tiles" extends="baseLayout">
-		<put-attribute name="title" value="Report" />
-		<put-attribute name="body" value="/error.jsp" />
-	</definition>
 	<definition name="/profile.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Update User's Profile" />
 		<put-attribute name="body" value="/userProfile.jsp" />
@@ -124,6 +120,11 @@
 	<definition name="/calendar.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Course Calendar" />
 		<put-attribute name="body" value="/calendar.jsp" />
+	</definition>
+        
+	<definition name="/reporterror.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Report" />
+		<put-attribute name="body" value="/error.jsp" />
 	</definition>
 	
 	<definition name="/login.tiles" extends="loginLayout">
