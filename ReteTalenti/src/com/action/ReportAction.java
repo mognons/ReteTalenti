@@ -31,8 +31,10 @@ public class ReportAction extends ActionSupport implements UserAware{
             out.close();
         } catch (Exception e) {
             e.printStackTrace(); //log to logs
+            formati = null;
+            return ERROR;
         }
-
+        formati = null;
         return SUCCESS;
     }
 
@@ -74,9 +76,10 @@ public class ReportAction extends ActionSupport implements UserAware{
             out.close();
         } catch (Exception e) {
             e.printStackTrace(); //log to logs
+            formati = null;
             return ERROR;
         }
-
+        formati = null;
         return SUCCESS;
     }
 
@@ -118,9 +121,10 @@ public class ReportAction extends ActionSupport implements UserAware{
             out.close();
         } catch (Exception e) {
             e.printStackTrace(); //log to logs
+            formati = null;
             return ERROR;
         }
-
+        formati = null;
         return SUCCESS;
     }
     
@@ -162,13 +166,56 @@ public class ReportAction extends ActionSupport implements UserAware{
             out.close();
         } catch (Exception e) {
             e.printStackTrace(); //log to logs
+            formati = null;
             return ERROR;
         }
-
+        formati = null;
         return SUCCESS;
     }
-
-
+    
+    public String graduatoriaProvinciale() {
+        FormatType formati[] = new FormatType[]{
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.INTEGER, // IDB 
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT};
+        ByteArrayOutputStream out;
+        ResultSetToExcel resultSetToExcel = new ResultSetToExcel(dao.graduatoriaProvinciale(user), formati, "Report");
+        filename = "graduatoria_provinciale.xls";
+        try {
+            out = new ByteArrayOutputStream();
+            resultSetToExcel.generate(out);
+            excelStream = new ByteArrayInputStream(out.toByteArray());
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace(); //log to logs
+            formati = null;
+            return ERROR;
+        }
+        formati = null;
+        return SUCCESS;
+    }
     public String getFilename() {
         return filename;
     }

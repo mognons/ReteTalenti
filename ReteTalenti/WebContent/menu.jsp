@@ -66,12 +66,23 @@
 			<li>-</li>
 			<li>Report
 				<ul>
-					<li onclick="window.location='anagraficaCompletaReport.action';">Elenco Assistiti</li>
-					<li onclick="window.location='anagraficaEnteUserReport.action';">Elenco Assistiti per Ente operatore</li>
-					<li onclick="window.location='anagraficaXProvinciaEnteUserReport.action';">Elenco Assistiti per Provincia Ente operatore</li>
-					<li class="ui-state-disabled">Elenco Eccedenze</li>
-					<li class="ui-state-disabled">Elenco Prenotazioni</li>
-					<li class="ui-state-disabled">Graduatoria Provinciale Emporio</li>
+				<li>Assistiti
+					<ul>
+						<li <s:if test="(groupId !=4)" >class="ui-state-disabled"</s:if>
+							onclick="window.location='anagraficaCompletaReport.action';">Elenco Regionale</li>
+						<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
+							onclick="window.location='anagraficaXProvinciaEnteUserReport.action';">Elenco per Provincia</li>
+						<li onclick="window.location='anagraficaEnteUserReport.action';">Elenco per Ente</li>
+						<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
+							onclick="window.location='graduatoriaProvinciale.action';">Graduatoria Provinciale</li>
+					</ul>
+				</li>
+				<li>Eccedenze
+					<ul>
+						<li class="ui-state-disabled">Elenco Eccedenze</li>
+						<li class="ui-state-disabled">Elenco Prenotazioni</li>
+					</ul>
+				</li>
 				</ul>
 			</li>
 			<s:if test="(#isAdmin || #isAdminEnte)">

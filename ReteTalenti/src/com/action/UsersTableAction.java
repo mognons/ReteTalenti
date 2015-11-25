@@ -129,9 +129,10 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 			result = "OK";
 		} catch (Exception e) {
 			result = "ERROR";
-			message = e.getMessage();
+			message = e.getMessage().toString();
 			System.err.println(e.getMessage());
-		}result = "OK";
+		}
+		result = "OK";
 		return Action.SUCCESS;
 	}
 	

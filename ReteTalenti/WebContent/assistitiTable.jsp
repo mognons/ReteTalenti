@@ -249,8 +249,8 @@ fieldset {
 				resizable : false,
 				draggable : false,
 				scrollable : true,
-				width : '1024',
-				height : '800',
+				width : '960',
+				height : '600',
 				title : 'Scheda Anagrafica',
 				buttons : {
 					"Chiudi" : function() {

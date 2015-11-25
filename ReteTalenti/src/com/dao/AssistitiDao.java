@@ -466,6 +466,87 @@ public class AssistitiDao {
         return assistiti;
     }
 
+    public List<Assistito> getAnagraficaEmporio(int jtStartIndex, int jtPageSize, String jtSorting, User user,
+            String cf_search, String cognome_search) {
+        if (jtSorting == null) {
+            jtSorting = "PUNTEGGIO_IDB DESC, DATA_CANDIDATURA ASC";
+        }
+
+        List<Assistito> assistiti = new ArrayList<Assistito>();
+        String whereCondition1 = "AND 1=1 ";
+        String whereCondition2 = "AND 1=1 ";
+        String whereCondition3 = "AND 1=1 ";
+        String whereCondition4 = "AND 1=1 ";
+
+        whereCondition1 = "AND EMPORIO=" + user.getEnte() + " ";
+        whereCondition2 = "AND DATA_ACCETTAZIONE IS NOT NULL AND DATA_DISMISSIONE IS NULL ";
+        if (cf_search != null || cf_search != "") {
+            whereCondition3 = "AND COD_FISCALE LIKE '" + cf_search + "%' ";
+        }
+        if (cognome_search != null || cognome_search != "") {
+            whereCondition4 = "AND COGNOME LIKE '" + cognome_search + "%' ";
+        }
+
+        String query = "SELECT * FROM ASSISTITI A "
+                + "LEFT JOIN ENTI E ON A.ENTE_ASSISTENTE=E.ID "
+                + "LEFT JOIN ENTI EMP ON A.EMPORIO=E.ID "
+                + "LEFT JOIN PROVINCE P ON A.PROVINCIA=P.COD_PROVINCIA "
+                + "LEFT JOIN NAZIONI N ON A.NAZIONALITA=N.CODICE "
+                + "LEFT JOIN STATI_CIVILI S ON A.STATO_CIVILE=S.ID "
+                + "WHERE 1=1 "
+                + whereCondition1 + " "
+                + whereCondition2 + " "
+                + whereCondition3 + " "
+                + whereCondition4 + " "
+                + "ORDER BY " + jtSorting + " "
+                + "LIMIT " + Integer.toString(jtPageSize) + " OFFSET "
+                + Integer.toString(jtStartIndex);
+        System.out.println(query);
+        try {
+            pStmt = dbConnection.prepareStatement(query);
+            ResultSet rs = pStmt.executeQuery();
+            while (rs.next()) {
+                Assistito assistito = new Assistito();
+
+                assistito.setCod_fiscale(rs.getString("COD_FISCALE"));
+                assistito.setNome(rs.getString("NOME"));
+                assistito.setCognome(rs.getString("COGNOME"));
+                assistito.setSesso(rs.getString("SESSO"));
+                assistito.setStato_civile(rs.getInt("STATO_CIVILE"));
+                assistito.setDesc_stato_civile(rs.getString("S.DESCRIZIONE"));
+                assistito.setLuogo_nascita(rs.getString("LUOGO_NASCITA"));
+                assistito.setData_nascita(rs.getDate("DATA_NASCITA"));
+                assistito.setNazionalita(rs.getString("NAZIONALITA"));
+                assistito.setDenominazione(rs.getString("DENOMINAZIONE"));
+                assistito.setIndirizzo_residenza(rs.getString("INDIRIZZO_RESIDENZA"));
+                assistito.setCitta_residenza(rs.getString("CITTA_RESIDENZA"));
+                assistito.setCap(rs.getString("CAP"));
+                assistito.setProvincia(rs.getInt("PROVINCIA"));
+                assistito.setSigla_autom(rs.getString("SIGLA_AUTOM"));
+                assistito.setPermesso_soggiorno(rs.getString("PERMESSO_SOGGIORNO"));
+                assistito.setTelefono(rs.getString("TELEFONO"));
+                assistito.setEmail(rs.getString("EMAIL"));
+                assistito.setNum_documento(rs.getString("NUM_DOCUMENTO"));
+                assistito.setEnte_assistente(rs.getInt("ENTE_ASSISTENTE"));
+                assistito.setDescrizione(rs.getString("E.DESCRIZIONE"));
+                assistito.setData_inserimento(rs.getDate("DATA_INSERIMENTO"));
+                assistito.setData_fine_assistenza(rs.getDate("DATA_FINE_ASSISTENZA"));
+                assistito.setData_candidatura(rs.getDate("DATA_CANDIDATURA"));
+                assistito.setData_accettazione(rs.getDate("DATA_ACCETTAZIONE"));
+                assistito.setData_scadenza(rs.getDate("DATA_SCADENZA"));
+                assistito.setData_dismissione(rs.getDate("DATA_DISMISSIONE"));
+                assistito.setEmporio(rs.getInt("EMPORIO"));
+                assistito.setDesc_emporio(rs.getString("EMP.DESCRIZIONE"));
+                assistito.setOperatore(rs.getInt("OPERATORE"));
+                assistito.setPunteggio_idb(rs.getInt("PUNTEGGIO_IDB"));
+                assistiti.add(assistito);
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return assistiti;
+    }
+
     public int getCountAssistiti(User user, String cf_search, String cognome_search) {
         int totalRecord = 0;
         String whereCondition1 = "AND 1=1 ";
@@ -596,6 +677,39 @@ public class AssistitiDao {
                 + "WHERE 1=1 "
                 + whereCondition1 + " "
                 + whereCondition2;
+        try {
+            pStmt = dbConnection.prepareStatement(query);
+            ResultSet rs = pStmt.executeQuery();
+            while (rs.next()) {
+                totalRecord = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return totalRecord;
+    }
+
+    public int getCountAnagraficaEmporio(User user, String cf_search, String cognome_search) {
+        int totalRecord = 0;
+        String whereCondition1 = "AND 1=1 ";
+        String whereCondition2 = "AND 1=1 ";
+        String whereCondition3 = "AND 1=1 ";
+        String whereCondition4 = "AND 1=1 ";
+        whereCondition1 = "AND EMPORIO=" + user.getEnte() + " ";
+        whereCondition2 = "AND DATA_ACCETTAZIONE IS NOT NULL AND DATA_DISMISSIONE IS NULL ";
+        if (cf_search != null || cf_search != "") {
+            whereCondition3 = "AND COD_FISCALE LIKE '" + cf_search + "%' ";
+        }
+        if (cognome_search != null || cognome_search != "") {
+            whereCondition4 = "AND COGNOME LIKE '" + cognome_search + "%' ";
+        }
+
+        String query = "SELECT COUNT(*) FROM ASSISTITI A "
+                + "WHERE 1=1 "
+                + whereCondition1 + " "
+                + whereCondition2 + " "
+                + whereCondition3 + " "
+                + whereCondition4;
         try {
             pStmt = dbConnection.prepareStatement(query);
             ResultSet rs = pStmt.executeQuery();

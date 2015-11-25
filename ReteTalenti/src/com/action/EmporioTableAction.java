@@ -82,8 +82,6 @@ public class EmporioTableAction extends ActionSupport implements UserAware, Mode
 
     public String graduatoria() {
         try {
-            // Fetch Data from Assistiti Table
-        	System.out.println("Getting graduatoria...");
             records = dao.getGraduatoria(jtStartIndex, jtPageSize, jtSorting, user);
             result = "OK";
             totalRecordCount = dao.getCountGraduatoria(user);
@@ -97,8 +95,6 @@ public class EmporioTableAction extends ActionSupport implements UserAware, Mode
    
     public String candidati() {
         try {
-            // Fetch Data from Assistiti Table
-        	System.out.println("Getting candidati...");
             records = dao.getCandidati(jtStartIndex, jtPageSize, jtSorting, user);
             result = "OK";
             totalRecordCount = dao.getCountCandidati(user);
@@ -112,8 +108,6 @@ public class EmporioTableAction extends ActionSupport implements UserAware, Mode
     
     public String candidatiProvincia() {
         try {
-            // Fetch Data from Assistiti Table
-        	System.out.println("Getting candidati provincia ...");
             records = dao.getCandidatiProvincia(jtStartIndex, jtPageSize, jtSorting, user, cf_search, cognome_search);
             result = "OK";
             totalRecordCount = dao.getCountCandidatiProvincia(user, cf_search, cognome_search);
@@ -127,8 +121,6 @@ public class EmporioTableAction extends ActionSupport implements UserAware, Mode
       
     public String inseriti() {
         try {
-            // Fetch Data from Assistiti Table
-        	System.out.println("Getting inseriti...");
             records = dao.getInseriti(jtStartIndex, jtPageSize, jtSorting, user);
             result = "OK";
             totalRecordCount = dao.getCountInseriti(user);
@@ -139,13 +131,28 @@ public class EmporioTableAction extends ActionSupport implements UserAware, Mode
         }
         return SUCCESS;
     }
+    
+    public String anagraficaEmporio() {
+        try {
+            records = dao.getAnagraficaEmporio(jtStartIndex, jtPageSize, jtSorting, user, cf_search, cognome_search);
+            result = "OK";
+            totalRecordCount = dao.getCountAnagraficaEmporio(user, cf_search, cognome_search);
+        } catch (Exception e) {
+            result = "ERROR";
+            message = e.getMessage();
+            System.err.println(e.getMessage());
+        }
+        return SUCCESS;
+    }
    
     public String candida() throws IOException {
-        System.out.println("Candidatura assistito con codice fiscale " + cod_fiscale);
         record = new Assistito();
         record.setCod_fiscale(cod_fiscale);
-        try {
+        noteAction = new NoteTableAction();
+        String nota = 	"Candidato all'emporio";
+       try {
             dao.candidaAssistito(record);
+            noteAction.annotazione(cod_fiscale, nota);
             result = "OK";
         } catch (Exception e) {
             result = "ERROR";
@@ -157,11 +164,13 @@ public class EmporioTableAction extends ActionSupport implements UserAware, Mode
     }
 
     public String rimuoviCandidatura() throws IOException {
-        System.out.println("Rimozione candidatura assistito con codice fiscale " + cod_fiscale);
         record = new Assistito();
         record.setCod_fiscale(cod_fiscale);
+        noteAction = new NoteTableAction();
+        String nota = 	"Rimozione candidatura dall'emporio";
         try {
             dao.rimuoviCandidaturaAssistito(record);
+            noteAction.annotazione(cod_fiscale, nota);
             result = "OK";
         } catch (Exception e) {
             result = "ERROR";
@@ -174,7 +183,6 @@ public class EmporioTableAction extends ActionSupport implements UserAware, Mode
     }
 
     public String EmporioOut() throws IOException {
-        System.out.println("Rimozione da EMPORIO per assistito con codice fiscale " + cod_fiscale);
         record = new Assistito();
         record.setCod_fiscale(cod_fiscale);
         noteAction = new NoteTableAction();
@@ -197,7 +205,6 @@ public class EmporioTableAction extends ActionSupport implements UserAware, Mode
     }
 
     public String EmporioIn() throws IOException {
-        System.out.println("Inserimento in EMPORIO per assistito con codice fiscale " + cod_fiscale);
         record = new Assistito();
         record.setCod_fiscale(cod_fiscale);
         record.setEmporio(user.getEnte());

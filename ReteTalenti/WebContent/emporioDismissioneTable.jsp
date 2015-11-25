@@ -195,50 +195,6 @@ fieldset {
 		return (gruppoUtente == 1);
 	};
 
-	function validaCodiceFiscale(cf) {
-		var validi, i, s, set1, set2, setpari, setdisp;
-		if (cf == '')
-			return '';
-		cf = cf.toUpperCase();
-		if (cf.length != 16)
-			return false;
-		validi = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		for (i = 0; i < 16; i++) {
-			if (validi.indexOf(cf.charAt(i)) == -1)
-				return false;
-		}
-		set1 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		set2 = "ABCDEFGHIJABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		setpari = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		setdisp = "BAKPLCQDREVOSFTGUHMINJWZYX";
-		s = 0;
-		for (i = 1; i <= 13; i += 2)
-			s += setpari.indexOf(set2.charAt(set1.indexOf(cf.charAt(i))));
-		for (i = 0; i <= 14; i += 2)
-			s += setdisp.indexOf(set2.charAt(set1.indexOf(cf.charAt(i))));
-		if (s % 26 != cf.charCodeAt(15) - 'A'.charCodeAt(0))
-			return false;
-		return true;
-	};
-
-	function openPage(page) {
-		var popup = document.getElementById('modalDialogBox');
-		popup.src = page;
-		(function() {
-			$('#pop-up').dialog({
-				modal : true,
-				resizable : false,
-				draggable : false,
-				width : '800',
-				height : '385',
-				title : 'Calcolo punteggio Indice di Bisogno'
-			});
-		})();
-        $('#AssistitiTableContainer').jtable('load', {
-            cf_search: $('#cf_search').val(),
-            cognome_search: $('#cognome_search').val()
-        });
-	};
 
 	function showSchedaAssistito(page) {
 		var popup = document.getElementById('modalDialogBox');
@@ -249,8 +205,8 @@ fieldset {
 				resizable : false,
 				draggable : false,
 				scrollable : true,
-				width : '1024',
-				height : '800',
+				width : '800',
+				height : '600',
 				title : 'Scheda Anagrafica',
 				buttons : {
 					"Chiudi" : function() {
@@ -264,30 +220,11 @@ fieldset {
 		})();
 	};
 
-	function openDialog(errorMessage) {
-		var popup = document.getElementById('modalDialogBox');
-		popup.src = "showCFDetails.action?codice_fiscale="
-				+ errorMessage.cf_search + "&origin=" + errorMessage.origin;
-		(function() {
-			$('#pop-up').dialog({
-				modal : true,
-				resizable : false,
-				draggable : false,
-				width : '800',
-				height : '600',
-				title : 'Codice Fiscale già inserito in Rete Talenti',
-				buttons : {
-					"Chiudi" : function() {
-						$(this).dialog("close");
-					}
-				}
-			});
-		})();
-	};
+
 	
 	$(document).ready(function () {
-		console.log(_GET);
-	});
+//
+});
 
 </script>
 
@@ -309,42 +246,7 @@ fieldset {
 	<div id="dialog" title="Informazione dal sistema"></div>
 	<div id="EmporioTableContainer"></div>
 	
-	<div id="dialog-form" title="Accettazione Assistito" class="ui-widget">
-		<form action="#">
-			<fieldset>
-				<div id="errorMessage"></div>
-				<label for="startDate">Dal</label>
-				<input type="text"
-					name="startDate" id="startDate"
-					class="text ui-widget-content ui-corner-all">
-				<label for="endDate">Al</label>
-				<input type="text"
-					name="endDate" id="endDate"
-					class="text ui-widget-content ui-corner-all">
-				<input type="hidden" id="codice_fiscale" name="codice_fiscale" value="codice_fiscale"> 
-				<!-- Allow form submission with keyboard without duplicating the dialog button -->
-				<input type="submit" tabindex="-1"
-					style="position: absolute; top: -1000px">
-			</fieldset>
-		</form>
-	</div>
-		<script>
-		$(function() {
-			$("#startDate").datepicker({
-				dateFormat: 'dd/mm/yy',
-				beforeShowDay: $.datepicker.noWeekends,
-				firstDay: 1
-			});
-			$("#endDate").datepicker({
-				dateFormat: 'dd/mm/yy',
-				beforeShowDay: $.datepicker.noWeekends,
-				firstDay: 1
-			});
-		});
-	  	$(function() {
-			$( "#speed" ).selectmenu();
-		});
-	</script>
-	<script src="js/emporioTable.js" type="text/javascript"></script>
+
+	<script src="js/emporioDismissioneTable.js" type="text/javascript"></script>
 </body>
 </html>

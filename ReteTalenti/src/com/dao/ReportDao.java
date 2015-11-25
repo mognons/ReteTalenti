@@ -79,7 +79,7 @@ public class ReportDao {
     public ResultSet anagraficaXProvinciaEnteUser(User user) {
 
         ResultSet rs = null;
-        String query = queryBase+ " WHERE A.PROVINCIA= " + user.getProvinciaEnte();
+        String query = queryBase+ " WHERE E.PROVINCIA_ENTE= " + user.getProvinciaEnte();
         try {
             pStmt = dbConnection.prepareStatement(query);
             rs = pStmt.executeQuery();
@@ -88,5 +88,20 @@ public class ReportDao {
         }
         return rs;
     }
+    
+    public ResultSet graduatoriaProvinciale(User user) {
 
+        ResultSet rs = null;
+        String query = queryBase+ 	" WHERE E.PROVINCIA_ENTE= " + user.getProvinciaEnte() +
+        							" AND PUNTEGGIO_IDB > 0 AND DATA_CANDIDATURA IS NULL AND DATA_ACCETTAZIONE IS NULL" + 
+        							" ORDER BY PUNTEGGIO_IDB DESC, DATA_CANDIDATURA ASC";
+
+        try {
+            pStmt = dbConnection.prepareStatement(query);
+            rs = pStmt.executeQuery();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return rs;
+    }
 }
