@@ -9,13 +9,13 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import java.io.*;
 
-public class ReportAction extends ActionSupport implements UserAware{
+public class ReportAction extends ActionSupport implements UserAware {
 
     private static final long serialVersionUID = 1173542L;
     private ReportDao dao = new ReportDao();
     public String filename;
     public InputStream excelStream;
-    
+
     private User user;
 
     public String getExcel() {
@@ -127,7 +127,7 @@ public class ReportAction extends ActionSupport implements UserAware{
         formati = null;
         return SUCCESS;
     }
-    
+
     public String anagraficaXProvinciaEnteUser() {
         FormatType formati[] = new FormatType[]{
             FormatType.TEXT,
@@ -172,7 +172,7 @@ public class ReportAction extends ActionSupport implements UserAware{
         formati = null;
         return SUCCESS;
     }
-    
+
     public String graduatoriaProvinciale() {
         FormatType formati[] = new FormatType[]{
             FormatType.TEXT,
@@ -216,6 +216,68 @@ public class ReportAction extends ActionSupport implements UserAware{
         formati = null;
         return SUCCESS;
     }
+
+    public String ritiriCompleto() {
+
+        FormatType formati[] = new FormatType[]{
+            FormatType.INTEGER,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.INTEGER,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT
+        };
+        ByteArrayOutputStream out;
+        ResultSetToExcel resultSetToExcel = new ResultSetToExcel(dao.ritiriCompleto(), formati, "Report");
+        filename = "ritiri_completo.xls";
+        try {
+            System.out.println("Inside getInputStream() - ritiri lista completa");
+            out = new ByteArrayOutputStream();
+            resultSetToExcel.generate(out);
+            excelStream = new ByteArrayInputStream(out.toByteArray());
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace(); //log to logs
+            formati = null;
+            return ERROR;
+        }
+        formati = null;
+        return SUCCESS;
+    }
+    
+    public String eccedenze() {
+        FormatType formati[] = new FormatType[]{
+            FormatType.INTEGER, 
+            FormatType.TEXT, 
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.INTEGER,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT
+     };
+            
+        ByteArrayOutputStream out;
+        ResultSetToExcel resultSetToExcel = new ResultSetToExcel(dao.eccedenze(),formati,"Report");
+        filename = "eccedenze.xls";
+        try {
+            System.out.println("Inside getInputStream()- eccedenze");
+            out = new ByteArrayOutputStream();
+	    resultSetToExcel.generate(out);
+            excelStream = new ByteArrayInputStream(out.toByteArray());
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace(); //log to logs
+            formati = null;
+            return ERROR;
+        }
+        formati = null;
+        return SUCCESS;
+    }
+
     public String getFilename() {
         return filename;
     }
@@ -240,5 +302,4 @@ public class ReportAction extends ActionSupport implements UserAware{
         this.user = user;
     }
 
-    
 }

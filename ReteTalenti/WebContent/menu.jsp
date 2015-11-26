@@ -79,8 +79,10 @@
 				</li>
 				<li>Eccedenze
 					<ul>
-						<li class="ui-state-disabled">Elenco Eccedenze</li>
-						<li class="ui-state-disabled">Elenco Prenotazioni</li>
+						<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
+							onclick="window.location='eccedenzeReport.action';">Elenco Eccedenze</li>
+                                                                                                <li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
+							onclick="window.location='ritiriCompletoReport.action';">Elenco Prenotazioni</li>
 					</ul>
 				</li>
 				</ul>
