@@ -27,36 +27,38 @@
 						modal: true,
 						buttons: [{
 			        	  text: "Conferma",
-				        	  click: function() {
-				        		  $selectedRows.each(function () {
-				        			  assistito = $(this).data('record');
-				        			  console.log(assistito);
-										$.ajax({
-											url: 'candidaEmporioAction',
-											type: 'POST',
-											dataType: 'json',
-											async : false,
-											data: {
-												cod_fiscale: assistito.cod_fiscale
-											},
-											success: function (data) {
-												$dfd.resolve(data);
-												$('#GraduatoriaTableContainer').jtable('reload');
-												$('#CandidatiTableContainer').jtable('reload');
-											},
-											error: function () {
-												$dfd.reject();
-											}
-										});
-				        		  });
-				        		  $(this).dialog( "close" );
-				        	  }
+			        	  click: function() {
+			        		  $selectedRows.each(function (e) {
+			        			  var self = this;
+			        			  var assistito = $(self).data('record');
+			        			  var codice_fiscale = assistito.cod_fiscale;
+									$.ajax({
+										url: 'candidaEmporioAction',
+										type: 'POST',
+										dataType: 'json',
+										async : false,
+										data: {
+											cod_fiscale: codice_fiscale
+										},
+										success: function (data) {
+											$dfd.resolve(data);
+										},
+										error: function () {
+											$dfd.reject();
+										}
+									});
+			        		  });
+			        		  $(this).dialog( "close" );
+			        		  $('#GraduatoriaTableContainer').jtable('reload');
+			        		  $('#CandidatiTableContainer').jtable('reload');
+			        	  }
 				          },{
 			        	  text: "Annulla",
 				        	  click: function() {
 				        		  $(this).dialog( "close" );
 				        	  }
-				          }],
+				          }
+				        ],
 				        open: function(){
 				        	$("#dialog").html("Confermi l'operazione di candidatura degli assistiti selezionati?")
 				        }

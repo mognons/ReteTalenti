@@ -19,7 +19,6 @@ public class dropdownAction extends ActionSupport {
 	public String StatiCivili() {
 		options = new ArrayList<JSONObject> ();
 		options = dao.getAllStatiCivili();
-		System.out.println("Inside getAllStatiCivili()");
 		result = "OK";
 		return Action.SUCCESS;
 	}
@@ -27,7 +26,6 @@ public class dropdownAction extends ActionSupport {
 	public String GradiParentela() {
 		options = new ArrayList<JSONObject> ();
 		options = dao.getAllGradiParentela();
-		System.out.println("Inside getAllGradiParentela()");
 		result = "OK";
 		return Action.SUCCESS;
 	}
@@ -35,7 +33,6 @@ public class dropdownAction extends ActionSupport {
 	public String Utenti() {
 		options = new ArrayList<JSONObject> ();
 		options = dao.getAllUsers();
-		System.out.println("Inside getAllUsers()");
 		result = "OK";
 		return Action.SUCCESS;
 	}
@@ -43,7 +40,6 @@ public class dropdownAction extends ActionSupport {
 	public String Gruppi() {
 		options = new ArrayList<JSONObject> ();
 		options = dao.getAllGroups();
-		System.out.println("Inside getAllGroups()");
 		result = "OK";
 		return Action.SUCCESS;
 	}
@@ -51,7 +47,6 @@ public class dropdownAction extends ActionSupport {
 	public String Province() {
 		options = new ArrayList<JSONObject> ();
 		options = dao.getAllProvince();
-		System.out.println("Inside getAllProvince()");
 		result = "OK";
 		return Action.SUCCESS;
 	}
@@ -59,7 +54,6 @@ public class dropdownAction extends ActionSupport {
 	public String Enti() {
 		options = new ArrayList<JSONObject> ();
 		options = dao.getAllEnti();
-		System.out.println("Inside getAllEnti()");
 		result = "OK";
 		return Action.SUCCESS;
 	}
@@ -67,7 +61,6 @@ public class dropdownAction extends ActionSupport {
 	public String UDM() {
 		options = new ArrayList<JSONObject> ();
 		options = dao.getAllUDM();
-		System.out.println("Inside getAllUDM()");
 		result = "OK";
 		return Action.SUCCESS;
 	}
@@ -75,7 +68,6 @@ public class dropdownAction extends ActionSupport {
 	public String Nazioni() {
 		options = new ArrayList<JSONObject> ();
 		options = dao.getAllNazioni();
-		System.out.println("Inside getAllNazioni()");
 		result = "OK";
 		return Action.SUCCESS;
 	}

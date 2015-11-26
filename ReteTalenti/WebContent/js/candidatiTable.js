@@ -27,35 +27,35 @@
 						modal: true,
 						buttons: [{
 			        	  text: "Conferma",
-				        	  click: function() {
-				        		  $selectedRows.each(function () {
-				        			  assistito = $(this).data('record');
-				        			  console.log(assistito);
-										$.ajax({
-											url: 'rimuoviCandidaturaEmporioAction',
-											type: 'POST',
-											dataType: 'json',
-											async : false,
-											data: {
-												cod_fiscale: assistito.cod_fiscale
-											},
-											success: function (data) {
-												$dfd.resolve(data);
-												$('#GraduatoriaTableContainer').jtable('reload');
-												$('#CandidatiTableContainer').jtable('reload');
-											},
-											error: function () {
-												$dfd.reject();
-											}
-										});
-				        		  });
-				        		  $(this).dialog( "close" );
-				        	  }
-				          },{
-			        	  text: "Annulla",
-				        	  click: function() {
-				        		  $(this).dialog( "close" );
-				        	  }
+			        	  click: function() {
+			        		  $selectedRows.each(function () {
+			        			  assistito = $(this).data('record');
+			        			  console.log(assistito);
+									$.ajax({
+										url: 'rimuoviCandidaturaEmporioAction',
+										type: 'POST',
+										dataType: 'json',
+										async : false,
+										data: {
+											cod_fiscale: assistito.cod_fiscale
+										},
+										success: function (data) {
+											$dfd.resolve(data);
+										},
+										error: function () {
+											$dfd.reject();
+										}
+									});
+			        		  });
+			        		  $(this).dialog( "close" );
+							  $('#GraduatoriaTableContainer').jtable('reload');
+							  $('#CandidatiTableContainer').jtable('reload');
+			        	  }
+			          },{
+		        	  text: "Annulla",
+		        	  click: function() {
+		        		  $(this).dialog( "close" );
+		        	  }
 				          }],
 				        open: function(){
 				        	$("#dialog").html("Confermi l'operazione di rimozione della candidatura degli assistiti selezionati?")

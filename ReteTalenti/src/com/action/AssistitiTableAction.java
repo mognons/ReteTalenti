@@ -8,6 +8,7 @@ package com.action;
 import com.dao.AssistitiDao;
 import com.interceptor.UserAware;
 import com.model.Assistito;
+import com.model.Message;
 import com.model.Tuple;
 import com.model.User;
 import com.opensymphony.xwork2.Action;
@@ -76,11 +77,14 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
 
     private int operatore;
     private String username;
+    // Pro trasferimento
+    private String motivazione;
+    private Date startDate;
+    private int enteDestinazione;
 
     public String list() {
         try {
             // Fetch Data from Assistiti Table
-        	System.out.println("cf_search: " + cf_search + " cognome_search: " +cognome_search);
             records = dao.getAllAssistiti(jtStartIndex, jtPageSize, jtSorting, user, cf_search, cognome_search);
             result = "OK";
             totalRecordCount = dao.getCountAssistiti(user, cf_search, cognome_search);
@@ -167,7 +171,7 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
     }
 
     public String update() throws IOException {
-        Assistito record = new Assistito();
+        record = new Assistito();
         record.setCod_fiscale(cod_fiscale.toUpperCase());
         record.setNome(nome);
         record.setCognome(cognome);
@@ -207,10 +211,50 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
         return Action.SUCCESS;
     }
 
+    public String trasferisci() throws IOException {
+        String message_text = 	"Completare il trasferimento di <b>"
+        						+ nome + " "
+        						+ cognome + "</b> "
+        						+ "("+cod_fiscale+") richiesto per: "
+        						+ motivazione;
+        System.err.println(message_text);
+        try {
+        	MessageAction mess = new MessageAction();
+        	Message messaggio = new Message();
+        	messaggio.setEnte(enteDestinazione);
+        	messaggio.setTag("ASSISTITI");
+        	messaggio.setAction("EXECUTE_completaTrasferimentoMessageAction");
+        	messaggio.setMessage_text(message_text);
+        	messaggio.setKey1(cod_fiscale.toUpperCase());
+        	messaggio.setKey2(enteDestinazione);
+        	messaggio.setStart_date(startDate);
+        	messaggio.setEnd_date(null);
+        	mess.createMessage(messaggio);
+            result = "OK";
+        } catch (Exception e) {
+            result = "ERROR";
+            message = e.getMessage();
+            System.err.println(e.getMessage());
+        }
+        return Action.SUCCESS;
+    }
+    
+    public String riattiva() throws IOException {
+    	String nota = "Riattivata assistenza in data odierna";
+    	NoteTableAction annotazione = new NoteTableAction();
+    	try {
+    		dao.riattivaAssistito(cod_fiscale);
+    		annotazione.annotazione(cod_fiscale, nota);
+            result = "OK";
+        } catch (Exception e) {
+            result = "ERROR";
+            message = e.getMessage();
+            System.err.println(e.getMessage());
+        }
+        return Action.SUCCESS;
+    }
+    
     public String delete() throws IOException {
-        // Delete record
-        
-        System.out.println("Deleting assistito con codice fiscale " + cod_fiscale);
         record = new Assistito();
         record.setCod_fiscale(cod_fiscale);
         try {
@@ -578,6 +622,36 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
 
 	public void setData_scadenza(Date data_scadenza) {
 		this.data_scadenza = data_scadenza;
+	}
+
+
+	public String getMotivazione() {
+		return motivazione;
+	}
+
+
+	public void setMotivazione(String motivazione) {
+		this.motivazione = motivazione;
+	}
+
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+
+	public int getEnteDestinazione() {
+		return enteDestinazione;
+	}
+
+
+	public void setEnteDestinazione(int enteDestinazione) {
+		this.enteDestinazione = enteDestinazione;
 	}
 
 }

@@ -118,8 +118,8 @@
                 title: 'Emporio',
                 width: '10%',
 				type: 'checkbox',
-				defaultValue: false,
 				values:  {false : 'No' ,true : 'Sì'},
+				list: true,
 				edit: true,
 				create: true
             }

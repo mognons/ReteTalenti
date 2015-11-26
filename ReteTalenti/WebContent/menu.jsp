@@ -81,7 +81,7 @@
 					<ul>
 						<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
 							onclick="window.location='eccedenzeReport.action';">Elenco Eccedenze</li>
-                                                                                                <li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
+                        <li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
 							onclick="window.location='ritiriCompletoReport.action';">Elenco Prenotazioni</li>
 					</ul>
 				</li>
@@ -97,12 +97,18 @@
 							<li onclick="window.location='nazioniLink';">Tabella Nazioni</li>
 							<li onclick="window.location='provinceLink';">Tabella Province</li>
 							<li onclick="window.location='uni_misuraLink';">Tabella Unità Misura</li>
+							<li onclick="window.location='messagesLink';">
+								<img src="icons/Message.png" align="bottom" height="16" width="16">
+								<span style="vertical-align: top">Messaggi</span></li>
 						</s:if>
 					</ul>
 				</li>
 			</s:if>
 			<li>-</li>
-			<li><a href="Logout">Logout</a></li>
+			<li  onclick="window.location='Logout';">
+				<img src="images/Power-Shutdown.png" align="bottom" height="16" width="16">
+				<span style="vertical-align: top">Logout</span>
+			</li>
 		</ul>
 	</div>
 

@@ -12,7 +12,6 @@ import java.util.List;
 
 import com.jdbc.DataAccessObject;
 import com.model.Assistito;
-import com.model.CalendarDTO;
 import com.model.Groups;
 import com.model.Tuple;
 import com.model.User;
@@ -84,6 +83,35 @@ public class AssistitiDao {
             pStmt.setString(14, assistito.getEmail());
             pStmt.setString(15, assistito.getNum_documento());
             pStmt.setString(16, assistito.getCod_fiscale());
+            pStmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public void updateEnteAssistito(String codice_fiscale, int ente_destinazione) {
+
+        String updateQuery = "UPDATE ASSISTITI "
+        		+ "SET ENTE_ASSISTENTE=? "
+                + "WHERE COD_FISCALE=?";
+        try {
+            pStmt = dbConnection.prepareStatement(updateQuery);
+            pStmt.setInt(1, ente_destinazione);
+            pStmt.setString(2, codice_fiscale);
+            pStmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public void riattivaAssistito(String codice_fiscale) {
+
+        String updateQuery = "UPDATE ASSISTITI "
+        		+ "SET DATA_FINE_ASSISTENZA=NULL "
+                + "WHERE COD_FISCALE=?";
+        try {
+            pStmt = dbConnection.prepareStatement(updateQuery);
+            pStmt.setString(1, codice_fiscale);
             pStmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println(e.getMessage());

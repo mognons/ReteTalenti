@@ -58,6 +58,7 @@
             <result name="anagraficaEmporio" type="tiles">/anagraficaEmporio.tiles</result>
             <result name="dismissioneEmporio" type="tiles">/dismissioneEmporio.tiles</result>
             <result name="assistiti" type="tiles">/assistititable.tiles</result>
+            <result name="messages" type="tiles">/messagestable.tiles</result>
             <result name="users" type="tiles">/userstable.tiles</result>
             <result name="enti" type="tiles">/entitable.tiles</result>
             <result name="filemanager" type="tiles">/fm.tiles</result>
@@ -89,11 +90,19 @@
 
 
         <action name="welcome" class="com.action.WelcomeAction">
-            <result name="success">welcome.jsp</result>
+            <result name="success">/welcome.jsp</result>
+        </action>
+        	
+        <action name="markReadMessageAction" class="com.action.MessageAction" method="markRead">
+            <result name="success" type="tiles">/welcome.tiles</result>
+        </action>
+        	
+        <action name="completaTrasferimentoMessageAction" class="com.action.MessageAction" method="completaTrasferimento">
+            <result name="success" type="tiles">/welcome.tiles</result>
         </action>
         	
         <action name="menu" class="com.action.MenuAction">
-            <result name="success">menu.jsp</result>
+            <result name="success">/menu.jsp</result>
         </action>
         	
         <action name="*Report" class="com.action.ReportAction" method="{1}">
@@ -123,12 +132,7 @@
             <result name="login" type="redirect">/home.action</result>
         </global-results>
         	                
-        <action name="*DocumentsAction" class="com.action.DocumentsTableAction"
-                        method="{1}">
-            <result type="json"></result>
-        </action>
-                
-        <action name="*UserAction" class="com.action.UsersTableAction"
+       <action name="*UserAction" class="com.action.UsersTableAction"
                         method="{1}">
             <result type="json"></result>
         </action>
@@ -184,6 +188,11 @@
         </action>
                 
         <action name="*ProvinceAction" class="com.action.ProvinceAction"
+                        method="{1}">
+            <result type="json"></result>
+        </action>
+                
+        <action name="*MessageAction" class="com.action.MessageAction"
                         method="{1}">
             <result type="json"></result>
         </action>

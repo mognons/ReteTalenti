@@ -233,11 +233,9 @@ fieldset {
 				height : '400',
 				title : 'Calcolo punteggio Indice di Bisogno'
 			});
-		})();
-        $('#AssistitiTableContainer').jtable('load', {
-            cf_search: $('#cf_search').val(),
-            cognome_search: $('#cognome_search').val()
-        });
+			$('#LoadRecordsButton').click();
+	   	})();
+
 	};
 
 	function showSchedaAssistito(page) {
@@ -341,9 +339,10 @@ fieldset {
 				<textarea rows="4" cols="50"
 					name="motivazione" id="motivazione"
 					class="text ui-widget-content ui-corner-all"></textarea>	
-				<input type="hidden" id="codice_fiscale" name="codice_fiscale" value="codice_fiscale"> 
-				<input type="hidden" id="enteProvenienza" name="enteProvenienza" value="enteProvenienza">
-				<input type="hidden" id="courseId" name="courseId" /> 
+				<input type="hidden" id="cod_fiscale" name="cod_fiscale" value="cod_fiscale"> 
+				<input type="hidden" id="ente_assistente" name="ente_assistente" value="ente_assistente">
+				<input type="hidden" id="nome" name="nome" value="nome">
+				<input type="hidden" id="cognome" name="cognome" value="cognome">
 				<!-- Allow form submission with keyboard without duplicating the dialog button -->
 				<input type="submit" tabindex="-1"
 					style="position: absolute; top: -1000px">

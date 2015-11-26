@@ -50,6 +50,8 @@ public class EntiTableAction extends ActionSupport implements UserAware {
         record.setResp_email(resp_email);
         record.setResp_phone(resp_phone);
         record.setProvincia_ente(provincia_ente);
+        if (ente_emporio==null)
+        	ente_emporio = false;
         record.setEnte_emporio(ente_emporio);
         if (dao.verifyEnte(descrizione)) {
             try {
@@ -78,8 +80,10 @@ public class EntiTableAction extends ActionSupport implements UserAware {
         record.setResp_email(resp_email);
         record.setResp_phone(resp_phone);
         record.setProvincia_ente(provincia_ente);
+        if (ente_emporio==null)
+        	ente_emporio = false;
         record.setEnte_emporio(ente_emporio);
-        System.out.println("Updating " + descrizione);
+        System.out.println("Emporio?  " + ente_emporio);
 
         try {
             // Update existing record

@@ -1,28 +1,28 @@
 ﻿$(document).ready(function () {
 	// CUT HERE
 	var assistito;
-	function generateCalendar() {
-		return; // ELIMINARE DA PRODUZIONE DOPO IMPLEMENTAZIONE METODO
-		var courseId = $("#courseId").val(); 
-		var courseName = $("#courseName").val(); 
-		var calendarColor = $("#calendarColor").val();
+	function trasferisciAssistito() {
 		var startDate = $("#startDate").val();
-		var selected = [];
-		$("#days :checked").each(function() {
-			selected.push($(this).val());
-		});
+		var enteDestinazione = $("#enteDestinazione").val();
+		var motivazione = $("#motivazione").val();
+		var nome = $("#nome").val();
+		var cognome = $("#cognome").val();
+		var cod_fiscale = $("#cod_fiscale").val();
+		var ente_assistente = $("#ente_assistente").val();
 		$.Deferred(function ($dfd) {
 			$.ajax({
 				traditional: true, // THIS IS MANDATORY FOR ARRAYS
-				url: 'CalendarEvents_generateCalendar',
+				url: 'trasferisciAssistitiAction',
 				type: 'POST',
 				dataType: 'json',
 				data: {
-					courseId: courseId,
-					courseName: courseName,
-					calendarColor: calendarColor,
 					startDate: startDate,
-					selectedDays: selected
+					enteDestinazione: enteDestinazione,
+					motivazione: motivazione,
+					nome: nome,
+					cognome: cognome,
+					cod_fiscale: cod_fiscale,
+					ente_assistente: ente_assistente
 				},
 				success: function (data) {
 					$dfd.resolve(data);
@@ -47,7 +47,7 @@
 		width : 400,
 		modal : true,
 		buttons : {
-			"Trasferisci" : generateCalendar,
+			"Trasferisci" : trasferisciAssistito,
 			Cancel : function() {
 				dialog.dialog("close");
 			}
@@ -91,33 +91,50 @@
 						var $selectedRows = $('#AssistitiTableContainer').jtable('selectedRows');
 						$selectedRows.each(function () {
 							var record = $(this).data('record');
-							$.ajax({
-								url: 'CloneCourse',
-								type: 'POST',
-								dataType: 'json',
-								data: record,
-								success: function (data) {
-									$dfd.resolve(data);
-									$("#dialog").dialog({
-										modal: true,
-										buttons: [
-										   {
-											   text: "Dismiss",
-										       click: function() {
-										       	  $( this ).dialog( "close" );
-										       }
-										   }
-										],
-								        open: function(){
-								        	  $("#dialog").html("Course succesfully cloned!")
-								        }
-									});
-									$('#AssistitiTableContainer').jtable('reload');
-								},
-								error: function () {
-									$dfd.reject();
-								}
-							});
+							if (recordObfuscation(record.ente_assistente) || (!record.data_fine_assistenza)) {
+								$("#dialog").dialog({
+									modal: true,
+									buttons: [{
+						        	  text: "Chiudi",
+							        	  click: function() {
+							        		  $(this).dialog( "close" );
+							        	  }
+							          }],
+							        open: function(){
+							        	  $("#dialog").html("Operazione <b>non</b> consentita per questo assistito")
+							        }
+								});
+							} else {
+								$.ajax({
+									url: 'riattivaAssistitiAction',
+									type: 'POST',
+									dataType: 'json',
+									data: {
+										cod_fiscale: record.cod_fiscale										
+									},
+									success: function (data) {
+										$dfd.resolve(data);
+										$("#dialog").dialog({
+											modal: true,
+											buttons: [
+											   {
+												   text: "Chiudi",
+											       click: function() {
+											       	  $(this).dialog( "close" );
+											       }
+											   }
+											],
+									        open: function(){
+									        	  $("#dialog").html("Assistenza riattivata con successo")
+									        }
+										});
+									},
+									error: function () {
+										$dfd.reject();
+									}
+								});
+							}
+							$('#AssistitiTableContainer').jtable('reload');
 						}
 						);
 					})}
@@ -133,7 +150,7 @@
 						assistito = $(this).data('record');
 						var name = assistito.name;
 						var startDate = assistito.startDate;
-						if (assistito.data_fine_assistenza) {
+						if (recordObfuscation(assistito.ente_assistente) || (assistito.data_fine_assistenza)) {
 							$("#dialog").dialog({
 								modal: true,
 								buttons: [{
@@ -148,9 +165,12 @@
 							});
 						} else {
 							$('#dialog-form').find('input[name="startDate"]').val(tomorrow());
-							$('#dialog-form').find('input[name="codice_fiscale"]').val(assistito.cod_fiscale);
-							$('#dialog-form').find('input[name="enteProvenienza"]').val(enteUtente);
-							$('#dialog-form').find('input[name="motivazione"]').val("Motivo del trasferimento");
+//							$('#dialog-form').find('input[name="enteDestinazione"]').val();
+							$('#dialog-form').find('textarea[name="motivazione"]').val("Motivo del trasferimento");
+							$('#dialog-form').find('input[name="cod_fiscale"]').val(assistito.cod_fiscale);
+							$('#dialog-form').find('input[name="nome"]').val(assistito.nome);
+							$('#dialog-form').find('input[name="cognome"]').val(assistito.cognome);
+							$('#dialog-form').find('input[name="ente_assistente"]').val(assistito.ente_assistente);
 							dialog.dialog( "open" );
 						}
 					}); // End of EACH

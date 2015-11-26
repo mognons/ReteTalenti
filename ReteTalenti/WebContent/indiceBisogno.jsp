@@ -17,8 +17,7 @@
 <script src="scripts/jquery.js" type="text/javascript"></script>
 <script src="scripts/jquery-ui.js" type="text/javascript"></script>
 <script type="text/javascript" src="scripts/jquery.validationEngine.js"></script>
-<script type="text/javascript"
-	src="scripts/jquery.validationEngine-it.js"></script>
+<script type="text/javascript" src="scripts/jquery.validationEngine-it.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <script type="text/JavaScript">

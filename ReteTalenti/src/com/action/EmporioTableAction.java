@@ -210,6 +210,17 @@ public class EmporioTableAction extends ActionSupport implements UserAware, Mode
         record.setEmporio(user.getEnte());
         record.setData_accettazione(data_accettazione);
         record.setData_scadenza(data_scadenza);
+        if (data_scadenza==null) {
+        	message = "Data scadenza obbligatoria";
+        	result = "ERROR";
+        	return SUCCESS;
+        }
+        
+        if (data_accettazione==null) {
+        	message = "Data accettazione <i>obbligatoria</i>";
+        	result = "ERROR";
+        	return SUCCESS;
+        }
         noteAction = new NoteTableAction();
         String nota = 	"Accettato dall'emporio " + user.getDescrizioneEnte()
         				+ " dal " + 

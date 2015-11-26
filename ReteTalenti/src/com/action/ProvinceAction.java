@@ -18,7 +18,7 @@ public class ProvinceAction extends ActionSupport implements UserAware {
 	private List<Provincia> records;
 	private String result;
 	private String message;
-	private User record;
+	private Provincia record;
 	private int totalRecordCount;
 	private String jtStartIndex,jtPageSize;
 	private String jtSorting;
@@ -60,12 +60,7 @@ public class ProvinceAction extends ActionSupport implements UserAware {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public User getRecord() {
-		return record;
-	}
-	public void setRecord(User record) {
-		this.record = record;
-	}
+
 	public int getTotalRecordCount() {
 		return totalRecordCount;
 	}
@@ -89,6 +84,12 @@ public class ProvinceAction extends ActionSupport implements UserAware {
 	}
 	public void setJtStartIndex(String jtStartIndex) {
 		this.jtStartIndex = jtStartIndex;
+	}
+	public Provincia getRecord() {
+		return record;
+	}
+	public void setRecord(Provincia record) {
+		this.record = record;
 	}
 
 

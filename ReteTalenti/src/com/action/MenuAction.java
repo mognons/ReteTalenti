@@ -1,11 +1,9 @@
 package com.action;
  
-import java.util.ArrayList;
-import java.util.List;
+
 
 import com.interceptor.UserAware;
 import com.model.User;
-import com.model.Groups;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
  
@@ -15,8 +13,6 @@ public class MenuAction extends ActionSupport implements UserAware, ModelDriven<
     private User user;
     
     public String execute() {
-    	System.out.println("Inside menuAction");
-    	System.out.println(user.getUsername());
     	return "success";
     }
     

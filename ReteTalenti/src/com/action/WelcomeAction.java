@@ -2,65 +2,35 @@ package com.action;
  
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.ResourceBundle;
-
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
 
 import com.interceptor.UserAware;
-import com.model.CalendarDTO;
+import com.model.Message;
 import com.model.Groups;
 import com.model.User;
-import com.dao.CalendarsDao;
+import com.dao.MessagesDao;
 import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.ModelDriven;
  
-public class WelcomeAction extends ActionSupport implements UserAware, ModelDriven<User> {
+public class WelcomeAction extends ActionSupport implements UserAware {
  
     private static final long serialVersionUID = 8111120314704779336L;
 	private List<Groups> userGroups = new ArrayList<Groups>();
-	private List<CalendarDTO> todayEvents;
 	private Boolean hasEvents, hasTodos = false;
 	private Date currentDate;
+	private String today, result;
+	private MessagesDao dao = new MessagesDao();
+	private User user = new User();
 
     @Override
     public String execute() {
-    	setTodayEvents(new ArrayList<CalendarDTO>());
-    	DateTime dt = new DateTime();
-    	DateTimeFormatter fmt = ISODateTimeFormat.date();
-    	String today = fmt.print(dt);
-    	todayEvents = new ArrayList<CalendarDTO>();
-    	if (todayEvents.size() != 0)
+    	currentDate = new Date();
+    	System.out.println(user.getEnte());
+    	if (dao.getCountOfValidMessages(user)!=0) {
     		hasEvents = true;
-    	// Lets check configuration
-		ResourceBundle rb = ResourceBundle.getBundle("com.properties.basicConfiguration");
-		Enumeration <String> keys = rb.getKeys();
-		while (keys.hasMoreElements()) {
-			String key = keys.nextElement();
-			String value = rb.getString(key);
-//			System.out.println(key + ": " + value);
-		}
-		setCurrentDate(new Date());
+    	}
         return SUCCESS;
     }
      
-    private User user = new User();
-    @Override
-    public void setUser(User user) {
-        this.user=user;
-    }
-     
-    public User getUser(User user){
-        return this.user;
-    }
- 
-    @Override
-    public User getModel() {
-        return this.user;
-    }
 
 	public List<Groups> getUserGroups() {
 		return userGroups;
@@ -68,14 +38,6 @@ public class WelcomeAction extends ActionSupport implements UserAware, ModelDriv
 
 	public void setUserGroups(List<Groups> userGroups) {
 		this.userGroups = userGroups;
-	}
-
-	public List<CalendarDTO> getTodayEvents() {
-		return todayEvents;
-	}
-
-	public void setTodayEvents(List<CalendarDTO> todayEvents) {
-		this.todayEvents = todayEvents;
 	}
 
 	public Boolean getHasEvents() {
@@ -100,6 +62,32 @@ public class WelcomeAction extends ActionSupport implements UserAware, ModelDriv
 
 	public void setCurrentDate(Date currentDate) {
 		this.currentDate = currentDate;
+	}
+
+	public String getToday() {
+		return today;
+	}
+
+	public void setToday(String today) {
+		this.today = today;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
 	}
  
 }
