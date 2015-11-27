@@ -108,17 +108,27 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 	public String resetPassword()  throws IOException {
 		RandomString rs = new RandomString(12);
 		String newPassword = rs.nextString();
-		dao.updateUserPassword(username, newPassword);
 	   	String mailRecipient = userEmail;
-    	String msgBody = "Dear " + userFirstname + " " + userLastname + ", \n\n" + 
-    					"your password has been reset to: " + newPassword + "." + "\n\n" + 
-    					"Please login into classAction and change your password as soon as possible";
+    	String msgBody = "Gentile " + userFirstname + " " + userLastname + ", \n\n" + 
+    					"la vostra password è stata resettata al seguente valore: " + newPassword + "." + "\n\n" + 
+    					"Fate cortesemente LOGIN a ReteTalenti e modificata la vostra password il più velocemente possibile. "
+    					+ "\n\n"
+    					+ "Grazie."
+    					+ "\n\nReteTalenti System Administrator";
     	sendMail sm = new sendMail();
-    	sm.send("Password reset", msgBody, mailRecipient);
-		message = "Password resettata con successo al valore: " + newPassword;
-		System.out.println(message);
-		result = "OK";
-		return Action.SUCCESS;
+    	try {
+	    	sm.send("Password reset", msgBody, mailRecipient);
+			dao.updateUserPassword(username, newPassword);
+			message = "Password resettata con successo al valore: " + newPassword;
+			System.out.println(message);
+			result = "OK";
+			return Action.SUCCESS;
+    	} catch (Exception e) {
+			message = "Errore nell'invio della mail: password <b>NON</b> modificata";
+			System.err.println(e.getMessage());
+			result = "ERROR";
+			return Action.SUCCESS;
+    	}
 	}
 
 	public String delete() throws IOException {

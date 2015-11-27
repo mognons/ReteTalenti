@@ -1217,8 +1217,8 @@
 			/* MOGNONI End of Changes */
 			if (vdate > pdate ) {
 				var rule = options.allrules.past;
-				if (rule.alertText2) return rule.alertText + methods._dateToString(pdate) + rule.alertText2;
-				return rule.alertText + methods._dateToString(pdate);
+				if (rule.alertText2) return rule.alertText + methods._dateToStringEURO(pdate) + rule.alertText2;
+				return rule.alertText + methods._dateToStringEURO(pdate);
 			}
 		},
 		/**
@@ -1252,8 +1252,8 @@
 			if (vdate < pdate ) {
 				var rule = options.allrules.future;
 				if (rule.alertText2)
-					return rule.alertText + methods._dateToString(pdate) + rule.alertText2;
-				return rule.alertText + methods._dateToString(pdate);
+					return rule.alertText + methods._dateToStringEURO(pdate) + rule.alertText2;
+				return rule.alertText + methods._dateToStringEURO(pdate);
 			}
 		},
 		/**
@@ -1555,6 +1555,14 @@
 			return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
 		},
 		/**
+		* date -> string
+		*
+		* @param {Object} date
+		*/
+		_dateToStringEURO: function(date) {
+			return date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()
+		},
+		/**
 		* Parses an ISO date
 		* @param {String} d
 		*/
@@ -1583,7 +1591,8 @@
 				return new Date(dateParts[2], (dateParts[1] - 1), dateParts[0]);
 			}
 			return new Date(dateParts[2], (dateParts[1] - 1) ,dateParts[0]);
-		},		/**
+		},		
+		/**
 		* Builds or updates a prompt with the given information
 		*
 		* @param {jqObject} field

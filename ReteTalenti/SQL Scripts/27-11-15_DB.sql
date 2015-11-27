@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.23)
 # Database: rtdb
-# Generation Time: 2015-11-23 08:54:13 +0000
+# Generation Time: 2015-11-27 08:20:35 +0000
 # ************************************************************
 
 
@@ -74,11 +74,11 @@ VALUES
 	('BLDLNZ00C29A893I','LORENZO   ','BALDO','M',4,'PARIGI','1960-06-07','Z000','VIA VILLA GLORI 4','VERONA','37131',23,'N','3391111142','email32@gmail.com','PRIMO',1,19,'2015-06-16',NULL,NULL,NULL,NULL,NULL,NULL,1),
 	('BLFZHR71A41Z330M','ZAHRA   ','BELFATMI','F',4,'PARIGI','1960-07-12','Z000','VIA G.DEL CARRETTO 58','VERONA','37166',23,'S','3391111177','email67@gmail.com','123456855',3,0,'2015-07-21',NULL,NULL,NULL,NULL,NULL,NULL,1),
 	('BLKMJD12B01H783M','MAJD','BOULKOUTE','M',4,'PARIGI','1960-08-25','Z000','VIA A.RIGHI 9/B','VERONA','37210',23,'S','3391111221','email111@gmail.com','123456899',12,0,'2015-09-03','2015-11-21',NULL,NULL,NULL,NULL,NULL,1),
-	('BLLFZO63H51Z330D','FOUZIA   ','ABOULAOULA','F',4,'PARIGI','1960-08-20','Z000','VIA A.RIGHI 9/B','VERONA','37205',23,'S','3391111216','email106@gmail.com','123456894',12,15,'2015-08-29',NULL,NULL,NULL,NULL,NULL,NULL,6),
+	('BLLFZO63H51Z330D','FOUZIA   ','ABOULAOULA','F',4,'PARIGI','1960-08-20','Z000','VIA A.RIGHI 9/B','VERONA','37205',23,'S','3391111216','email106@gmail.com','123456894',12,15,'2015-08-29',NULL,NULL,NULL,NULL,NULL,2,6),
 	('BLLNRC69E20D612U','ENRICO   ','BELLINI','M',4,'PARIGI','1960-10-29','Z000','VIA FIUMICELLO 18','VERONA','37275',23,'S','3391111286','email176@gmail.com','123456964',1,0,'2015-11-07',NULL,NULL,NULL,NULL,NULL,NULL,6),
-	('BNCZZA79A64Z330O','AZIZA   ','BENCHERQUI','F',4,'PARIGI','1960-05-27','Z000','VIA CACCIATORI PIEMONTESI 9','VERONA','37120',23,'S','3391111131','email21@gmail.com','123456809',12,15,'2015-06-05',NULL,NULL,NULL,NULL,NULL,NULL,6),
+	('BNCZZA79A64Z330O','AZIZA   ','BENCHERQUI','F',4,'PARIGI','1960-05-27','Z000','VIA CACCIATORI PIEMONTESI 9','VERONA','37120',23,'S','3391111131','email21@gmail.com','123456809',11,19,'2015-06-05',NULL,'2015-11-26',NULL,NULL,NULL,2,6),
 	('BNKMSR84P67A512U','MOYOSOREOLUWA FADEJIMI  ','BANKOLE','F',4,'PARIGI','1960-08-16','Z000','VIA P.SARPI 21','VERONA','37201',23,'N','3391111212','email102@gmail.com','123456890',1,0,'2015-08-25',NULL,NULL,NULL,NULL,NULL,NULL,1),
-	('BNNSDA81A41Z330S','SAIDA','BENNOUNE','F',4,'PARIGI','1960-06-28','Z000','VIA G.PELLEGRINI 18','VERONA','37152',23,'S','3391111190','email53@gmail.com','123456841',12,12,'2015-07-07',NULL,NULL,NULL,NULL,NULL,NULL,7),
+	('BNNSDA81A41Z330S','SAIDA','BENNOUNE','F',4,'PARIGI','1960-06-28','Z000','VIA G.PELLEGRINI 18','VERONA','37152',23,'S','3391111190','email53@gmail.com','123456841',12,12,'2015-07-07',NULL,'2015-11-26',NULL,NULL,NULL,2,7),
 	('BNTGNI61L31M178S','GINO','BENETTI','M',4,'PARIGI','1960-11-05','Z705','VIALE SICILIA 12','VERONA','37282',23,'S','3391111293','email183@gmail.com','123456971',2,15,'2015-11-14',NULL,NULL,NULL,NULL,NULL,NULL,7),
 	('BNTNTT69R43Z209L','BADUGE ANNETTE IDRANI ','BENTHOTA','F',4,'PARIGI','1960-09-01','Z000','S.NE S.LUCIA 8/A','VERONA','37217',23,'S','3391111228','email118@gmail.com','123456906',1,0,'2015-09-10',NULL,NULL,NULL,NULL,NULL,NULL,1),
 	('BRMLNE39A65L781M','ELENA   ','BRAMBILLA','F',4,'PARIGI','1960-05-07','Z000','VIA S.GIACOMO 48','VERONA','37100',23,'S','3391111111','email01@gmail.com','SECONDO',1,10,'2015-05-16',NULL,NULL,NULL,NULL,NULL,NULL,1),
@@ -90,16 +90,16 @@ VALUES
 	('BSYSKV01S30L781H','OSAJE KEVIN  ','OBASUYI','M',4,'PARIGI','1960-09-26','Z000','VIA DOGANA 16','S.GIOVANNI LUPATOTO','37242',23,'S','3391111253','email143@gmail.com','123456931',12,0,'2015-10-05',NULL,NULL,NULL,NULL,NULL,NULL,1),
 	('BTNCFR61R49Z318Q','CONFORT   ','BOATENG','F',4,'PARIGI','1960-07-25','Z000','VIA B.GIULIARI 29/C','VERONA','37179',23,'N','3391111190','email80@gmail.com','123456868',1,0,'2015-08-03',NULL,NULL,NULL,NULL,NULL,NULL,1),
 	('BTNSHR96D63L781S','ESTHER   ','BOATENG','F',4,'PARIGI','1960-07-26','Z000','VIA B.GIULIARI 29/C','VERONA','37180',23,'S','3391111191','email81@gmail.com','123456869',1,0,'2015-08-04',NULL,NULL,NULL,NULL,NULL,NULL,6),
-	('BVODNS82C27M172M','DENIS   ','BOVI','M',4,'PARIGI','1960-07-03','Z000','VIA I.PINDEMONTE 24','S.MARTINO B.A','37157',23,'N','3391111168','email58@gmail.com','123456846',12,15,'2015-07-12',NULL,NULL,NULL,NULL,'2015-11-22',2,1),
+	('BVODNS82C27M172M','DENIS   ','BOVI','M',4,'PARIGI','1960-07-03','Z000','VIA I.PINDEMONTE 24','S.MARTINO B.A','37157',23,'N','3391111168','email58@gmail.com','123456846',12,15,'2015-07-12',NULL,NULL,NULL,NULL,NULL,2,1),
 	('BVOFNC49B02A540W','FRANCESCO   ','BOVI','M',4,'PARIGI','1960-07-04','Z000','VIA I.PINDEMONTE 24','S.MARTINO B.A','37158',23,'S','3391111169','email59@gmail.com','123456847',1,0,'2015-07-13',NULL,NULL,NULL,NULL,NULL,NULL,6),
 	('BVOSDK79S19M172V','SANDOKAN   ','BOVI','M',4,'PARIGI','1960-07-05','Z000','VIA I.PINDEMONTE 24','S.MARTINO B.A','37159',23,'N','3391111170','email60@gmail.com','123456848',2,0,'2015-07-14',NULL,NULL,NULL,NULL,NULL,NULL,7),
 	('BVOSNT78R48M172N','SAMANTA   ','BOVI','F',4,'PARIGI','1960-07-02','Z000','VIA I.PINDEMONTE 24','S.MARTINO B.A','37156',23,'S','3391111167','email57@gmail.com','123456845',11,0,'2015-07-11',NULL,NULL,NULL,NULL,NULL,NULL,1),
 	('CCABBR72M46E512B','BARBARA   ','CAUCI','F',4,'PARIGI','1960-09-12','Z000','VIA DIETRO SALIERI 18','VERONA','37228',23,'S','3391111239','email129@gmail.com','123456917',1,0,'2015-09-21',NULL,NULL,NULL,NULL,NULL,NULL,7),
 	('CDNCNL70C09Z140E','CORNELIU   ','CIUDIN','M',4,'PARIGI','1960-10-01','Z000','VIA LEGNAGO 41','VERONA','37247',23,'S','3391111258','email148@gmail.com','123456936',11,0,'2015-10-10',NULL,NULL,NULL,NULL,NULL,NULL,7),
-	('CDNOLG70C09Z140E','OLGA   ','CIUDIN','F',4,'PARIGI','1960-10-02','Z000','VIA LEGNAGO 41','VERONA','37248',23,'N','3391111259','email149@gmail.com','123456937',12,16,'2015-10-11',NULL,NULL,NULL,NULL,NULL,NULL,1),
+	('CDNOLG70C09Z140E','OLGA   ','CIUDIN','F',4,'PARIGI','1960-10-02','Z000','VIA LEGNAGO 41','VERONA','37248',23,'N','3391111259','email149@gmail.com','123456937',12,16,'2015-10-11',NULL,'2015-11-26',NULL,NULL,NULL,2,1),
 	('CHFFTM51S55Z330G','FATIMA   ','CHAIF','F',4,'PARIGI','1960-06-27','Z000','VIA MANTOVANA 85','VERONA','37151',23,'N','3391111162','email52@gmail.com','123456840',11,0,'2015-07-06',NULL,NULL,NULL,NULL,NULL,NULL,6),
 	('CHHKDJ73H62Z330B','KHADIJA   ','CHAID','F',4,'PARIGI','1960-06-17','Z000','VIALE DELL INDUSTRIA 2','VERONA','37141',23,'N','3391111152','email42@gmail.com','123456830',12,0,'2015-06-26',NULL,NULL,NULL,NULL,NULL,NULL,1),
-	('CHMZLD39S66Z154U','ISOLDA   ','ACHMADULLINA','F',4,'PARIGI','1960-10-07','Z000','VIA NICOLA MAZZA 30','VERONA','37253',23,'N','3391111264','email154@gmail.com','123456942',12,0,'2015-10-16',NULL,NULL,NULL,NULL,NULL,NULL,6),
+	('CHMZLD39S66Z154U','ISOLDA   ','ACHMADULLINA','F',4,'PARIGI','1960-10-07','Z000','VIA NICOLA MAZZA 30','VERONA','37253',23,'N','3391111264','email154@gmail.com','123456942',2,0,'2015-10-16',NULL,NULL,NULL,NULL,NULL,NULL,6),
 	('CHRBLL78B05Z330G','ABDALLAH   ','CHAARI','M',4,'PARIGI','1960-07-29','Z000','VIA G.MURARI BRA\' 26','VERONA','37183',23,'N','3391111194','email84@gmail.com','123456872',11,0,'2015-08-07',NULL,NULL,NULL,NULL,NULL,NULL,6),
 	('CLNPCL46H23L781O','PERICLE   ','CEOLONI','M',4,'PARIGI','1960-10-14','Z000','VIA PRINCIPE AMEDEO 112','VILLAFRANCA','37260',23,'S','3391111271','email161@gmail.com','123456949',1,0,'2015-10-23',NULL,NULL,NULL,NULL,NULL,NULL,7),
 	('CNTVCN83A71Z129T','VIORICA IONELLA  ','CANTEA','F',4,'PARIGI','1960-09-14','Z000','VIA RIVOLI 25 E','VERONA','37230',23,'S','3391111241','email131@gmail.com','123456919',3,0,'2015-09-23',NULL,NULL,NULL,NULL,NULL,NULL,6),
@@ -260,7 +260,7 @@ VALUES
 	('WRNMYR62S41Z209O','MARY ROSE PUSHPARANI ','WARNAKULASURIYA','F',4,'PARIGI','1960-09-07','Z000','VIA CENTRO 39','VERONA','37223',23,'N','3391111234','email124@gmail.com','123456912',2,0,'2015-09-16',NULL,NULL,NULL,NULL,NULL,NULL,1),
 	('WRNSLR66R12Z209C','TUKAPPULAGE SUSIL RANJ ','WARNAKULASOORIYA','M',4,'PARIGI','1960-09-03','Z000','S.NE S.LUCIA 8/A','VERONA','37219',23,'S','3391111230','email120@gmail.com','123456908',3,0,'2015-09-12',NULL,NULL,NULL,NULL,NULL,NULL,7),
 	('WSDBSH96H12Z209M','GAMAGE DON ABHISHAKE PIYARELLO','WISIDA','M',4,'PARIGI','1960-08-06','Z000','VIA SCUDERLANDO 172','VERONA','37191',23,'S','3391111202','email92@gmail.com','123456880',2,0,'2015-08-15',NULL,NULL,NULL,NULL,NULL,NULL,1),
-	('WSDJPH59M10Z209D','GAMAGE DON JOSEPH ANTONY','WISIDA','M',4,'PARIGI','1960-08-04','Z000','VIA SCUDERLANDO 172','VERONA','37189',23,'S','3391111200','email90@gmail.com','123456878',12,0,'2015-08-13',NULL,NULL,NULL,NULL,NULL,NULL,6),
+	('WSDJPH59M10Z209D','GAMAGE DON JOSEPH ANTONY','WISIDA','M',4,'PARIGI','1960-08-04','Z000','VIA SCUDERLANDO 172','VERONA','37189',23,'S','3391111200','email90@gmail.com','123456878',12,0,'2015-08-13','2015-11-26',NULL,NULL,NULL,NULL,NULL,6),
 	('WSDJSC90T68Z209Z','GAMAGE DON JESSICA PRIYADARSHANI','WISIDA','F',4,'PARIGI','1960-08-05','Z000','VIA SCUDERLANDO 172','VERONA','37190',23,'S','3391111201','email91@gmail.com','123456879',1,0,'2015-08-14',NULL,NULL,NULL,NULL,NULL,NULL,7),
 	('xxxxxxxxxxxxxxx','SOFIA   ','ANKOUD','F',4,'PARIGI','1960-06-21','Z000','VIALE DELL INDUSTRIA 2','VERONA','37145',23,'N','3391111156','email46@gmail.com','123456834',11,0,'2015-06-30',NULL,NULL,NULL,NULL,NULL,NULL,6),
 	('YLLJMS80E05Z318V','JAMES   ','YALLEY','M',4,'PARIGI','1960-11-09','Z000','VIA DEL COMBATTENTE 16/A','NEGRAR','37286',23,'S','3391111297','email187@gmail.com','123456975',1,0,'2015-11-18',NULL,NULL,NULL,NULL,NULL,NULL,1),
@@ -276,29 +276,6 @@ VALUES
 UNLOCK TABLES;
 
 
-
-# Dump of table CONFIGURATION
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `CONFIGURATION`;
-
-CREATE TABLE `CONFIGURATION` (
-  `key` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `value` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-LOCK TABLES `CONFIGURATION` WRITE;
-/*!40000 ALTER TABLE `CONFIGURATION` DISABLE KEYS */;
-
-INSERT INTO `CONFIGURATION` (`key`, `value`)
-VALUES
-	(X'6C61737459656172486F6C696461794C6F61646564',X'32303136'),
-	(X'64656661756C744C6F63616C65',X'656E');
-
-/*!40000 ALTER TABLE `CONFIGURATION` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
 # Dump of table DOCUMENTS
 # ------------------------------------------------------------
 
@@ -311,7 +288,7 @@ CREATE TABLE `DOCUMENTS` (
   `name` varchar(128) DEFAULT NULL,
   `documentpath` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`documentId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 LOCK TABLES `DOCUMENTS` WRITE;
 /*!40000 ALTER TABLE `DOCUMENTS` DISABLE KEYS */;
@@ -347,7 +324,7 @@ CREATE TABLE `ECCEDENZE` (
   `operatore` varchar(32) NOT NULL DEFAULT '' COMMENT 'FK username',
   PRIMARY KEY (`id`),
   KEY `ente_cedente` (`ente_cedente`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `ECCEDENZE` WRITE;
 /*!40000 ALTER TABLE `ECCEDENZE` DISABLE KEYS */;
@@ -380,17 +357,17 @@ CREATE TABLE `ENTI` (
   `provincia_ente` int(2) DEFAULT NULL,
   `ente_emporio` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `ENTI` WRITE;
 /*!40000 ALTER TABLE `ENTI` DISABLE KEYS */;
 
 INSERT INTO `ENTI` (`id`, `descrizione`, `responsabile`, `resp_email`, `resp_phone`, `provincia_ente`, `ente_emporio`)
 VALUES
-	(1,'Caritas Verona','Don Lulli Polli','l.polli@caritas.it','022135528',23,0),
-	(2,'5020-cinquantaventi','Fabrizio Meregalli','fabrizio.meregalli@5020.it','3387263636',23,1),
-	(3,'Ronda della Carità','Enrica Tentorio','enrica.tentorio@gmail.com','02334455',23,0),
-	(11,'Caritas Rovigo','Giovanni Storti','g.storti@email.it','04088779',29,0),
+	(1,'Caritas Verona','Martina Tommasi','martina.tommasi@acliverona.it','022135528',23,0),
+	(2,'5020-EMPORIO','Fabrizio Meregalli','fabrizio.meregalli@5020.it','3387263636',23,1),
+	(3,'Ronda della Carità','Martina Tommasi','martina.tommasi@acliverona.it','02334455',23,0),
+	(11,'Caritas Rovigo','Martina Tommasi','martina.tommasi@acliverona.it','04088779',29,0),
 	(12,'ACLI Verona','Martina Tommasi','martina.tommasi@acliverona.it','00223300',23,0);
 
 /*!40000 ALTER TABLE `ENTI` ENABLE KEYS */;
@@ -406,7 +383,7 @@ CREATE TABLE `GRADI_PARENTELA` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `descrizione` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `GRADI_PARENTELA` WRITE;
 /*!40000 ALTER TABLE `GRADI_PARENTELA` DISABLE KEYS */;
@@ -465,7 +442,7 @@ CREATE TABLE `IMPEGNI` (
   `timestamp` datetime NOT NULL,
   `operatore` varchar(32) DEFAULT NULL COMMENT 'FK username',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `IMPEGNI` WRITE;
 /*!40000 ALTER TABLE `IMPEGNI` DISABLE KEYS */;
@@ -510,7 +487,7 @@ CREATE TABLE `INDICI_BISOGNO` (
   `operatore` int(2) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `cf_assistito_ib` (`cf_assistito_ib`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `INDICI_BISOGNO` WRITE;
 /*!40000 ALTER TABLE `INDICI_BISOGNO` DISABLE KEYS */;
@@ -520,11 +497,48 @@ VALUES
 	(9,0,0,0,0,1,0,0,14,0,1,0,0,15,'BLLFZO63H51Z330D','2015-11-21 18:19:08',NULL),
 	(10,0,0,0,0,1,0,0,14,0,1,0,0,15,'BNTGNI61L31M178S','2015-11-21 22:16:49',NULL),
 	(11,5000,0,0,0,1,0,0,11,0,1,0,0,12,'BNNSDA81A41Z330S','2015-11-21 23:00:03',NULL),
-	(12,0,0,0,0,1,0,0,14,0,1,0,0,15,'BNCZZA79A64Z330O','2015-11-21 23:03:07',NULL),
+	(12,1200,0,0,0,1,0,5,13,0,1,0,5,19,'BNCZZA79A64Z330O','2015-11-21 23:03:07',NULL),
 	(13,0,0,0,0,1,0,0,14,0,1,0,0,15,'BVODNS82C27M172M','2015-11-21 23:04:46',NULL),
 	(14,0,2000,0,0,3,3,2,14,-2,3,-1,2,16,'CDNOLG70C09Z140E','2015-11-23 09:39:52',NULL);
 
 /*!40000 ALTER TABLE `INDICI_BISOGNO` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table MESSAGES
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `MESSAGES`;
+
+CREATE TABLE `MESSAGES` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `ente` int(11) DEFAULT NULL,
+  `tag` varchar(16) DEFAULT NULL,
+  `message_text` varchar(255) DEFAULT NULL,
+  `action` varchar(128) DEFAULT NULL,
+  `key1` varchar(32) DEFAULT NULL,
+  `key2` int(11) DEFAULT NULL,
+  `key3` date DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `message_read` tinyint(1) DEFAULT NULL,
+  `timestamp` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+LOCK TABLES `MESSAGES` WRITE;
+/*!40000 ALTER TABLE `MESSAGES` DISABLE KEYS */;
+
+INSERT INTO `MESSAGES` (`id`, `ente`, `tag`, `message_text`, `action`, `key1`, `key2`, `key3`, `start_date`, `end_date`, `message_read`, `timestamp`)
+VALUES
+	(4,0,'ECCEDENZE','Eccedenza disponibile','FOLLOW_impegniLink',NULL,NULL,NULL,'2015-11-22','2015-11-27',1,NULL),
+	(5,12,'ASSISTITI','Trasferimento assistito SAIDA BENNOUNE (BNNSDA81A41Z330S) con la seguente motivazione: Cambio di residenza, richiede trasferimento su 5020','EXECUTE_completaTrasferimentoMessageAction','BNNSDA81A41Z330S',2,NULL,'2015-11-26',NULL,1,'2015-11-26 19:07:41'),
+	(6,2,'ASSISTITI','Trasferimento assistito ISOLDA    ACHMADULLINA (CHMZLD39S66Z154U) con la seguente motivazione: Prova trasferimento','EXECUTE_completaTrasferimentoMessageAction','CHMZLD39S66Z154U',2,NULL,'2015-11-26',NULL,1,'2015-11-26 20:02:08'),
+	(7,11,'ASSISTITI','Completare il trasferimento di <b>AZIZA    BENCHERQUI</b> (BNCZZA79A64Z330O) richiesto per: Vuole provare una nuova parrocchia...','EXECUTE_completaTrasferimentoMessageAction','BNCZZA79A64Z330O',11,NULL,'2015-11-26',NULL,1,'2015-11-26 21:35:19'),
+	(9,0,'A_HALT','Il sig. Gabriele Minardi è desiderato alla reception','WARNING_',NULL,0,NULL,'2015-11-26',NULL,1,'2015-11-26 22:59:00'),
+	(10,0,'A_HALT','Il dott. Gabriele Minardi è desiderato alla <i>reception</i> con <b>urgenza</b>','WARNING_',NULL,0,NULL,'2015-11-26',NULL,1,'2015-11-26 23:00:16');
+
+/*!40000 ALTER TABLE `MESSAGES` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -841,7 +855,7 @@ CREATE TABLE `NOTE_ASSISTITI` (
   PRIMARY KEY (`id`),
   KEY `fk_cf_assistito_idx` (`cf_assistito_note`),
   CONSTRAINT `fk_cf_assistito_note` FOREIGN KEY (`cf_assistito_note`) REFERENCES `assistiti` (`cod_fiscale`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `NOTE_ASSISTITI` WRITE;
 /*!40000 ALTER TABLE `NOTE_ASSISTITI` DISABLE KEYS */;
@@ -856,7 +870,102 @@ VALUES
 	(8,'Rimosso dall\'emporio (inserito il 2015-01-01T00:00:00 fino al 2015-12-31T00:00:00)','2015-11-22','BVODNS82C27M172M',0),
 	(9,'Rimosso dall\'emporio (accettato il 2015-01-01T00:00:00 fino al 2015-12-31T00:00:00)','2015-11-22','BVODNS82C27M172M',0),
 	(10,'Rimosso dall\'emporio (accettato il 01-01-2015 fino al 31-12-2015)','2015-11-22','BVODNS82C27M172M',0),
-	(11,'Nota la nota, è una nota nota.','2015-11-23','BLLFZO63H51Z330D',9);
+	(11,'Nota la nota, è una nota nota.','2015-11-23','BLLFZO63H51Z330D',9),
+	(12,'Accettato dall\'emporio 5020-cinquantaventi dal 30/nov/2015 al 31/dic/2015','2015-11-23','BLLFZO63H51Z330D',0),
+	(13,'Accettato dall\'emporio 5020-cinquantaventi dal 30/nov/2015 al 31/dic/2015','2015-11-23','BNCZZA79A64Z330O',0),
+	(14,'Accettato dall\'emporio 5020-cinquantaventi dal 24/nov/2015 al 30/gen/2016','2015-11-23','BNCZZA79A64Z330O',0),
+	(15,'Accettato dall\'emporio 5020-cinquantaventi dal 26/nov/2015 al 26/nov/2015','2015-11-25','BLLFZO63H51Z330D',0),
+	(16,'Rimosso dall\'emporio (accettato il 24-11-2015 fino al 30-01-2016)','2015-11-25','BNCZZA79A64Z330O',0),
+	(17,'Rimozione candidatura dall\'emporio','2015-11-25','CDNOLG70C09Z140E',0),
+	(18,'Rimozione candidatura dall\'emporio','2015-11-25','BVODNS82C27M172M',0),
+	(19,'Rimozione candidatura dall\'emporio','2015-11-25','BNNSDA81A41Z330S',0),
+	(20,'Candidato all\'emporio','2015-11-25','BNCZZA79A64Z330O',0),
+	(21,'Candidato all\'emporio','2015-11-25','BVODNS82C27M172M',0),
+	(22,'Accettato dall\'emporio 5020-EMPORIO dal null al null','2015-11-25','BNCZZA79A64Z330O',0),
+	(23,'Candidato all\'emporio','2015-11-25','CDNOLG70C09Z140E',0),
+	(24,'Candidato all\'emporio','2015-11-25','BNCZZA79A64Z330O',0),
+	(25,'Candidato all\'emporio','2015-11-25','BLLFZO63H51Z330D',0),
+	(26,'Candidato all\'emporio','2015-11-25','BNNSDA81A41Z330S',0),
+	(27,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al null','2015-11-25','CDNOLG70C09Z140E',0),
+	(28,'Accettato dall\'emporio 5020-EMPORIO dal 02/nov/2015 al null','2015-11-25','BLLFZO63H51Z330D',0),
+	(29,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al null','2015-11-25','BNCZZA79A64Z330O',0),
+	(30,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al null','2015-11-25','BVODNS82C27M172M',0),
+	(31,'Candidato all\'emporio','2015-11-25','CDNOLG70C09Z140E',0),
+	(32,'Candidato all\'emporio','2015-11-25','BNCZZA79A64Z330O',0),
+	(33,'Candidato all\'emporio','2015-11-25','BVODNS82C27M172M',0),
+	(34,'Candidato all\'emporio','2015-11-25','BLLFZO63H51Z330D',0),
+	(35,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','CDNOLG70C09Z140E',0),
+	(36,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BLLFZO63H51Z330D',0),
+	(37,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BLLFZO63H51Z330D',0),
+	(38,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BLLFZO63H51Z330D',0),
+	(39,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BLLFZO63H51Z330D',0),
+	(40,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BLLFZO63H51Z330D',0),
+	(41,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BLLFZO63H51Z330D',0),
+	(42,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BLLFZO63H51Z330D',0),
+	(43,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BLLFZO63H51Z330D',0),
+	(44,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BLLFZO63H51Z330D',0),
+	(45,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BLLFZO63H51Z330D',0),
+	(46,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BLLFZO63H51Z330D',0),
+	(47,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BLLFZO63H51Z330D',0),
+	(48,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BLLFZO63H51Z330D',0),
+	(49,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BLLFZO63H51Z330D',0),
+	(50,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BLLFZO63H51Z330D',0),
+	(51,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BLLFZO63H51Z330D',0),
+	(52,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BLLFZO63H51Z330D',0),
+	(53,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BLLFZO63H51Z330D',0),
+	(54,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BLLFZO63H51Z330D',0),
+	(55,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BLLFZO63H51Z330D',0),
+	(56,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BNCZZA79A64Z330O',0),
+	(57,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BVODNS82C27M172M',0),
+	(58,'Accettato dall\'emporio 5020-EMPORIO dal 26/nov/2015 al 26/nov/2015','2015-11-25','BNNSDA81A41Z330S',0),
+	(59,'Candidato all\'emporio','2015-11-25','CDNOLG70C09Z140E',0),
+	(60,'Candidato all\'emporio','2015-11-25','BNCZZA79A64Z330O',0),
+	(61,'Candidato all\'emporio','2015-11-25','BVODNS82C27M172M',0),
+	(62,'Candidato all\'emporio','2015-11-25','BLLFZO63H51Z330D',0),
+	(63,'Candidato all\'emporio','2015-11-25','BNNSDA81A41Z330S',0),
+	(64,'Rimozione candidatura dall\'emporio','2015-11-26','CDNOLG70C09Z140E',0),
+	(65,'Rimozione candidatura dall\'emporio','2015-11-26','BLLFZO63H51Z330D',0),
+	(66,'Rimozione candidatura dall\'emporio','2015-11-26','BNCZZA79A64Z330O',0),
+	(67,'Rimozione candidatura dall\'emporio','2015-11-26','BVODNS82C27M172M',0),
+	(68,'Rimozione candidatura dall\'emporio','2015-11-26','BNNSDA81A41Z330S',0),
+	(69,'Candidato all\'emporio','2015-11-26','CDNOLG70C09Z140E',0),
+	(70,'Candidato all\'emporio','2015-11-26','BNCZZA79A64Z330O',0),
+	(71,'Rimozione candidatura dall\'emporio','2015-11-26','CDNOLG70C09Z140E',0),
+	(72,'Rimozione candidatura dall\'emporio','2015-11-26','BNCZZA79A64Z330O',0),
+	(73,'Candidato all\'emporio','2015-11-26','CDNOLG70C09Z140E',0),
+	(74,'Candidato all\'emporio','2015-11-26','BNCZZA79A64Z330O',0),
+	(75,'Rimozione candidatura dall\'emporio','2015-11-26','CDNOLG70C09Z140E',0),
+	(76,'Rimozione candidatura dall\'emporio','2015-11-26','BNCZZA79A64Z330O',0),
+	(77,'Candidato all\'emporio','2015-11-26','CDNOLG70C09Z140E',0),
+	(78,'Candidato all\'emporio','2015-11-26','BNCZZA79A64Z330O',0),
+	(79,'Rimozione candidatura dall\'emporio','2015-11-26','CDNOLG70C09Z140E',0),
+	(80,'Rimozione candidatura dall\'emporio','2015-11-26','BNCZZA79A64Z330O',0),
+	(81,'Candidato all\'emporio','2015-11-26','CDNOLG70C09Z140E',0),
+	(82,'Candidato all\'emporio','2015-11-26','BNCZZA79A64Z330O',0),
+	(83,'Rimozione candidatura dall\'emporio','2015-11-26','CDNOLG70C09Z140E',0),
+	(84,'Rimozione candidatura dall\'emporio','2015-11-26','BNCZZA79A64Z330O',0),
+	(85,'Candidato all\'emporio','2015-11-26','CDNOLG70C09Z140E',0),
+	(86,'Candidato all\'emporio','2015-11-26','BNCZZA79A64Z330O',0),
+	(87,'Candidato all\'emporio','2015-11-26','BVODNS82C27M172M',0),
+	(88,'Candidato all\'emporio','2015-11-26','BLLFZO63H51Z330D',0),
+	(89,'Candidato all\'emporio','2015-11-26','BNNSDA81A41Z330S',0),
+	(90,'Rimozione candidatura dall\'emporio','2015-11-26','CDNOLG70C09Z140E',0),
+	(91,'Rimozione candidatura dall\'emporio','2015-11-26','BLLFZO63H51Z330D',0),
+	(92,'Rimozione candidatura dall\'emporio','2015-11-26','BNCZZA79A64Z330O',0),
+	(93,'Rimozione candidatura dall\'emporio','2015-11-26','BVODNS82C27M172M',0),
+	(94,'Rimozione candidatura dall\'emporio','2015-11-26','BNNSDA81A41Z330S',0),
+	(95,'Candidato all\'emporio','2015-11-26','CDNOLG70C09Z140E',0),
+	(96,'Candidato all\'emporio','2015-11-26','BNCZZA79A64Z330O',0),
+	(97,'Candidato all\'emporio','2015-11-26','BVODNS82C27M172M',0),
+	(98,'Candidato all\'emporio','2015-11-26','BLLFZO63H51Z330D',0),
+	(99,'Candidato all\'emporio','2015-11-26','BNNSDA81A41Z330S',0),
+	(100,'Rimozione candidatura dall\'emporio','2015-11-26','BLLFZO63H51Z330D',0),
+	(101,'Rimozione candidatura dall\'emporio','2015-11-26','BVODNS82C27M172M',0),
+	(102,'Riattivata assistenza in data odierna','2015-11-26','BLKMJD12B01H783M',0),
+	(103,'Trasferimento completato in data odierna','2015-11-26','CHMZLD39S66Z154U',0),
+	(104,'Trasferimento completato in data odierna','2015-11-26','BNNSDA81A41Z330S',0),
+	(105,'Trasferimento completato in data odierna','2015-11-26','BNNSDA81A41Z330S',0),
+	(107,'Trasferimento completato in data odierna','2015-11-26','CHMZLD39S66Z154U',0);
 
 /*!40000 ALTER TABLE `NOTE_ASSISTITI` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -933,7 +1042,7 @@ CREATE TABLE `STATI_CIVILI` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `descrizione` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `STATI_CIVILI` WRITE;
 /*!40000 ALTER TABLE `STATI_CIVILI` DISABLE KEYS */;
@@ -959,7 +1068,7 @@ CREATE TABLE `UNI_MISURA` (
   `codice` varchar(10) DEFAULT NULL,
   `descrizione` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `UNI_MISURA` WRITE;
 /*!40000 ALTER TABLE `UNI_MISURA` DISABLE KEYS */;
@@ -1010,17 +1119,6 @@ VALUES
 UNLOCK TABLES;
 
 
-
-
-# Replace placeholder table for check_cf with correct view syntax
-# ------------------------------------------------------------
-
-DROP VIEW IF EXISTS `check_cf`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `check_cf`
-AS SELECT
-   `assistiti`.`cod_fiscale` AS `cod_fiscale`,'MASTER' AS `ORIGIN`
-FROM `assistiti` union select `nucleo_familiare`.`codice_fiscale` AS `codice_fiscale`,`nucleo_familiare`.`cf_assistito_nf` AS `ORIGIN` from `nucleo_familiare`;
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

@@ -68,13 +68,13 @@
 				<ul>
 				<li>Assistiti
 					<ul>
-						<li <s:if test="(groupId !=4)" >class="ui-state-disabled"</s:if>
+						<li <s:if test="(groupId == 2 || groupId == 3)" >class="ui-state-disabled"</s:if>
 							onclick="window.location='anagraficaCompletaReport.action';">Elenco Regionale</li>
 						<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
 							onclick="window.location='anagraficaXProvinciaEnteUserReport.action';">Elenco per Provincia</li>
 						<li onclick="window.location='anagraficaEnteUserReport.action';">Elenco per Ente</li>
 						<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
-							onclick="window.location='graduatoriaProvinciale.action';">Graduatoria Provinciale</li>
+							onclick="window.location='graduatoriaProvincialeReport.action';">Graduatoria Provinciale</li>
 					</ul>
 				</li>
 				<li>Eccedenze

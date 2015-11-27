@@ -86,8 +86,8 @@ public class UsersDao {
 			pStmt.setString(3, user.getUserEmail());
 			pStmt.setString(4, user.getUserPhone());
 			pStmt.setInt(5, user.getEnte());
-			pStmt.setString(7, user.getUsername());
 			pStmt.setInt(6, user.getGroupId());
+			pStmt.setString(7, user.getUsername());
 			pStmt.executeUpdate();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());

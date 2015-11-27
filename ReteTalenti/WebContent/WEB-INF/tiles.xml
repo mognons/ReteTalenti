@@ -98,20 +98,11 @@
 		<put-attribute name="body" value="/usersTable.jsp" />
 	</definition>
 	
-	<definition name="/coursestable.tiles" extends="baseLayout">
-		<put-attribute name="title" value="Courses" />
-		<put-attribute name="body" value="/coursesTable.jsp" />
-	</definition>
-	
-	<definition name="/classregister.tiles" extends="baseLayout">
-		<put-attribute name="title" value="Class Register" />
-		<put-attribute name="body" value="/classRegister.jsp" />
-	</definition>
-	
 	<definition name="/profile.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Update User's Profile" />
 		<put-attribute name="body" value="/userProfile.jsp" />
 	</definition>
+
 	<definition name="/nowhere.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Error" />
 		<put-attribute name="body" value="/error.jsp" />
@@ -122,11 +113,6 @@
 		<put-attribute name="body" value="/fileManager.jsp" />
 	</definition>
 	
-	<definition name="/calendar.tiles" extends="baseLayout">
-		<put-attribute name="title" value="Course Calendar" />
-		<put-attribute name="body" value="/calendar.jsp" />
-	</definition>
-        
 	<definition name="/reporterror.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Report" />
 		<put-attribute name="body" value="/error.jsp" />
@@ -135,4 +121,5 @@
 	<definition name="/login.tiles" extends="loginLayout">
 		<put-attribute name="body" value="/login.jsp" />
 	</definition>
+
 </tiles-definitions>

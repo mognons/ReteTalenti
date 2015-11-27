@@ -6,23 +6,32 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import com.model.User;
 import com.dao.UsersDao;
+import com.jdbc.DataAccessObject;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
  
 public class LoginAction extends ActionSupport implements SessionAware, ModelDriven<User>{
  
     private static final long serialVersionUID = -3369875299120377549L;
-    private String errorMsg;
+    private String errorMsg, errorMessage;
     private UsersDao dao = new UsersDao();
     private String cognome;
     private int openTab = 0;
+    private Boolean loginOk;
  
     @Override
     public String execute() throws Exception {
     	if (user.getUsername() == null)
     		return INPUT;
     	
-        if (dao.verifyLogin(user.getUsername(), user.getPassword())) {
+    	try {
+    		loginOk = dao.verifyLogin(user.getUsername(), user.getPassword());
+    	} catch (Exception e) {
+    		errorMessage = "Database unreachable or unavailable. Contact SYSADMIN";
+    		DataAccessObject.closeConnection();
+    		return ERROR;
+    	}
+        if (loginOk) {
             user = dao.getUserData(user.getUsername());
             sessionAttributes.put("USER", user);
             errorMsg="";
@@ -85,6 +94,12 @@ public class LoginAction extends ActionSupport implements SessionAware, ModelDri
 	}
 	public void setOpenTab(int openTab) {
 		this.openTab = openTab;
+	}
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
 	}
      
 	

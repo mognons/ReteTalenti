@@ -34,19 +34,19 @@ $(document).ready(function() {
                             data: record,
                             success: function (data) {
                                 $dfd.resolve(data);
+                                console.log(data);
                                 $("#dialog").dialog({
-//                                	  dialogClass: "alert",
                                 	  modal: true,
                                 	  buttons: [
                                 	    {
-                                	      text: "Dismiss",
+                                	      text: "Chiudi",
                                 	      click: function() {
                                 	        $( this ).dialog( "close" );
                                 	      }
                                 	    }
                                 	  ],
                                 	  open: function(){
-                                		  $("#dialog").html("Resetting password for user <b>"+ name + "</b><br/>was successfull!")
+                                		  $("#dialog").html(data.message)
                                 	  }
                                 	});
                             },

@@ -69,6 +69,7 @@
             <interceptor-ref name="defaultStack"></interceptor-ref>
             <result name="success" type="tiles">/welcome.tiles</result>
             <result name="input" type="tiles">/login.tiles</result>
+            <result name="error">/error.jsp</result>
         </action>
 
         <action name="Logout" class="com.action.LogoutAction">

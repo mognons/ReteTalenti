@@ -153,7 +153,7 @@
             },
             udm: {
                 title: 'UDM',
-                inputTitle: 'Unità di misura' + ' <span style="color:red">*</span>',
+                inputTitle: 'Unità di misura',
                 options: 'Choose_UDM',
                 width: '15%',
                 list: true,
@@ -163,7 +163,7 @@
             qta: {
                 title: 'Quantità',
                 inputTitle: 'Quantità' + ' <span style="color:red">*</span>',
-                inputClass: 'validate[required]',
+                inputClass: 'validate[required,custom[integer], min[1]]',
                 width: '10%',
                 list: true,
                 edit: true,
@@ -171,8 +171,6 @@
             },
             qta_residua: {
                 title: 'Quantità Disp.',
-                inputTitle: 'Quantità Disponibile' + ' <span style="color:red">*</span>',
-                inputClass: 'validate[required]',
                 width: '10%',
                 list: true,
                 edit: false,
@@ -183,7 +181,7 @@
                 inputTitle: 'Scadenza' + ' <span style="color:red">*</span>',
                 type: 'date',
 				displayFormat: 'dd/mm/yy',
-                inputClass: 'validate[required]',
+                inputClass: 'validate[required],future[now]',
                 width: '10%',
                 edit: true,
                 create: true
@@ -198,12 +196,7 @@
         // Initialize validation logic when a form is created
         formCreated: function (event, data) {
             data.form.find('input[name=prodotto]').css('width', '300px');
-            // data.form.parent().css('width', '400px');
-            // data.form.parent().css('height','200px');
-            //$(".jtable-input-field-container").slice(1,2).wrapAll("");
-            // Slice Parameters are Start Stop
-            //$(".jtable-input-field-container").slice(2,5).wrapAll("");
-            data.form.validationEngine();
+            data.form.validationEngine('attach',{promptPosition : "bottomLeft", scroll: false});
         },
         // Validate form when it is being submitted
         formSubmitting: function (event, data) {

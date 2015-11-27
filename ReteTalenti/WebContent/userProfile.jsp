@@ -22,23 +22,45 @@
 				<h3 style="color: red">
 					<s:property value="errorMsg"></s:property>
 				</h3>
-				<s:form action="updateUser">
-					<s:textfield name="userFirstname" label="Nome" required="true"
-						size="45"></s:textfield>
-					<s:textfield name="userLastname" label="Cognome" required="true"
-						size="45"></s:textfield>
-					<s:textfield name="userEmail" label="Indirizzo Email"
-						required="true" size="30"></s:textfield>
-					<s:textfield name="userPhone" label="Recapito telefonico"
-						required="true" size="30"></s:textfield>
-					<s:textfield name="oldPassword" label="Password precedente"
-						type="password" size="30"></s:textfield>
-					<s:textfield name="newPassword" label="Nuova password"
-						type="password" size="30"></s:textfield>
-					<s:textfield name="newPassword2" label="Conferma nuova password"
-						type="password" size="30"></s:textfield>
+				<form action="updateUser">
+				<table>		
+					<tr>
+					<td>
+						<label for="emailUtente">Indirizzo email</label>
+					</td><td>
+						<input type="text" size="40" id="emailUtente" name="emailUtente" value="<s:property value="userEmail"></s:property>"/>
+					</td>
+					</tr>
+					<tr>
+					<td>
+						<label for="telefonoUtente">Numero di telefono</label>
+					</td><td>
+						<input type="text" size="20" id="telefonoUtente" name="telefonoUtente" value="<s:property value="userPhone"></s:property>"/>
+					</td>
+					</tr>
+					<tr>
+					<td>
+						<label for="oldPassword">Password precedente</label>
+					</td><td>
+						<input type="password" size="32" id="oldPassword" name="oldPassword" value=""/>
+					</td>
+					</tr>
+					<tr>
+					<td>
+						<label for="newPassword">Nuova password</label>
+					</td><td>
+					<input type="password" size="32" id="newPassword" name="newPassword" value=""/>
+					</td>
+					</tr>
+					<tr>
+					<td>
+						<label for="newPassword2">Conferma nuova password</label>
+					</td><td>
+						<input type="password" size="32" id="newPassword2" name="newPassword2" value=""/>
+					<input type="hidden" id="nomeutente" name="nomeutente" value="<s:property value="username"></s:property>"/>
 					<s:submit value="Aggiorna Profilo"></s:submit>
-				</s:form>
+				</table>	
+				</form>
 			</div>
 		</div>
 	</div>

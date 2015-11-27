@@ -90,12 +90,12 @@ public class Uni_misuraDao {
 
 
 	public Uni_misura getUni_misuraById(int id) {
-		String countQuery = "SELECT * FROM UNI_MISURA WHERE ID=? ORDER BY CODICE";
+		String countQuery = "SELECT * FROM UNI_MISURA WHERE ID=?";
 		Uni_misura uniMisura = new Uni_misura();
 		try {
 			pStmt = dbConnection.prepareStatement(countQuery);
 			pStmt.setInt(1, id);
-			ResultSet rs = stmt.executeQuery(countQuery);
+			ResultSet rs = pStmt.executeQuery();
 			while (rs.next()) {
 				uniMisura.setId(rs.getInt("ID"));
 				uniMisura.setCodice(rs.getString("CODICE"));

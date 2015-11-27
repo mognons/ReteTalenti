@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>jTable in Struts 2</title>
+<title>System Error</title>
 <!-- jTable metro styles. -->
 <link href="css/metro/blue/jtable.css" rel="stylesheet" type="text/css" />
 <link href="css/metro/site.css" rel="stylesheet" type="text/css" />
@@ -15,7 +15,7 @@
 	<div class="site-container">
 		<div class="main-header" style="position: relative">
 			<h2>
-				Errore,  <%= request.getParameter("errorMessage") %> 
+				FATAL ERROR: <s:property value="errorMessage"/> 
 			</h2>
 		</div>
 	</div>

@@ -29,4 +29,8 @@ public class DataAccessObject {
 			return connection;
 		}
 	}
+	public static void closeConnection() {
+		if (connection != null)
+			connection = null;
+	}
 }

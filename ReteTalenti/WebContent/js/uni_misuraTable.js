@@ -24,13 +24,29 @@ $(document).ready(function () {
             codice: {
                 title: 'Codice',
                 width: '20%',
+                inputClass: 'validate[required]',
                 edit: true
             },
             descrizione: {
                 title: 'Descrizione',
+                inputClass: 'validate[required]',
                 width: '80%',
                 edit: true
             }
+        },
+        //Initialize validation logic when a form is created
+        formCreated: function (event, data) {
+            data.form.find('input[name=descrizione]').css('width', '200px');
+            data.form.validationEngine('attach',{promptPosition : "bottomLeft", scroll: false});
+        },
+        //Validate form when it is being submitted
+        formSubmitting: function (event, data) {
+            return data.form.validationEngine('validate');
+        },
+        //Dispose validation logic when form is closed
+        formClosed: function (event, data) {
+            data.form.validationEngine('hide');
+            data.form.validationEngine('detach');
         }
     });
     $('#Uni_misuraTableContainer').jtable('load');

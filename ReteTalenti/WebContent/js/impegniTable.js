@@ -223,7 +223,7 @@
             //$(".jtable-input-field-container").slice(1,2).wrapAll("");
             // Slice Parameters are Start Stop
             //$(".jtable-input-field-container").slice(2,5).wrapAll("");
-            data.form.validationEngine();
+            data.form.validationEngine('attach',{promptPosition : "bottomLeft", scroll: false});
         },
         // Validate form when it is being submitted
         formSubmitting: function (event, data) {

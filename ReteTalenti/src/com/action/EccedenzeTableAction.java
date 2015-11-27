@@ -1,12 +1,16 @@
 package com.action;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import com.dao.EccedenzeDao;
+import com.dao.Uni_misuraDao;
 import com.interceptor.UserAware;
 import com.model.Eccedenza;
+import com.model.Message;
+import com.model.Uni_misura;
 import com.model.User;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -15,6 +19,7 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
 
     private static final long serialVersionUID = 1L;
     private EccedenzeDao dao = new EccedenzeDao();
+    private Uni_misuraDao u_dao = new Uni_misuraDao();
     private List<Eccedenza> records;
     private String result;
 
@@ -63,6 +68,14 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
     }
 
     public String create() throws IOException {
+        Uni_misura udm1 = u_dao.getUni_misuraById(udm);
+        String message_text = 	
+        		user.getDescrizioneEnte() + 
+        		" ha segnalato un'eccedenza di <b>"
+				+ prodotto + "</b> per un totale di "
+				+ qta+ " " + udm1.getDescrizione() + " con scadenza "
+				+ scadenza;
+
         record = new Eccedenza();
         record.setEnte_cedente(user.getEnte());
         record.setProdotto(prodotto);
@@ -74,6 +87,18 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
             try {
                 System.out.println("Creating eccedenza for " + prodotto);
                 record.setId(dao.createEccedenza(record));
+            	MessageAction mess = new MessageAction();
+            	Message messaggio = new Message();
+            	messaggio.setEnte(0);
+            	messaggio.setTag("ECCEDENZE");
+            	messaggio.setAction("FOLLOW_impegniLink.action");
+            	messaggio.setMessage_text(message_text);
+            	messaggio.setKey1(null);
+            	messaggio.setKey2(0);
+            	messaggio.setKey3(null);
+            	messaggio.setStart_date(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+            	messaggio.setEnd_date(scadenza);
+            	mess.createMessage(messaggio);
                 result = "OK";
             } catch (Exception e) {
                 message = e.getMessage();

@@ -6,37 +6,33 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import com.dao.UsersDao;
 import com.model.User;
-import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
  
-public class UpdateProfileAction extends ActionSupport implements SessionAware, ModelDriven<User>{
+public class UpdateProfileAction extends ActionSupport implements SessionAware, ModelDriven<User> {
  
     private static final long serialVersionUID = -3394545299120377549L;
     private String errorMsg;
 	private UsersDao dao = new UsersDao();
-    private User user = new User();
+    private User record = new User();
+    private Map<String, Object> sessionAttributes = null;
+ 
+    private String nomeutente, emailUtente, telefonoUtente;
     private String newPassword;
     private String newPassword2;
     private String oldPassword;
 	
 	@Override
 	public void validate() {
-		System.out.print("Validating");
-		if (user.getUserFirstname().length() == 0) {
-			addFieldError( "userFirstname", "First name is required." );
-		}
-		if (user.getUserLastname().length() == 0) {
-			addFieldError( "userLastname", "Last name is required." );
-		}
-		if (user.getUserEmail().length() == 0) {
-			addFieldError( "userEmail", "Email address is required." );
+		System.out.println("Validating");
+		if (emailUtente == null || emailUtente.length() == 0) {
+			addFieldError( "emailUtente", "Indirizzo Email obbligatorio" );
 		}
 		
-		if (oldPassword.length() != 0) {
+		if (oldPassword != null && oldPassword.length() != 0) {
 			// Verify username + password against DB
 			try {
-				if(!dao.verifyLogin(user.getUsername(), oldPassword)) 
+				if(!dao.verifyLogin(nomeutente, oldPassword)) 
 				{
 					addFieldError( "oldPassword", "Wrong password" );
 				}
@@ -47,7 +43,7 @@ public class UpdateProfileAction extends ActionSupport implements SessionAware, 
 		}
 
 		if (newPassword.length() != 0) {
-			if (oldPassword.length() == 0) {
+			if (oldPassword != null && oldPassword.length() == 0) {
 				addFieldError( "oldPassword", "Old password is required" );
 			}
 			
@@ -58,34 +54,35 @@ public class UpdateProfileAction extends ActionSupport implements SessionAware, 
 		
 	}
 	
-    public String execute(){
+    public String execute() throws Exception {
 		System.out.println("Inside UpdateProfile");
-		System.out.println(user.getUsername());
-		System.out.println(newPassword);
-		user.setPassword(newPassword);
+		System.out.println(nomeutente);
+		record = new User();
+		record = dao.getUserData(nomeutente);
+		record.setUserEmail(emailUtente);
+		record.setUserPhone(telefonoUtente);
+		record.setPassword(newPassword);
     	try {    			
     		if (newPassword.length() == 0)
-    			dao.updateUser(user);
+    			dao.updateUser(record);
     		else
-    			dao.updateUserFull(user);
+    			dao.updateUserFull(record);
+    		User user = dao.getUserData(nomeutente);
+            sessionAttributes.put("USER", user);
             errorMsg="";
             return SUCCESS;
 			
 		} catch (Exception e) {
 			errorMsg = e.getMessage();
 			System.err.println(e.getMessage());
-			return Action.ERROR;
+			return ERROR;
 		}
     }
          
  
     @Override
     public void setSession(Map<String, Object> sessionAttributes) {
-    }
-     
-    @Override
-    public User getModel() {
-        return user;
+        this.sessionAttributes = sessionAttributes;
     }
 
 	public String getErrorMsg() {
@@ -123,6 +120,36 @@ public class UpdateProfileAction extends ActionSupport implements SessionAware, 
 	public void setOldPassword(String oldPassword) {
 		this.oldPassword = oldPassword;
 	}
-	
+
+
+	public String getNomeutente() {
+		return nomeutente;
+	}
+
+	public void setNomeutente(String nomeutente) {
+		this.nomeutente = nomeutente;
+	}
+
+	public String getEmailUtente() {
+		return emailUtente;
+	}
+
+	public void setEmailUtente(String emailUtente) {
+		this.emailUtente = emailUtente;
+	}
+
+	public String getTelefonoUtente() {
+		return telefonoUtente;
+	}
+
+	public void setTelefonoUtente(String telefonoUtente) {
+		this.telefonoUtente = telefonoUtente;
+	}
+
+	@Override
+	public User getModel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
      
 }

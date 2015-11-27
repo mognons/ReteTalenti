@@ -684,7 +684,7 @@
 
     $('#ResetButton').click(function (e) {
         e.preventDefault();
-        $('#codice_fiscale').val(null);
+        $('#cf_search').val(null);
         $('#cognome_search').val(null);
         $('#AssistitiTableContainer').jtable('load', {
             cf_search: $('#cf_search').val(),

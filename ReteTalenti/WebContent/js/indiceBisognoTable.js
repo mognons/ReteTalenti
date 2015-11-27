@@ -140,17 +140,9 @@
             }
         },
         // Initialize validation logic when a form is created
-//        formCreated: function (event, data) {
-//            data.form.find('input[name=nome]').css('width', '200px');
-//            data.form.find('input[name=cognome]').css('width', '200px');
-//            data.form.find('input[name=citta_residenza]').css('width', '200px');
-//            data.form.find('input[name=num_documento]').css('width', '200px');
-//            data.form.find('input[name=email]').css('width', '200px');
-//            data.form.find('select[name=nazionalita]').css('width', '150px');
-//            data.form.children(':lt(8)').wrapAll('<div class="col1"/>');
-//            data.form.children(':gt(0)').wrapAll('<div class="col2"/>');
-//            data.form.validationEngine('attach', {promptPosition: "bottomLeft", scroll: false});
-//        },
+        formCreated: function (event, data) {
+            data.form.validationEngine('attach', {promptPosition: "bottomLeft", scroll: false});
+        },
         // Validate form when it is being submitted
         formSubmitting: function (event, data) {
             return data.form.validationEngine('validate');
