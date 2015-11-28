@@ -7,6 +7,8 @@ package com.dao;
 
 import com.jdbc.DataAccessObject;
 import com.model.Ente;
+import com.model.User;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -80,7 +82,7 @@ public class EntiDao {
             System.err.println(e.getMessage());
         }
     }
-
+    
     public int getEntiRecordCount() {
         String countQuery = "SELECT COUNT(ID) AS TOTALREC FROM ENTI";
         int result = 0;
@@ -94,6 +96,39 @@ public class EntiDao {
             System.err.println(e.getMessage());
         }
         return result;
+    }
+
+    public List<Ente> getOtherEnti(User utente, Boolean allEnti) {
+        List<Ente> enti = new ArrayList<Ente>();
+        String whereCondition1;
+        if (allEnti)
+        	whereCondition1 = "AND 1=1";
+        else
+        	whereCondition1 = "AND PROVINCIA_ENTE=" + utente.getProvinciaEnte();
+        
+        String query = 	"SELECT * FROM ENTI "
+        				+ "WHERE ID<>? "
+        				+ whereCondition1;
+        try {
+            PreparedStatement pStmt = dbConnection.prepareStatement(query);
+            pStmt.setInt(1, utente.getEnte());
+            ResultSet rs = pStmt.executeQuery();
+            while (rs.next()) {
+                Ente ente = new Ente();
+
+                ente.setId(rs.getInt("ID"));
+                ente.setDescrizione(rs.getString("DESCRIZIONE"));
+                ente.setResponsabile(rs.getString("RESPONSABILE"));
+                ente.setResp_email(rs.getString("RESP_EMAIL"));
+                ente.setResp_phone(rs.getString("RESP_PHONE"));
+                ente.setProvincia_ente(rs.getInt("PROVINCIA_ENTE"));
+                ente.setEnte_emporio(rs.getBoolean("ENTE_EMPORIO"));
+                enti.add(ente);
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return enti;
     }
 
     public List<Ente> getAllEnti(int jtStartIndex, int jtPageSize,

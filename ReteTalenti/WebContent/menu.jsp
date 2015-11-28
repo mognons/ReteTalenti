@@ -89,14 +89,31 @@
 			</li>
 			<s:if test="(#isAdmin || #isAdminEnte)">
 				<li>-</li>
-				<li>Sistema
+				<li>
+					<img src="icons/Settings.png" align="bottom" height="18" width="18">
+					<span style="vertical-align: top">Sistema</span>
 					<ul>
-						<li onclick="window.location='usersLink';">Gestione Utenti</li>
+						<li onclick="window.location='usersLink';">
+							<img src="icons/User%20group.png" align="bottom" height="16" width="16">
+							<span style="vertical-align: top">Utenti</span>
+						</li>
 						<s:if test="(#isAdmin)">
-							<li onclick="window.location='entiLink';">Tabella Enti</li>
-							<li onclick="window.location='nazioniLink';">Tabella Nazioni</li>
-							<li onclick="window.location='provinceLink';">Tabella Province</li>
-							<li onclick="window.location='uni_misuraLink';">Tabella Unità Misura</li>
+							<li onclick="window.location='entiLink';">
+								<img src="icons/Database.png" align="bottom" height="16" width="16">
+								<span style="vertical-align: top">Enti</span>
+							</li>
+							<li onclick="window.location='nazioniLink';">
+								<img src="icons/Database.png" align="bottom" height="16" width="16">
+								<span style="vertical-align: top">Nazioni</span>
+							</li>
+							<li onclick="window.location='provinceLink';">
+								<img src="icons/Database.png" align="bottom" height="16" width="16">
+								<span style="vertical-align: top">Province</span>
+							</li>
+							<li onclick="window.location='uni_misuraLink';">
+								<img src="icons/Database.png" align="bottom" height="16" width="16">
+								<span style="vertical-align: top">Unità di Misura</span>
+							</li>
 							<li onclick="window.location='messagesLink';">
 								<img src="icons/Message.png" align="bottom" height="16" width="16">
 								<span style="vertical-align: top">Messaggi</span></li>
@@ -106,7 +123,7 @@
 			</s:if>
 			<li>-</li>
 			<li  onclick="window.location='Logout';">
-				<img src="images/Power-Shutdown.png" align="bottom" height="16" width="16">
+				<img src="icons/Power-Shutdown.png" align="bottom" height="20" width="20">
 				<span style="vertical-align: top">Logout</span>
 			</li>
 		</ul>

@@ -514,7 +514,7 @@ CREATE TABLE `MESSAGES` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ente` int(11) DEFAULT NULL,
   `tag` varchar(16) DEFAULT NULL,
-  `message_text` varchar(255) DEFAULT NULL,
+  `message_text` varchar(1024) DEFAULT NULL,
   `action` varchar(128) DEFAULT NULL,
   `key1` varchar(32) DEFAULT NULL,
   `key2` int(11) DEFAULT NULL,

@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.interceptor.UserAware;
-import com.model.Message;
 import com.model.Groups;
 import com.model.User;
 import com.dao.MessagesDao;
