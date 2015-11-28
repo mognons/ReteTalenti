@@ -53,7 +53,6 @@ public class ReportDao {
 
         ResultSet rs = null;
         String query = queryBase;
-        System.out.println(query);
         try {
             pStmt = dbConnection.prepareStatement(query);
             rs = pStmt.executeQuery();
@@ -144,7 +143,6 @@ public class ReportDao {
                 + "from eccedenze E "
                 + "left join enti en on E.ente_cedente = en.id "
                 + "left join uni_misura U on E.udm = U.id";
-        System.out.println(query);
         try {
             pStmt = dbConnection.prepareStatement(query);
             rs = pStmt.executeQuery();

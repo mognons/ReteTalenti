@@ -64,17 +64,14 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 		record.setGroupId(groupId);
 		if (dao.verifyUsername(username)) {
 			try {
-				System.out.println("Creating "+username);
 				dao.createUser(record);
 				result = "OK";
 			} catch (Exception e) {
 				message = e.getMessage();
-				System.err.println("Porcaccia EVA");
 				System.err.println(e.getMessage());
 				result = "ERROR";
 			}
 		} else {
-			System.out.println("Username already exists");
 			message = "Impossibile creare un nuovo utente: username <b>" + username + "</b> già inserito";
 			result = "ERROR";
 		}
@@ -91,7 +88,6 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 		record.setUserPhone(userPhone);
 		record.setEnte(ente);
 		record.setGroupId(groupId);
-		System.out.println("Updating "+username);
 
 		try {
 			// Update existing record
@@ -120,7 +116,6 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 	    	sm.send("Password reset", msgBody, mailRecipient);
 			dao.updateUserPassword(username, newPassword);
 			message = "Password resettata con successo al valore: " + newPassword;
-			System.out.println(message);
 			result = "OK";
 			return Action.SUCCESS;
     	} catch (Exception e) {
@@ -132,7 +127,6 @@ public class UsersTableAction extends ActionSupport implements UserAware {
 	}
 
 	public String delete() throws IOException {
-		System.out.println("Deleting user " + username);
 		try {
 			// Update existing record
 			dao.deleteUser(username);

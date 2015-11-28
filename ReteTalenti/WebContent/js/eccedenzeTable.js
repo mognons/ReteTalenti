@@ -181,7 +181,7 @@
                 inputTitle: 'Scadenza' + ' <span style="color:red">*</span>',
                 type: 'date',
 				displayFormat: 'dd/mm/yy',
-                inputClass: 'validate[required],future[now]',
+                inputClass: 'validate[required],future[now] datepicker',
                 width: '10%',
                 edit: true,
                 create: true

@@ -37,7 +37,6 @@ public class NoteTableAction extends ActionSupport implements UserAware {
 	
 	public String list() {
 		try {
-			System.out.println("Calling list() method of class ModulesTableAction");
 			records = dao.getNoteAssistito(jtStartIndex, jtPageSize, cf_assistito_note);
 			result = "OK";
 			totalRecordCount = 1;

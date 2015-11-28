@@ -39,7 +39,6 @@ public class ImpegniTableAction extends ActionSupport implements UserAware, Mode
             records = dao.getAllImpegniByEccedenza(jtStartIndex, jtPageSize, jtSorting, id_eccedenza);
             result = "OK";
             totalRecordCount = dao.getCountImpegniByEccedenza(id_eccedenza);
-            System.out.println("Totale impegni: " + records.size());
         } catch (Exception e) {
             result = "ERROR";
             message = e.getMessage();
@@ -75,7 +74,6 @@ public class ImpegniTableAction extends ActionSupport implements UserAware, Mode
         record.setOra_ritiro(ora_ritiro);
         record.setOperatore(user.getUsername());
             try {
-                System.out.println("Creating impegno for eccedenza id: " + id_eccedenza);
                 record.setId(dao.createImpegno(record));
                 result = "OK";
             } catch (Exception e) {
@@ -129,7 +127,6 @@ public class ImpegniTableAction extends ActionSupport implements UserAware, Mode
     }
 
     public String delete() throws IOException {
-        System.out.println("Deleting eccedenza " + id);
         record = new Impegno();
         record.setId(id);
         try {

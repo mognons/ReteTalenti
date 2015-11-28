@@ -63,7 +63,6 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
         try {
             // Fetch Data from Enti Table
             records = dao.getAvailableEccedenze(jtStartIndex, jtPageSize, jtSorting, user);
-            System.out.println(user.getProvinciaEnte());
             result = "OK";
             totalRecordCount = dao.getCountAvailableEccedenze(user);
 
@@ -82,7 +81,6 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
         Ente enteCedente = e_dao.getEnte(user.getEnte());
 		ResourceBundle rb = ResourceBundle.getBundle("com.properties.basicConfiguration");
 		Boolean invioEmail = "true".equalsIgnoreCase(rb.getString("sendEccedenze"));
-		System.err.println("flag invio email: " + invioEmail);
         String message_text = 	
         		user.getDescrizioneEnte() + 
         		" ha segnalato un'eccedenza di <b>"
@@ -106,7 +104,6 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
     	MessageAction mess = new MessageAction();
     	sendMail sm = new sendMail();
         try {
-            System.out.println("Creating eccedenza for " + prodotto);
             record.setId(dao.createEccedenza(record));
             entiDestinatari = e_dao.getOtherEnti(user, false);
             Iterator<Ente> enti = entiDestinatari.iterator();
@@ -151,8 +148,6 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
         record.setQta(qta);
         record.setQta_residua(qta);
         record.setScadenza(scadenza);
-        System.out.println("Updating eccedenza for " + prodotto);
-
         try {
             // Update existing record
             dao.updateEccedenza(record);
@@ -166,7 +161,6 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
     }
 
     public String delete() throws IOException {
-        System.out.println("Deleting eccedenza " + id);
         record = new Eccedenza();
         record.setId(id);
         try {

@@ -24,7 +24,6 @@ public class UpdateProfileAction extends ActionSupport implements SessionAware, 
 	
 	@Override
 	public void validate() {
-		System.out.println("Validating");
 		if (emailUtente == null || emailUtente.length() == 0) {
 			addFieldError( "emailUtente", "Indirizzo Email obbligatorio" );
 		}
@@ -55,8 +54,6 @@ public class UpdateProfileAction extends ActionSupport implements SessionAware, 
 	}
 	
     public String execute() throws Exception {
-		System.out.println("Inside UpdateProfile");
-		System.out.println(nomeutente);
 		record = new User();
 		record = dao.getUserData(nomeutente);
 		record.setUserEmail(emailUtente);

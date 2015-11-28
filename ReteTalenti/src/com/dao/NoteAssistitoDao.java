@@ -58,10 +58,6 @@ public class NoteAssistitoDao {
 			    } else {
 			        throw new Exception("Focca la bindella");
 			    }
-
-			    System.out.println("Key returned from " +
-			                       "'SELECT LAST_INSERT_ID()': " +
-			                       autoIncKeyFromFunc);
 			    
 			} catch (SQLException e) {
 				System.err.println(e.getMessage());

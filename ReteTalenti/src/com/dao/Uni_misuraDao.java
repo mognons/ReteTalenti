@@ -33,7 +33,6 @@ public class Uni_misuraDao {
 
 			if (rs.next()) {
 				autoIncKeyFromFunc = rs.getInt(1);
-				System.out.println("ID inserito: " + autoIncKeyFromFunc);
 			}
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());

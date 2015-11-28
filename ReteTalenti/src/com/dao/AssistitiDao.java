@@ -304,7 +304,6 @@ public class AssistitiDao {
                 + "ORDER BY " + jtSorting + " "
                 + "LIMIT " + Integer.toString(jtPageSize) + " OFFSET "
                 + Integer.toString(jtStartIndex);
-        System.out.println(query);
         try {
             pStmt = dbConnection.prepareStatement(query);
             ResultSet rs = pStmt.executeQuery();
@@ -381,7 +380,6 @@ public class AssistitiDao {
                 + "ORDER BY " + jtSorting + " "
                 + "LIMIT " + Integer.toString(jtPageSize) + " OFFSET "
                 + Integer.toString(jtStartIndex);
-        System.out.println(query);
         try {
             pStmt = dbConnection.prepareStatement(query);
             ResultSet rs = pStmt.executeQuery();
@@ -448,7 +446,6 @@ public class AssistitiDao {
                 + "ORDER BY " + jtSorting + " "
                 + "LIMIT " + Integer.toString(jtPageSize) + " OFFSET "
                 + Integer.toString(jtStartIndex);
-        System.out.println(query);
         try {
             pStmt = dbConnection.prepareStatement(query);
             ResultSet rs = pStmt.executeQuery();
@@ -529,7 +526,6 @@ public class AssistitiDao {
                 + "ORDER BY " + jtSorting + " "
                 + "LIMIT " + Integer.toString(jtPageSize) + " OFFSET "
                 + Integer.toString(jtStartIndex);
-        System.out.println(query);
         try {
             pStmt = dbConnection.prepareStatement(query);
             ResultSet rs = pStmt.executeQuery();

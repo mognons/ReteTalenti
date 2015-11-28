@@ -4,14 +4,11 @@
  * and open the template in the editor.
  */
 package com.action;
-
 import com.dao.AssistitiDao;
 import com.action.NoteTableAction;
 import com.interceptor.UserAware;
 import com.model.Assistito;
-import com.model.Tuple;
 import com.model.User;
-import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -246,7 +243,7 @@ public class EmporioTableAction extends ActionSupport implements UserAware, Mode
     	try {
     		dateString = sdfr.format(indate);
     	} catch (Exception ex ) {
-    		System.out.println(ex);
+    		System.err.println(ex);
     	}
     	return dateString;
     }

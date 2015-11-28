@@ -108,7 +108,7 @@
                                 	inputTitle: 'Ritiro previsto' + ' <span style="color:red">*</span>',
                 					type: 'date',
                 					displayFormat: 'dd/mm/yy',
-                					inputClass: 'validate[required,future[now],past[data_scadenza]]',
+                					inputClass: 'validate[required,future[now],past[data_scadenza]] datepicker',
 									defaultValue: tomorrow(),
                                     list: true,
                                     edit: true

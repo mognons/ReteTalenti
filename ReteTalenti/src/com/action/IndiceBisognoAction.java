@@ -46,7 +46,6 @@ public class IndiceBisognoAction extends ActionSupport implements UserAware {
     public String getData() {
     	recordIDB = dao.getIndiceBisogno(cf_assistito_ib);
     	if (recordIDB.getCf_assistito_ib() != null) {
-    		System.out.println("Found " + recordIDB.getCf_assistito_ib());
     	} else {
 			recordIDB.setIsee_euro(0);
 			recordIDB.setCc_euro(0);
@@ -69,10 +68,6 @@ public class IndiceBisognoAction extends ActionSupport implements UserAware {
 
     
     public String update() throws IOException {
-        System.out.println("Updating " + cf_assistito_ib);
-        System.out.println("Totale Punti: " + totalepunti);
-        System.out.println("Cognome e Nome: " + cognome + " " + nome);
-        System.out.println("ID: "+ id);
         recordIDB = new IndiceBisogno();
         recordIDB.setId(id);
         recordIDB.setIsee_euro(isee_euro);

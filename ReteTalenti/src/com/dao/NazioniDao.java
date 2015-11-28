@@ -24,7 +24,6 @@ public class NazioniDao {
 
 		String query = "SELECT * FROM NAZIONI ORDER BY DENOMINAZIONE " + "LIMIT " + jtPageSize
 				+ " OFFSET " + jtStartIndex;
-		System.out.println(query);
 		
 		try {
 			Statement stmt = dbConnection.createStatement();

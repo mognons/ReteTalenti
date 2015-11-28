@@ -27,8 +27,6 @@ public class ShowCFDetailsAction extends ActionSupport implements UserAware, Mod
  
     public String execute(){
     	user = new User();
-    	System.out.println("---"+codice_fiscale +"---");
-    	System.out.println("---"+origin +"---");
     	if (origin.equals("MASTER")) {
         	assistito = a_dao.getAssistito(codice_fiscale);
     	} else {

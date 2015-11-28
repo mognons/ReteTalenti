@@ -144,7 +144,6 @@ public class UsersDao {
 	}
 
 	public boolean verifyLogin(String username, String password) throws Exception {
-		System.out.println("Inside verifyLogin");
 		int result = 0;
 		if (username.isEmpty() || password.isEmpty()) {
 			throw new Exception("No valid credential given");
@@ -258,7 +257,6 @@ public class UsersDao {
 
 	public User getUserData(String username) {
 		User user = new User();
-		System.out.println("Inside getUser with " + username);
 		String newQuery = "SELECT U.ID, U.USERNAME, U.USERFIRSTNAME, U.USERLASTNAME, " + 
 						  "U.USEREMAIL, U.USERPHONE, U.ENTE, E.DESCRIZIONE, E.ENTE_EMPORIO, P.COD_PROVINCIA, U.GROUPID " + 
 						  "FROM USERS U, ENTI E, PROVINCE P " +

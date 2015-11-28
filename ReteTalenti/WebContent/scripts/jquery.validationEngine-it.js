@@ -53,11 +53,11 @@
                 },
                 "past": {
                     "regex": "none",
-                    "alertText": "* Data antecedente al "
+                    "alertText": "* Data successiva al "
                 },
                 "future": {
                     "regex": "none",
-                    "alertText": "* Data successiva al "
+                    "alertText": "* Data precedente al "
                 },
                 "maxCheckbox": {
                     "regex": "none",

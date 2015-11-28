@@ -24,7 +24,6 @@ public class ReportAction extends ActionSupport implements UserAware {
 //		ResultSetToExcel resultSetToExcel = new ResultSetToExcel(dao.getStudentsRS(),formati,"Report");
         filename = "report_test.xls";
         try {
-            System.out.println("Inside getInputStream()");
             out = new ByteArrayOutputStream();
 //	        resultSetToExcel.generate(out);
             excelStream = new ByteArrayInputStream(out.toByteArray());
@@ -69,7 +68,6 @@ public class ReportAction extends ActionSupport implements UserAware {
         ResultSetToExcel resultSetToExcel = new ResultSetToExcel(dao.anagraficaCompleta(), formati, "Report");
         filename = "anagrafica_completa.xls";
         try {
-            System.out.println("Inside getInputStream() - anagraficaCompleta");
             out = new ByteArrayOutputStream();
             resultSetToExcel.generate(out);
             excelStream = new ByteArrayInputStream(out.toByteArray());
@@ -114,7 +112,6 @@ public class ReportAction extends ActionSupport implements UserAware {
         ResultSetToExcel resultSetToExcel = new ResultSetToExcel(dao.anagraficaXEnteUser(user), formati, "Report");
         filename = "anagrafica_xenteuser.xls";
         try {
-            System.out.println("Inside getInputStream() - anagraficaXEnteUser");
             out = new ByteArrayOutputStream();
             resultSetToExcel.generate(out);
             excelStream = new ByteArrayInputStream(out.toByteArray());
@@ -159,7 +156,6 @@ public class ReportAction extends ActionSupport implements UserAware {
         ResultSetToExcel resultSetToExcel = new ResultSetToExcel(dao.anagraficaXProvinciaEnteUser(user), formati, "Report");
         filename = "anagrafica_xprovinciaenteuser.xls";
         try {
-            System.out.println("Inside getInputStream() - anagraficaXProvinciaEnteUser");
             out = new ByteArrayOutputStream();
             resultSetToExcel.generate(out);
             excelStream = new ByteArrayInputStream(out.toByteArray());
@@ -234,7 +230,6 @@ public class ReportAction extends ActionSupport implements UserAware {
         ResultSetToExcel resultSetToExcel = new ResultSetToExcel(dao.ritiriCompleto(), formati, "Report");
         filename = "ritiri_completo.xls";
         try {
-            System.out.println("Inside getInputStream() - ritiri lista completa");
             out = new ByteArrayOutputStream();
             resultSetToExcel.generate(out);
             excelStream = new ByteArrayInputStream(out.toByteArray());
@@ -264,9 +259,8 @@ public class ReportAction extends ActionSupport implements UserAware {
         ResultSetToExcel resultSetToExcel = new ResultSetToExcel(dao.eccedenze(),formati,"Report");
         filename = "eccedenze.xls";
         try {
-            System.out.println("Inside getInputStream()- eccedenze");
             out = new ByteArrayOutputStream();
-	    resultSetToExcel.generate(out);
+            resultSetToExcel.generate(out);
             excelStream = new ByteArrayInputStream(out.toByteArray());
             out.close();
         } catch (Exception e) {

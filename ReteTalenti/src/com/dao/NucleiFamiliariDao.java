@@ -120,7 +120,6 @@ public class NucleiFamiliariDao {
 		try {
 			pStmt = dbConnection.prepareStatement(query);
 			pStmt.setString(1, cod_fiscale);
-			System.out.println(pStmt.toString());
 			ResultSet rs = pStmt.executeQuery();
 			while (rs.next()) {
 

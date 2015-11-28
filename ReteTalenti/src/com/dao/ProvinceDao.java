@@ -23,7 +23,6 @@ public class ProvinceDao {
 		List<Provincia> Province = new ArrayList<Provincia>();
 
 		String query = "SELECT * FROM PROVINCE ORDER BY DENOMINAZIONE";
-		System.out.println(query);
 		
 		try {
 			Statement stmt = dbConnection.createStatement();

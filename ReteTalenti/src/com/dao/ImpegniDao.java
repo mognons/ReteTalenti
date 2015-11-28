@@ -50,7 +50,6 @@ public class ImpegniDao {
 
 			if (rs.next()) {
 				autoIncKeyFromFunc = rs.getInt(1);
-				System.out.println("Impegno, ID inserito: " + autoIncKeyFromFunc);
 			}
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
@@ -181,18 +180,15 @@ public class ImpegniDao {
 
 	public List<Impegno> getAllImpegniByEccedenza(int jtStartIndex, int jtPageSize, String jtSorting, int eccedenza) {
 		List<Impegno> impegni = new ArrayList<Impegno>();
-		System.out.println("getAllImpegnyByEccedenza: " + eccedenza);
 		String query = 	"SELECT * FROM IMPEGNI WHERE ID_ECCEDENZA = ? "
 						+ "ORDER BY " + jtSorting
 						+ " LIMIT " + jtPageSize
 						+ " OFFSET " + jtStartIndex;
-		System.out.println(query);
 		try {
 			pStmt = dbConnection.prepareStatement(query);
 			pStmt.setInt(1, eccedenza);
 			ResultSet rs = pStmt.executeQuery();
 			while (rs.next()) {
-				System.out.println("Inside while of getAllImpegnyByEccedenza");
 				Impegno impegno = new Impegno();
 				impegno.setId(rs.getInt("ID"));
 				impegno.setEnte_richiedente(rs.getInt("ENTE_RICHIEDENTE"));

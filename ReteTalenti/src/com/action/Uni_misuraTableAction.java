@@ -51,7 +51,6 @@ public class Uni_misuraTableAction extends ActionSupport implements UserAware{
 		record.setDescrizione(descrizione);
 		// create new record
 			try {
-				System.out.println("Creating "+ codice);
 				record.setId(dao.createUni_misura(record));
 				result = "OK";
 			} catch (Exception e) {
@@ -70,8 +69,6 @@ public class Uni_misuraTableAction extends ActionSupport implements UserAware{
 		UniMisura.setId(id);
 		UniMisura.setCodice(codice);
 		UniMisura.setDescrizione(descrizione);
-		System.out.println("Updating "+id);
-
 		try {
 			// Update existing record
 			dao.updateUni_misura(UniMisura);
@@ -87,7 +84,6 @@ public class Uni_misuraTableAction extends ActionSupport implements UserAware{
 	
 
 	public String delete() throws IOException {
-		System.out.println("Deleting user " + id);
 		try {
 			// Update existing record
 			dao.deleteUni_misura(id);

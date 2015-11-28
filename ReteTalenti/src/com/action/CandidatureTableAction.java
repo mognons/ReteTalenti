@@ -79,8 +79,7 @@ public class CandidatureTableAction extends ActionSupport implements UserAware, 
     public String list() {
         try {
             // Fetch Data from Assistiti Table
-        	System.out.println("cf_search: " + cf_search + " cognome_search: " +cognome_search);
-            records = dao.getAllAssistiti(jtStartIndex, jtPageSize, jtSorting, user, cf_search, cognome_search);
+        	records = dao.getAllAssistiti(jtStartIndex, jtPageSize, jtSorting, user, cf_search, cognome_search);
             result = "OK";
             totalRecordCount = dao.getCountAssistiti(user, cf_search, cognome_search);
 
@@ -208,7 +207,6 @@ public class CandidatureTableAction extends ActionSupport implements UserAware, 
     public String delete() throws IOException {
         // Delete record
         
-        System.out.println("Deleting assistito con codice fiscale " + cod_fiscale);
         record = new Assistito();
         record.setCod_fiscale(cod_fiscale);
         try {

@@ -46,7 +46,6 @@ public class EccedenzeDao {
 
 			if (rs.next()) {
 				autoIncKeyFromFunc = rs.getInt(1);
-				System.out.println("Eccedenza, ID inserito: " + autoIncKeyFromFunc);
 			}
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());

@@ -55,7 +55,6 @@ public class EntiTableAction extends ActionSupport implements UserAware {
         record.setEnte_emporio(ente_emporio);
         if (dao.verifyEnte(descrizione)) {
             try {
-                System.out.println("Creating " + descrizione);
                 record.setId(dao.createEnte(record));
                 result = "OK";
             } catch (Exception e) {
@@ -64,7 +63,6 @@ public class EntiTableAction extends ActionSupport implements UserAware {
                 result = "ERROR";
             }
         } else {
-            System.out.println("Ente ESISTENTE!");
             message = "Impossibile creare un nuovo ente: descrizione ente <b>" + descrizione + "</b> già inserita";
             result = "ERROR";
         }
@@ -83,7 +81,6 @@ public class EntiTableAction extends ActionSupport implements UserAware {
         if (ente_emporio==null)
         	ente_emporio = false;
         record.setEnte_emporio(ente_emporio);
-        System.out.println("Emporio?  " + ente_emporio);
 
         try {
             // Update existing record
@@ -98,7 +95,6 @@ public class EntiTableAction extends ActionSupport implements UserAware {
     }
 
     public String delete() throws IOException {
-        System.out.println("Deleting descrizione " + id);
         try {
             // Update existing record
             dao.deleteEnte(id);

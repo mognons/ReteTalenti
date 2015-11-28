@@ -25,7 +25,6 @@ public class NazioniAction extends ActionSupport implements UserAware {
 	//
 
 	public String list() {
-		System.out.println(jtStartIndex);
 		try {
 			// Fetch Data from User Table
 			totalRecordCount = dao.getCountNazioni();

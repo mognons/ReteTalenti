@@ -23,7 +23,6 @@ public class WelcomeAction extends ActionSupport implements UserAware {
     @Override
     public String execute() {
     	currentDate = new Date();
-    	System.out.println(user.getEnte());
     	if (dao.getCountOfValidMessages(user)!=0) {
     		hasEvents = true;
     	}
