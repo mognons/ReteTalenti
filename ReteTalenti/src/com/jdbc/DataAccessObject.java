@@ -17,7 +17,7 @@ public class DataAccessObject {
 //			String portNumber = "1521";
 			String sid = rb.getString("dbName");
 			String dbUrl = 	"jdbc:mysql://" + serverName + "/" + sid +
-						 	"?useOldAliasMetadataBehavior=true";
+						 	"?useOldAliasMetadataBehavior=true&autoReconnect=true";
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
 				// set the url, username and password for the database
