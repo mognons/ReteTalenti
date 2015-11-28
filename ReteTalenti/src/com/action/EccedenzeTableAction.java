@@ -1,6 +1,7 @@
 package com.action;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -42,7 +43,7 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
     private User user = new User();
 
     public String listOwn() {
-    	jtSorting = "PRODOTTO ASC";
+    	jtSorting = "SCADENZA ASC";
         try {
             // Fetch Data from Enti Table
             records = dao.getOwnEccedenze(jtStartIndex, jtPageSize, jtSorting, user);
@@ -58,7 +59,7 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
     }
 
     public String listAvailable() {
-    	jtSorting = "PRODOTTO ASC";
+    	jtSorting = "SCADENZA ASC";
         try {
             // Fetch Data from Enti Table
             records = dao.getAvailableEccedenze(jtStartIndex, jtPageSize, jtSorting, user);
@@ -75,21 +76,25 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
     }
 
     public String create() throws IOException {
+    	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Uni_misura udm1 = u_dao.getUni_misuraById(udm);
         String mailRecipient;
         Ente enteCedente = e_dao.getEnte(user.getEnte());
 		ResourceBundle rb = ResourceBundle.getBundle("com.properties.basicConfiguration");
-		String invioEmail = rb.getString("sendEccedenze");
+		Boolean invioEmail = "true".equalsIgnoreCase(rb.getString("sendEccedenze"));
+		System.err.println("flag invio email: " + invioEmail);
         String message_text = 	
         		user.getDescrizioneEnte() + 
         		" ha segnalato un'eccedenza di <b>"
 				+ prodotto + "</b> per un totale di <b>"
 				+ qta+ " " + udm1.getDescrizione() + "</b> con scadenza "
-				+ scadenza + ".\n"
+				+ sdf.format(scadenza) + ".\n"
 				+ "Contattare il responsabile <i>" + enteCedente.getResponsabile()
 				+ "</i> al numero di telefono <b>" + enteCedente.getResp_phone()
-				+ "</b> oppure via email all'indirizzo <b>" + enteCedente.getResp_email() + "</b>";
-    	 
+				+ "</b> oppure via email all'indirizzo <b>" + enteCedente.getResp_email() + "</b>.";
+        
+    	String mail_body = message_text.replaceAll("\\<[^>]*>","");
+    	mail_body = mail_body + "\n\nMessaggio inviato automaticamente dal sistema ReteTalenti.";
         record = new Eccedenza();
         record.setEnte_cedente(user.getEnte());
         record.setProdotto(prodotto);
@@ -121,8 +126,8 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
             	mailRecipient = enteDestinatario.getResp_email();
             	/* Invio email */
             	try {
-            		if (invioEmail.equals("true"));
-        	    		sm.send("Segnalazione eccedenza", message_text, mailRecipient);
+            		if (invioEmail)
+        	    		sm.send("Segnalazione eccedenza", mail_body, mailRecipient);
             	} catch (Exception e) {
             		//
             	}

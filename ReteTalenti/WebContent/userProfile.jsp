@@ -131,6 +131,7 @@
 								name="newPassword2" 
 								value=""/>
 					</td>
+					</tr>
 					<tr>
 					<td colspan="2" align="right">
 						<input type="hidden" id="nomeutente" name="nomeutente" value="<s:property value="username"></s:property>"/>
