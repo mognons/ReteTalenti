@@ -1,7 +1,8 @@
 package com.action;
 
 import com.utilities.*;
-import com.utilities.ResultSetToExcel.FormatType;
+//import com.utilities.RSToExcel.FormatType;
+import com.utilities.RSToExcel.FormatType;
 import com.dao.ReportDao;
 import com.interceptor.UserAware;
 import com.model.User;
@@ -18,58 +19,40 @@ public class ReportAction extends ActionSupport implements UserAware {
 
     private User user;
 
-    public String getExcel() {
-        FormatType formati[] = new FormatType[]{FormatType.INTEGER, FormatType.TEXT, FormatType.TEXT, FormatType.TEXT};
-        ByteArrayOutputStream out;
-//		ResultSetToExcel resultSetToExcel = new ResultSetToExcel(dao.getStudentsRS(),formati,"Report");
-        filename = "report_test.xls";
-        try {
-            out = new ByteArrayOutputStream();
-//	        resultSetToExcel.generate(out);
-            excelStream = new ByteArrayInputStream(out.toByteArray());
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace(); //log to logs
-            formati = null;
-            return ERROR;
-        }
-        formati = null;
-        return SUCCESS;
-    }
-
     public String anagraficaCompleta() {
         FormatType formati[] = new FormatType[]{
+            FormatType.TEXT, //cf
+            FormatType.TEXT, // Nome
+            FormatType.TEXT, // Cognome
+            FormatType.TEXT, // Genere
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT, // Data di nascita
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT,
+            FormatType.TEXT, // CAP
             FormatType.TEXT,
             FormatType.TEXT,
             FormatType.TEXT,
             FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
+            FormatType.TEXT, // Documento
+            FormatType.TEXT, // Ente Assistente
+            FormatType.TEXT, // Provincia Ente
+            FormatType.TEXT, 
             FormatType.TEXT,
             FormatType.INTEGER, // IDB 
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
+            FormatType.TEXT, // Emporio
             FormatType.TEXT,
             FormatType.TEXT,
             FormatType.TEXT,
             FormatType.TEXT};
         ByteArrayOutputStream out;
-        ResultSetToExcel resultSetToExcel = new ResultSetToExcel(dao.anagraficaCompleta(), formati, "Report");
+        RSToExcel RSToExcel = new RSToExcel(dao.anagraficaCompleta(), formati, "Report");
         filename = "anagrafica_completa.xls";
         try {
             out = new ByteArrayOutputStream();
-            resultSetToExcel.generate(out);
+            RSToExcel.generate(out);
             excelStream = new ByteArrayInputStream(out.toByteArray());
             out.close();
         } catch (Exception e) {
@@ -83,37 +66,38 @@ public class ReportAction extends ActionSupport implements UserAware {
 
     public String anagraficaEnteUser() {
         FormatType formati[] = new FormatType[]{
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.INTEGER, // IDB 
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT};
+                FormatType.TEXT, //cf
+                FormatType.TEXT, // Nome
+                FormatType.TEXT, // Cognome
+                FormatType.TEXT, // Genere
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT, // Data di nascita
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT, // CAP
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT, // Documento
+                FormatType.TEXT, // Ente Assistente
+                FormatType.TEXT, // Provincia Ente
+                FormatType.TEXT, 
+                FormatType.TEXT,
+                FormatType.INTEGER, // IDB 
+                FormatType.TEXT, // Emporio
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT};
         ByteArrayOutputStream out;
-        ResultSetToExcel resultSetToExcel = new ResultSetToExcel(dao.anagraficaXEnteUser(user), formati, "Report");
-        filename = "anagrafica_xenteuser.xls";
+        RSToExcel RSToExcel = new RSToExcel(dao.anagraficaXEnteUser(user), formati, "Report");
+        filename = "anagrafica_ente.xls";
         try {
             out = new ByteArrayOutputStream();
-            resultSetToExcel.generate(out);
+            RSToExcel.generate(out);
             excelStream = new ByteArrayInputStream(out.toByteArray());
             out.close();
         } catch (Exception e) {
@@ -127,37 +111,38 @@ public class ReportAction extends ActionSupport implements UserAware {
 
     public String anagraficaXProvinciaEnteUser() {
         FormatType formati[] = new FormatType[]{
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.INTEGER, // IDB 
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT};
+                FormatType.TEXT, //cf
+                FormatType.TEXT, // Nome
+                FormatType.TEXT, // Cognome
+                FormatType.TEXT, // Genere
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT, // Data di nascita
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT, // CAP
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT, // Documento
+                FormatType.TEXT, // Ente Assistente
+                FormatType.TEXT, // Provincia Ente
+                FormatType.TEXT, 
+                FormatType.TEXT,
+                FormatType.INTEGER, // IDB 
+                FormatType.TEXT, // Emporio
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT};
         ByteArrayOutputStream out;
-        ResultSetToExcel resultSetToExcel = new ResultSetToExcel(dao.anagraficaXProvinciaEnteUser(user), formati, "Report");
-        filename = "anagrafica_xprovinciaenteuser.xls";
+        RSToExcel RSToExcel = new RSToExcel(dao.anagraficaXProvinciaEnteUser(user), formati, "Report");
+        filename = "anagrafica_provinciale.xls";
         try {
             out = new ByteArrayOutputStream();
-            resultSetToExcel.generate(out);
+            RSToExcel.generate(out);
             excelStream = new ByteArrayInputStream(out.toByteArray());
             out.close();
         } catch (Exception e) {
@@ -171,37 +156,38 @@ public class ReportAction extends ActionSupport implements UserAware {
 
     public String graduatoriaProvinciale() {
         FormatType formati[] = new FormatType[]{
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.INTEGER, // IDB 
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT};
+                FormatType.TEXT, //cf
+                FormatType.TEXT, // Nome
+                FormatType.TEXT, // Cognome
+                FormatType.TEXT, // Genere
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT, // Data di nascita
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT, // CAP
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT, // Documento
+                FormatType.TEXT, // Ente Assistente
+                FormatType.TEXT, // Provincia Ente
+                FormatType.TEXT, 
+                FormatType.TEXT,
+                FormatType.INTEGER, // IDB 
+                FormatType.TEXT, // Emporio
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT};
         ByteArrayOutputStream out;
-        ResultSetToExcel resultSetToExcel = new ResultSetToExcel(dao.graduatoriaProvinciale(user), formati, "Report");
+        RSToExcel RSToExcel = new RSToExcel(dao.graduatoriaProvinciale(user), formati, "Graduatoria");
         filename = "graduatoria_provinciale.xls";
         try {
             out = new ByteArrayOutputStream();
-            resultSetToExcel.generate(out);
+            RSToExcel.generate(out);
             excelStream = new ByteArrayInputStream(out.toByteArray());
             out.close();
         } catch (Exception e) {
@@ -213,37 +199,7 @@ public class ReportAction extends ActionSupport implements UserAware {
         return SUCCESS;
     }
 
-    public String ritiriCompleto() {
-
-        FormatType formati[] = new FormatType[]{
-            FormatType.INTEGER,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.INTEGER,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT,
-            FormatType.TEXT
-        };
-        ByteArrayOutputStream out;
-        ResultSetToExcel resultSetToExcel = new ResultSetToExcel(dao.ritiriCompleto(), formati, "Report");
-        filename = "ritiri_completo.xls";
-        try {
-            out = new ByteArrayOutputStream();
-            resultSetToExcel.generate(out);
-            excelStream = new ByteArrayInputStream(out.toByteArray());
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace(); //log to logs
-            formati = null;
-            return ERROR;
-        }
-        formati = null;
-        return SUCCESS;
-    }
-    
-    public String eccedenze() {
+    public String situazioneEccedenze() {
         FormatType formati[] = new FormatType[]{
             FormatType.INTEGER, 
             FormatType.TEXT, 
@@ -253,14 +209,26 @@ public class ReportAction extends ActionSupport implements UserAware {
             FormatType.TEXT,
             FormatType.TEXT,
             FormatType.TEXT
-     };
+        };
             
         ByteArrayOutputStream out;
-        ResultSetToExcel resultSetToExcel = new ResultSetToExcel(dao.eccedenze(),formati,"Report");
-        filename = "eccedenze.xls";
+        RSToExcel RSToExcel = new RSToExcel(dao.eccedenze(), formati,"Eccedenze");
+        FormatType formati_r[] = new FormatType[]{
+                FormatType.INTEGER,
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.INTEGER,
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT,
+                FormatType.TEXT};
+
+        RSToExcel.addRSToExcel(dao.ritiri(), formati_r,"Ritiri");
+        filename = "situazione_eccedenze.xls";
         try {
             out = new ByteArrayOutputStream();
-            resultSetToExcel.generate(out);
+            RSToExcel.generate(out);
             excelStream = new ByteArrayInputStream(out.toByteArray());
             out.close();
         } catch (Exception e) {
@@ -269,6 +237,7 @@ public class ReportAction extends ActionSupport implements UserAware {
             return ERROR;
         }
         formati = null;
+        formati_r = null;
         return SUCCESS;
     }
 

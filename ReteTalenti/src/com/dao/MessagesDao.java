@@ -35,7 +35,6 @@ public class MessagesDao {
 		try {
 			PreparedStatement pStmt = dbConnection.prepareStatement(query);
 			pStmt.setInt(1, loggedUser.getEnte());
-			System.err.println(query);
 			ResultSet rs = pStmt.executeQuery();
 			while (rs.next()) {
 				Message messaggio = new Message();

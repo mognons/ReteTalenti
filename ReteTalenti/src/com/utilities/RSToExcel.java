@@ -15,27 +15,52 @@ import java.io.OutputStream;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-public class ResultSetToExcel {
+public class RSToExcel {
+	private class DataSheet {
+		private ResultSet resultSet;
+		private HSSFSheet sheet;
+		private FormatType [] formatTypes;
+		
+		private DataSheet(ResultSet rs, FormatType [] ft, HSSFSheet sh) {
+			this.resultSet = rs;
+			this.formatTypes = ft;
+			this.sheet = sh;
+		}
+	}
+	
 	public HSSFWorkbook workbook;
-	private HSSFSheet sheet;
 	private HSSFFont boldFont;
 	private HSSFDataFormat format;
+	/*
+	private HSSFSheet sheet;
 	private ResultSet resultSet;
 	private FormatType[] formatTypes;
+	*/
+	List<DataSheet> dataSheets = new ArrayList<DataSheet>();
 
-	public ResultSetToExcel(ResultSet resultSet, FormatType[] formatTypes,
-			String sheetName) {
+	public RSToExcel(ResultSet rs, FormatType[] ft, String sheetName) {
 		workbook = new HSSFWorkbook();
-		this.resultSet = resultSet;
-		sheet = workbook.createSheet(sheetName);
+		dataSheets.add(new DataSheet(rs, ft, workbook.createSheet(sheetName)));
 		boldFont = workbook.createFont();
 		boldFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
 		format = workbook.createDataFormat();
-		this.formatTypes = formatTypes;
+	}
+	
+	public void addRSToExcel(ResultSet rs, FormatType[] ft, String sheetName) {
+		dataSheets.add(new DataSheet(rs, ft, workbook.createSheet(sheetName)));
 	}
 
-	public ResultSetToExcel(ResultSet resultSet, String sheetName) {
+
+	public void addRSToExcel(ResultSet rs, String sheetName) {
+		this.addRSToExcel(rs, null, sheetName);;
+	}
+
+
+	public RSToExcel(ResultSet resultSet, String sheetName) {
 		this(resultSet, null, sheetName);
 	}
 
@@ -53,43 +78,47 @@ public class ResultSetToExcel {
 
 	public void generate(OutputStream outputStream) throws Exception {
 		try {
-			ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
-			if (formatTypes != null
-					&& formatTypes.length != resultSetMetaData.getColumnCount()) {
-				throw new IllegalStateException(
-						"Number of types is not identical to number of resultset columns. "
-								+ "Number of types: " + formatTypes.length
-								+ ". Number of columns: "
-								+ resultSetMetaData.getColumnCount());
-			}
-			int currentRow = 0;
-			HSSFRow row = sheet.createRow(currentRow);
-			int numCols = resultSetMetaData.getColumnCount();
-			boolean isAutoDecideFormatTypes;
-			if (isAutoDecideFormatTypes = (formatTypes == null)) {
-				formatTypes = new FormatType[numCols];
-			}
-			for (int i = 0; i < numCols; i++) {
-				String title = resultSetMetaData.getColumnName(i + 1);
-				writeCell(row, i, title, FormatType.TEXT, boldFont);
-				if (isAutoDecideFormatTypes) {
-					Class _class = Class.forName(resultSetMetaData
-							.getColumnClassName(i + 1));
-					formatTypes[i] = getFormatType(_class);
+			Iterator<DataSheet> itr = dataSheets.iterator();
+			while (itr.hasNext()) {
+				DataSheet sheet = itr.next();
+				ResultSetMetaData resultSetMetaData = sheet.resultSet.getMetaData();
+				if (sheet.formatTypes != null
+						&& sheet.formatTypes.length != resultSetMetaData.getColumnCount()) {
+					throw new IllegalStateException(
+							"Number of types is not identical to number of resultset columns. "
+									+ "Number of types: " + sheet.formatTypes.length
+									+ ". Number of columns: "
+									+ resultSetMetaData.getColumnCount());
 				}
-			}
-			currentRow++;
-			// Write report rows
-			while (resultSet.next()) {
-				row = sheet.createRow(currentRow++);
+				int currentRow = 0;
+				HSSFRow row = sheet.sheet.createRow(currentRow);
+				int numCols = resultSetMetaData.getColumnCount();
+				boolean isAutoDecideFormatTypes;
+				if (isAutoDecideFormatTypes = (sheet.formatTypes == null)) {
+					sheet.formatTypes = new FormatType[numCols];
+				}
 				for (int i = 0; i < numCols; i++) {
-					Object value = resultSet.getObject(i + 1);
-					writeCell(row, i, value, formatTypes[i]);
+					String title = resultSetMetaData.getColumnName(i + 1);
+					writeCell(row, i, title, FormatType.TEXT, boldFont);
+					if (isAutoDecideFormatTypes) {
+						Class _class = Class.forName(resultSetMetaData
+								.getColumnClassName(i + 1));
+						sheet.formatTypes[i] = getFormatType(_class);
+					}
 				}
-			}
-			// Autosize columns
-			for (int i = 0; i < numCols; i++) {
-				sheet.autoSizeColumn((short) i);
+				currentRow++;
+				// Write report rows
+				while (sheet.resultSet.next()) {
+					row = sheet.sheet.createRow(currentRow++);
+					for (int i = 0; i < numCols; i++) {
+						Object value = sheet.resultSet.getObject(i + 1);
+						writeCell(row, i, value, sheet.formatTypes[i]);
+					}
+				}
+				// Autosize columns
+				for (int i = 0; i < numCols; i++) {
+					sheet.sheet.autoSizeColumn((short) i);
+				}
 			}
 			workbook.write(outputStream);
 		} finally {

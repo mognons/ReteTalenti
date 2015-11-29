@@ -77,14 +77,8 @@
 							onclick="window.location='graduatoriaProvincialeReport.action';">Graduatoria Provinciale</li>
 					</ul>
 				</li>
-				<li>Eccedenze
-					<ul>
-						<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
-							onclick="window.location='eccedenzeReport.action';">Elenco Eccedenze</li>
-                        <li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
-							onclick="window.location='ritiriCompletoReport.action';">Elenco Prenotazioni</li>
-					</ul>
-				</li>
+				<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
+							onclick="window.location='situazioneEccedenzeReport.action';">Elenco Eccedenze</li>
 				</ul>
 			</li>
 			<s:if test="(#isAdmin || #isAdminEnte)">

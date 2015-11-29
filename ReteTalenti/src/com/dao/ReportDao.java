@@ -13,37 +13,41 @@ public class ReportDao {
     private Connection dbConnection;
     private PreparedStatement pStmt;
     private Statement stmt;
-    private String queryBase = "SELECT cod_fiscale AS 'codice fiscale',"
-            + "nome,"
-            + "cognome,"
-            + "sesso, "
-            + "S.descrizione AS 'stato civile',"
-            + "luogo_nascita AS 'luogo di nascita',"
-            + "data_nascita AS 'data di nascita', "
-            + "N.sigla, "
-            + "indirizzo_residenza 'indirizzo di residenza',"
-            + "citta_residenza AS 'citta di residenza',"
-            + "cap,"
-            + "P.sigla_autom AS provincia,"
-            + "permesso_soggiorno AS 'perm. sogg.',"
-            + "telefono,"
-            + "email,"
-            + "num_documento AS 'num. documento', "
-            + "E.descrizione AS 'ente',"
-            + "punteggio_idb AS 'Indice bisogno',"
-            + "EN.descrizione as 'emporio',"
-            + "DATE_FORMAT(data_inserimento,'%d/%m/%Y') AS 'iscrizione',"
-            + "DATE_FORMAT(data_fine_assistenza,'%d/%m/%Y') AS 'fine assistenza',"
-            + "DATE_FORMAT(data_candidatura,'%d/%m/%Y') AS  'candidatura',"
-            + "DATE_FORMAT(data_accettazione,'%d/%m/%Y') AS  'accettazione', "
-            + "DATE_FORMAT(data_scadenza,'%d/%m/%Y') AS 'scadenza',"
-            + "DATE_FORMAT(data_dismissione,'%d/%m/%Y') AS 'dimissione' "
+    private String queryBase = "SELECT cod_fiscale AS 'Codice Fiscale',"
+            + "nome AS 'Nome',"
+            + "cognome AS 'Cognome',"
+            + "sesso AS 'Genere', "
+            + "S.descrizione AS 'Stato Civile',"
+            + "luogo_nascita AS 'Luogo di Nascita',"
+            + "DATE_FORMAT(data_nascita,'%d/%m/%Y') AS 'Data di Nascita', "
+            + "N.DENOMINAZIONE AS 'Nazione', "
+            + "indirizzo_residenza AS 'Indirizzo di Residenza',"
+            + "citta_residenza AS 'Città di Residenza',"
+            + "cap AS 'CAP',"
+            + "P.sigla_autom AS 'Provincia',"
+            + "permesso_soggiorno AS 'Perm. Sogg.',"
+            + "telefono AS 'Recapito Telefonico', "
+            + "email AS 'Indirizzo email',"
+            + "num_documento AS 'Documento Identità', "
+            + "E.descrizione AS 'Ente Assistente',"
+            + "PE.DENOMINAZIONE AS 'Provincia Ente',"
+            + "DATE_FORMAT(data_inserimento,'%d/%m/%Y') AS 'Inizio Assistenza',"
+            + "DATE_FORMAT(data_fine_assistenza,'%d/%m/%Y') AS 'Fine Assistenza',"
+            + "punteggio_idb AS 'Indice di Bisogno',"
+            + "EN.descrizione as 'Emporio',"
+            + "DATE_FORMAT(data_candidatura,'%d/%m/%Y') AS  'Candidatura',"
+            + "DATE_FORMAT(data_accettazione,'%d/%m/%Y') AS  'Accettazione', "
+            + "DATE_FORMAT(data_scadenza,'%d/%m/%Y') AS 'Scadenza',"
+            + "DATE_FORMAT(data_dismissione,'%d/%m/%Y') AS 'Dimissione' "
             + "FROM ASSISTITI A "
             + "LEFT JOIN ENTI E ON A.ENTE_ASSISTENTE=E.ID "
             + "LEFT JOIN ENTI EN ON A.EMPORIO=EN.ID "
             + "LEFT JOIN PROVINCE P ON A.PROVINCIA=P.COD_PROVINCIA "
+            + "LEFT JOIN PROVINCE PE ON E.PROVINCIA_ENTE=PE.COD_PROVINCIA "
             + "LEFT JOIN NAZIONI N ON A.NAZIONALITA=N.CODICE "
-            + "LEFT JOIN STATI_CIVILI S ON A.STATO_CIVILE=S.ID";
+            + "LEFT JOIN STATI_CIVILI S ON A.STATO_CIVILE=S.ID ";
+    
+    private String orderBy = " ORDER BY PE.DENOMINAZIONE, E.DESCRIZIONE, A.COD_FISCALE";
 
     public ReportDao() {
         dbConnection = DataAccessObject.getConnection();
@@ -52,7 +56,7 @@ public class ReportDao {
     public ResultSet anagraficaCompleta() {
 
         ResultSet rs = null;
-        String query = queryBase;
+        String query = queryBase + orderBy;
         try {
             pStmt = dbConnection.prepareStatement(query);
             rs = pStmt.executeQuery();
@@ -65,7 +69,7 @@ public class ReportDao {
     public ResultSet anagraficaXEnteUser(User user) {
 
         ResultSet rs = null;
-        String query = queryBase + " WHERE A.ENTE_ASSISTENTE=" + user.getEnte();
+        String query = queryBase + " WHERE A.ENTE_ASSISTENTE=" + user.getEnte() + orderBy;
         try {
             pStmt = dbConnection.prepareStatement(query);
             rs = pStmt.executeQuery();
@@ -78,7 +82,7 @@ public class ReportDao {
     public ResultSet anagraficaXProvinciaEnteUser(User user) {
 
         ResultSet rs = null;
-        String query = queryBase + " WHERE E.PROVINCIA_ENTE= " + user.getProvinciaEnte();
+        String query = queryBase + " WHERE E.PROVINCIA_ENTE= " + user.getProvinciaEnte() + orderBy;
         try {
             pStmt = dbConnection.prepareStatement(query);
             rs = pStmt.executeQuery();
@@ -104,22 +108,21 @@ public class ReportDao {
         return rs;
     }
 
-    public ResultSet ritiriCompleto() {
-
-        // report dei ritiri (impegni) COMPLETO ***********************
+    public ResultSet ritiri() {
         ResultSet rs = null;
-        String query = "SELECT id_eccedenza 'id prodotto',"
-                + "EC.prodotto,"
-                + "E.descrizione 'ente richiedente',"
-                + "qta_prenotata 'quantita prenotata',"
-                + "DATE_FORMAT(data_ritiro,'%d/%m/%Y') 'data ritiro',"
-                + "ora_ritiro 'ora ritiro',"
-                + "IF(ritiro_effettuato=1,'S','N') 'ritiro effettuato', "
-                + "DATE_FORMAT(I.timestamp,'%d/%m/%Y-%T') 'data inserimento',"
-                + "I.operatore "
-                + "FROM impegni I "
-                + "LEFT JOIN eccedenze EC on I.id_eccedenza=EC.id "
-                + "LEFT JOIN enti E on I.ente_richiedente=E.id";
+        String query = 	"SELECT id_eccedenza AS 'Id Eccedenza',"
+		                + "EC.prodotto,"
+		                + "E.descrizione 'Ente Richiedente',"
+		                + "qta_prenotata 'Quantità Prenotata',"
+		                + "DATE_FORMAT(data_ritiro,'%d/%m/%Y') 'Data Ritiro',"
+		                + "ora_ritiro 'Ora Ritiro',"
+		                + "IF(ritiro_effettuato,'S','N') 'Ritiro Effettuato', "
+		                + "DATE_FORMAT(I.timestamp,'%d/%m/%Y-%T') 'Data/Ora Inserimento',"
+		                + "I.operatore AS 'Operatore' "
+		                + "FROM impegni I "
+		                + "LEFT JOIN eccedenze EC on I.id_eccedenza=EC.id "
+		                + "LEFT JOIN enti E on I.ente_richiedente=E.id "
+		                + "ORDER BY ID_ECCEDENZA, DATA_RITIRO";
         try {
             pStmt = dbConnection.prepareStatement(query);
             rs = pStmt.executeQuery();
@@ -132,17 +135,18 @@ public class ReportDao {
     public ResultSet eccedenze() {
 
         ResultSet rs = null;
-        String query = "SELECT E.id, "
+        String query = "SELECT E.id AS 'Id Eccedenza', "
                 + "en.descrizione as 'Ente Cedente',"
                 + "prodotto 'Prodotto',"
-                + "U.codice 'udm ',"
-                + "qta as 'Quantita',"
+                + "U.codice 'UdM ',"
+                + "qta as 'Quantità',"
                 + "DATE_FORMAT(scadenza,'%d/%m/%Y') 'Scadenza',"
-                + "DATE_FORMAT(timestamp,'%d/%m/%Y/ %T') 'TimeStamp',"
-                + "operatore 'Operatore' "
+                + "DATE_FORMAT(timestamp,'%d/%m/%Y/ %T') AS 'Data/Ora Inserimento',"
+                + "operatore AS 'Operatore' "
                 + "from eccedenze E "
                 + "left join enti en on E.ente_cedente = en.id "
-                + "left join uni_misura U on E.udm = U.id";
+                + "left join uni_misura U on E.udm = U.id "
+                + "ORDER BY E.ID";
         try {
             pStmt = dbConnection.prepareStatement(query);
             rs = pStmt.executeQuery();
