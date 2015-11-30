@@ -266,6 +266,8 @@
                                 data.form.validationEngine('attach',{promptPosition : "bottomLeft", scroll: false});
                                 data.form.find('input[name=nome]').css('width', '200px');
                                 data.form.find('input[name=cognome]').css('width', '200px');
+                                data.form.find('select[name=sesso]').css('width', '100px');
+                                data.form.find('select[name=tipo_parentela]').css('width', '150px');
                             },
                             // Validate form when it is being submitted
                             formSubmitting: function (event, data) {
@@ -303,8 +305,6 @@
                 create: false,
                 display: function (assistito) {
                 	if (assistito.record.data_fine_assistenza != null) {return '<center><b>-</b></center>';}
-
-                    // Create an image that will be used to open child table
                 	var $img = $('<span align="CENTER"><img src="icons/Dollar.png" width="16" height="16" title="Calcolo IDB"/></span>');
                     // Open Foreign Form
                     $img.click(function () {
@@ -509,7 +509,7 @@
                 inputTitle: 'Data di Nascita' + ' <span style="color:red">*</span>',
 				type: 'date',
 				displayFormat: 'dd/mm/yy',
-                inputClass: 'validate[required]',
+                inputClass: 'validate[required] datepicker',
                 list: true,
                 edit: true,
                 create: true
@@ -655,9 +655,15 @@
         formCreated: function (event, data) {
             data.form.find('input[name=nome]').css('width', '200px');
             data.form.find('input[name=cognome]').css('width', '200px');
+            data.form.find('input[name=luogo_nascita]').css('width', '200px');
+            data.form.find('input[name=indirizzo_residenza]').css('width', '200px');
             data.form.find('input[name=citta_residenza]').css('width', '200px');
+            data.form.find('input[name=cap]').css('width', '50px');
             data.form.find('input[name=num_documento]').css('width', '200px');
             data.form.find('input[name=email]').css('width', '200px');
+            data.form.find('select[name=provincia]').css('width', '150px');
+            data.form.find('select[name=stato_civile]').css('width', '150px');
+            data.form.find('select[name=sesso]').css('width', '150px');
             data.form.find('select[name=nazionalita]').css('width', '150px');
             data.form.children(':lt(9)').wrapAll('<div class="col1"/>');
             data.form.children(':gt(0)').wrapAll('<div class="col2"/>');

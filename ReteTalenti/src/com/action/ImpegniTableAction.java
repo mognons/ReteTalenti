@@ -93,6 +93,7 @@ public class ImpegniTableAction extends ActionSupport implements UserAware, Mode
         record.setQta_prenotata(qta_prenotata);
         record.setRitiro_effettuato(false);
         record.setData_ritiro(data_ritiro);
+        record.setOra_ritiro(ora_ritiro);
         try {
             // Update existing record
             dao.updateImpegno(record);

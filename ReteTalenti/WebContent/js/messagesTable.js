@@ -1,4 +1,15 @@
 $(document).ready(function () {
+	function ISOtoEuroDateTime(dt) {
+		d = dt.substring(0,10);
+		t = dt.substring(11,19);
+		var dateParts = d.split("-");
+		if(dateParts==d)
+			dateParts = d.split("/");
+		if(dateParts==d)
+			dateParts = d.split(".");
+		return (dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0]) + " " + t;
+	};
+	
 	$('#MessagesTableContainer').jtable(
 			{
 				title : 'Messaggi dal sistema ReteTalenti',
@@ -57,19 +68,17 @@ $(document).ready(function () {
 					},
 					message_text : {
 						title : "Messaggio",
-						width : '50%',
+						width : '85%',
 						create : true
 					},
-					document : {
-						title : 'Document',
-						width : '30%',
-						list : false,
-						display : function(data) {
-							myFilename = data.record.documentPath;
-							html = '<a href="' + data.record.documentPath
-							+ ' " target="_blank"">'
-							+ myFilename.split("/").pop() + '</a>';
-							return html;
+					timestamp: {
+						width: '15%',
+						title: 'Timestamp',
+						type: 'date',
+						dateFormat: 'dd/MM/yy hh:mm',
+						display: function(data) {
+							var $html = $('<span style="font-size:smaller;">'+ISOtoEuroDateTime(data.record.timestamp)+'</span>');
+							return $html;
 						}
 					}
 				}

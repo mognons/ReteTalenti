@@ -31,7 +31,8 @@
                 	} else {
 	                	var page = "'ShowSchedaAssistito?codice_fiscale="+ data.record.cod_fiscale + "'";
 						html = '<a href="javascript:showSchedaAssistito(' + page + ')'  
-						+ '" target="_blank">' 
+//						+ ';" target="_blank">' 
+						+ ';" >' 
 						+ data.record.cod_fiscale 
 						+ '</a>';
                 	}

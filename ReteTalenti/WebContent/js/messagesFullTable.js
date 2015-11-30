@@ -134,14 +134,16 @@
 						title: 'Inizio validità',
                     	inputTitle: 'Inizio validità' + ' <span style="color:red">*</span>',
 						type: 'date',
-						inputClass: 'validate[required]',
+						inputClass: 'validate[required] datepicker',
 						displayFormat: 'dd/mm/yy',
 						create: true
 					},
 					end_date : {
 						title: 'Fine validità',
+                    	inputTitle: 'Inizio validità' + ' <span style="color:red">*</span>',
 						type: 'date',
 						displayFormat: 'dd/mm/yy',
+						inputClass: 'validate[required, future[now]] datepicker',
 						create: true
 					},
 					message_read : {

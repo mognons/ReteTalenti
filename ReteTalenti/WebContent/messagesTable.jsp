@@ -10,6 +10,17 @@
 <script type="text/javascript" src="scripts/jquery.validationEngine-it.js"></script>
 
 <script type="text/JavaScript">
+	function ISOtoEuro(d) {
+		d = d.substring(0,10);
+		var dateParts = d.split("-");
+		if(dateParts==d)
+			dateParts = d.split("/");
+		if(dateParts==d)
+			dateParts = d.split(".");
+		return (dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0]);
+	};
+	
+	
 	var today = new Date();
 	function heute() {
 		var dd = today.getDate();

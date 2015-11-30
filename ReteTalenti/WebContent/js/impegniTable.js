@@ -74,7 +74,7 @@
                             actions: {
                                 listAction: 'listOwnByEccedenzaImpegniAction?id_eccedenza=' + eccedenzaData.record.id,
                                 createAction: 'createImpegniAction?id_eccedenza=' + eccedenzaData.record.id,
-                                updateAction: 'listOwnImpegniAction?id_eccedenza=' + eccedenzaData.record.id
+                                updateAction: 'updateImpegniAction?id_eccedenza=' + eccedenzaData.record.id
                             },                                    
                             fields: {
                                 id: {
@@ -99,16 +99,20 @@
                 					inputClass: 'validate[required,min[1],max['
                 								+eccedenzaData.record.qta_residua +']'
                                 },
-                                data_scadenza: {
-                                	type: 'hidden',
-                                	defaultValue: ISOtoEuro(eccedenzaData.record.scadenza)
+                                dummy_data: {
+                                	create: true,
+                                	edit: true,
+                                	input: function (data) {
+                                		return 	'<input type="hidden" id ="data_scadenza" name="data_scadenza" value="' 
+                                				+ ISOtoEuro(eccedenzaData.record.scadenza) + '" />';
+                                    }
                                 },
                                 data_ritiro: {
                                 	title: 'Ritiro previsto',
                                 	inputTitle: 'Ritiro previsto' + ' <span style="color:red">*</span>',
                 					type: 'date',
                 					displayFormat: 'dd/mm/yy',
-                					inputClass: 'validate[required,future[now],past[data_scadenza]] datepicker',
+                					inputClass: 'validate[required,future[now],past[scadenza]] datepicker',
 									defaultValue: tomorrow(),
                                     list: true,
                                     edit: true
@@ -137,9 +141,8 @@
                             },
                             // Initialize validation logic when a form is created
                             formCreated: function (event, data) {
-                                data.form.validationEngine();
-                                data.form.parent().css('width', '300px');
-
+                                data.form.validationEngine('attach',{promptPosition : "bottomLeft", scroll: false});
+                                data.form.css('width','200px');
                             },
                             // Validate form when it is being submitted
                             formSubmitting: function (event, data) {
@@ -149,7 +152,9 @@
                             formClosed: function (event, data) {
                                 data.form.validationEngine('hide');
                                 data.form.validationEngine('detach');
-                          	  	$('#ImpegniTableContainer').jtable('reload');
+                            },
+                            closeRequested: function(event, data) {
+                          	  	$('#ImpegniTableContainer').jtable('reload');                            	
                             }
                         },
                         function (data) { // opened handler

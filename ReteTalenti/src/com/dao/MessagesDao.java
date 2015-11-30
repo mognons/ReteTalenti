@@ -49,6 +49,7 @@ public class MessagesDao {
 				messaggio.setStart_date(rs.getDate("START_DATE"));
 				messaggio.setEnd_date(rs.getDate("END_DATE"));
 				messaggio.setMessage_read(rs.getBoolean("MESSAGE_READ"));
+				messaggio.setTimestamp(rs.getTimestamp("TIMESTAMP"));
 				messaggi.add(messaggio);
 			}
 		} catch (SQLException e) {

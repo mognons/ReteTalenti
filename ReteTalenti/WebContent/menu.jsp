@@ -35,7 +35,9 @@
 
 	<div style="position: relative; left: 0px; top: 0px; z-index: 10">
 		<ul id="verticalMenu">
-			<li <s:if test="(enteEmporio)" >class="ui-state-disabled"</s:if>>Gestione Assistiti
+			<li <s:if test="(enteEmporio)" >class="ui-state-disabled"</s:if>>
+			<img src="icons/group.png" align="bottom" height="16" width="16">
+				<span style="vertical-align: top">Gestione Assistiti</span>
 				<ul>
 					<li <s:if test="(enteEmporio)" >class="ui-state-disabled"</s:if> 
 						onclick="window.location='assistitiLink';">Anagrafica Assistiti</li>
@@ -46,7 +48,9 @@
 				</ul>
 			</li>
 			<li>-</li>
-			<li <s:if test="!(enteEmporio)" >class="ui-state-disabled"</s:if>>Gestione Emporio  
+			<li <s:if test="!(enteEmporio)" >class="ui-state-disabled"</s:if>> 
+				<img src="icons/Food-Bunch-Ingredients-icon.png" align="bottom" height="16" width="16">
+				<span style="vertical-align: top">Gestione Emporio</span>
 				<ul>
 					<li onclick="window.location='accettazioneEmporioLink';">Accettazione Emporio</li>
 					<li onclick="window.location='anagraficaEmporioLink';">Anagrafica Emporio</li>
@@ -54,7 +58,8 @@
 				</ul>
 			</li>
 			<li>-</li>
-			<li>Gestione Eccedenze
+			<li> <img src="icons/Food-Bunch-Ingredients-icon.png" align="bottom" height="16" width="16">
+				<span style="vertical-align: top">Gestione Eccedenze</span>
 				<ul>
 					<li onclick="window.location='eccedenzeLink';">Segnalazione
 						Eccedenze</li>
@@ -64,21 +69,23 @@
 				</ul>
 			</li>
 			<li>-</li>
-			<li>Report
+			<li> <img src="icons/report_data_online.png" align="bottom" height="16" width="16">
+				<span style="vertical-align: top">Report</span>
 				<ul>
-				<li>Assistiti
-					<ul>
-						<li <s:if test="(groupId == 2 || groupId == 3)" >class="ui-state-disabled"</s:if>
-							onclick="window.location='anagraficaCompletaReport.action';">Elenco Regionale</li>
-						<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
-							onclick="window.location='anagraficaXProvinciaEnteUserReport.action';">Elenco per Provincia</li>
-						<li onclick="window.location='anagraficaEnteUserReport.action';">Elenco per Ente</li>
-						<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
-							onclick="window.location='graduatoriaProvincialeReport.action';">Graduatoria Provinciale</li>
-					</ul>
-				</li>
-				<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
-							onclick="window.location='situazioneEccedenzeReport.action';">Elenco Eccedenze</li>
+					<li>Report Assistiti
+						<ul>
+							<li <s:if test="(groupId == 2 || groupId == 3)" >class="ui-state-disabled"</s:if>
+								onclick="window.location='anagraficaCompletaReport.action';">Elenco Regionale</li>
+							<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
+								onclick="window.location='anagraficaXProvinciaEnteUserReport.action';">Elenco per Provincia</li>
+							<li onclick="window.location='anagraficaEnteUserReport.action';">Elenco per Ente</li>
+							<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
+								onclick="window.location='graduatoriaProvincialeReport.action';">Graduatoria Provinciale</li>
+						</ul>
+					</li>
+					<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
+								onclick="window.location='situazioneEccedenzeReport.action';">
+								Elenco Eccedenze</li>
 				</ul>
 			</li>
 			<s:if test="(#isAdmin || #isAdminEnte)">

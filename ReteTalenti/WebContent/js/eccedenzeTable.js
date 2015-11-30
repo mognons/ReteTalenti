@@ -43,7 +43,7 @@
                             pageSizeChangeArea: false,
 					        defaultSorting : 'DATA_RITIRO ASC', //Set default sorting
 							selecting: true,
-							multiselect: false, 
+							multiselect: true, 
 							selectingCheckboxes: true, 
 							selectOnRowClick: true,
 							toolbar: {
@@ -68,7 +68,6 @@
 													},
 													success: function (data) {
 														$dfd.resolve(data);
-														$('.jtable-child-table-container').jtable('reload');
 													},
 													error: function () {
 														$dfd.reject();
@@ -76,6 +75,7 @@
 												});
 											}
 											);
+											$('.jtable-child-table-container').jtable('reload');
 										})}
 								}
 								]},

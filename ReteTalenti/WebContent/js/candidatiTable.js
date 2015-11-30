@@ -164,8 +164,8 @@
                 display: function(data) {
                     if (data.record.punteggio_idb < 10) {
                 		html='<span style="color: red;">'+  data.record.punteggio_idb + '</span>';
-                	} else if (data.record.punteggio_idb >= 10 && data.record.punteggio_idb < 15) {
-                		html='<span style="color: yellow;">' +  data.record.punteggio_idb + '</span>';
+                	} else if (data.record.punteggio_idb >= 10 && data.record.punteggio_idb < 20) {
+                		html='<span style="color: orange;">' +  data.record.punteggio_idb + '</span>';
                 	} else 
                    		html='<span style="color: green;">' +  data.record.punteggio_idb + '</span>';
                     return html;
