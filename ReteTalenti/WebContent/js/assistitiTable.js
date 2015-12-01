@@ -77,15 +77,14 @@
         actions: {
             listAction: 'listAssistitiAction',
             createAction: 'createAssistitiAction',
-            updateAction: 'updateAssistitiAction',
-            deleteAction: 'deleteAssistitiAction'
+            updateAction: 'updateAssistitiAction'
         },
 		toolbar: {
 			items: [{
 				text: 'Ri-attiva',
-				icon: 'icons/Green%20pin.png',
+				icon: 'icons/Yes.png',
 				cssClass: 'RIAT',
-				tooltip: 'Riattivazione di un assistito con assistenza scaduta',
+				tooltip: "Riattiva l'assistenza per il record selezionato",
 				click: function () {
 					return $.Deferred(function ($dfd) {
 						var $selectedRows = $('#AssistitiTableContainer').jtable('selectedRows');
@@ -134,9 +133,67 @@
 									}
 								});
 							}
-							$('#AssistitiTableContainer').jtable('reload');
-						}
-						);
+						})
+						$('#AssistitiTableContainer').jtable('reload');
+						;
+					})}
+			},
+			{
+				text: 'Termina',
+				icon: 'icons/No.png',
+				cssClass: 'DISA',
+				tooltip: "Termina l'assistenza per il record selezionato",
+				click: function () {
+					return $.Deferred(function ($dfd) {
+						var $selectedRows = $('#AssistitiTableContainer').jtable('selectedRows');
+						$selectedRows.each(function () {
+							var record = $(this).data('record');
+							if (recordObfuscation(record.ente_assistente) || (record.data_fine_assistenza)) {
+								$("#dialog").dialog({
+									modal: true,
+									buttons: [{
+						        	  text: "Chiudi",
+							        	  click: function() {
+							        		  $(this).dialog( "close" );
+							        	  }
+							          }],
+							        open: function(){
+							        	  $("#dialog").html("Operazione <b>non</b> consentita per questo assistito")
+							        }
+								});
+							} else {
+								$.ajax({
+									url: 'disattivaAssistitiAction',
+									type: 'POST',
+									dataType: 'json',
+									data: {
+										cod_fiscale: record.cod_fiscale										
+									},
+									success: function (data) {
+										$dfd.resolve(data);
+										$("#dialog").dialog({
+											modal: true,
+											buttons: [
+											   {
+												   text: "Chiudi",
+											       click: function() {
+											       	  $(this).dialog( "close" );
+											       }
+											   }
+											],
+									        open: function(){
+									        	  $("#dialog").html("Assistenza Terminata con successo")
+									        }
+										});
+									},
+									error: function () {
+										$dfd.reject();
+									}
+								});
+							}
+						})
+						$('#AssistitiTableContainer').jtable('reload');
+						;
 					})}
 			},
 			{
@@ -187,7 +244,8 @@
                 edit: false,
                 create: false,
                 display: function (assistito) {
-                	if (assistito.record.data_fine_assistenza != null) {return '<center><b>-</b></center>';}
+                	if (recordObfuscation(assistito.record.ente_assistente) || (assistito.record.data_fine_assistenza)) 
+                		{return '<center><b>-</b></center>';}
                     // Create an image that will be used to open child table
                     var $img = $('<span align="CENTER"><img src="icons/People.png" width="16" height="16" title="Nucleo familiare"/></span>');
                     // Open child table when user clicks the image
@@ -239,8 +297,10 @@
                                 },
                                 data_nascita: {
                                 	title: 'Data Nascita',
+                                    inputTitle: 'Data Nascita' + ' <span style="color:red">*</span>',
                 					type: 'date',
                 					displayFormat: 'dd/mm/yy',
+                	                inputClass: 'validate[required] datepicker',
                                     list: true,
                                     edit: true,
                                     create: true
@@ -304,7 +364,8 @@
                 edit: false,
                 create: false,
                 display: function (assistito) {
-                	if (assistito.record.data_fine_assistenza != null) {return '<center><b>-</b></center>';}
+                	if (recordObfuscation(assistito.record.ente_assistente) || (assistito.record.data_fine_assistenza))  
+                		{return '<center><b>-</b></center>';}
                 	var $img = $('<span align="CENTER"><img src="icons/Dollar.png" width="16" height="16" title="Calcolo IDB"/></span>');
                     // Open Foreign Form
                     $img.click(function () {
@@ -323,7 +384,8 @@
                 edit: false,
                 create: false,
                 display: function (assistito) {
-                	if (assistito.record.data_fine_assistenza != null) {return '<center><b>-</b></center>';}
+                	if (recordObfuscation(assistito.record.ente_assistente) || (assistito.record.data_fine_assistenza))  
+                		{return '<center><b>-</b></center>';}
                     // Create an image that will be used to open child table
                     var $img = $('<span align="CENTER"><img src="icons/Notes.png" width="16" height="16" title="Annotazioni"/></span>');
                     // Open child table when user clicks the image
@@ -637,14 +699,15 @@
             }
         },
         recordsLoaded: function(event, data) {
-      	  if (addRecordObfuscation()) {
-      	     $('#AssistitiTableContainer').find('.jtable-toolbar-item.jtable-toolbar-item-add-record').remove();
-      	  }
-     	  if (gruppoUtente>2) {
-       	     $('#AssistitiTableContainer').find('.jtable-toolbar-item.TRAS').remove();
-      	     $('#AssistitiTableContainer').find('.jtable-toolbar-item.RIAT').remove();
-      	         	  }
-         },
+	      	if (addRecordObfuscation()) {
+	      	     $('#AssistitiTableContainer').find('.jtable-toolbar-item.jtable-toolbar-item-add-record').remove();
+	      	}
+	     	if (gruppoUtente>2) {
+	       	     $('#AssistitiTableContainer').find('.jtable-toolbar-item.TRAS').remove();
+	      	     $('#AssistitiTableContainer').find('.jtable-toolbar-item.RIAT').remove();
+	      	     $('#AssistitiTableContainer').find('.jtable-toolbar-item.DISA').remove();
+	      	}
+        },
         rowInserted: function(event, data){
         	if (recordObfuscation(data.record.ente_assistente) || (data.record.data_fine_assistenza)) {
               data.row.find('.jtable-edit-command-button').hide();

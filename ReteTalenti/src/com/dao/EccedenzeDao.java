@@ -30,8 +30,9 @@ public class EccedenzeDao {
 
 	public int createEccedenza(Eccedenza eccedenza) {
 		int autoIncKeyFromFunc = -1;
-		String insertQuery = "INSERT INTO ECCEDENZE "
-				+ "(ENTE_CEDENTE, PRODOTTO, UDM, QTA, SCADENZA, TIMESTAMP, OPERATORE) " + "VALUES (?,?,?,?,?,NOW(),?)";
+		String insertQuery = 	"INSERT INTO ECCEDENZE "
+								+ "(ENTE_CEDENTE, PRODOTTO, UDM, QTA, SCADENZA, TIMESTAMP, OPERATORE) "
+								+ "VALUES (?,?,?,?,?,NOW(),?)";
 		try {
 			pStmt = dbConnection.prepareStatement(insertQuery);
 			pStmt.setInt(1, eccedenza.getEnte_cedente());

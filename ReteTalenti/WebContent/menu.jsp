@@ -8,7 +8,7 @@
 
 <style>
 .ui-menu {
-	width: 220px;
+	width: 190px;
 }
 </style>
 
@@ -40,7 +40,7 @@
 				<span style="vertical-align: top">Gestione Assistiti</span>
 				<ul>
 					<li <s:if test="(enteEmporio)" >class="ui-state-disabled"</s:if> 
-						onclick="window.location='assistitiLink';">Anagrafica Assistiti</li>
+						onclick="window.location='assistitiLink';">Anagrafica</li>
 					<li <s:if test="(enteEmporio || groupId > 2)" >class="ui-state-disabled"</s:if>
 						onclick="window.location='candidatureLink';">Candidatura Emporio</li>
 					<li <s:if test="(enteEmporio || groupId > 2)" >class="ui-state-disabled"</s:if>
@@ -61,11 +61,9 @@
 			<li> <img src="icons/Food-Bunch-Ingredients-icon.png" align="bottom" height="16" width="16">
 				<span style="vertical-align: top">Gestione Eccedenze</span>
 				<ul>
-					<li onclick="window.location='eccedenzeLink';">Segnalazione
-						Eccedenze</li>
-					<li onclick="window.location='impegniLink';">Prenotazione
-						Ritiri</li>
-					<li onclick="window.location='ritiriLink';">Elenco Ritiri Prenotati</li>
+					<li onclick="window.location='eccedenzeLink';">Segnalazione</li>
+					<li onclick="window.location='impegniLink';">Prenotazione</li>
+					<li onclick="window.location='ritiriLink';">Elenco Prenotazioni</li>
 				</ul>
 			</li>
 			<li>-</li>
@@ -78,7 +76,8 @@
 								onclick="window.location='anagraficaCompletaReport.action';">Elenco Regionale</li>
 							<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
 								onclick="window.location='anagraficaXProvinciaEnteUserReport.action';">Elenco per Provincia</li>
-							<li onclick="window.location='anagraficaEnteUserReport.action';">Elenco per Ente</li>
+							<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
+								onclick="window.location='anagraficaEnteUserReport.action';">Elenco per Ente</li>
 							<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
 								onclick="window.location='graduatoriaProvincialeReport.action';">Graduatoria Provinciale</li>
 						</ul>

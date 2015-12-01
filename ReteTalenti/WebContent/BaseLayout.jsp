@@ -15,7 +15,6 @@
 <!-- jQuery script file. -->
 <script src="scripts/jquery.js" type="text/javascript"></script>
 <script src="scripts/jquery-ui.js" type="text/javascript"></script>
-<meta charset="UTF-8">
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
@@ -27,7 +26,7 @@
 				<td height="30" colspan="2"><tiles:insertAttribute  name="header" /></td>
 			</tr>
 			<tr height="600" valign="top">
-				<td width="180px" ><tiles:insertAttribute name="menu" /></td>
+				<td width="0px" ><tiles:insertAttribute name="menu" /></td>
 				<td align="center"><tiles:insertAttribute name="body" /></td>
 			</tr>
 			<tr>

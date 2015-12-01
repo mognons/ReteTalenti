@@ -1,4 +1,7 @@
 ﻿$(document).ready(function () {
+	var today = new Date();
+	var tomorrow = new Date((new Date()).valueOf() + 1000*3600*24);
+	
 	function ISOtoEuro(d) {
 		d = d.substring(0,10);
 		var dateParts = d.split("-");
@@ -16,9 +19,9 @@
 		if(dd<10){dd='0'+dd}; 
 		if(mm<10){mm='0'+mm};
 		//return (yyyy+"/"+mm+"/"+dd);	
-		return (dd+"/"+mm+"/"+yyyy);
+		return (yyyy+"-"+mm+"-"+dd+"T00:00:00");
 	};
-	function tomorrow() {
+	function morgen() {
 		var today = new Date((new Date()).valueOf() + 1000*3600*24);
 		var dd = today.getDate(); 
 		var mm = today.getMonth()+1;//January is 0! 
@@ -26,7 +29,7 @@
 		if(dd<10){dd='0'+dd}; 
 		if(mm<10){mm='0'+mm};
 		//return (yyyy+"/"+mm+"/"+dd);	
-		return (dd+"/"+mm+"/"+yyyy);
+		return (yyyy+"-"+mm+"-"+dd+"T00:00:00");
 	};
     $('#ImpegniTableContainer').jtable({
         title: 'Lista ritiri prenotati',
@@ -72,13 +75,13 @@
 				type: 'date',
 				displayFormat: 'dd/mm/yy',
 				display: function(data) {
-					console.log(heute());
+					console.log(heute(), morgen());
 					console.log(data.record.data_ritiro);
-					if (ISOtoEuro(data.record.data_ritiro) < heute()) {
+					if (data.record.data_ritiro < heute()) {
 						html = '<span style="color:red; font-weight: bold;">' + ISOtoEuro(data.record.data_ritiro)+ '</span>';
-					} else if (ISOtoEuro(data.record.data_ritiro) == heute()) {
+					} else if (data.record.data_ritiro == heute()) {
 						html = '<span style="color:orange; font-weight: bold;">' + ISOtoEuro(data.record.data_ritiro)+ '</span>';
-					} else if (ISOtoEuro(data.record.data_ritiro) == tomorrow()) {
+					} else if (data.record.data_ritiro == morgen()) {
 						html = '<span style="color:black; font-weight: bold;">' + ISOtoEuro(data.record.data_ritiro)+ '</span>';
 					} else {
 						html = '<span style="color:green; font-weight: bold;">' + ISOtoEuro(data.record.data_ritiro)+ '</span>';

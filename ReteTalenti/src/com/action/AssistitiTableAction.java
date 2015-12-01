@@ -254,7 +254,21 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
         return Action.SUCCESS;
     }
     
-    public String delete() throws IOException {
+    public String disattiva() throws IOException {
+    	String nota = "Assistenza terminata in data odierna";
+    	NoteTableAction annotazione = new NoteTableAction();
+    	try {
+    		dao.disattivaAssistito(cod_fiscale);
+    		annotazione.annotazione(cod_fiscale, nota);
+            result = "OK";
+        } catch (Exception e) {
+            result = "ERROR";
+            message = e.getMessage();
+            System.err.println(e.getMessage());
+        }
+        return Action.SUCCESS;
+    }
+        public String delete() throws IOException {
         record = new Assistito();
         record.setCod_fiscale(cod_fiscale);
         try {

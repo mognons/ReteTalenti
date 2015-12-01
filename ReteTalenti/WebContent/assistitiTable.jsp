@@ -106,7 +106,19 @@ fieldset {
 	top:1px;
 }
 
+.titleBar {
+    background: url("icons/danger-icon.png") no-repeat;
+    display: inline-block;
+    background-size: 24px 24px; /* image's size */
+    height: 24px; /* image's height */
+    padding-left: 34px; /* image's width plus 10 px (margin between text and image) */
+}
 
+.titleBar span {
+    height: 24px; /* image's height */
+    display: table-cell;
+    vertical-align: middle;
+}
 
 </style>
 
@@ -267,18 +279,21 @@ fieldset {
 		popup.src = "showCFDetails.action?codice_fiscale="
 				+ errorMessage.cf_search + "&origin=" + errorMessage.origin;
 		(function() {
+			var $title = 'Codice Fiscale già inserito in Rete Talenti</span>';
 			$('#pop-up').dialog({
 				modal : true,
 				resizable : false,
 				draggable : false,
 				width : '800',
 				height : '600',
-				title : 'Codice Fiscale già inserito in Rete Talenti',
 				buttons : {
 					"Chiudi" : function() {
 						$(this).dialog("close");
 					}
-				}
+				},
+	            open: function(event, ui){
+	                $(this).parent().find('.ui-dialog-titlebar').html('<span class="titleBar"><span>' + $title +'</span></span>');
+	            }
 			});
 		})();
 	};
@@ -287,9 +302,6 @@ fieldset {
 	var opzioni = [];
 	var select = document.getElementById("enteDestinazione");
 	var el = document.createElement("option");
-//     el.textContent = "Ente di destinazione";
-//     el.value = "-1";
-//     select.appendChild(el);
 
 	$.getJSON('Choose_Enti', function(data) {
 		$(data.options).each(function() {

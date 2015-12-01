@@ -27,13 +27,14 @@ public class AssistitiDao {
     }
 
     public void createAssistito(Assistito assistito) {
-        String insertAssistitoQuery = "INSERT INTO ASSISTITI (NOME,COGNOME,SESSO,STATO_CIVILE, "
-                + "LUOGO_NASCITA,DATA_NASCITA,NAZIONALITA,INDIRIZZO_RESIDENZA, "
-                + "CITTA_RESIDENZA,CAP,PROVINCIA,PERMESSO_SOGGIORNO,TELEFONO,EMAIL, "
-                + "NUM_DOCUMENTO,ENTE_ASSISTITI,DATA_INSERIMENTO,DATA_FINE_ASSISTENZA, "
-                + "DATA_CANDIDATURA,DATA_ACCETTAZIONE,DATA_SCADENZA, DATA_DISMISSIONE,OPERATORE) "
-                + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW(),null,null,null,null,null,?)";
-        try {
+        String insertAssistitoQuery = "INSERT INTO ASSISTITI "
+        							+ "(NOME,COGNOME,SESSO,STATO_CIVILE, "
+        							+ "LUOGO_NASCITA,DATA_NASCITA,NAZIONALITA,INDIRIZZO_RESIDENZA, "
+					                + "CITTA_RESIDENZA,CAP,PROVINCIA,PERMESSO_SOGGIORNO,TELEFONO,EMAIL, "
+					                + "NUM_DOCUMENTO,ENTE_ASSISTENTE,DATA_INSERIMENTO,DATA_FINE_ASSISTENZA, "
+					                + "DATA_CANDIDATURA,DATA_ACCETTAZIONE,DATA_SCADENZA, DATA_DISMISSIONE, EMPORIO, OPERATORE) "
+					                + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW(),null,null,null,null,null,null,?)";
+					        try {
             pStmt = dbConnection.prepareStatement(insertAssistitoQuery);
             pStmt.setString(1, assistito.getNome());
             pStmt.setString(2, assistito.getCognome());
@@ -108,6 +109,20 @@ public class AssistitiDao {
 
         String updateQuery = "UPDATE ASSISTITI "
         		+ "SET DATA_FINE_ASSISTENZA=NULL "
+                + "WHERE COD_FISCALE=?";
+        try {
+            pStmt = dbConnection.prepareStatement(updateQuery);
+            pStmt.setString(1, codice_fiscale);
+            pStmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public void disattivaAssistito(String codice_fiscale) {
+
+        String updateQuery = "UPDATE ASSISTITI "
+        		+ "SET DATA_FINE_ASSISTENZA=NOW() "
                 + "WHERE COD_FISCALE=?";
         try {
             pStmt = dbConnection.prepareStatement(updateQuery);
