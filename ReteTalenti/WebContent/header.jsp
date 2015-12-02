@@ -3,6 +3,33 @@
 <!DOCTYPE h2 PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<script type="text/JavaScript">
+// Groups
+var enteUtente = '<s:property value="ente"/>';
+var gruppoUtente = '<s:property value="groupId"/>';
+
+$(document).ready(function () {
+	var newMessages = false;
+	<s:if test="newMessages">newMessages=true</s:if>
+	if (newMessages) {
+	    $( "#msg-dialog" ).dialog({
+	        resizable: false,
+	        height:150,
+	        modal: true,
+	        buttons: {
+	          "Vai": function() {
+	            $(this).dialog("close");
+	      		window.location.replace("home.action");		
+	          },
+	          "Ignora": function() {
+	            $(this).dialog("close");
+	          }
+	        }
+	      });
+	}
+});
+
+</script>
 </head>
 <body>
 	<div class="main-header" style="position: relative">
@@ -32,5 +59,9 @@
 			</tr>
 		</table>
 	</div>
+	<div style="display:none;" id="msg-dialog" title="Informazione dal sistema">
+	  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;">
+	  </span>Ci sono nuovi messaggi: vuoi vederli?</p>
+	</div>	
 </body>
 </html>

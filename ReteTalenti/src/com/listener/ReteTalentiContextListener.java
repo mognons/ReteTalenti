@@ -7,7 +7,7 @@ import java.util.Enumeration;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
  
-public class classActionServletContextListener 
+public class ReteTalentiContextListener 
                implements ServletContextListener{
  
 	@Override

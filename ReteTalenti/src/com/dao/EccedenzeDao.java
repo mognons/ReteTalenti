@@ -8,12 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.Date;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
 
-import com.interceptor.UserAware;
 import com.jdbc.DataAccessObject;
 import com.model.Eccedenza;
 import com.model.User;

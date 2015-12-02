@@ -20,9 +20,9 @@
 				toolbar: {
 					items: [
 					{
-						text: 'LETTO',
+						text: 'LETTO/DA LEGGERE',
 						icon: 'icons/Yes.png',
-						tooltip: "Marca uno o più messaggi come se fossero stati letti",
+						tooltip: "Marca i messaggi letti come non lwtti e viceversa",
 						click: function () {
 							return $.Deferred(function ($dfd) {
 							var $selectedRows = $('#MessagesTableContainer').jtable('selectedRows');

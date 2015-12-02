@@ -80,6 +80,28 @@ public class MessagesDao {
 		return recordCount;
 	}
 	
+	public int getLastIdOfValidMessages(User loggedUser) {
+		int recordCount = 0;
+		String query = 	"SELECT MAX(ID) FROM MESSAGES "
+						+ "WHERE MESSAGE_READ=FALSE "
+						+ "AND (END_DATE>=NOW() OR END_DATE IS NULL) "
+						+ "AND START_DATE<=NOW() "
+						+ "AND (ENTE=? OR ENTE=0) "
+						+ "ORDER BY START_DATE DESC";
+		
+		try {
+			PreparedStatement pStmt = dbConnection.prepareStatement(query);
+			pStmt.setInt(1, loggedUser.getEnte());
+			ResultSet rs = pStmt.executeQuery();
+			while (rs.next()) {
+				recordCount = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return recordCount;
+	}
+	
 	public List<Message> getAllMessages(int jtStartIndex, int jtPageSize) {
 		List<Message> messaggi = new ArrayList<Message>();
 
@@ -131,7 +153,7 @@ public class MessagesDao {
 	
 	public void markMessageAsRead(int messageID) {
 		String query = 	"UPDATE MESSAGES "
-						+ "SET MESSAGE_READ=TRUE "
+						+ "SET MESSAGE_READ=NOT(MESSAGE_READ) "
 						+ "WHERE ID=?";
 		
 		try {
@@ -182,4 +204,19 @@ public class MessagesDao {
 		return;
 	}
 	
+	public void deleteMessageByTypeAndKey(Message messaggio) {
+		String query = 	"DELETE FROM MESSAGES "
+						+ "WHERE KEY2=? " 
+						+ "AND ACTION=?";
+		
+		try {
+			PreparedStatement pStmt = dbConnection.prepareStatement(query);
+			pStmt.setInt(1, messaggio.getKey2());
+			pStmt.setString(2, messaggio.getAction());
+			pStmt.executeUpdate();
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return;
+	}
 }

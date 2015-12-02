@@ -104,7 +104,21 @@ public class MessageAction extends ActionSupport implements UserAware {
 	public String createMessage(Message messaggio) {
 		try {
 			// Fetch Data from User Table
-			dao.insertNewMessage(messaggio);;
+			dao.insertNewMessage(messaggio);
+			result = "OK";
+			
+		} catch (Exception e) {
+			result = "ERROR";
+			message = e.getMessage();
+			System.err.println(e.getMessage());
+		}
+		return Action.SUCCESS;
+	}
+	
+	public String deleteMessage(Message messaggio) {
+		try {
+			// Fetch Data from User Table
+			dao.deleteMessageByTypeAndKey(messaggio);
 			result = "OK";
 			
 		} catch (Exception e) {

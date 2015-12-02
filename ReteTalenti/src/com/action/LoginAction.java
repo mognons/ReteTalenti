@@ -5,6 +5,7 @@ import java.util.Map;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.model.User;
+import com.dao.MessagesDao;
 import com.dao.UsersDao;
 import com.jdbc.DataAccessObject;
 import com.opensymphony.xwork2.ActionSupport;
@@ -15,6 +16,7 @@ public class LoginAction extends ActionSupport implements SessionAware, ModelDri
     private static final long serialVersionUID = -3369875299120377549L;
     private String errorMsg, errorMessage;
     private UsersDao dao = new UsersDao();
+    private MessagesDao m_dao = new MessagesDao();
     private String cognome;
     private int openTab = 0;
     private Boolean loginOk;
@@ -34,6 +36,9 @@ public class LoginAction extends ActionSupport implements SessionAware, ModelDri
         if (loginOk) {
             user = dao.getUserData(user.getUsername());
             sessionAttributes.put("USER", user);
+        	int actualMessageId = m_dao.getLastIdOfValidMessages(user);
+        	System.err.print(actualMessageId);
+        	sessionAttributes.put("LASTMSGID", actualMessageId);
             errorMsg="";
             return SUCCESS;
         }

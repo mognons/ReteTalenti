@@ -117,7 +117,7 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
             	messaggio.setAction("FOLLOW_impegniLink.action");
             	messaggio.setMessage_text(message_text);
             	messaggio.setKey1(null);
-            	messaggio.setKey2(0);
+            	messaggio.setKey2(record.getId());
             	messaggio.setKey3(null);
             	messaggio.setStart_date(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
             	messaggio.setEnd_date(scadenza);
@@ -141,6 +141,23 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
     }
 
     public String update() throws IOException {
+    	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Uni_misura udm1 = u_dao.getUni_misuraById(udm);
+        Ente enteCedente = e_dao.getEnte(user.getEnte());
+        String message_text = 	
+        		user.getDescrizioneEnte() + 
+        		" ha segnalato un'eccedenza di <b>"
+				+ prodotto + "</b> per un totale di <b>"
+				+ qta+ " " + udm1.getDescrizione() + "</b> con scadenza "
+				+ sdf.format(scadenza) + ".\n"
+				+ "Contattare il responsabile <i>" + enteCedente.getResponsabile()
+				+ "</i> al numero di telefono <b>" + enteCedente.getResp_phone()
+				+ "</b> oppure via email all'indirizzo <b><a href='mailto:" + enteCedente.getResp_email() + "'>" 
+				+ enteCedente.getResp_email() +"</a></b>.";
+        
+        
+    	String mail_body = message_text.replaceAll("\\<[^>]*>","");
+    	mail_body = mail_body + "\n\nMessaggio inviato automaticamente dal sistema ReteTalenti.";
         record = new Eccedenza();
 
         record.setId(id);
@@ -150,15 +167,36 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
         record.setQta(qta);
         record.setQta_residua(qta);
         record.setScadenza(scadenza);
+    	MessageAction mess = new MessageAction();
         try {
-            // Update existing record
             dao.updateEccedenza(record);
-            result = "OK";
+            entiDestinatari = e_dao.getOtherEnti(user, false);
+            Iterator<Ente> enti = entiDestinatari.iterator();
+        	Message messaggio = new Message();
+        	messaggio.setAction("FOLLOW_impegniLink.action");
+        	messaggio.setKey2(id);
+        	mess.deleteMessage(messaggio); // Rimuove il messaggio precedente epoi lo ricrea con i dati aggiornati
+            while (enti.hasNext()) {
+            	messaggio = new Message();
+            	Ente enteDestinatario = enti.next();
+            	messaggio.setEnte(enteDestinatario.getId());
+            	messaggio.setTag("ECCEDENZE");
+            	messaggio.setAction("FOLLOW_impegniLink.action");
+            	messaggio.setMessage_text(message_text);
+            	messaggio.setKey1(null);
+            	messaggio.setKey2(id);
+            	messaggio.setKey3(null);
+            	messaggio.setStart_date(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+            	messaggio.setEnd_date(scadenza);
+            	mess.createMessage(messaggio);
+            }    
         } catch (Exception e) {
             result = "ERROR";
             message = e.getMessage();
-            System.err.println(e.getMessage());
+            System.err.println(e.getCause());
+            return SUCCESS;
         }
+        result = "OK";
         return SUCCESS;
     }
 
