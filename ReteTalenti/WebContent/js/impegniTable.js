@@ -100,6 +100,7 @@
                 								+eccedenzaData.record.qta_residua +']'
                                 },
                                 dummy_data: {
+                                	list: false,
                                 	create: true,
                                 	edit: true,
                                 	input: function (data) {
@@ -112,7 +113,7 @@
                                 	inputTitle: 'Ritiro previsto' + ' <span style="color:red">*</span>',
                 					type: 'date',
                 					displayFormat: 'dd/mm/yy',
-                					inputClass: 'validate[required,future[now],past[scadenza]] datepicker',
+                					inputClass: 'validate[required,future[now],past[data_scadenza]] datepicker',
 									defaultValue: tomorrow(),
                                     list: true,
                                     edit: true

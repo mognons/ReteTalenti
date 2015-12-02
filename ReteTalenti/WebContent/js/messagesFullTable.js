@@ -134,7 +134,7 @@
 						title: 'Inizio validità',
                     	inputTitle: 'Inizio validità' + ' <span style="color:red">*</span>',
 						type: 'date',
-						inputClass: 'validate[required] datepicker',
+						inputClass: 'validate[required, future[now]] datepicker',
 						displayFormat: 'dd/mm/yy',
 						create: true
 					},

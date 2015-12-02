@@ -1,4 +1,4 @@
-$(document).ready(function () {
+﻿$(document).ready(function () {
     $('#Uni_misuraTableContainer').jtable({
         title: 'Tabella Unità di Misura',
         paging: false, //Enable paging

@@ -49,12 +49,12 @@
 			</li>
 			<li>-</li>
 			<li <s:if test="!(enteEmporio)" >class="ui-state-disabled"</s:if>> 
-				<img src="icons/Food-Bunch-Ingredients-icon.png" align="bottom" height="16" width="16">
+				<img src="icons/shop_basket.png" align="bottom" height="16" width="16">
 				<span style="vertical-align: top">Gestione Emporio</span>
 				<ul>
-					<li onclick="window.location='accettazioneEmporioLink';">Accettazione Emporio</li>
-					<li onclick="window.location='anagraficaEmporioLink';">Anagrafica Emporio</li>
-					<li onclick="window.location='dismissioneEmporioLink';">Dimissione Emporio</li>
+					<li onclick="window.location='accettazioneEmporioLink';">Accettazione</li>
+					<li onclick="window.location='anagraficaEmporioLink';">Anagrafica</li>
+					<li onclick="window.location='dismissioneEmporioLink';">Dimissione</li>
 				</ul>
 			</li>
 			<li>-</li>

@@ -288,7 +288,7 @@ public class UsersDao {
 
 	public List<Groups> getGroupsByUser(int userId) {
 		List<Groups> groups = new ArrayList<Groups>();
-		String query = "SELECT GROUPS.GROUPID, GROUPS.GROUPNAME FROM USERS,GROUPS,USERGROUP"
+		String query = "SELECT GROUPS.GROUPID, GROUPS.GROUPNAME FROM USERS,GROUPS"
 				+ " WHERE 1=1"
 				+ " AND USERS.ID = USERGROUP.USERID"
 				+ " AND GROUPS.GROUPID = USERGROUP.GROUPID"
@@ -349,21 +349,7 @@ public class UsersDao {
 	}
 
 	public void deleteUser(String username) {
-		int tempId = 0;
-		String query = "SELECT ID FROM USERS WHERE USERNAME=?";		
-		try {
-			pStmt = dbConnection.prepareStatement(query);
-			pStmt.setString(1, username);
-			
-			ResultSet rs = pStmt.executeQuery();
-			
-			while (rs.next()) {
-				tempId = rs.getInt(1);
-			}
-			
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-		}
+
 		String deleteQuery = "DELETE FROM USERS WHERE USERNAME=?";
 		try {
 			pStmt = dbConnection.prepareStatement(deleteQuery);
@@ -372,13 +358,6 @@ public class UsersDao {
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
-		deleteQuery = "DELETE FROM USERGROUP WHERE USERID=?";
-		try {
-			pStmt = dbConnection.prepareStatement(deleteQuery);
-			pStmt.setInt(1, tempId);
-			pStmt.executeUpdate();
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-		}
+
 	}
 }

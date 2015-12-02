@@ -89,7 +89,9 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
 				+ sdf.format(scadenza) + ".\n"
 				+ "Contattare il responsabile <i>" + enteCedente.getResponsabile()
 				+ "</i> al numero di telefono <b>" + enteCedente.getResp_phone()
-				+ "</b> oppure via email all'indirizzo <b>" + enteCedente.getResp_email() + "</b>.";
+				+ "</b> oppure via email all'indirizzo <b><a href='mailto:" + enteCedente.getResp_email() + "'>" 
+				+ enteCedente.getResp_email() +"</a></b>.";
+        
         
     	String mail_body = message_text.replaceAll("\\<[^>]*>","");
     	mail_body = mail_body + "\n\nMessaggio inviato automaticamente dal sistema ReteTalenti.";

@@ -26,7 +26,7 @@
 				<td height="30" colspan="2"><tiles:insertAttribute  name="header" /></td>
 			</tr>
 			<tr height="600" valign="top">
-				<td width="0px" ><tiles:insertAttribute name="menu" /></td>
+				<td style="width:192px;"><tiles:insertAttribute name="menu" /></td>
 				<td align="center"><tiles:insertAttribute name="body" /></td>
 			</tr>
 			<tr>
