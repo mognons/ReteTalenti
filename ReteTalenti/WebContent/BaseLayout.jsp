@@ -11,28 +11,56 @@
 <link href="css/theme.css" rel="stylesheet" type="text/css" />
 <link href="css/lightcolor/blue/jtable.css" rel="stylesheet" type="text/css" />
 <link href="css/style.css" rel="stylesheet" type="text/css" />
-
+<!– Add conditional for IE7 + 8 support –>   
+<!–[if lte IE 8]>
+<script src="scripts/html5.js"></script>
+<![endif]–>
 <!-- jQuery script file. -->
 <script src="scripts/jquery.js" type="text/javascript"></script>
 <script src="scripts/jquery-ui.js" type="text/javascript"></script>
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  var bodyHeight = $("body").height();
+  var vwptHeight = $(document).height();
+  console.log(bodyHeight,vwptHeight);
+  if (vwptHeight > bodyHeight) {
+    $("footer#colophon").css("position","absolute").css("bottom",0);
+  }
+});
+</script>
+
+<style>
+
+header, footer {
+        float:left;
+		padding:1px 0;
+		min-width:100%;
+}
+	
+
+body {
+    margin: 0;
+    padding: 0;
+}
+    
+</style>
 </head>
 <body>
-<!-- 	<div class="site-container"> -->
+<header><tiles:insertAttribute  name="header" /></header>
 		<table width="100%" align="center">
-			<tr>
-				<td height="30" colspan="2"><tiles:insertAttribute  name="header" /></td>
-			</tr>
-			<tr height="600" valign="top">
+			<tr height="1024" valign="top">
 				<td style="width:192px;"><tiles:insertAttribute name="menu" /></td>
 				<td align="center"><tiles:insertAttribute name="body" /></td>
 			</tr>
-			<tr>
-				<td height="30" colspan="2" align="center"><tiles:insertAttribute name="footer" /></td>
-			</tr>
 		</table>
 <!-- 	</div> -->
+<footer id="colophon" >
+		<div class="main-footer">&copy;2015 - <a href="http://www.acliverona.it" target="_new">ACLI Verona</a> - Developed by  
+		<a href="http://www.5020.it" target="_new">5020-cinquantaventi</a></div>
+</footer>
 </body>
 </html>

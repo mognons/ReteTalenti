@@ -6,15 +6,18 @@ import java.util.Enumeration;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+
+import com.jdbc.DataAccessObject;
  
 public class ReteTalentiContextListener 
                implements ServletContextListener{
  
 	@Override
 	public final void contextDestroyed(ServletContextEvent sce) {
-	    // ... First close any background tasks which may be using the DB ...
-	    // ... Then close any DB connection pools ...
-
+		// Close Database Connection
+		System.out.println("Closing DB Connection");
+	    DataAccessObject.closeConnection();
+	    
 		// Now deregister JDBC drivers in this context's ClassLoader:
 	    // Get the webapp's ClassLoader
 	    ClassLoader cl = Thread.currentThread().getContextClassLoader();
@@ -39,6 +42,6 @@ public class ReteTalentiContextListener
         //Run this before web application is started
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		System.out.println("ServletContextListener started");
+		System.out.println("ReteTalenti starting...");
 	}
 }

@@ -22,7 +22,7 @@ public class HeaderAction extends ActionSupport implements SessionAware, UserAwa
     	int lastMessageId = (int) sessionAttributes.get("LASTMSGID");
     	int actualMessageId = dao.getLastIdOfValidMessages(user);
     	sessionAttributes.put("LASTMSGID", actualMessageId);
-    	if (lastMessageId != actualMessageId) {
+    	if (lastMessageId > actualMessageId) {
     		newMessages = true;
     	}
         return SUCCESS;

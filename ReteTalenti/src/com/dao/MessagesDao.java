@@ -82,7 +82,7 @@ public class MessagesDao {
 	
 	public int getLastIdOfValidMessages(User loggedUser) {
 		int recordCount = 0;
-		String query = 	"SELECT MAX(ID) FROM MESSAGES "
+		String query = 	"SELECT COALESCE(MAX(ID),999999999) FROM MESSAGES "
 						+ "WHERE MESSAGE_READ=FALSE "
 						+ "AND (END_DATE>=NOW() OR END_DATE IS NULL) "
 						+ "AND START_DATE<=NOW() "
@@ -152,6 +152,21 @@ public class MessagesDao {
 	}
 	
 	public void markMessageAsRead(int messageID) {
+		String query = 	"UPDATE MESSAGES "
+						+ "SET MESSAGE_READ=TRUE "
+						+ "WHERE ID=?";
+		
+		try {
+			PreparedStatement pStmt = dbConnection.prepareStatement(query);
+			pStmt.setInt(1, messageID);
+			pStmt.executeUpdate();
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return;
+	}
+	
+	public void markMessage(int messageID) {
 		String query = 	"UPDATE MESSAGES "
 						+ "SET MESSAGE_READ=NOT(MESSAGE_READ) "
 						+ "WHERE ID=?";

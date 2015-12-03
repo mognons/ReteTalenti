@@ -3,16 +3,19 @@ package com.action;
 import java.util.*;
 import org.json.simple.JSONObject;
 import com.dao.DropDownDao;
+import com.interceptor.UserAware;
+import com.model.User;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class dropdownAction extends ActionSupport {
+public class dropdownAction extends ActionSupport implements UserAware {
 	private static final long serialVersionUID = 1L;
 
 	private DropDownDao dao = new DropDownDao();
 
 	private String result;
 	private String message;
+	private User user = new User();
 	
 	private List<JSONObject> options;
 
@@ -58,6 +61,20 @@ public class dropdownAction extends ActionSupport {
 		return Action.SUCCESS;
 	}
 
+	public String EntiOther() {
+		options = new ArrayList<JSONObject> ();
+		options = dao.getAllEnti();
+		result = "OK";
+		return Action.SUCCESS;
+	}
+
+	public String MessageDestination() {
+		options = new ArrayList<JSONObject> ();
+		options = dao.getMessageDestination(user);
+		result = "OK";
+		return Action.SUCCESS;
+	}
+
 	public String UDM() {
 		options = new ArrayList<JSONObject> ();
 		options = dao.getAllUDM();
@@ -95,6 +112,11 @@ public class dropdownAction extends ActionSupport {
 
 	public void setoptions(List<JSONObject> options) {
 		this.options = options;
+	}
+
+	@Override
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	

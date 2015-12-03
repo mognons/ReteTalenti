@@ -12,7 +12,7 @@
 		<put-attribute name="footer" value="/footer.jsp" />
 	</definition>
 	<definition name="loginLayout" template="/LoginLayout.jsp">
-		<put-attribute name="title" value="ReteTalenti Login Page" />
+		<put-attribute name="title" value="ReteTalenti: Accesso" />
 		<put-attribute name="header" value="/header.jsp" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/footer.jsp" />

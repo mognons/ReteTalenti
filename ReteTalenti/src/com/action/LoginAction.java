@@ -37,7 +37,7 @@ public class LoginAction extends ActionSupport implements SessionAware, ModelDri
             user = dao.getUserData(user.getUsername());
             sessionAttributes.put("USER", user);
         	int actualMessageId = m_dao.getLastIdOfValidMessages(user);
-        	System.err.print(actualMessageId);
+        	System.err.println("Actual message id: " + actualMessageId);
         	sessionAttributes.put("LASTMSGID", actualMessageId);
             errorMsg="";
             return SUCCESS;

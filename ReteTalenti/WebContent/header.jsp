@@ -15,6 +15,7 @@ $(document).ready(function () {
 	    $( "#msg-dialog" ).dialog({
 	        resizable: false,
 	        height:150,
+	        width: 400,
 	        modal: true,
 	        buttons: {
 	          "Vai": function() {

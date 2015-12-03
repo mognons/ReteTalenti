@@ -8,8 +8,7 @@
 				selecting : true, // Enable selecting
 				multiselect : true, // Allow multiple selecting
 				selectingCheckboxes : true, // Show checkboxes on first column
-				selectOnRowClick : true, // Enable this to only select using
-				// checkboxes
+				selectOnRowClick : true, // Enable this to only select using checkboxes
 				pageSizeChangeArea : false,
 				openChildAsAccordion : true,
 				actions : {
@@ -22,10 +21,11 @@
 					{
 						text: 'LETTO/DA LEGGERE',
 						icon: 'icons/Yes.png',
-						tooltip: "Marca i messaggi letti come non lwtti e viceversa",
+						tooltip: "Marca i messaggi letti come non letti e viceversa",
 						click: function () {
 							return $.Deferred(function ($dfd) {
 							var $selectedRows = $('#MessagesTableContainer').jtable('selectedRows');
+							console.log($selectedRows);
 							$("#dialog").dialog({
 								modal: true,
 								buttons: [{
@@ -35,7 +35,7 @@
 					        			  var self = this;
 					        			  var record = $(self).data('record');
 											$.ajax({
-												url: 'markReadMessageAction',
+												url: 'changeStatusMessageAction',
 												type: 'POST',
 												dataType: 'json',
 												async : false,
@@ -50,6 +50,7 @@
 												}
 											});
 					        		  });
+					        		  $('#MessagesTableContainer .jtable-row-selected').removeClass('jtable-row-selected');
 					        		  $('#MessagesTableContainer').jtable('reload');
 					        		  $(this).dialog('close');
 					        	  }
@@ -119,14 +120,19 @@
 					ente : {
 						title: 'Destinatario',
 						width: '10%',
-						options: 'Choose_Enti',
+						options: 'Choose_MessageDestination',
 						list: true,
-						create: false
+						create: true
 					},
 					action : {
-						title: 'Action',
+						title: 'Tipologia',
 						width: '10%',
-						options: {'WARNING_':'Non leggibile','READMSG_markReadMessageAction':'Leggibile'},
+						options: function(data) {
+							if (gruppoUtente==1) 
+								return {'WARNING_':'Permanente','READMSG_markReadMessageAction':'Standard'};
+							else
+								return {'READMSG_markReadMessageAction':'Standard'};
+						},
 						list: false,
 						create: true
 					},

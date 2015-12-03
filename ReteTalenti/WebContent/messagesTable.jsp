@@ -10,6 +10,11 @@
 <script type="text/javascript" src="scripts/jquery.validationEngine-it.js"></script>
 
 <script type="text/JavaScript">
+// Groups
+var enteUtente = '<s:property value="ente"/>';
+var gruppoUtente = '<s:property value="groupId"/>';
+
+
 	function ISOtoEuro(d) {
 		d = d.substring(0,10);
 		var dateParts = d.split("-");
@@ -37,71 +42,8 @@
 		return (yyyy + "/" + mm + "/" + dd);
 	}
 
-	function identifyAction(message) {
-		var action = message.action.split('_')[0];
-		var URL = message.action.split('_').pop();
-		// Build up URL complete with parameters
-		URL = URL + "?messageID=" + message.id;
-		if (message.key1 != null)
-			URL = URL + "&key1=" + message.key1;
-		if (message.key2 != 0)
-			URL = URL + "&key2=" + message.key2;
-		if (message.key3 != null)
-			URL = URL + "&key3=" + message.key3;
-
-		var dialog_text = null;
-		switch (action) {
-		case "READMSG":
-			dialog_text = "<center>Hai letto: </center><i>"
-					+ message.message_text + "</i>?";
-			break;
-		case "EXECUTE":
-			dialog_text = "<center>Vuoi eseguire: </center><i>"
-					+ message.message_text + "</i>?";
-			break;
-		default:
-		}
-		if (dialog_text != null) {
-			$("#dialog").dialog({
-				modal : true,
-				buttons : [ {
-					text : "Conferma",
-					click : function() {
-						$(this).dialog("close");
-						window.location.replace(URL);
-					}
-				}, {
-					text : "Annulla",
-					click : function() {
-						$(this).dialog("close");
-					}
-				} ],
-				open : function() {
-					$("#dialog").html(dialog_text);
-				}
-			});
-		} else {
-			window.location.replace(URL);
-		}
-	};
-
 	$(document).ready(function() {
-		var myUsername = "";
-		var openTab = '<s:property value="openTab"/>';
-		if (openTab == '')
-			openTab = 0;
 
-		$("#tabs").tabs({
-			active : openTab
-		});
-
-		// Groups
-		var userGroups = [];
-		<s:iterator value="groups">
-		myGroup = '<s:property value="groupName"/>';
-		userGroups.push(myGroup);
-		console.log(myGroup);
-		</s:iterator>;
 	});
 </script>
 <style>
