@@ -161,7 +161,7 @@ public class EntiDao {
     public Ente getEnte(int id_ente) {
         Ente ente = new Ente();
         String newQuery = "SELECT * FROM ENTI WHERE ID=? ";
-
+        System.out.println("Ente id: " + id_ente);
         try {
             pStmt = dbConnection.prepareStatement(newQuery);
             pStmt.setInt(1, id_ente);
@@ -176,7 +176,7 @@ public class EntiDao {
                 ente.setEnte_emporio(rs.getBoolean(7));
             }
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            System.err.println("Errore in getEnte: " + e.getMessage());
         }
         return ente;
     }
