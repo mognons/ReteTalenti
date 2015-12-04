@@ -1,4 +1,4 @@
-package com.listener;
+	package com.listener;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import org.quartz.CronScheduleBuilder;
@@ -38,17 +38,24 @@ public class QuartzSchedulerListener implements ServletContextListener {
 			     CronScheduleBuilder.cronSchedule("0/10 * * * * ?"))
 			  .build();
 
-			Trigger dailyInTheEvening = TriggerBuilder
+			Trigger dailyInTheEvening1 = TriggerBuilder
 					  .newTrigger()
-					  .withIdentity("dailyInTheEvening", "myGroup")
+					  .withIdentity("dailyInTheEvening1", "myGroup")
+					  .withSchedule(
+					     CronScheduleBuilder.cronSchedule("0 30 20 * * ?"))
+					  .build();
+
+			Trigger dailyInTheEvening2 = TriggerBuilder
+					  .newTrigger()
+					  .withIdentity("dailyInTheEvening2", "myGroup")
 					  .withSchedule(
 					     CronScheduleBuilder.cronSchedule("0 30 20 * * ?"))
 					  .build();
 
 			Scheduler scheduler = new StdSchedulerFactory().getScheduler();
 			scheduler.start();
-			scheduler.scheduleJob(DBkeepAlive, dailyInTheEvening);
-			scheduler.scheduleJob(ChkScadenzaEmporio, dailyInTheEvening);
+			scheduler.scheduleJob(DBkeepAlive, dailyInTheEvening1);
+			scheduler.scheduleJob(ChkScadenzaEmporio, dailyInTheEvening2);
 
 		} catch (SchedulerException e) {
 			e.printStackTrace();
