@@ -74,6 +74,7 @@
         selectOnRowClick: false, // Enable this to only select using checkboxes
         pageSizeChangeArea: false,
         openChildAsAccordion: true,
+        jqueryuiTheme: false,
         actions: {
             listAction: 'listAssistitiAction',
             createAction: 'createAssistitiAction',

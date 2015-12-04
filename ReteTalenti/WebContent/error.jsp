@@ -5,12 +5,6 @@
 <html>
 <head>
 <title>System Error</title>
-<!-- jTable metro styles. -->
-<link href="css/metro/blue/jtable.css" rel="stylesheet" type="text/css" />
-<link href="css/metro/site.css" rel="stylesheet" type="text/css" />
-<link href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css" />
-
-
 <body>
 	<div class="site-container">
 		<div class="main-header" style="position: relative">
