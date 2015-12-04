@@ -17,12 +17,14 @@ public class sendMail {
 		ResourceBundle rb = ResourceBundle.getBundle("com.properties.basicConfiguration");
 		final String username = rb.getString("mailUser");
 		final String password = rb.getString("mailPassword");
+		final String mailServer =  rb.getString("mailServer");
+		final String mailServerPort =  rb.getString("mailServerPort");
 		System.out.println("Inside sendMail with " + username + " / " + password);
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.host", mailServer);
+		props.put("mail.smtp.port", mailServerPort);
 
 		Session session = Session.getInstance(props,
 		  new javax.mail.Authenticator() {

@@ -10,6 +10,11 @@
 .ui-menu {
 	width: 190px;
 }
+
+ul ul{
+    display:none;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -33,7 +38,7 @@
 		<s:set var="isRegione" value="%{'true'}" />
 	</s:elseif>
 
-	<div style="position: relative; left: 0px; top: 0px; z-index: 10">
+	<div style="height:42px; position:relative; left: 0px; top: 0px; z-index: 10">
 		<ul id="verticalMenu">
 			<li <s:if test="(enteEmporio)" >class="ui-state-disabled"</s:if>>
 			<img src="icons/group.png" align="bottom" height="16" width="16">
