@@ -60,7 +60,7 @@
 	<li class="delete separator"><a href="#delete"></a></li>
 </ul>
 
-<!-- <script type="text/javascript" src="js/jquery.js"></script> -->
+<!-- <script type="text/javascript" src="js/jquery-2.1.4.js"></script> -->
 <script type="text/javascript" src="scripts/jquery-browser.js"></script>
 <script type="text/javascript" src="scripts/jquery.form-3.24.js"></script>
 <script type="text/javascript" src="scripts/jquery.splitter/jquery.splitter-1.5.1.js"></script>

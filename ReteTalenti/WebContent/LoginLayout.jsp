@@ -14,9 +14,8 @@
 <link href="css/theme.css" rel="stylesheet" type="text/css" />
 <link href="css/lightcolor/blue/jtable.css" rel="stylesheet" type="text/css" />
 <link href="css/style.css" rel="stylesheet" type="text/css" />
-
 <!-- jQuery script file. -->
-<script src="scripts/jquery.js" type="text/javascript"></script>
+<script src="scripts/jquery-2.1.4.js" type="text/javascript"></script>
 <script src="scripts/jquery-ui.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -49,7 +48,7 @@ body {
 <body> 
 <!-- 	<div class="site-container"> -->
 <header><tiles:insertAttribute  name="header" /></header>
-		<td colspan="2"><tiles:insertAttribute name="body" /></td>
+		<div><tiles:insertAttribute name="body" /></div>
 <!-- 	</div> -->
 <footer id="colophon" >
 		<div class="main-footer">&copy;2015 - <a href="http://www.acliverona.it" target="_new">ACLI Verona</a> - Developed by  

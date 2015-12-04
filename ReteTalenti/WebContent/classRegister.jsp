@@ -11,7 +11,7 @@
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 
 <!-- jQuery script file. -->
-<script src="scripts/jquery.js" type="text/javascript"></script>
+<script src="scripts/jquery-2.1.4.js" type="text/javascript"></script>
 <script src="scripts/jquery-ui.min.js" type="text/javascript"></script>
 
 

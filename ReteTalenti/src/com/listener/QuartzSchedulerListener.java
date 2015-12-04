@@ -25,37 +25,37 @@ public class QuartzSchedulerListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent arg0) {
 
 		JobDetail DBkeepAlive = JobBuilder.newJob(DatabaseKeepAlive.class)
-								.withIdentity("DBkeepAlive", "myGroup").build();
+								.withIdentity("DBkeepAlive", "Service").build();
 		
 		JobDetail ChkScadenzaEmporio = JobBuilder.newJob(CheckScadenzaEmporio.class)
-				.withIdentity("ChkScadenzaEmporio", "myGroup").build();
+				.withIdentity("ChkScadenzaEmporio", "Database").build();
 		try {	
 
-			Trigger everyTenSeconds = TriggerBuilder
+			Trigger t1 = TriggerBuilder
 			  .newTrigger()
-			  .withIdentity("everyTenSeconds", "myGroup")
+			  .withIdentity("everyTenSeconds", "Hourly")
 			  .withSchedule(
 			     CronScheduleBuilder.cronSchedule("0/10 * * * * ?"))
 			  .build();
 
-			Trigger dailyInTheEvening1 = TriggerBuilder
+			Trigger t2 = TriggerBuilder
 					  .newTrigger()
-					  .withIdentity("dailyInTheEvening1", "myGroup")
+					  .withIdentity("InTheEvening1", "Daily")
 					  .withSchedule(
 					     CronScheduleBuilder.cronSchedule("0 30 20 * * ?"))
 					  .build();
 
-			Trigger dailyInTheEvening2 = TriggerBuilder
+			Trigger t3 = TriggerBuilder
 					  .newTrigger()
-					  .withIdentity("dailyInTheEvening2", "myGroup")
+					  .withIdentity("InTheEvening2", "Daily")
 					  .withSchedule(
 					     CronScheduleBuilder.cronSchedule("0 30 20 * * ?"))
 					  .build();
 
 			Scheduler scheduler = new StdSchedulerFactory().getScheduler();
 			scheduler.start();
-			scheduler.scheduleJob(DBkeepAlive, dailyInTheEvening1);
-			scheduler.scheduleJob(ChkScadenzaEmporio, dailyInTheEvening2);
+			scheduler.scheduleJob(DBkeepAlive, t2);
+			scheduler.scheduleJob(ChkScadenzaEmporio, t3);
 
 		} catch (SchedulerException e) {
 			e.printStackTrace();

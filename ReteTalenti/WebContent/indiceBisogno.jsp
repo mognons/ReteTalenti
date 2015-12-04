@@ -14,7 +14,7 @@
 <link href="css/lightcolor/blue/jtable.css" rel="stylesheet"
 	type="text/css" />
 <link href="css/style.css" rel="stylesheet" type="text/css" />
-<script src="scripts/jquery.js" type="text/javascript"></script>
+<script src="scripts/jquery-2.1.4.js" type="text/javascript"></script>
 <script src="scripts/jquery-ui.js" type="text/javascript"></script>
 <script type="text/javascript" src="scripts/jquery.validationEngine.js"></script>
 <script type="text/javascript" src="scripts/jquery.validationEngine-it.js"></script>
