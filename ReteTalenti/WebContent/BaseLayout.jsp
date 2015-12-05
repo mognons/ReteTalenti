@@ -11,10 +11,10 @@
 <link href="css/theme.css" rel="stylesheet" type="text/css" />
 <link href="css/lightcolor/blue/jtable.css" rel="stylesheet" type="text/css" />
 <link href="css/style.css" rel="stylesheet" type="text/css" />
-<!– Add conditional for IE7 + 8 support –>   
-<!–[if lte IE 8]>
+<!â Add conditional for IE7 + 8 support â>   
+<!â[if lte IE 8]>
 <script src="scripts/html5.js"></script>
-<![endif]–>
+<![endif]â>
 <!-- jQuery script file. -->
 <script src="scripts/jquery-2.1.4.js" type="text/javascript"></script>
 <script src="scripts/jquery-ui.js" type="text/javascript"></script>
@@ -23,14 +23,22 @@
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
 <script type="text/javascript">
-$(document).ready(function() {
-  var bodyHeight = $("body").height();
-  var vwptHeight = $(document).height();
-  console.log(bodyHeight,vwptHeight);
-  if (vwptHeight > bodyHeight) {
-    $("footer#colophon").css("position","absolute").css("bottom",0);
-  }
-});
+
+	function stickyFooter() {
+		var bodyHeight = $("body").height();
+		var vwptHeight = $(window).height();
+		if (vwptHeight > bodyHeight) {
+			$("footer#footer").css("position", "absolute").css("bottom", 0);
+		} else {
+			$("footer#footer").css("position", "").css("bottom", "");
+		}
+	}
+	$(document).ready(function() {
+		stickyFooter();
+	});
+	$(window).resize(function() {
+		stickyFooter();
+	});
 </script>
 
 <style>
@@ -52,13 +60,13 @@ body {
 <body>
 <header><tiles:insertAttribute  name="header" /></header>
 		<table width="100%" align="center">
-			<tr height="1024" valign="top">
+			<tr valign="top">
 				<td style="width:192px;"><tiles:insertAttribute name="menu" /></td>
 				<td align="center"><tiles:insertAttribute name="body" /></td>
 			</tr>
 		</table>
 <!-- 	</div> -->
-<footer id="colophon" >
+<footer id="footer" >
 		<div class="main-footer">&copy;2015 - <a href="http://www.acliverona.it" target="_new">ACLI Verona</a> - Developed by  
 		<a href="http://www.5020.it" target="_new">5020-cinquantaventi</a></div>
 </footer>

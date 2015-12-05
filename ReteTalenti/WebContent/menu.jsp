@@ -20,6 +20,7 @@ ul ul{
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#verticalMenu").menu()
+		$("#menu-container").css("display","block");
 	});
 </script>
 
@@ -38,7 +39,7 @@ ul ul{
 		<s:set var="isRegione" value="%{'true'}" />
 	</s:elseif>
 
-	<div style="height:42px; position:relative; left: 0px; top: 0px; z-index: 10">
+	<div id="menu-container" style="display:none; height:42px; position:relative; left: 0px; top: 0px; z-index: 10">
 		<ul id="verticalMenu">
 			<li <s:if test="(enteEmporio)" >class="ui-state-disabled"</s:if>>
 			<img src="icons/group.png" align="bottom" height="16" width="16">
