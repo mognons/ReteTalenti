@@ -12,7 +12,7 @@ import com.opensymphony.xwork2.ModelDriven;
 public class UpdateProfileAction extends ActionSupport implements SessionAware, ModelDriven<User> {
  
     private static final long serialVersionUID = -3394545299120377549L;
-    private String errorMsg;
+    private String errorMessage;
 	private UsersDao dao = new UsersDao();
     private User record = new User();
     private Map<String, Object> sessionAttributes = null;
@@ -66,11 +66,11 @@ public class UpdateProfileAction extends ActionSupport implements SessionAware, 
     			dao.updateUserFull(record);
     		User user = dao.getUserData(nomeutente);
             sessionAttributes.put("USER", user);
-            errorMsg="";
+            errorMessage="";
             return SUCCESS;
 			
 		} catch (Exception e) {
-			errorMsg = e.getMessage();
+			errorMessage = e.getMessage();
 			System.err.println(e.getMessage());
 			return ERROR;
 		}
@@ -82,12 +82,12 @@ public class UpdateProfileAction extends ActionSupport implements SessionAware, 
         this.sessionAttributes = sessionAttributes;
     }
 
-	public String getErrorMsg() {
-		return errorMsg;
+	public String getErrorMessage() {
+		return errorMessage;
 	}
 
-	public void setErrorMsg(String errorMsg) {
-		this.errorMsg = errorMsg;
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
 	}
 
 

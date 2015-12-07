@@ -14,6 +14,7 @@ public class ReportAction extends ActionSupport implements UserAware {
 
     private static final long serialVersionUID = 1173542L;
     private ReportDao dao = new ReportDao();
+    private String errorMessage;
     public String filename;
     public InputStream excelStream;
 
@@ -56,6 +57,7 @@ public class ReportAction extends ActionSupport implements UserAware {
             excelStream = new ByteArrayInputStream(out.toByteArray());
             out.close();
         } catch (Exception e) {
+        	errorMessage = "Error generating report because " + e.getMessage();
             e.printStackTrace(); //log to logs
             formati = null;
             return ERROR;
@@ -103,7 +105,8 @@ public class ReportAction extends ActionSupport implements UserAware {
         } catch (Exception e) {
             e.printStackTrace(); //log to logs
             formati = null;
-            return ERROR;
+        	errorMessage = "Error generating report because " + e.getMessage();
+        	return ERROR;
         }
         formati = null;
         return SUCCESS;
@@ -148,7 +151,8 @@ public class ReportAction extends ActionSupport implements UserAware {
         } catch (Exception e) {
             e.printStackTrace(); //log to logs
             formati = null;
-            return ERROR;
+        	errorMessage = "Error generating report because " + e.getMessage();
+        	return ERROR;
         }
         formati = null;
         return SUCCESS;
@@ -193,7 +197,8 @@ public class ReportAction extends ActionSupport implements UserAware {
         } catch (Exception e) {
             e.printStackTrace(); //log to logs
             formati = null;
-            return ERROR;
+        	errorMessage = "Error generating report because " + e.getMessage();
+        	return ERROR;
         }
         formati = null;
         return SUCCESS;
@@ -234,7 +239,8 @@ public class ReportAction extends ActionSupport implements UserAware {
         } catch (Exception e) {
             e.printStackTrace(); //log to logs
             formati = null;
-            return ERROR;
+        	errorMessage = "Error generating report because " + e.getMessage();
+        	return ERROR;
         }
         formati = null;
         formati_r = null;
@@ -264,5 +270,13 @@ public class ReportAction extends ActionSupport implements UserAware {
     public void setUser(User user) {
         this.user = user;
     }
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
 
 }

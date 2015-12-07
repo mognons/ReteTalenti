@@ -11,11 +11,17 @@
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/footer.jsp" />
 	</definition>
+	
 	<definition name="loginLayout" template="/LoginLayout.jsp">
 		<put-attribute name="title" value="ReteTalenti: Accesso" />
 		<put-attribute name="header" value="/header.jsp" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/footer.jsp" />
+	</definition>
+	 
+	<definition name="/error.tiles" extends="loginLayout">
+		<put-attribute name="title" value="Errore di sistema" />
+		<put-attribute name="body" value="/error.jsp" />
 	</definition>
 	 
 	<definition name="/welcome.tiles" extends="baseLayout">
@@ -38,62 +44,62 @@
 		<put-attribute name="body" value="/emporioDismissioneTable.jsp" />
 	</definition>
 	 
-	<definition name="/eccedenzetable.tiles" extends="baseLayout">
+	<definition name="/eccedenze.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Gestione Eccedenze" />
 		<put-attribute name="body" value="/eccedenzeTable.jsp" />
 	</definition>
 	 
-	<definition name="/impegnitable.tiles" extends="baseLayout">
+	<definition name="/impegni.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Prenotazione ritiri" />
 		<put-attribute name="body" value="/impegniTable.jsp" />
 	</definition>
  
-	<definition name="/ritiritable.tiles" extends="baseLayout">
+	<definition name="/ritiri.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Visualizzazione ritiri prenotati" />
 		<put-attribute name="body" value="/ritiriTable.jsp" />
 	</definition>
  
-	<definition name="/assistititable.tiles" extends="baseLayout">
+	<definition name="/assistiti.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Anagrafica Assistiti" />
 		<put-attribute name="body" value="/assistitiTable.jsp" />
 	</definition>
  
-	<definition name="/messagestable.tiles" extends="baseLayout">
+	<definition name="/messages.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Gestione Messaggi" />
 		<put-attribute name="body" value="/messagesTable.jsp" />
 	</definition>
  
-	<definition name="/candidaturetable.tiles" extends="baseLayout">
+	<definition name="/candidature.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Candidatura Emporio" />
 		<put-attribute name="body" value="/candidatureTable.jsp" />
 	</definition>
  
-	<definition name="/rimozioneEmporiotable.tiles" extends="baseLayout">
+	<definition name="/rimozioneEmporio.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Rimozione Assistiti da Emporio" />
 		<put-attribute name="body" value="/rimozioneEmporioTable.jsp" />
 	</definition>
  
-	<definition name="/nazionitable.tiles" extends="baseLayout">
+	<definition name="/nazioni.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Lista Tabella Nazioni" />
 		<put-attribute name="body" value="/nazioniTable.jsp" />
 	</definition>
  
-	<definition name="/uni_misuratable.tiles" extends="baseLayout">
+	<definition name="/uni_misura.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Gestione Tabella Unità di Misura" />
 		<put-attribute name="body" value="/uni_misuraTable.jsp" />
 	</definition>
  
-	<definition name="/provincetable.tiles" extends="baseLayout">
+	<definition name="/province.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Lista Tabella Province" />
 		<put-attribute name="body" value="/provinceTable.jsp" />
 	</definition>
  
-	<definition name="/entitable.tiles" extends="baseLayout">
+	<definition name="/enti.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Gestione Tabella Enti" />
 		<put-attribute name="body" value="/entiTable.jsp" />
 	</definition>
  
- 	<definition name="/userstable.tiles" extends="baseLayout">
+ 	<definition name="/users.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Users" />
 		<put-attribute name="body" value="/usersTable.jsp" />
 	</definition>
