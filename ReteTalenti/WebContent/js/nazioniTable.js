@@ -9,6 +9,8 @@
         multiselect: false, //Allow multiple selecting
         selectingCheckboxes: false, //Show checkboxes on first column
         selectOnRowClick: false,
+		toolbarsearch:true,
+		toolbarreset:false,
 		actions : {
 			listAction : 'listNazioniAction',
 		},
@@ -22,11 +24,14 @@
 			denominazione : {
 				title : 'Denominazione',
 				width : '75%',
-				list: true
+				list: true,
+				searchable: true, // default is false, if set to true then a text input is created
+//				sqlName: 'NOME_DELLA_COLONNA'
 			},
 			sigla : {
 				title : 'Sigla',
-				width : '20%'
+				width : '20%',
+				searchable: true
 			}
 		}
 	});

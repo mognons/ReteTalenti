@@ -12,6 +12,7 @@
 
 <!-- User defined Jtable js file -->
 <script src="scripts/jquery.jtable.it.js" type="text/javascript"></script>
+<script src="scripts/jquery.jtable.toolbarsearch.js" type="text/javascript"></script>
 <script src="js/nazioniTable.js" type="text/javascript"></script>
 
 </head>
