@@ -65,7 +65,8 @@
     $('#AssistitiTableContainer').jtable({
         title: 'Gestione Anagrafica Assistiti',
         paging: true, // Enable paging
-        pageSize: 15, // Set page size (default: 10)
+		pageSize: 15,
+		pageSizes: [5,10,15],
         sorting: false, // Enable sorting
         defaultSorting : 'COD_FISCALE ASC', //Set default sorting
         selecting: true, // Enable selecting

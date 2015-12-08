@@ -2,7 +2,8 @@ $(document).ready(function() {
 	$('#ProvinceTableContainer').jtable({
 		title : 'Elenco Province ReteTalenti',
 		paging : false, //Enable paging
-        pageSize : 10, //Set page size (default: 10)           
+		pageSize: 15,
+		pageSizes: [5,10,15],
         sorting : false, //Enable sorting
         selecting: false, //Enable selecting
         multiselect: false, //Allow multiple selecting

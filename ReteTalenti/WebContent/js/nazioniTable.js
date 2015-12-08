@@ -2,8 +2,8 @@
 	$('#NazioniTableContainer').jtable({
 		title: 'Elenco Nazioni',
 		paging: true,
-		pageSize: 20, //Set page size (default: 10) 
-		pageSizes: [5,10,15,18],
+		pageSize: 15,
+		pageSizes: [5,10,15],
         sorting: false, //Enable sorting
         selecting: false, //Enable selecting
         multiselect: false, //Allow multiple selecting

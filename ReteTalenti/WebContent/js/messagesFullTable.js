@@ -3,7 +3,8 @@
 			{
 				title : 'Messaggi sistema ReteTalenti',
 				paging : true, // Enable paging
-				pageSize : 15, // Set page size (default: 10)
+				pageSize: 15,
+				pageSizes: [5,10,15],
 				sorting : false, // Enable sorting
 				selecting : true, // Enable selecting
 				multiselect : true, // Allow multiple selecting
@@ -111,10 +112,11 @@
 						title : "Testo del Messaggio",
                     	inputTitle: 'Testo del Messaggio' + ' <span style="color:red">*</span>',
 						width : '50%',
+						type: 'textarea',
 						inputClass: 'validate[required]',
-                        input: function (data) {
-                        	return '<textarea name="message_text" rows="4" cols="50"></textarea>';
-                        },
+//                        input: function (data) {
+//                        	return '<textarea name="message_text" rows="4" cols="50"></textarea>';
+//                        },
 						create : true
 					},
 					ente : {

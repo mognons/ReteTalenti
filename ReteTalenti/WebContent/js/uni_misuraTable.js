@@ -2,7 +2,8 @@
     $('#Uni_misuraTableContainer').jtable({
         title: 'Tabella Unità di Misura',
         paging: false, //Enable paging
-        pageSize: 15, //Set page size (default: 10)           
+		pageSize: 15,
+		pageSizes: [5,10,15],
         sorting: false, //Enable sorting
         defaultSorting: 'name ASC', //Set default sorting
         selecting: false, //Enable selecting

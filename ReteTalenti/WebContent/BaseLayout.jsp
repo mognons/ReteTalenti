@@ -27,9 +27,11 @@
 	function stickyFooter() {
 		var bodyHeight = $("body").height();
 		var vwptHeight = $(window).height();
+		console.log(vwptHeight,bodyHeight);
 		if (vwptHeight > bodyHeight) {
 			$("footer#footer").css("position", "absolute").css("bottom", 0);
-		} else {
+		} 
+		else {
 			$("footer#footer").css("position", "").css("bottom", "");
 		}
 	}
@@ -37,6 +39,9 @@
 		stickyFooter();
 	});
 	$(window).resize(function() {
+		stickyFooter();
+	});
+	$(window).scroll(function() {
 		stickyFooter();
 	});
 </script>
