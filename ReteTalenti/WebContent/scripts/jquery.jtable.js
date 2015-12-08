@@ -26,7 +26,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 */
-
+/* Modified by Alberto Mognoni in order to work with the struts2json plugin, which lowercase all JSON variables
+	eg. result instead of Result but totalRecordCount stays the same */
 /************************************************************************
 * CORE jTable module                                                    *
 *************************************************************************/
@@ -436,14 +437,14 @@ THE SOFTWARE.
                 self._hideBusy();
 
                 //Show the error message if server returns error
-                if (data.Result != 'OK') {
-                    self._showError(data.Message);
+                if (data.result != 'OK') {
+                    self._showError(data.message);
                     return;
                 }
 
                 //Re-generate table rows
                 self._removeAllRows('reloading');
-                self._addRecordsToTable(data.Records);
+                self._addRecordsToTable(data.records);
 
                 self._onRecordsLoaded(data);
 
@@ -857,12 +858,12 @@ THE SOFTWARE.
                 url: url,
                 async: false,
                 success: function (data) {
-                    if (data.Result != 'OK') {
-                        self._showError(data.Message);
+                    if (data.result != 'OK') {
+                        self._showError(data.message);
                         return;
                     }
 
-                    options = data.Options;
+                    options = data.options;
                 },
                 error: function () {
                     var errMessage = self._formatString(self.options.messages.cannotLoadOptionsFor, fieldName);
@@ -1296,7 +1297,7 @@ THE SOFTWARE.
         },
 
         _onRecordsLoaded: function (data) {
-            this._trigger("recordsLoaded", null, { records: data.Records, serverResponse: data });
+            this._trigger("recordsLoaded", null, { records: data.records, serverResponse: data });
         },
 
         _onRowInserted: function ($row, isNewRow) {
@@ -2120,13 +2121,13 @@ THE SOFTWARE.
             }
 
             var completeAddRecord = function (data) {
-                if (data.Result != 'OK') {
-                    self._showError(data.Message);
+                if (data.result != 'OK') {
+                    self._showError(data.message);
                     options.error(data);
                     return;
                 }
 
-                if (!data.Record) {
+                if (!data.record) {
                     self._logError('Server must return the created Record object.');
                     options.error(data);
                     return;
@@ -2134,7 +2135,7 @@ THE SOFTWARE.
 
                 self._onRecordAdded(data);
                 self._addRow(
-                    self._createRowFromRecord(data.Record), {
+                    self._createRowFromRecord(data.record), {
                         isNewRow: true,
                         animationsEnabled: options.animationsEnabled
                     });
@@ -2246,13 +2247,13 @@ THE SOFTWARE.
             var self = this;
 
             var completeAddRecord = function (data) {
-                if (data.Result != 'OK') {
-                    self._showError(data.Message);
+                if (data.result != 'OK') {
+                    self._showError(data.message);
                     self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
                     return;
                 }
 
-                if (!data.Record) {
+                if (!data.record) {
                     self._logError('Server must return the created Record object.');
                     self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
                     return;
@@ -2260,7 +2261,7 @@ THE SOFTWARE.
 
                 self._onRecordAdded(data);
                 self._addRow(
-                    self._createRowFromRecord(data.Record), {
+                    self._createRowFromRecord(data.record), {
                         isNewRow: true
                     });
                 self._$addRecordDiv.dialog("close");
@@ -2304,7 +2305,7 @@ THE SOFTWARE.
         },
 
         _onRecordAdded: function (data) {
-            this._trigger("recordAdded", null, { record: data.Record, serverResponse: data });
+            this._trigger("recordAdded", null, { record: data.record, serverResponse: data });
         }
 
     });
@@ -2470,8 +2471,8 @@ THE SOFTWARE.
             }
 
             var completeEdit = function (data) {
-                if (data.Result != 'OK') {
-                    self._showError(data.Message);
+                if (data.result != 'OK') {
+                    self._showError(data.message);
                     options.error(data);
                     return;
                 }
@@ -2639,8 +2640,8 @@ THE SOFTWARE.
             var self = this;
             
             var completeEdit = function (data) {
-                if (data.Result != 'OK') {
-                    self._showError(data.Message);
+                if (data.result != 'OK') {
+                    self._showError(data.message);
                     self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
                     return;
                 }
@@ -3105,10 +3106,10 @@ THE SOFTWARE.
             var self = this;
 
             var completeDelete = function(data) {
-                if (data.Result != 'OK') {
+                if (data.result != 'OK') {
                     $row.data('deleting', false);
                     if (error) {
-                        error(data.Message);
+                        error(data.message);
                     }
 
                     return;
@@ -3961,7 +3962,7 @@ THE SOFTWARE.
         *************************************************************************/
         _onRecordsLoaded: function (data) {
             if (this.options.paging) {
-                this._totalRecordCount = data.TotalRecordCount;
+                this._totalRecordCount = data.totalRecordCount;
                 this._createPagingList();
                 this._createPagingInfo();
                 this._refreshGotoPageInput();

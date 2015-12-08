@@ -8,7 +8,7 @@
         serverCommunicationError: 'Si è verificato un errore di comunicazione con il server.',
         loadingMessage: 'Caricamento dei record...',
         noDataAvailable: 'Non ci sono dati disponibili!',
-        addNewRecord: '+ Crea un nuovo record',
+        addNewRecord: 'Nuovo record',
         editRecord: 'Modifica record',
         areYouSure: 'Sei sicuro?',
         deleteConfirmation: 'Il record verrà eliminato. Sei sicuro?',

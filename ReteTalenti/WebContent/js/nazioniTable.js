@@ -1,14 +1,14 @@
-$(document).ready(function() {
+﻿$(document).ready(function() {
 	$('#NazioniTableContainer').jtable({
-		title : 'Elenco Nazioni',
-		paging : true, //Enable paging
-        pageSize : 15, //Set page size (default: 10)           
-        sorting : false, //Enable sorting
+		title: 'Elenco Nazioni',
+		paging: true,
+		pageSize: 20, //Set page size (default: 10) 
+		pageSizes: [5,10,15,18],
+        sorting: false, //Enable sorting
         selecting: false, //Enable selecting
         multiselect: false, //Allow multiple selecting
         selectingCheckboxes: false, //Show checkboxes on first column
-        selectOnRowClick: false, //Enable this to only select using checkboxes
-        pageSizeChangeArea: true,  
+        selectOnRowClick: false,
 		actions : {
 			listAction : 'listNazioniAction',
 		},
@@ -30,5 +30,9 @@ $(document).ready(function() {
 			}
 		}
 	});
+/*	$('table.jtable > thead:first').
+		append('<tr><th><input type="text"></input></th>'+
+				'<th><input type="text"></input></th>'+
+				'<th><input type="text"></input></th></tr>');  */
 	$('#NazioniTableContainer').jtable('load');
 });
