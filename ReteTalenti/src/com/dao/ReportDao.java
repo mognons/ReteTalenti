@@ -155,5 +155,251 @@ public class ReportDao {
         }
         return rs;
     }
+    
+    public ResultSet tabellaAssistiti(int ente) {
+        ResultSet rs = null;
+        String whereCondition = "1=1";
+        if (ente!=-1)
+        	whereCondition = "ENTE_ASSISTENTE=" + ente;
+        
+        String query = 	"SELECT * FROM ASSISTITI "
+        				+ "WHERE " + whereCondition;
+        try {
+            pStmt = dbConnection.prepareStatement(query);
+            rs = pStmt.executeQuery();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return rs;
+    }
+    
+    public ResultSet tabellaNucleoFamiliare(int ente) {
+        ResultSet rs = null;
+        String whereCondition = "1=1";
+        if (ente!=-1)
+        	whereCondition = "A.ENTE_ASSISTENTE=" + ente;
+        
+        String query = 	"SELECT NF.* FROM NUCLEO_FAMILIARE NF "
+        				+ "INNER JOIN ASSISTITI A ON A.COD_FISCALE = NF.CF_ASSISTITO_NF "
+        				+ "WHERE " + whereCondition;
+        try {
+            pStmt = dbConnection.prepareStatement(query);
+            rs = pStmt.executeQuery();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return rs;
+    }
+
+    public ResultSet tabellaIndiciBisogno(int ente) {
+        ResultSet rs = null;
+        String whereCondition = "1=1";
+        if (ente!=-1)
+        	whereCondition = "A.ENTE_ASSISTENTE=" + ente;
+        
+        String query = 	"SELECT IB.* FROM INDICI_BISOGNO IB "
+        				+ "INNER JOIN ASSISTITI A ON A.COD_FISCALE = IB.CF_ASSISTITO_IB "
+        				+ "WHERE " + whereCondition;
+        try {
+            pStmt = dbConnection.prepareStatement(query);
+            rs = pStmt.executeQuery();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return rs;
+    }
+
+    public ResultSet tabellaNoteAssistiti(int ente) {
+        ResultSet rs = null;
+        String whereCondition = "1=1";
+        if (ente!=-1)
+        	whereCondition = "A.ENTE_ASSISTENTE=" + ente;
+        
+        String query = 	"SELECT NA.* FROM NOTE_ASSISTITI NA "
+        				+ "INNER JOIN ASSISTITI A ON A.COD_FISCALE = NA.CF_ASSISTITO_NOTE "
+        				+ "WHERE " + whereCondition;
+        try {
+            pStmt = dbConnection.prepareStatement(query);
+            rs = pStmt.executeQuery();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return rs;
+    }
+
+    public ResultSet tabellaEccedenze(int ente) {
+    	/* Tutte le eccedenze di cui l'ente è promotore (cedente) e tutte le eccedenze in cui l'ente è richiedente */
+        ResultSet rs = null;
+        String whereCondition1 = "1=1";
+        String whereCondition2 = "1=1";
+        if (ente!=-1) {
+        	whereCondition1 = "EC.ENTE_CEDENTE=" + ente;
+        	whereCondition2 = "I.ENTE_RICHIEDENTE=" + ente;
+        }
+        
+        String query = 	"SELECT EC.* FROM ECCEDENZE EC " 
+						+ "WHERE " + whereCondition1 
+						+ " UNION "
+						+ "SELECT EC.* FROM ECCEDENZE EC "
+						+ "INNER JOIN IMPEGNI I ON I.ID_ECCEDENZA = EC.ID "
+						+ "WHERE " + whereCondition2;
+        try {
+            pStmt = dbConnection.prepareStatement(query);
+            rs = pStmt.executeQuery();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return rs;
+    }
+
+    public ResultSet tabellaImpegni(int ente) {
+    	/* Tutti gli impegni di cui l'ente è richiedente più tutti gli impegni relativi a eccedenze di cui l'ente è promotore */
+        ResultSet rs = null;
+        String whereCondition1 = "1=1";
+        String whereCondition2 = "1=1";
+        if (ente!=-1) {
+        	whereCondition1 = "I.ENTE_RICHIEDENTE=" + ente;
+        	whereCondition2 = "EC.ENTE_CEDENTE=" + ente;
+        }
+        
+        String query = 	"SELECT I.* FROM IMPEGNI I " 
+						+ "WHERE " + whereCondition1 
+						+ " UNION "
+						+ "SELECT I.* FROM IMPEGNI I "
+						+ "INNER JOIN ECCEDENZE EC ON I.ID_ECCEDENZA = EC.ID "
+						+ "WHERE " + whereCondition2;
+        try {
+            pStmt = dbConnection.prepareStatement(query);
+            rs = pStmt.executeQuery();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return rs;
+    }
+
+    public ResultSet tabellaUsers(int ente) {
+        ResultSet rs = null;
+        String whereCondition1 = "1=1";
+
+        if (ente!=-1) {
+        	whereCondition1 = "U.ENTE=" + ente;
+        }
+        
+        String query = 	"SELECT U.* FROM USERS U " 
+						+ "WHERE " + whereCondition1;
+        try {
+            pStmt = dbConnection.prepareStatement(query);
+            rs = pStmt.executeQuery();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return rs;
+    }
+
+    public ResultSet tabellaGroups() {
+        ResultSet rs = null;
+        
+        String query = 	"SELECT G.* FROM GROUPS G ";
+        try {
+            pStmt = dbConnection.prepareStatement(query);
+            rs = pStmt.executeQuery();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return rs;
+    }
+
+/* Reference Section */
+    public ResultSet tabellaEnti() {
+        ResultSet rs = null;
+        
+        String query = 	"SELECT * FROM ENTI ";
+        try {
+            pStmt = dbConnection.prepareStatement(query);
+            rs = pStmt.executeQuery();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return rs;
+    }
+
+    public ResultSet tabellaMessages() {
+        ResultSet rs = null;
+        
+        String query = 	"SELECT * FROM MESSAGES ";
+        try {
+            pStmt = dbConnection.prepareStatement(query);
+            rs = pStmt.executeQuery();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return rs;
+    }
+
+    public ResultSet tabellaStatiCivili() {
+        ResultSet rs = null;
+        
+        String query = 	"SELECT * FROM STATI_CIVILI ";
+        try {
+            pStmt = dbConnection.prepareStatement(query);
+            rs = pStmt.executeQuery();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return rs;
+    }
+
+    public ResultSet tabellaGradiParentela() {
+        ResultSet rs = null;
+        
+        String query = 	"SELECT * FROM GRADI_PARENTELA ";
+        try {
+            pStmt = dbConnection.prepareStatement(query);
+            rs = pStmt.executeQuery();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return rs;
+    }
+
+    public ResultSet tabellaNazioni() {
+        ResultSet rs = null;
+        
+        String query = 	"SELECT * FROM NAZIONI ";
+        try {
+            pStmt = dbConnection.prepareStatement(query);
+            rs = pStmt.executeQuery();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return rs;
+    }
+
+    public ResultSet tabellaProvince() {
+        ResultSet rs = null;
+        
+        String query = 	"SELECT * FROM PROVINCE ";
+        try {
+            pStmt = dbConnection.prepareStatement(query);
+            rs = pStmt.executeQuery();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return rs;
+    }
+
+    public ResultSet tabellaUniMisura() {
+        ResultSet rs = null;
+        
+        String query = 	"SELECT * FROM UNI_MISURA ";
+        try {
+            pStmt = dbConnection.prepareStatement(query);
+            rs = pStmt.executeQuery();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return rs;
+    }
+
 
 }

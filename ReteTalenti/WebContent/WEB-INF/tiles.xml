@@ -24,6 +24,11 @@
 		<put-attribute name="body" value="/error.jsp" />
 	</definition>
 	 
+	<definition name="/export.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Esportazione Tabelle di Sistema" />
+		<put-attribute name="body" value="/tableExport.jsp" />
+	</definition>
+	 
 	<definition name="/welcome.tiles" extends="baseLayout">
 		<put-attribute name="title" value="ReteTalenti" />
 		<put-attribute name="body" value="/welcome.action" />
