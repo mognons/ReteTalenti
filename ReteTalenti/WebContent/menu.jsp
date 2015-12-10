@@ -103,6 +103,16 @@ ul ul{
 							<img src="icons/User%20group.png" align="bottom" height="16" width="16">
 							<span style="vertical-align: top">Utenti</span>
 						</li>
+						<li onclick="window.location='gradi_parentelaLink';">
+							<img src="icons/Female symbol.png" align="bottom" height="16" width="16">
+							<span style="vertical-align: top">Gradi parentela</span>
+						</li>
+						
+						<li onclick="window.location='stati_civiliLink';">
+							<img src="icons/Female symbol.png" align="bottom" height="16" width="16">
+							<span style="vertical-align: top">Stati Civili</span>
+						</li>
+						
 						<s:if test="(#isAdmin)">
 							<li onclick="window.location='entiLink';">
 								<img src="icons/Database.png" align="bottom" height="16" width="16">

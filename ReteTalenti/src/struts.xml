@@ -115,6 +115,18 @@
                         method="{1}">
             <result type="json"></result>
         </action>
+        
+         <action name="*Gradi_parentelaAction" class="com.action.Gradi_parentelaTableAction"
+                        method="{1}">
+            <result type="json"></result>
+        </action>
+        
+         <action name="*Stati_civiliAction" class="com.action.Stati_civiliTableAction"
+                        method="{1}">
+            <result type="json"></result>
+        </action>
+        
+        
                 
         <action name="*EccedenzeAction" class="com.action.EccedenzeTableAction"
                         method="{1}">

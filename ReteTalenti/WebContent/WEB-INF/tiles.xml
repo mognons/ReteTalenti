@@ -98,11 +98,23 @@
 		<put-attribute name="title" value="Gestione Tabella Enti" />
 		<put-attribute name="body" value="/entiTable.jsp" />
 	</definition>
- 
+	
+	
  	<definition name="/users.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Users" />
 		<put-attribute name="body" value="/usersTable.jsp" />
 	</definition>
+	
+	<definition name="/gradi_parentela.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Gestione Tabella Gradi di parentela" />
+		<put-attribute name="body" value="/gradi_parentelaTable.jsp" />
+	</definition>
+	
+	<definition name="/stati_civili.tiles" extends="baseLayout">
+		<put-attribute name="title" value="Gestione Tabella Stati civili" />
+		<put-attribute name="body" value="/stati_civiliTable.jsp" />
+	</definition>
+	
 	
 	<definition name="/profile.tiles" extends="baseLayout">
 		<put-attribute name="title" value="Update User's Profile" />
