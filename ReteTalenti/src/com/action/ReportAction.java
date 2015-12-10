@@ -15,6 +15,8 @@ public class ReportAction extends ActionSupport implements UserAware {
     private static final long serialVersionUID = 1173542L;
     private ReportDao dao = new ReportDao();
     private String errorMessage;
+    private Boolean Assistiti, Eccedenze, Utenti, Reference;
+    private int ente;
     public String filename;
     public InputStream excelStream;
 
@@ -247,6 +249,69 @@ public class ReportAction extends ActionSupport implements UserAware {
         return SUCCESS;
     }
 
+    public String export() {
+    	Boolean first = true;
+    	RSToExcel RSToExcel = null;
+    	System.out.println("Ente : "+ ente);
+    	System.out.print("Assistiti: " + Assistiti);
+    	System.out.print("Eccedenze: " + Eccedenze);
+        ByteArrayOutputStream out;
+        if (Assistiti) {
+        	if (first) {
+                RSToExcel = new RSToExcel(dao.tabellaAssistiti(ente), "Assistiti");
+                first = false;
+        	} else {
+                RSToExcel.addRSToExcel(dao.tabellaAssistiti(ente), "Assistiti");        		
+        	}
+            RSToExcel.addRSToExcel(dao.tabellaNucleoFamiliare(ente), "NucleiFamiliari");
+            RSToExcel.addRSToExcel(dao.tabellaIndiciBisogno(ente), "IndiciBisogno");
+            RSToExcel.addRSToExcel(dao.tabellaNoteAssistiti(ente), "NoteAssistiti");
+        }
+        if (Eccedenze) {
+        	if (first) {
+                RSToExcel = new RSToExcel(dao.tabellaEccedenze(ente), "Eccedenze");
+                first = false;
+        	} else {
+                RSToExcel.addRSToExcel(dao.tabellaEccedenze(ente), "Eccedenze");        		
+        	}
+            RSToExcel.addRSToExcel(dao.tabellaImpegni(ente), "Impegni");
+        }
+        if (Utenti) {
+        	if (first) {
+                RSToExcel = new RSToExcel(dao.tabellaUsers(ente), "Users");
+                first = false;
+        	} else {
+                RSToExcel.addRSToExcel(dao.tabellaUsers(ente), "Users");        		
+        	}
+            RSToExcel.addRSToExcel(dao.tabellaGroups(), "Groups");
+        }
+        if (Reference) {
+        	if (first) {
+                RSToExcel = new RSToExcel(dao.tabellaEnti(), "Enti");
+                first = false;
+        	} else {
+                RSToExcel.addRSToExcel(dao.tabellaEnti(), "Enti");        		
+        	}
+            RSToExcel.addRSToExcel(dao.tabellaMessages(), "Messages");
+            RSToExcel.addRSToExcel(dao.tabellaStatiCivili(), "StatiCivili");
+            RSToExcel.addRSToExcel(dao.tabellaGradiParentela(), "GradiParentela");
+            RSToExcel.addRSToExcel(dao.tabellaNazioni(), "Nazioni");
+            RSToExcel.addRSToExcel(dao.tabellaProvince(), "Province");
+            RSToExcel.addRSToExcel(dao.tabellaUniMisura(), "UniMisura");
+        }
+        try {
+            out = new ByteArrayOutputStream();
+            RSToExcel.generate(out);
+            excelStream = new ByteArrayInputStream(out.toByteArray());
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace(); //log to logs
+        	errorMessage = "Error generating export because " + e.getMessage();
+        	return ERROR;
+        }
+        return SUCCESS;
+    }
+
     public String getFilename() {
         return filename;
     }
@@ -277,6 +342,46 @@ public class ReportAction extends ActionSupport implements UserAware {
 
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
+	}
+
+	public Boolean getAssistiti() {
+		return Assistiti;
+	}
+
+	public void setAssistiti(Boolean assistiti) {
+		Assistiti = assistiti;
+	}
+
+	public Boolean getEccedenze() {
+		return Eccedenze;
+	}
+
+	public void setEccedenze(Boolean eccedenze) {
+		Eccedenze = eccedenze;
+	}
+
+	public Boolean getUtenti() {
+		return Utenti;
+	}
+
+	public void setUtenti(Boolean utenti) {
+		Utenti = utenti;
+	}
+
+	public Boolean getReference() {
+		return Reference;
+	}
+
+	public void setReference(Boolean reference) {
+		Reference = reference;
+	}
+
+	public int getEnte() {
+		return ente;
+	}
+
+	public void setEnte(int ente) {
+		this.ente = ente;
 	}
 
 }

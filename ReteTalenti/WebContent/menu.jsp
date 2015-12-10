@@ -53,16 +53,18 @@ ul ul{
 						onclick="window.location='rimozioneEmporioLink';">Rimozione Emporio</li>
 				</ul>
 			</li>
+			<s:if test="(enteEmporio)" >
 			<li>-</li>
-			<li <s:if test="!(enteEmporio)" >class="ui-state-disabled"</s:if>> 
+			<li>
 				<img src="icons/shop_basket.png" align="bottom" height="16" width="16">
-				<span style="vertical-align: top">Gestione Emporio</span>
+				<span style="vertical-align: top">Utenti Emporio</span>
 				<ul>
 					<li onclick="window.location='accettazioneEmporioLink';">Accettazione</li>
-					<li onclick="window.location='anagraficaEmporioLink';">Anagrafica</li>
 					<li onclick="window.location='dismissioneEmporioLink';">Dimissione</li>
+					<li onclick="window.location='anagraficaEmporioLink';">Anagrafica</li>
 				</ul>
 			</li>
+			</s:if>
 			<li>-</li>
 			<li> <img src="icons/Food-Bunch-Ingredients-icon.png" align="bottom" height="16" width="16">
 				<span style="vertical-align: top">Gestione Eccedenze</span>
@@ -133,6 +135,11 @@ ul ul{
 							<li onclick="window.location='messagesLink';">
 								<img src="icons/Message.png" align="bottom" height="16" width="16">
 								<span style="vertical-align: top">Messaggi</span></li>
+							<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
+								onclick="window.location='exportLink';">
+								<img src="icons/save-icon.png" align="bottom" height="16" width="16">
+								<span style="vertical-align: top">Export</span>
+							</li>
 						</s:if>
 					</ul>
 				</li>

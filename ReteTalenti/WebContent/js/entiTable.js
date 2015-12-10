@@ -103,7 +103,7 @@
             },
             resp_phone: {
                 title: 'Telefono',
-                inputClass: 'validate[required,custom[phone]]',
+                inputClass: 'validate[required,custom[phone],maxSize[10]]',
                 width: '10%',
                 list: true,
                 edit: true,
