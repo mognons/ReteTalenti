@@ -4,13 +4,16 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.Reader;
 import java.sql.Connection;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.quartz.Job;
+import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.quartz.JobKey;
 
 import com.ibatis.common.jdbc.ScriptRunner;
 import com.jdbc.DataAccessObject;
@@ -20,6 +23,9 @@ public class OptimizeTables implements Job, ServletRequestAware {
    	HttpServletRequest servletRequest;
 
     public void execute(JobExecutionContext context) throws JobExecutionException {
+		JobDetail jobDetail = context.getJobDetail();
+		JobKey key = jobDetail.getKey();
+		System.out.println("Job key:"+ key +", Date:"+ new Date());
  		String filePath = servletRequest.getSession().getServletContext().getRealPath("/");
 
     	String SQLScriptFilePath = filePath + "SQL_Scripts/rtdb_optimize.sql";

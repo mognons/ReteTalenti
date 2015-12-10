@@ -9,8 +9,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import org.quartz.Job;
+import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.quartz.JobKey;
 
 import com.action.MessageAction;
 import com.dao.AssistitiDao;
@@ -29,10 +31,13 @@ public class CheckScadenzaEmporio extends ActionSupport implements Job {
     private List<Assistito> assistiti;
 
     public void execute(JobExecutionContext context) throws JobExecutionException {
+		JobDetail jobDetail = context.getJobDetail();
+		JobKey key = jobDetail.getKey();
+		System.out.println("Job key:"+ key +", Date:"+ new Date());
     	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String mailRecipient;
 		ResourceBundle rb = ResourceBundle.getBundle("com.properties.basicConfiguration");
-		Boolean invioEmail = "true".equalsIgnoreCase(rb.getString("sendEccedenze"));
+		Boolean invioEmail = "true".equalsIgnoreCase(rb.getString("sendWarningEmporio"));
         
     	MessageAction mess = new MessageAction();
     	sendMail sm = new sendMail();
