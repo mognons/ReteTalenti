@@ -414,6 +414,7 @@
                                 operatore: {
                                 	title: 'Operatore',
                                 	options: 'Choose_Utenti',
+                                	width: '13%',
                                 	list: true,
                                 	edit: false,
                                 	create: false
@@ -429,16 +430,13 @@
                                 },
                                 note_libere: {
                                     title: 'Nota',
-                                    inputTitle: 'Note' + ' <span style="color:red">*</span>',
-                                    inputClass: 'validate[required]',
-                                    width: '90%',
-                                    input: function (data) {
-                                        if (data.value) {
-                                            return '<textarea name="note_libere" readonly rows="4" cols="50">' + data.value + '</textarea>';
-                                        } else {
-                                            return '<textarea name="note_libere" rows="4" cols="50"></textarea>';
-                                        }
-                                    },
+                                    inputTitle: 'Note' + ' <span style="color:red">*</span>' + 
+                                    			'<span style="color:gray; font-size:x-small;">(' + 
+                                    			'<span id="charCount" ' +
+                                    			'></span> su 1000)</span>',
+                                    inputClass: 'validate[required], maxSize[1000]',
+                                    width: '80%',
+                                    type: 'textarea',
                                     list: true,
                                     edit: true,
                                     create: true
@@ -456,10 +454,12 @@
 	                              }
 	                        },
                             formCreated: function (event, data) {
-                                data.form.validationEngine('attach',{promptPosition : "bottomLeft", scroll: false});
-                                data.form.find('input[name=nome]').css('width', '200px');
-                                data.form.find('input[name=cognome]').css('width', '200px');
-                            },
+                                $('#Edit-note_libere').on('change keyup paste',function() {
+                                	var $text = $(this).val();
+                                	$('#charCount').html($text.length);
+                                });
+                                data.form.validationEngine('attach',{promptPosition : "topLeft", scroll: true});
+                           },
                             // Validate form when it is being submitted
                             formSubmitting: function (event, data) {
                                 return data.form.validationEngine('validate');
@@ -481,6 +481,7 @@
             ente_assistente: {
             	title: 'Ente Assistente',
             	options: 'Choose_Enti',
+            	width: '15%',
             	list: true,
             	edit: false,
             	create: false
@@ -511,7 +512,7 @@
                 title: 'Nome',
                 inputTitle: 'Nome' + ' <span style="color:red">*</span>',
                 inputClass: 'validate[required]',
-                width: '10%',
+                width: '20%',
                 display: function(data) {
                 	if (data.record.data_fine_assistenza!=null) {
                 		return '<span style="color:red; font-style: italic;" >'+  data.record.nome + '</span>';
@@ -527,7 +528,7 @@
                 title: 'Cognome',
                 inputTitle: 'Cognome' + ' <span style="color:red">*</span>',
                 inputClass: 'validate[required]',
-                width: '20%',
+                width: '30%',
                 display: function(data) {
                 	if (data.record.data_fine_assistenza!=null) {
                 		return '<span style="color:red; font-style: italic;" >'+  data.record.cognome + '</span>';
@@ -552,7 +553,6 @@
                 title: 'Stato Civile',
                 inputTitle: 'Stato Civile' + ' <span style="color:red">*</span>',
                 inputClass: 'validate[required]',
-                width: '20%',
                 options: 'Choose_StatiCivili',
                 list: false,
                 edit: true,
@@ -562,7 +562,6 @@
                 title: 'Luogo di Nascita',
                 inputTitle: 'Luogo di Nascita' + ' <span style="color:red">*</span>',
                 inputClass: 'validate[required]',
-                width: '20%',
                 list: false,
                 edit: true,
                 create: true
@@ -571,6 +570,7 @@
             	title: 'Data di Nascita',
                 inputTitle: 'Data di Nascita' + ' <span style="color:red">*</span>',
 				type: 'date',
+				width: '10%',
 				displayFormat: 'dd/mm/yy',
                 inputClass: 'validate[required] datepicker',
                 list: true,
@@ -588,7 +588,6 @@
                 title: 'Residenza',
                 inputTitle: 'Indirizzo di Residenza' + ' <span style="color:red">*</span>',
                 inputClass: 'validate[required]',
-                width: '20%',
                 list: false,
                 edit: true,
                 create: true
@@ -597,7 +596,6 @@
                 title: 'Città Residenza',
                 inputTitle: 'Città di Residenza' + ' <span style="color:red">*</span>',
                 inputClass: 'validate[required]',
-                width: '20%',
                 list: false,
                 edit: true,
                 create: true
@@ -644,17 +642,17 @@
 				},
             },
             accesso_emporio: {
-	            title: '-',
-	            width: '1%',
-	            sorting: false,
+	            title: ' ',
+	            width: '5%',
 	            edit: false,
 	            create: false,
 	            display: function (assistito) {
 	            	if (assistito.record.data_accettazione==null)
-	            		{return '<center><b>-</b></center>';}
-	                var $img = $('<span align="CENTER"><img src="icons/shop_basket.png" width="16" height="16" title="Utente dell\'emporio"/></span>');
+	            		{return '<center><b></b></center>';}
+	                var $img = $('<CENTER><img src="icons/shop_basket.png" width="16" height="16" title="Utente dell\'emporio"/></CENTER>');
 	                $img.click(function () {
-	                	// do nothing by now...
+	                	var page = "ShowSchedaAssistitoEmporio?codice_fiscale="+ assistito.record.cod_fiscale;
+	                	showSchedaAssistito(page);
 	                });
 	                return $img;
 	            }

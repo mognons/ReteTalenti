@@ -27,7 +27,6 @@
 	function stickyFooter() {
 		var bodyHeight = $("body").height();
 		var vwptHeight = $(window).height();
-		console.log(vwptHeight,bodyHeight);
 		if (vwptHeight > bodyHeight) {
 			$("footer#footer").css("position", "absolute").css("bottom", 0);
 		} 

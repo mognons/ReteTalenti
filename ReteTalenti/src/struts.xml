@@ -39,6 +39,7 @@
             <result name="success">/showAnagDetails.jsp</result>
         </action>
         	
+        	
         <action name="ShowSchedaAssistitoEmporio" class="com.action.ShowSchedaAssistitoAction">
             <result name="success">/showAssistitoEmporio.jsp</result>
         </action>
