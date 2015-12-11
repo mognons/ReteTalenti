@@ -125,7 +125,7 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
         //
         // *******************************************************************
         
-        Assistito record = new Assistito();
+        record = new Assistito();
         
         record.setCod_fiscale(cod_fiscale.toUpperCase());
         record.setNome(nome);

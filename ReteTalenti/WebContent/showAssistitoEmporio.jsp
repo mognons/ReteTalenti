@@ -93,6 +93,11 @@ th {
 					<td class="dato"><a href="mailto:<s:property value="%{assistito.email}"/>"><s:property
 								value="%{assistito.email}" /></a></td>
 				</tr>
+			</tbody>
+		</table>
+
+			<h1>Emporio</h1>
+			<table>
 				<tr>
 					<td class="label">Assistito da</td>
 					<td class="dato"><s:property value="assistito.descrizione" /></td>
@@ -109,60 +114,9 @@ th {
 					<td class="dato"><s:date name="assistito.data_candidatura" format="dd/MM/yyyy"/></td>
 					<td class="label">Accettato il </td>
 					<td class="dato"><s:date name="assistito.data_accettazione" format="dd/MM/yyyy"/></td>
-					<td class="label">Terminato il </td>
-					<td class="dato"><s:date name="assistito.data_dismissione" format="dd/MM/yyyy"/></td>
 				</tr>
 				</s:if>
-			</tbody>
-		</table>
-
-		<s:if test="(conviventi.size()!=0)">
-			<h1>Stato di famiglia</h1>
-			<table>
-				<thead>
-					<tr>
-						<th>Nome</th>
-						<th>Cognome</th>
-						<th>Codice fiscale</th>
-						<th>Data di nascita</th>
-						<th>Sesso</th>
-						<th>Relazione</th>
-					</tr>
-				</thead>
-				<s:iterator value="conviventi">
-					<tr>
-						<td><s:property value="nome" /></td>
-						<td><s:property value="cognome" /></td>
-						<td><s:property value="codice_fiscale"/></td>
-						<td><s:date name="data_nascita" format="dd/MM/yyyy"/></td>
-						<td><s:if test='sesso=="M"'>Maschio</s:if>
-							<s:elseif test='sesso=="F"'>Femmina</s:elseif>
-							<s:else>Non specificato</s:else>	
-						</td>
-						<td><s:property value="desc_tipo_parentela" /></td>
-					</tr>
-				</s:iterator>
 			</table>
-		</s:if>
-
-		<s:if test="note.size()!=0">
-			<h1>Note</h1>
-			<table>
-				<thead>
-					<tr>
-						<th align="left">Data</th>
-						<th>Annotazione</th>
-					</tr>
-				</thead>
-				<s:iterator value="note">
-					<tr>
-						<td style="font-size: x-small;" width="5%"><s:date name="data_note" format="dd/MM/yyyy"/></td>
-						<td width="95%"><s:property value="%{note_libere}" /></td>
-					</tr>
-				</s:iterator>
-			</table>
-		</s:if>
-		
 	</div>
 </body>
 </html>

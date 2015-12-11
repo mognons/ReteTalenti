@@ -28,31 +28,32 @@ public class AssistitiDao {
 
     public void createAssistito(Assistito assistito) {
         String insertAssistitoQuery = "INSERT INTO ASSISTITI "
-        							+ "(NOME,COGNOME,SESSO,STATO_CIVILE, "
+        							+ "(COD_FISCALE, NOME,COGNOME,SESSO,STATO_CIVILE, "
         							+ "LUOGO_NASCITA,DATA_NASCITA,NAZIONALITA,INDIRIZZO_RESIDENZA, "
 					                + "CITTA_RESIDENZA,CAP,PROVINCIA,PERMESSO_SOGGIORNO,TELEFONO,EMAIL, "
 					                + "NUM_DOCUMENTO,ENTE_ASSISTENTE,DATA_INSERIMENTO,DATA_FINE_ASSISTENZA, "
 					                + "DATA_CANDIDATURA,DATA_ACCETTAZIONE,DATA_SCADENZA, DATA_DISMISSIONE, EMPORIO, OPERATORE) "
-					                + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW(),null,null,null,null,null,null,?)";
+					                + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW(),null,null,null,null,null,null,?)";
 					        try {
             pStmt = dbConnection.prepareStatement(insertAssistitoQuery);
-            pStmt.setString(1, assistito.getNome());
-            pStmt.setString(2, assistito.getCognome());
-            pStmt.setString(3, assistito.getSesso());
-            pStmt.setInt(4, assistito.getStato_civile());
-            pStmt.setString(5, assistito.getLuogo_nascita());
-            pStmt.setDate(6, assistito.getData_nascita());
-            pStmt.setString(7, assistito.getNazionalita());
-            pStmt.setString(8, assistito.getIndirizzo_residenza());
-            pStmt.setString(9, assistito.getCitta_residenza());
-            pStmt.setString(10, assistito.getCap());
-            pStmt.setInt(11, assistito.getProvincia());
-            pStmt.setString(12, assistito.getPermesso_soggiorno());
-            pStmt.setString(13, assistito.getTelefono());
-            pStmt.setString(14, assistito.getEmail());
-            pStmt.setString(15, assistito.getNum_documento());
-            pStmt.setInt(16, assistito.getEnte_assistente());
-            pStmt.setInt(17, assistito.getOperatore());
+            pStmt.setString(1, assistito.getCod_fiscale());
+            pStmt.setString(2, assistito.getNome());
+            pStmt.setString(3, assistito.getCognome());
+            pStmt.setString(4, assistito.getSesso());
+            pStmt.setInt(5, assistito.getStato_civile());
+            pStmt.setString(6, assistito.getLuogo_nascita());
+            pStmt.setDate(7, assistito.getData_nascita());
+            pStmt.setString(8, assistito.getNazionalita());
+            pStmt.setString(9, assistito.getIndirizzo_residenza());
+            pStmt.setString(10, assistito.getCitta_residenza());
+            pStmt.setString(11, assistito.getCap());
+            pStmt.setInt(12, assistito.getProvincia());
+            pStmt.setString(13, assistito.getPermesso_soggiorno());
+            pStmt.setString(14, assistito.getTelefono());
+            pStmt.setString(15, assistito.getEmail());
+            pStmt.setString(16, assistito.getNum_documento());
+            pStmt.setInt(17, assistito.getEnte_assistente());
+            pStmt.setInt(18, assistito.getOperatore());
             pStmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -432,7 +433,7 @@ public class AssistitiDao {
         String whereCondition2 = "AND 1=1 ";
         String whereCondition3 = "AND 1=1 ";
         String whereCondition4 = "AND 1=1 ";
-        whereCondition1 = "AND PROVINCIA=" + user.getProvinciaEnte() + " ";
+        whereCondition1 = "AND E.PROVINCIA_ENTE=" + user.getProvinciaEnte() + " ";
         whereCondition2 = "AND DATA_CANDIDATURA IS NOT NULL AND DATA_ACCETTAZIONE IS NULL ";
         if (cf_search != null || cf_search != "") {
             whereCondition3 = "AND COD_FISCALE LIKE '" + cf_search + "%' ";
@@ -847,7 +848,7 @@ public class AssistitiDao {
                 assistito.setLuogo_nascita(rs.getString("LUOGO_NASCITA"));
                 assistito.setData_nascita(rs.getDate("DATA_NASCITA"));
                 assistito.setNazionalita(rs.getString("NAZIONALITA"));
-                assistito.setDenominazione(rs.getString("DENOMINAZIONE"));
+                assistito.setDenominazione(rs.getString("N.DENOMINAZIONE"));
                 assistito.setIndirizzo_residenza(rs.getString("INDIRIZZO_RESIDENZA"));
                 assistito.setCitta_residenza(rs.getString("CITTA_RESIDENZA"));
                 assistito.setCap(rs.getString("CAP"));

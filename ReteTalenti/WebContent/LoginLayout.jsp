@@ -21,7 +21,6 @@
 $(document).ready(function() {
   var bodyHeight = $("body").height();
   var vwptHeight = $(document).height();
-  console.log(bodyHeight,vwptHeight);
   if (vwptHeight > bodyHeight) {
     $("footer#colophon").css("position","absolute").css("bottom",0);
   }
