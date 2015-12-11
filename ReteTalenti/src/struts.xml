@@ -39,6 +39,10 @@
             <result name="success">/showAnagDetails.jsp</result>
         </action>
         	
+        <action name="ShowSchedaAssistitoEmporio" class="com.action.ShowSchedaAssistitoAction">
+            <result name="success">/showAssistitoEmporio.jsp</result>
+        </action>
+        	
         <action name="*IDBAction" class="com.action.IndiceBisognoAction" method="{1}">
             <result name="success">/indiceBisogno.jsp</result>
         </action>

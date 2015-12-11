@@ -25,7 +25,7 @@ public class Stati_civiliDao {
     
     public int createStato_civile(Stato_civile stato_civile) {
     	int autoIncKeyFromFunc = -1;
-        String insertEnteQuery =  "INSERT INTO stati_civili (DESCRIZIONE) " +
+        String insertEnteQuery =  "INSERT INTO STATI_CIVILI (DESCRIZIONE) " +
         							"VALUES (?)";
         try {
             pStmt = dbConnection.prepareStatement(insertEnteQuery);
@@ -45,7 +45,7 @@ public class Stati_civiliDao {
     }
     
     public void updateStato_civile(Stato_civile stato_civile) {
-        String updateQuery = 	"UPDATE Stati_civili SET DESCRIZIONE=? "
+        String updateQuery = 	"UPDATE STATI_CIVILI SET DESCRIZIONE=? "
         						+ "WHERE ID=?";
         try {
             pStmt = dbConnection.prepareStatement(updateQuery);
@@ -59,7 +59,7 @@ public class Stati_civiliDao {
     }
     
     public void deleteStato_civile(int stato_civileId) {
-        String deleteQuery = "DELETE FROM Stati_civili WHERE ID = ?";
+        String deleteQuery = "DELETE FROM STATI_CIVILI WHERE ID = ?";
         try {
             pStmt = dbConnection.prepareStatement(deleteQuery);
             pStmt.setInt(1, stato_civileId);
@@ -89,7 +89,7 @@ public class Stati_civiliDao {
             String jtSorting) {
         List<Stato_civile> stato_civile = new ArrayList<Stato_civile>();
 
-        String query = "SELECT * FROM Stati_civili " + "ORDER BY " + jtSorting + " "
+        String query = "SELECT * FROM STATI_CIVILI " + "ORDER BY " + jtSorting + " "
                 + "LIMIT " + Integer.toString(jtPageSize) + " OFFSET "
                 + Integer.toString(jtStartIndex);
         try {
@@ -111,7 +111,7 @@ public class Stati_civiliDao {
     
     public Stato_civile getStato_civile(int id_stato_civile) {
         Stato_civile stato_civile = new Stato_civile();
-        String newQuery = "SELECT * FROM Stati_civili WHERE ID=? ";
+        String newQuery = "SELECT * FROM STATI_CIVILI WHERE ID=? ";
         System.out.println("Stato_civile id: " + id_stato_civile);
         try {
             pStmt = dbConnection.prepareStatement(newQuery);
@@ -129,7 +129,7 @@ public class Stati_civiliDao {
     }
     
     public boolean verifyStato_civile(String descrizione) {
-        String countQuery = "SELECT ID FROM Stati_civile WHERE DESCRIZIONE=?";
+        String countQuery = "SELECT ID FROM STATI_CIVILI WHERE DESCRIZIONE=?";
         int result = 0;
         try {
             pStmt = dbConnection.prepareStatement(countQuery);

@@ -494,7 +494,6 @@
                 	} else {
 	                	var page = "'ShowSchedaAssistito?codice_fiscale="+ data.record.cod_fiscale + "'";
 						html = '<a href="javascript:showSchedaAssistito(' + page + ')'  
-//						+ ';" target="_blank">' 
 						+ ';" >' 
 						+ data.record.cod_fiscale 
 						+ '</a>';
@@ -632,7 +631,7 @@
             punteggio_idb: {
             	title: 'IdB',
             	inputTitle: 'Indice di bisogno',
-            	width: '5%',
+            	width: '3%',
                 list: true,
                 edit: true,
                 input: function(data) {
@@ -643,6 +642,22 @@
                 	}
                 	return html;
 				},
+            },
+            accesso_emporio: {
+	            title: '-',
+	            width: '1%',
+	            sorting: false,
+	            edit: false,
+	            create: false,
+	            display: function (assistito) {
+	            	if (assistito.record.data_accettazione==null)
+	            		{return '<center><b>-</b></center>';}
+	                var $img = $('<span align="CENTER"><img src="icons/shop_basket.png" width="16" height="16" title="Utente dell\'emporio"/></span>');
+	                $img.click(function () {
+	                	// do nothing by now...
+	                });
+	                return $img;
+	            }
             },
             telefono: {
                 title: 'Telefono',

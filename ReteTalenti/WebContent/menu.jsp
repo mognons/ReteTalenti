@@ -105,16 +105,6 @@ ul ul{
 							<img src="icons/User%20group.png" align="bottom" height="16" width="16">
 							<span style="vertical-align: top">Utenti</span>
 						</li>
-						<li onclick="window.location='gradi_parentelaLink';">
-							<img src="icons/Female symbol.png" align="bottom" height="16" width="16">
-							<span style="vertical-align: top">Gradi parentela</span>
-						</li>
-						
-						<li onclick="window.location='stati_civiliLink';">
-							<img src="icons/Female symbol.png" align="bottom" height="16" width="16">
-							<span style="vertical-align: top">Stati Civili</span>
-						</li>
-						
 						<s:if test="(#isAdmin)">
 							<li onclick="window.location='entiLink';">
 								<img src="icons/Database.png" align="bottom" height="16" width="16">
@@ -131,6 +121,15 @@ ul ul{
 							<li onclick="window.location='uni_misuraLink';">
 								<img src="icons/Database.png" align="bottom" height="16" width="16">
 								<span style="vertical-align: top">Unità di Misura</span>
+							</li>
+							<li onclick="window.location='gradi_parentelaLink';">
+								<img src="icons/Database.png" align="bottom" height="16" width="16">
+								<span style="vertical-align: top">Gradi parentela</span>
+							</li>
+							
+							<li onclick="window.location='stati_civiliLink';">
+								<img src="icons/Database.png" align="bottom" height="16" width="16">
+								<span style="vertical-align: top">Stati Civili</span>
 							</li>
 							<li onclick="window.location='messagesLink';">
 								<img src="icons/Message.png" align="bottom" height="16" width="16">
