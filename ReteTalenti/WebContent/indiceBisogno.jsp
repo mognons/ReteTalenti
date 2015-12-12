@@ -32,7 +32,7 @@ $(document).ready(function() {
 
 function resetMode() {
 	formMode = 'CALC';
-	$('#submitButton').val("Calcola");
+	$('#submitButton').val("Verifica");
 };
 
 function go() {
@@ -43,12 +43,56 @@ function go() {
 		calcoloPunteggio();
 		// Submit form
 		if (formMode == 'SUBMIT') {
-			$('#calcoloIDB').trigger(event);
-			window.parent.$('.ui-dialog-content:visible').dialog('close');
+			$.Deferred(function ($dfd) {
+				$.ajax({
+					traditional: true, // THIS IS MANDATORY FOR ARRAYS
+					url: 'updateIDBAction',
+					type: 'POST',
+					dataType: 'json',
+					data: {
+						id: '<s:property value="recordIDB.id"/>',
+						cf_assistito_ib: '<s:property value="recordIDB.cf_assistito_ib"/>',
+						nome: '<s:property value="nome"/>',
+						cognome: '<s:property value="cognome"/>',
+						isee_euro: $('#isee_euro').val(),
+						cc_euro: $('#cc_euro').val(),
+						ca_euro: $('#ca_euro').val(),
+						cs_euro: $('#cs_euro').val(),
+						stato_disoc: $('#stato_disoc').val(),
+						spese_imp: $('#spese_imp').val(),
+						urgenza: $('#urgenza').val(),
+						isee_punti: $('#isee_punti').val(),
+						entrate_nc_punti: $('#entrate_nc_punti').val(),
+						stato_disoc_punti: $('#stato_disoc_punti').val(),
+						spese_imp_punti: $('#spese_imp_punti').val(),
+						urgenza_punti: $('#urgenza_punti').val(),
+						totalepunti: $('#totalepunti').val()
+					},
+					success: function (data) {
+						$dfd.resolve(data);
+						if (data.message) {
+							$('#errorMessage').html("<h3>"+data.message+"</h3	>");
+						} else {
+							window.parent.$('#AssistitiTableContainer').jtable('reload');
+				 			window.parent.$('.ui-dialog-content:visible').dialog('close');
+						};
+					},
+					error: function () {
+						alert("si è rotto");
+						$dfd.reject();
+					}
+				});
+			})
 		} else {
 			formMode = 'SUBMIT';
 			$('#submitButton').val("Aggiorna");
 		}
+	}
+};
+
+function dynamicCalc() {
+	if ($('#calcoloIDB').validationEngine('validate')) {
+		calcoloPunteggio();
 	}
 };
 
@@ -177,7 +221,7 @@ select {
 				value="recordIDB.cf_assistito_ib" />)
 		</span>
 		<form method="POST" id="calcoloIDB" name="calcoloIDB" id="calcoloIDB"
-			action="updateIDBAction?cf_assistito_ib=<s:property value="codice_fiscale"/>&nome=<s:property value="nome"/>&cognome=<s:property value="cognome"/>"
+			action="#"
 			>
 			<input type="hidden" name="id"
 				value="<s:property value="recordIDB.id"/>">
@@ -194,47 +238,47 @@ select {
 				</tr>
 				<tr>
 					<td style="font-weight: bold;">1. ISEE - Valore in EURO</td>
-					<td><input name="isee_euro"
+					<td><input name="isee_euro" id="isee_euro"
 						style="text-align:right;" 
 						value="<s:property value="%{recordIDB.isee_euro}"/>"
 						class="validate[required,custom[integer]]"
-						onChange="resetMode()" /></td>
+						onChange="dynamicCalc();resetMode()" /></td>
 					<td></td>
-					<td ALIGN="right"><input name="isee_punti" readonly size="2"
+					<td ALIGN="right"><input name="isee_punti"  id="isee_punti" readonly size="2"
 						value="<s:property value="%{recordIDB.isee_punti}"/>" style="text-align:right;"/></td>
 				</tr>
 				<tr>
 					<td style="font-weight: bold;">2. Contributo Comune per spese
 						documentate</td>
-					<td><input name="cc_euro"
+					<td><input name="cc_euro" id="cc_euro"
 						style="text-align:right;" 
 						value="<s:property value="%{recordIDB.cc_euro}"/>"
-						class="validate[required,custom[integer]]" onChange="resetMode()"/></td>
+						class="validate[required,custom[integer]]" onChange="dynamicCalc();resetMode()"/></td>
 				</tr>
 				<tr>
 					<td style="font-weight: bold;">3. Contributo affitto regione
 						per spese documentate</td>
-					<td><input name="ca_euro"
+					<td><input name="ca_euro" id="ca_euro"
 						style="text-align:right;" 
 						value="<s:property value="%{recordIDB.ca_euro}"/>"
-						class="validate[required,custom[integer]]" onChange="resetMode()"/></td>
+						class="validate[required,custom[integer]]" onChange="dynamicCalc();resetMode()"/></td>
 				</tr>
 				<tr>
 					<td style="font-weight: bold;">4. Contributo spot privato
 						sociale per spese documentate</td>
-					<td><input name="cs_euro"
+					<td><input name="cs_euro" id="cs_euro"
 						style="text-align:right;" 
 						value="<s:property value="%{recordIDB.cs_euro}"/>"
-						class="validate[required,custom[integer]]" onChange="resetMode()"/></td>
+						class="validate[required,custom[integer]]" onChange="dynamicCalc();resetMode()"/></td>
 					<td></td>
-					<td ALIGN="right"><input name="entrate_nc_punti" readonly
+					<td ALIGN="right"><input name="entrate_nc_punti" id="entrate_nc_punti" readonly
 						size="2"
 						value="<s:property value="%{recordIDB.entrate_nc_punti}"/>"  style="text-align:right;"/></td>
 				</tr>
 				<tr>
 					<td style="font-weight: bold;">5. Stato di disoccupazione di
 						lunga durata (mesi)</td>
-					<td><select name="stato_disoc" onChange="resetMode()">
+					<td><select name="stato_disoc" id="stato_disoc" onChange="dynamicCalc();resetMode()">
 							<option
 								<s:if test="(recordIDB.stato_disoc==1)">selected="selected"</s:if>
 								value="1">1-3 mesi</option>
@@ -252,25 +296,25 @@ select {
 								value="5">Mai percepita</option>
 					</select></td>
 					<td></td>
-					<td ALIGN="right"><input name="stato_disoc_punti" readonly
+					<td ALIGN="right"><input name="stato_disoc_punti" id="stato_disoc_punti" readonly
 						size="2"
 						value="<s:property value="%{recordIDB.stato_disoc_punti}"/>" style="text-align:right;"/></td>
 				<tr>
 					<td style="font-weight: bold;">6. Spese impreviste e
 						straordinarie"</td>
-					<td><input name="spese_imp"
+					<td><input name="spese_imp" id="spese_imp"
 						style="text-align:right;" 
 						value="<s:property value="%{recordIDB.spese_imp}"/>"
-						class="validate[required,custom[integer]]" onChange="resetMode()"/></td>
+						class="validate[required,custom[integer]]" onChange="dynamicCalc();resetMode()"/></td>
 					<td></td>
-					<td ALIGN="right"><input name="spese_imp_punti" readonly
+					<td ALIGN="right"><input name="spese_imp_punti" id="spese_imp_punti" readonly
 						size="2"
 						value="<s:property value="%{recordIDB.spese_imp_punti}"/>" style="text-align:right;"/></td>
 				</tr>
 				<tr>
 					<td style="font-weight: bold;">7. Carattere di urgenza e
 						condizione socio-economica"</td>
-					<td><select name="urgenza" onChange="resetMode()">
+					<td><select name="urgenza" id="urgenza" onChange="dynamicCalc();resetMode()">
 							<option
 								<s:if test="(recordIDB.urgenza==0)">selected="selected"</s:if>
 								value="0">Situazione cronica</option>
@@ -285,23 +329,23 @@ select {
 								value="3">Miglioramento medio</option>
 							<option
 								<s:if test="(recordIDB.urgenza==4)">selected="selected"</s:if>
-								value="4">Miglioramento discret0</option>
+								value="4">Miglioramento discreto</option>
 							<option
 								<s:if test="(recordIDB.urgenza==5)">selected="selected"</s:if>
 								value="5">Miglioramento ottimo</option>
 					</select></td>
 					<td></td>
-					<td ALIGN="right"><input name="urgenza_punti" readonly
+					<td ALIGN="right"><input name="urgenza_punti" id="urgenza_punti" readonly
 						size="2" value="<s:property value="%{recordIDB.urgenza_punti}"/>" style="text-align:right;"/></td>
 				</tr>
 				<tr>
 					<td COLSPAN="3" ALIGN="right">TOTALE</td>
-					<td COLSPAN="1" ALIGN="right"><input name="totalepunti"
+					<td COLSPAN="1" ALIGN="right"><input name="totalepunti" id="totalepunti"
 						readonly size="2"
 						value="<s:property value="%{recordIDB.totalepunti}"/>" style="text-align:right;"/></td>
 				</tr>
 				<tr>
-					<td COLSPAN="4" ALIGN="right"><input type="button" value="Calcola"
+					<td COLSPAN="4" ALIGN="right"><input type="button" value="Verifica"
 						id="submitButton" class="okButton" onClick="go()"/></td>
 				</tr>
 			</table>

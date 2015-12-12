@@ -84,6 +84,7 @@ public class IndiceBisognoAction extends ActionSupport implements UserAware {
         recordIDB.setUrgenza_punti(urgenza_punti);
         recordIDB.setIsee_punti(isee_punti);
         recordIDB.setTotalepunti(totalepunti);
+        recordIDB.setOperatore(user.getId());;
         if (id==0) {
             try {
                 // Insert INTO recordIDB

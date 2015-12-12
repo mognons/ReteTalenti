@@ -43,8 +43,8 @@ public class IndiceBisognoDao {
     public void createIndiceBisogno(IndiceBisogno indiceBisogno) throws Exception {
         String insert = "INSERT INTO INDICI_BISOGNO (ISEE_EURO, CC_EURO, CA_EURO, CS_EURO, STATO_DISOC, SPESE_IMP, "
                 + "URGENZA, ISEE_PUNTI, ENTRATE_NC_PUNTI, STATO_DISOC_PUNTI, SPESE_IMP_PUNTI, URGENZA_PUNTI, TOTALEPUNTI, "
-                + "CF_ASSISTITO_IB, DATA_INSERIMENTO) "
-                + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW())";
+                + "CF_ASSISTITO_IB, DATA_INSERIMENTO, OPERATORE) "
+                + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW(),?)";
         try {
             pStmt = dbConnection.prepareStatement(insert);
             pStmt.setInt(1, indiceBisogno.getIsee_euro());
@@ -61,6 +61,7 @@ public class IndiceBisognoDao {
             pStmt.setInt(12, indiceBisogno.getUrgenza_punti());
             pStmt.setInt(13, indiceBisogno.getTotalepunti());
             pStmt.setString(14, indiceBisogno.getCf_assistito_ib());
+            pStmt.setInt(15,indiceBisogno.getOperatore());
 
             pStmt.executeUpdate();
 			updateAssistito(indiceBisogno.getCf_assistito_ib(), indiceBisogno.getTotalepunti());

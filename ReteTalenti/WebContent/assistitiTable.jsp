@@ -236,18 +236,24 @@ fieldset {
 	function openPage(page) {
 		var popup = document.getElementById('modalDialogBox');
 		popup.src = page;
-		(function() {
-			$('#pop-up').dialog({
-				modal : true,
-				resizable : false,
-				draggable : false,
-				width : '800',
-				height : '500',
-				title : 'Calcolo punteggio Indice di Bisogno'
-			});
-			$('#LoadRecordsButton').click();
-	   	})();
-
+// 		(function() {
+// 			$('#pop-up').dialog({
+// 				modal : true,
+// 				resizable : false,
+// 				draggable : false,
+// 				width : '800',
+// 				height : '500',
+// 				title : 'Calcolo punteggio Indice di Bisogno'
+// 			});
+//  	   	})();
+		$('#pop-up').dialog({
+			modal : true,
+			resizable : false,
+			draggable : false,
+			width : '800',
+			height : '500',
+			title : 'Calcolo punteggio Indice di Bisogno'
+		});
 	};
 
 	function showSchedaAssistito(page) {

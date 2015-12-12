@@ -44,7 +44,7 @@
             <result name="success">/showAssistitoEmporio.jsp</result>
         </action>
         	
-        <action name="*IDBAction" class="com.action.IndiceBisognoAction" method="{1}">
+        <action name="getDataIDBAction" class="com.action.IndiceBisognoAction" method="getData">
             <result name="success">/indiceBisogno.jsp</result>
         </action>
         	
@@ -193,6 +193,10 @@
         </action>
                                                                 
         <action name="ResetPassword" class="com.action.UsersTableAction" method="resetPassword">
+            <result type="json"></result>
+        </action>
+                  	
+        <action name="updateIDBAction" class="com.action.IndiceBisognoAction" method="update">
             <result type="json"></result>
         </action>
                   	

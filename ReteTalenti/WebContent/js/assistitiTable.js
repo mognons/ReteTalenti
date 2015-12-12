@@ -632,8 +632,14 @@
             	width: '3%',
                 list: true,
                 edit: true,
+                display: function(data) {
+                	if (data.record.punteggio_idb==0)
+                		return '';
+                	else
+                		return '<span style="align:right">' + data.record.punteggio_idb + '</span>';
+                },
                 input: function(data) {
-                    if (!data.formType=="create") {
+                    if (data.formType!="create") {
                 		html='<input style="text-align:right; background-color: #F2F5F7;" size="3" readonly value="'+  data.record.punteggio_idb + '"/>';
                 	} else {
                 		html='<input style="text-align:right; background-color: #F2F5F7;" size="3" readonly value="0"/>';
