@@ -96,7 +96,7 @@ public class ReportDao {
 
         ResultSet rs = null;
         String query = queryBase + " WHERE E.PROVINCIA_ENTE= " + user.getProvinciaEnte()
-                + " AND PUNTEGGIO_IDB > 0 AND DATA_CANDIDATURA IS NULL AND DATA_ACCETTAZIONE IS NULL"
+                + " AND PUNTEGGIO_IDB > 0 AND DATA_CANDIDATURA IS NOT NULL AND DATA_ACCETTAZIONE IS NULL"
                 + " ORDER BY PUNTEGGIO_IDB DESC, DATA_CANDIDATURA ASC";
 
         try {
