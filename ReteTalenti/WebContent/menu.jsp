@@ -41,29 +41,30 @@ ul ul{
 
 	<div id="menu-container" style="display:none; height:42px; position:relative; left: 0px; top: 0px; z-index: 10">
 		<ul id="verticalMenu">
-			<li <s:if test="(enteEmporio)" >class="ui-state-disabled"</s:if>>
-			<img src="icons/group.png" align="bottom" height="16" width="16">
-				<span style="vertical-align: top">Gestione Assistiti</span>
-				<ul>
-					<li <s:if test="(enteEmporio)" >class="ui-state-disabled"</s:if> 
-						onclick="window.location='assistitiLink';">Anagrafica</li>
-					<li <s:if test="(enteEmporio || groupId > 2)" >class="ui-state-disabled"</s:if>
-						onclick="window.location='candidatureLink';">Candidatura Emporio</li>
-					<li <s:if test="(enteEmporio || groupId > 2)" >class="ui-state-disabled"</s:if>
-						onclick="window.location='rimozioneEmporioLink';">Rimozione Emporio</li>
-				</ul>
-			</li>
+			<s:if test="(!enteEmporio)" >
+				<li>
+				<img src="icons/group.png" align="bottom" height="16" width="16">
+					<span style="vertical-align: top">Gestione Assistiti</span>
+					<ul>
+						<li <s:if test="(enteEmporio)" >class="ui-state-disabled"</s:if> 
+							onclick="window.location='assistitiLink';">Anagrafica</li>
+						<li <s:if test="(enteEmporio || groupId > 2)" >class="ui-state-disabled"</s:if>
+							onclick="window.location='candidatureLink';">Candidatura Emporio</li>
+						<li <s:if test="(enteEmporio || groupId > 2)" >class="ui-state-disabled"</s:if>
+							onclick="window.location='rimozioneEmporioLink';">Rimozione Emporio</li>
+					</ul>
+				</li>
+			</s:if>
 			<s:if test="(enteEmporio)" >
-			<li>-</li>
-			<li>
-				<img src="icons/shop_basket.png" align="bottom" height="16" width="16">
-				<span style="vertical-align: top">Utenti Emporio</span>
-				<ul>
-					<li onclick="window.location='accettazioneEmporioLink';">Accettazione</li>
-					<li onclick="window.location='dismissioneEmporioLink';">Dimissione</li>
-					<li onclick="window.location='anagraficaEmporioLink';">Anagrafica</li>
-				</ul>
-			</li>
+				<li>
+					<img src="icons/shop_basket.png" align="bottom" height="16" width="16">
+					<span style="vertical-align: top">Utenti Emporio</span>
+					<ul>
+						<li onclick="window.location='accettazioneEmporioLink';">Accettazione</li>
+						<li onclick="window.location='dismissioneEmporioLink';">Dimissione</li>
+						<li onclick="window.location='anagraficaEmporioLink';">Anagrafica</li>
+					</ul>
+				</li>
 			</s:if>
 			<li>-</li>
 			<li> <img src="icons/Food-Bunch-Ingredients-icon.png" align="bottom" height="16" width="16">

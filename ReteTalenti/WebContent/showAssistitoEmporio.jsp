@@ -99,23 +99,19 @@ th {
 			<h1>Emporio</h1>
 			<table>
 				<tr>
-					<td class="label">Assistito da</td>
-					<td class="dato"><s:property value="assistito.descrizione" /></td>
-					<td class="label">dal</td>
-					<td class="dato"><s:date name="assistito.data_inserimento" format="dd/MM/yyyy"/></td>
-					<s:if test="assistito.data_fine_assistenza">
-						<td class="label">al</td>
-						<td class="dato"><s:date name="assistito.data_fine_assistenza"  format="dd/MM/yyyy"/></td>
-					</s:if>
+					<td class="label">Emporio</td>
+					<td class="dato"><s:property value="assistito.desc_emporio"/></td>
 				</tr>
-				<s:if test="assistito.data_candidatura||assistito.data_accettazione||assistito.data_dismissione">
 				<tr>
-					<td class="label">Candidatura Emporio</td>
-					<td class="dato"><s:date name="assistito.data_candidatura" format="dd/MM/yyyy"/></td>
-					<td class="label">Accettato il </td>
+					<td class="label">Accettato dal </td>
 					<td class="dato"><s:date name="assistito.data_accettazione" format="dd/MM/yyyy"/></td>
+					<td class="label">Fino al</td>
+					<td class="dato"><s:property value="assistito.data_scadenza" /></td>
 				</tr>
-				</s:if>
+				<tr>
+					<td class="label">Indice di Bisogno</td>
+					<td class="dato"><s:property value="assistito.punteggio_idb"/></td>
+				</tr>
 			</table>
 	</div>
 </body>

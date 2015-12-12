@@ -828,6 +828,7 @@ public class AssistitiDao {
         Assistito assistito = null;
         String query = "SELECT * FROM ASSISTITI A "
                 + "LEFT JOIN ENTI E ON A.ENTE_ASSISTENTE=E.ID "
+                + "LEFT JOIN ENTI EM ON A.EMPORIO=EM.ID "
                 + "LEFT JOIN PROVINCE P ON A.PROVINCIA=P.COD_PROVINCIA "
                 + "LEFT JOIN NAZIONI N ON A.NAZIONALITA=N.CODICE "
                 + "LEFT JOIN STATI_CIVILI S ON A.STATO_CIVILE=S.ID "
@@ -859,7 +860,7 @@ public class AssistitiDao {
                 assistito.setEmail(rs.getString("EMAIL"));
                 assistito.setNum_documento(rs.getString("NUM_DOCUMENTO"));
                 assistito.setEnte_assistente(rs.getInt("ENTE_ASSISTENTE"));
-                assistito.setDescrizione(rs.getString("DESCRIZIONE"));
+                assistito.setDescrizione(rs.getString("E.DESCRIZIONE"));
                 assistito.setData_inserimento(rs.getDate("DATA_INSERIMENTO"));
                 assistito.setData_fine_assistenza(rs.getDate("DATA_FINE_ASSISTENZA"));
                 assistito.setData_candidatura(rs.getDate("DATA_CANDIDATURA"));
@@ -869,6 +870,7 @@ public class AssistitiDao {
                 assistito.setOperatore(rs.getInt("OPERATORE"));
                 assistito.setPunteggio_idb(rs.getInt("PUNTEGGIO_IDB"));
                 assistito.setEmporio(rs.getInt("EMPORIO"));
+                assistito.setDesc_emporio(rs.getString("EM.DESCRIZIONE"));
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());

@@ -73,7 +73,7 @@
 			// CUT HERE
 			$('#EmporioTableContainer').jtable(
 					{
-						title : "Accettazione Candidati all'Emporio",
+						title : "Graduatoria Provinciale Candidati",
 						paging : true, // Enable paging
 						pageSize: 15,
 						pageSizes: [5,10,15],
