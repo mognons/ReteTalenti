@@ -5,7 +5,7 @@
 		pageSize: 15,
 		pageSizes: [5,10,15],
         sorting: false, // Enable sorting
-        selecting: true, // Enable selecting
+        selecting: false, // Enable selecting
         multiselect: false, // Allow multiple selecting
         selectingCheckboxes: true, // Show checkboxes on first column
         selectOnRowClick: false, // Enable this to only select using

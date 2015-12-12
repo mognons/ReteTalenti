@@ -248,7 +248,7 @@ public class ImpegniDao {
 
 		String query = 	"SELECT COUNT(*) FROM IMPEGNI " 
 						+ "WHERE ENTE_RICHIEDENTE=? "
-						+ "AND ID_ECCEDENZA=?"
+						+ "AND ID_ECCEDENZA=? "
 						+ "AND DATA_RITIRO > SUBDATE(NOW(),7) ";
 		try {
 			pStmt = dbConnection.prepareStatement(query);

@@ -9,8 +9,8 @@
         multiselect: false, //Allow multiple selecting
         selectingCheckboxes: false, //Show checkboxes on first column
         selectOnRowClick: false,
-		toolbarsearch:true,
-		toolbarreset:false,
+		toolbarSearch:true,
+		toolbarReset:false,
 		actions : {
 			listAction : 'listNazioniAction',
 		},

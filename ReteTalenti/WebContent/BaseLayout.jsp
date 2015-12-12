@@ -11,13 +11,14 @@
 <link href="css/theme.css" rel="stylesheet" type="text/css" />
 <link href="css/lightcolor/blue/jtable.css" rel="stylesheet" type="text/css" />
 <link href="css/style.css" rel="stylesheet" type="text/css" />
-<!â Add conditional for IE7 + 8 support â>   
-<!â[if lte IE 8]>
+<!-- Add conditional for IE7 + 8 support ��-->
+<!--[if lte IE 8]>
 <script src="scripts/html5.js"></script>
-<![endif]â>
+<![endif]-->
 <!-- jQuery script file. -->
 <script src="scripts/jquery-2.1.4.js" type="text/javascript"></script>
 <script src="scripts/jquery-ui.js" type="text/javascript"></script>
+<script type="text/javascript" src="scripts/datepicker-it.js"></script>
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>

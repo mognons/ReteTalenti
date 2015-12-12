@@ -35,6 +35,7 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
     private Eccedenza record;
     private int totalRecordCount, jtStartIndex, jtPageSize;
     private String jtSorting;
+    private String jtFilter = "";
     //
     private int id, ente_cedente, udm, qta, qta_residua;
     private String prodotto, operatore;
@@ -62,9 +63,10 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
     	jtSorting = "SCADENZA ASC";
         try {
             // Fetch Data from Enti Table
-            records = dao.getAvailableEccedenze(jtStartIndex, jtPageSize, jtSorting, user);
+        	System.out.println(jtFilter);
+            records = dao.getAvailableEccedenze(jtStartIndex, jtPageSize, jtSorting, jtFilter, user);
             result = "OK";
-            totalRecordCount = dao.getCountAvailableEccedenze(user);
+            totalRecordCount = dao.getCountAvailableEccedenze(jtFilter, user);
 
         } catch (Exception e) {
             result = "ERROR";
@@ -394,6 +396,14 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
 
 	public void setQta_residua(int qta_residua) {
 		this.qta_residua = qta_residua;
+	}
+
+	public String getJtFilter() {
+		return jtFilter;
+	}
+
+	public void setJtFilter(String jtFilter) {
+		this.jtFilter = jtFilter;
 	}
 
 }

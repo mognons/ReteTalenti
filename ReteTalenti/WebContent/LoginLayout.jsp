@@ -5,10 +5,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!– Add conditional for IE7 + 8 support –>   
-<!–[if lte IE 8]>
+<!-- Add conditional for IE7 + 8 support ��-->
+<!--[if lte IE 8]>
 <script src="scripts/html5.js"></script>
-<![endif]–>
+<![endif]-->
 <link href="css/jquery-ui.structure.css" rel="stylesheet" type="text/css" />
 <link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
 <link href="css/theme.css" rel="stylesheet" type="text/css" />
@@ -17,6 +17,8 @@
 <!-- jQuery script file. -->
 <script src="scripts/jquery-2.1.4.js" type="text/javascript"></script>
 <script src="scripts/jquery-ui.js" type="text/javascript"></script>
+<script type="text/javascript" src="scripts/datepicker-it.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function() {
   var bodyHeight = $("body").height();

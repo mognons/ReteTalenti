@@ -113,7 +113,8 @@ public class EccedenzeDao {
 		return totalRecord;
 	}
 
-	public List<Eccedenza> getAvailableEccedenze(int jtStartIndex, int jtPageSize, String jtSorting, User user) {
+	public List<Eccedenza> getAvailableEccedenze(int jtStartIndex, int jtPageSize, String jtSorting, String jtFilter, 
+			User user) {
 		List<Eccedenza> eccedenze = new ArrayList<Eccedenza>();
 		String query = 	"SELECT * FROM ("
 						+ "SELECT ECC.*, (QTA-COALESCE(IMP.QTA_PRENOTATA,0))  QTA_RESIDUA FROM ECCEDENZE ECC " 
@@ -124,7 +125,8 @@ public class EccedenzeDao {
 						+ "AND PROVINCIA_ENTE=? "
 						+ "AND SCADENZA>=NOW() ) ECCE "
 						+ "WHERE QTA_RESIDUA <>0 "
-						+ "ORDER BY " + jtSorting
+						+ jtFilter 
+						+ " ORDER BY " + jtSorting
 						+ " LIMIT " + jtPageSize
 						+ " OFFSET " + jtStartIndex;
 		try {
@@ -150,7 +152,7 @@ public class EccedenzeDao {
 		return eccedenze;
 	}
 
-	public int getCountAvailableEccedenze(User user) {
+	public int getCountAvailableEccedenze(String jtFilter, User user) {
 		int totalRecord = 0;
 
 		String query = 	"SELECT * FROM ("
@@ -158,9 +160,9 @@ public class EccedenzeDao {
 						+ "LEFT JOIN (SELECT ID_ECCEDENZA, SUM(QTA_PRENOTATA) AS QTA_PRENOTATA FROM IMPEGNI "
 						+ "GROUP BY ID_ECCEDENZA ) IMP ON ECC.ID=IMP.ID_ECCEDENZA "
 						+ "WHERE ENTE_CEDENTE<>? "
-						+ "AND SCADENZA>=NOW() "
+						+ " AND SCADENZA>=NOW() "
 						+ ") ECCE "
-						+ "WHERE QTA_RESIDUA <>0 ";
+						+ "WHERE QTA_RESIDUA <>0 " + jtFilter;
 		try {
 			pStmt = dbConnection.prepareStatement(query);
 			pStmt.setInt(1, user.getEnte());

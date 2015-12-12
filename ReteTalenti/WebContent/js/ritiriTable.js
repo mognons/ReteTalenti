@@ -46,6 +46,8 @@
         openChildAsAccordion: true,
         actions: {
             listAction: 'listRitiriAction'
+//            	,
+//            updateAction: 'updateImpegniAction'
         },
         fields: {
             id: {
@@ -57,19 +59,22 @@
                 width: '15%',
                 options: 'Choose_Enti',
                 list: true,
+                edit: false
             },
             prodotto: {
                 title: 'Prodotto',
                 width: '45%',
-                list: true
+                list: true,
+                edit: false
             },
             desc_udm: {
                 title: 'UDM',
                 list: true,
+                edit: false
             },
             qta_prenotata: {
             	title: 'Quantità',
-                list: true,
+                list: true
             },
             data_ritiro: {
             	title: 'Ritiro previsto',
@@ -89,7 +94,7 @@
 					}
 					return html;	
 				},
-                list: true,
+                list: true
             },
             ora_ritiro: {
             	title: 'Orario Ritiro',
