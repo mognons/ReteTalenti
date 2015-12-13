@@ -34,7 +34,7 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
     private Assistito record;
     private int totalRecordCount, jtStartIndex, jtPageSize;
     private String jtSorting;
-
+    private String jtFilter = "";
     private User user = new User();
 //
 
@@ -85,10 +85,10 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
     public String list() {
         try {
             // Fetch Data from Assistiti Table
-            records = dao.getAllAssistiti(jtStartIndex, jtPageSize, jtSorting, user, cf_search, cognome_search);
+            records = dao.getAllAssistiti(jtStartIndex, jtPageSize, jtSorting, jtFilter, user);
+            totalRecordCount = dao.getCountAssistiti(jtFilter, user);
             result = "OK";
-            totalRecordCount = dao.getCountAssistiti(user, cf_search, cognome_search);
-            System.out.println("Inside listAssistitiAction");
+            System.out.println("Inside listAssistitiAction with filter: " + jtFilter);
         } catch (Exception e) {
             result = "ERROR";
             message = e.getMessage();
@@ -666,6 +666,16 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
 
 	public void setEnteDestinazione(int enteDestinazione) {
 		this.enteDestinazione = enteDestinazione;
+	}
+
+
+	public String getJtFilter() {
+		return jtFilter;
+	}
+
+
+	public void setJtFilter(String jtFilter) {
+		this.jtFilter = jtFilter;
 	}
 
 }

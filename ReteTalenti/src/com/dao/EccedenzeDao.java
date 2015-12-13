@@ -50,7 +50,9 @@ public class EccedenzeDao {
 	}
 
 	public void updateEccedenza(Eccedenza eccedenza) {
-		String updateQuery = "UPDATE ECCEDENZE SET " + "PRODOTTO=?, UDM=?, QTA=?, SCADENZA=? " + "WHERE ID=?";
+		String updateQuery = 	"UPDATE ECCEDENZE SET " 
+								+ "PRODOTTO=?, UDM=?, QTA=?, SCADENZA=? " 
+								+ "WHERE ID=?";
 		try {
 			pStmt = dbConnection.prepareStatement(updateQuery);
 			pStmt.setString(1, eccedenza.getProdotto());
@@ -66,9 +68,9 @@ public class EccedenzeDao {
 
 	public List<Eccedenza> getOwnEccedenze(int jtStartIndex, int jtPageSize, String jtSorting, User user) {
 		List<Eccedenza> eccedenze = new ArrayList<Eccedenza>();
-		String query = 	"select ecc.*, coalesce(imp.qta_prenotata,0)  qta_prenotata from eccedenze ecc "
-						+ "left join (SELECT id_eccedenza, sum(qta_prenotata) as qta_prenotata from impegni "
-						+ "group by id_eccedenza ) imp on ecc.id=imp.id_eccedenza "
+		String query = 	"SELECT ECC.*, COALESCE(imp.qta_prenotata,0)  qta_prenotata from ECCEDENZE ECC "
+						+ "left join (SELECT id_eccedenza, sum(qta_prenotata) as qta_prenotata FROM IMPEGNI "
+						+ "group by id_eccedenza ) IMP on ecc.id=imp.id_eccedenza "
 						+ "WHERE ENTE_CEDENTE=? "
 						+ "ORDER BY " + jtSorting
 						+ " LIMIT " + jtPageSize

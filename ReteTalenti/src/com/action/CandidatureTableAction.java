@@ -33,7 +33,7 @@ public class CandidatureTableAction extends ActionSupport implements UserAware, 
     private Assistito record;
     private int totalRecordCount, jtStartIndex, jtPageSize;
     private String jtSorting;
-
+    private String jtFilter = "";
     private User user = new User();
 //
 
@@ -79,9 +79,9 @@ public class CandidatureTableAction extends ActionSupport implements UserAware, 
     public String list() {
         try {
             // Fetch Data from Assistiti Table
-        	records = dao.getAllAssistiti(jtStartIndex, jtPageSize, jtSorting, user, cf_search, cognome_search);
+        	records = dao.getAllAssistiti(jtStartIndex, jtPageSize, jtSorting, jtFilter, user);
             result = "OK";
-            totalRecordCount = dao.getCountAssistiti(user, cf_search, cognome_search);
+            totalRecordCount = dao.getCountAssistiti(jtFilter, user);
 
         } catch (Exception e) {
             result = "ERROR";
@@ -564,6 +564,16 @@ public class CandidatureTableAction extends ActionSupport implements UserAware, 
 
 	public void setPunteggio_idb(int punteggio_idb) {
 		this.punteggio_idb = punteggio_idb;
+	}
+
+
+	public String getJtFilter() {
+		return jtFilter;
+	}
+
+
+	public void setJtFilter(String jtFilter) {
+		this.jtFilter = jtFilter;
 	}
 
 }

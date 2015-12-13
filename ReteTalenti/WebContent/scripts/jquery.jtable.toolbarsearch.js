@@ -46,15 +46,19 @@
 	            value: -1,
 	            text: '--- Tutti ---'
 	        }));
-
-			$.getJSON($optionsURL, function(data) {
-				$(data.options).each(function() {
-			        $($targetField).append($('<option>', {
-			            value: $(this).attr('Value'),
-			            text: $(this).attr('DisplayText')
-			        }));
-				})
-			});
+			if (typeof $optionsURL==='string') {
+				$.getJSON($optionsURL, function(data) {
+					$(data.options).each(function() {
+				        $($targetField).append($('<option>', {
+				            value: $(this).attr('Value'),
+				            text: $(this).attr('DisplayText')
+				        }));
+					})
+				});
+			} else {
+				// It's an object...
+					console.log($optionsURL);
+			}
         },	
 		/* Adds column header cells to given tr element.
 		 * A.M. - Modified to move Reset "button" to REAL toolbar, along with other items in a standard
@@ -69,6 +73,7 @@
     	    	var fieldName = this._columnList[i];
         	    var $headerCell = this._toolbarsearch_createHeaderCellForField(fieldName, this.options.fields[fieldName]);
             	$headerCell.appendTo($tr);
+//    			$('.hasTooltip').qtip();
             }
 			if(this.options.toolbarReset){
 				$reset = $('.jtable-toolbar');
@@ -114,17 +119,21 @@
 			} else {
 				var $_type = 'text';
 			}
+ 
+			var $_title = 'Colonna con filtro, operatore: <b>' + field.sqlOperator + '</b>';
 			if(field.type=="options"){
 				var $input = $('<SELECT '
 						+ 'id="' + $_id + '"'
-						+ 'name="' + $_name + '" ></SELECT>')
-						.addClass('jtable-toolbarsearch')
+						+ 'name="' + $_name + '"'
+						+ ' title="' + $_title + '" ></SELECT>')
+						.addClass('jtable-toolbarsearch hasTooltip')
 						.css('width','90%');				
 			} else {
 				var $input = $('<input type="' + $_type + '" '
 						+ 'id="' + $_id + '"'
-						+ 'name="' + $_name + '" />')
-						.addClass('jtable-toolbarsearch')
+						+ 'name="' + $_name + '"'
+						+ ' title="' + $_title + '"/>')
+						.addClass('jtable-toolbarsearch hasTooltip')
 						.css('width','90%');				
 			}
 			if(field.type=="date"){
@@ -135,7 +144,12 @@
     				firstDay: 1
     			});
 			}
-			$input.bind('change',function(){
+			$input.qtip({
+			    position: {
+			        viewport: $(window)
+			    }
+			});
+ 			$input.bind('change',function(){
 				var $q=[];
 				var $opt=[];
 				var $postData={};
@@ -152,7 +166,6 @@
 					if ($field_type=='date') {
 						$field_value = _toolbarsearch_convertDateFromEuroToISO($field_value);
 					}
-					console.log($field_type, $field_value);
 					if($(this).val().length>=1 && 
 							!($field_type=='options' && $field_value==-1)){
 						if ($sql_operator=='LIKE')
@@ -185,7 +198,7 @@
                 .css('width', field.width)
                 .data('fieldName', fieldName)
                 .append($headerContainerDiv);
-
+            
             return $th;
         }
 	});

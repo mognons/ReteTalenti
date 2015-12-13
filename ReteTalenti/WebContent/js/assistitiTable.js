@@ -75,6 +75,8 @@
         selectOnRowClick: false, // Enable this to only select using checkboxes
         pageSizeChangeArea: false,
         openChildAsAccordion: true,
+		toolbarSearch:true,
+		toolbarReset:true,
         jqueryuiTheme: false,
         actions: {
             listAction: 'listAssistitiAction',
@@ -482,6 +484,9 @@
             	title: 'Ente Assistente',
             	options: 'Choose_Enti',
             	width: '15%',
+				searchable: true, // default is false, if set to true then a text input is created
+				sqlOperator: '=',
+//				sqlName: 'NOME_DELLA_COLONNA'
             	list: true,
             	edit: false,
             	create: false
@@ -504,6 +509,9 @@
                 inputTitle: 'Codice Fiscale' + ' <span style="color:red">*</span>',
                 inputClass: 'validate[required],funcCall[checkCF]',
                 width: '10%',
+				searchable: true, // default is false, if set to true then a text input is created
+//				sqlOperator: '=',
+//				sqlName: 'NOME_DELLA_COLONNA'
                 list: true,
                 edit: false,
                 create: true
@@ -520,6 +528,9 @@
                 		return data.record.nome;
                 	}
                 },
+				searchable: true, // default is false, if set to true then a text input is created
+//				sqlOperator: '=',
+//				sqlName: 'NOME_DELLA_COLONNA'
                 list: true,
                 edit: true,
                 create: true
@@ -536,6 +547,9 @@
                 		return data.record.cognome;
                 	}
                 },
+				searchable: true, // default is false, if set to true then a text input is created
+//				sqlOperator: '=',
+//				sqlName: 'NOME_DELLA_COLONNA'
                 list: true,
                 edit: true,
                 create: true
@@ -573,6 +587,9 @@
 				width: '10%',
 				displayFormat: 'dd/mm/yy',
                 inputClass: 'validate[required] datepicker',
+				searchable: true, // default is false, if set to true then a text input is created
+				sqlOperator: '>=',
+//				sqlName: 'NOME_DELLA_COLONNA'
                 list: true,
                 edit: true,
                 create: true
@@ -630,6 +647,9 @@
             	title: 'IdB',
             	inputTitle: 'Indice di bisogno',
             	width: '3%',
+				searchable: true, // default is false, if set to true then a text input is created
+				sqlOperator: '>=',
+//				sqlName: 'NOME_DELLA_COLONNA'
                 list: true,
                 edit: true,
                 display: function(data) {
@@ -763,25 +783,7 @@
             data.form.validationEngine('detach');
         }
     });
-    //Re-load records when user click 'load records' button.
-    $('#LoadRecordsButton').click(function (e) {
-        e.preventDefault();
-        $('#AssistitiTableContainer').jtable('load', {
-            cf_search: $('#cf_search').val(),
-            cognome_search: $('#cognome_search').val()
-        });
-    });
-
-    $('#ResetButton').click(function (e) {
-        e.preventDefault();
-        $('#cf_search').val(null);
-        $('#cognome_search').val(null);
-        $('#AssistitiTableContainer').jtable('load', {
-            cf_search: $('#cf_search').val(),
-            cognome_search: $('#cognome_search').val()
-        });
-    });
-
+ 
     //Load all records when page is first shown
-    $('#LoadRecordsButton').click();
+    $('#AssistitiTableContainer').jtable('load');
 });

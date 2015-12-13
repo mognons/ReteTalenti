@@ -194,6 +194,7 @@
                 inputTitle: 'Prodotto' + ' <span style="color:red">*</span>',
                 inputClass: 'validate[required]',
 				searchable: true, // default is false, if set to true then a text input is created
+//				sqlOperator: '=',
 //				sqlName: 'NOME_DELLA_COLONNA'
                list: true
             },
@@ -202,6 +203,8 @@
                 inputTitle: 'Unità di misura' + ' <span style="color:red">*</span>',
                 options: 'Choose_UDM',
                 width: '15%',
+				searchable: true, // default is false, if set to true then a text input is created
+				sqlOperator: '=',
                 list: true,
                 edit: true,
                 create: true
@@ -209,6 +212,8 @@
             qta: {
                 title: 'Quantità',
                 width: '5%',
+				searchable: true, // default is false, if set to true then a text input is created
+				sqlOperator: '>=',
                 list: true,
                 edit: true,
                 create: true
@@ -224,7 +229,7 @@
 				displayFormat: 'dd/mm/yy',
                 inputClass: 'validate[required]',
 				searchable: true, // default is false, if set to true then a text input is created
-				sqlOperator: '<=',
+				sqlOperator: '>=',
 //				sqlName: 'NOME_DELLA_COLONNA'
                 width: '10%'
             }

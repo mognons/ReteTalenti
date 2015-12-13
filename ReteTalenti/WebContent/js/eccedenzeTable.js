@@ -174,8 +174,13 @@
                 title: 'Quantità Disp.',
                 width: '10%',
                 list: true,
-                edit: false,
-                create: false
+                edit: true,
+                input: function (data) {
+                	return 	'<input name="qta_residua" '
+                			+ 'style="border:0px; text-align:right; background-color: #F2F5F7;" '
+                			+ 'readonly value="'+  data.record.qta_residua + '"/>';
+                },
+              create: false
             },
             scadenza: {
                 title: 'Scadenza',
@@ -198,13 +203,17 @@
         formCreated: function (event, data) {
             data.form.find('input[name=prodotto]').css('width', '300px');
             data.form.validationEngine('attach',{promptPosition : "bottomLeft", scroll: false});
+            data.form.find('.jtable-input-field-container:nth-of-type(4)').hide();
         },
         // Validate form when it is being submitted
         formSubmitting: function (event, data) {
+            data.form.find('input[name=qta_residua]')
+            .val(data.form.find('input[name=qta]').val());
             return data.form.validationEngine('validate');
         },
         // Dispose validation logic when form is closed
         formClosed: function (event, data) {
+        	console.log(data);
             data.form.validationEngine('hide');
             data.form.validationEngine('detach');
         }
