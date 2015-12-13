@@ -29,7 +29,7 @@
 		return (dd+"/"+mm+"/"+yyyy);
 	};
     $('#ImpegniTableContainer').jtable({
-        title: 'Gestione Prenotazione Eccedenze',
+        title: 'Eccedenze disponibili per il ritiro',
         paging: true, // Enable paging
 		pageSize: 15,
 		pageSizes: [5,10,15],
@@ -58,8 +58,13 @@
                 edit: false,
                 create: false,
                 display: function (eccedenzaData) {
-                    var $img = $('<span align="CENTER"><img src="icons/Delivery.png" width="16" height="16" title="Ritiri prenotati"/></span>');
+                    var $img = $('<center><img src="icons/Delivery.png" width="16" height="16" title="Prenotazione del ritiro"/></center>');
                     // Open child table when user clicks the image
+                    $img.find('img').qtip({
+        			    position: {
+        			        viewport: $(window)
+        			    }
+        			});
                     $img.click(function () {
                         $('#ImpegniTableContainer').jtable('openChildTable',$img.closest('tr'),
                         {

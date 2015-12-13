@@ -73,16 +73,20 @@
     	    	var fieldName = this._columnList[i];
         	    var $headerCell = this._toolbarsearch_createHeaderCellForField(fieldName, this.options.fields[fieldName]);
             	$headerCell.appendTo($tr);
-//    			$('.hasTooltip').qtip();
             }
 			if(this.options.toolbarReset){
 				$reset = $('.jtable-toolbar');
 				$resetbutton = $(
-					'<span class="jtable-toolbar-item RESET" title="Cancella i criteri di ricerca" style="">'
+					'<span class="jtable-toolbar-item RESET" title="Azzera i criteri di ricerca" style="">'
 					+ '<span class="jtable-toolbar-item-icon"' 
 					+ 'style="background-image: url(icons/Cancel.png); background-position: initial initial; background-repeat: initial initial;">'
 					+ '</span>'
 					+ '<span class="jtable-toolbar-item-text">Reset</span></span>').appendTo($reset);
+				$resetbutton.qtip({
+				    position: {
+				        viewport: $(window)
+				    }
+				});
 				$resetbutton.click(function(){
 					$('.jtable-toolbarsearch').val('');
 					self.load({});				

@@ -15,7 +15,10 @@ public class ReportAction extends ActionSupport implements UserAware {
     private static final long serialVersionUID = 1173542L;
     private ReportDao dao = new ReportDao();
     private String errorMessage;
-    private Boolean Assistiti, Eccedenze, Utenti, Reference;
+    private Boolean Assistiti = false;
+    private Boolean Eccedenze = false;
+    private Boolean Utenti = false;
+    private Boolean Reference = false;
     private int ente;
     public String filename;
     public InputStream excelStream;
@@ -252,9 +255,11 @@ public class ReportAction extends ActionSupport implements UserAware {
     public String export() {
     	Boolean first = true;
     	RSToExcel RSToExcel = null;
-    	System.out.println("Ente : "+ ente);
-    	System.out.print("Assistiti: " + Assistiti);
-    	System.out.print("Eccedenze: " + Eccedenze);
+    	System.out.println("Filename : "+ filename);
+    	if (!filename.contains(".xls")) {
+    		filename = filename.concat(".xls");
+    	}
+    	System.out.println("Filename : "+ filename);
         ByteArrayOutputStream out;
         if (Assistiti) {
         	if (first) {

@@ -251,7 +251,12 @@
                 	if (recordObfuscation(assistito.record.ente_assistente) || (assistito.record.data_fine_assistenza)) 
                 		{return '<center><b>-</b></center>';}
                     // Create an image that will be used to open child table
-                    var $img = $('<span align="CENTER"><img src="icons/People.png" width="16" height="16" title="Nucleo familiare"/></span>');
+                    var $img = $('<CENTER><img src="icons/People.png" width="16" height="16" title="Nucleo familiare"/></center>');
+                    $img.find('img').qtip({
+        			    position: {
+        			        viewport: $(window)
+        			    }
+        			});
                     // Open child table when user clicks the image
                     $img.click(function () {
                         $('#AssistitiTableContainer').jtable('openChildTable',$img.closest('tr'),
@@ -370,8 +375,13 @@
                 display: function (assistito) {
                 	if (recordObfuscation(assistito.record.ente_assistente) || (assistito.record.data_fine_assistenza))  
                 		{return '<center><b>-</b></center>';}
-                	var $img = $('<span align="CENTER"><img src="icons/Dollar.png" width="16" height="16" title="Calcolo IDB"/></span>');
-                    // Open Foreign Form
+                	var $img = $('<center><img src="icons/Dollar.png" width="16" height="16" title="Calcolo Indice Di Bisogno"/></center>');
+                    $img.find('img').qtip({
+        			    position: {
+        			        viewport: $(window)
+        			    }
+        			});
+                   // Open Foreign Form
                     $img.click(function () {
                     	openPage('getDataIDBAction.action?cf_assistito_ib=' + assistito.record.cod_fiscale
                     			+ '&nome=' + assistito.record.nome
@@ -391,7 +401,12 @@
                 	if (recordObfuscation(assistito.record.ente_assistente) || (assistito.record.data_fine_assistenza))  
                 		{return '<center><b>-</b></center>';}
                     // Create an image that will be used to open child table
-                    var $img = $('<span align="CENTER"><img src="icons/Notes.png" width="16" height="16" title="Annotazioni"/></span>');
+                    var $img = $('<center><img src="icons/Notes.png" width="16" height="16" title="Annotazioni"/></center>');
+                    $img.find('img').qtip({
+        			    position: {
+        			        viewport: $(window)
+        			    }
+        			});
                     // Open child table when user clicks the image
                     $img.click(function () {
                         $('#AssistitiTableContainer').jtable('openChildTable',$img.closest('tr'),
@@ -785,5 +800,15 @@
     });
  
     //Load all records when page is first shown
+    $('.jtable-toolbar-item').qtip({
+	    position: {
+	        viewport: $(window)
+	    }
+	});
+    $('button.jtable-command-button').qtip({
+	    position: {
+	        viewport: $(window)
+	    }
+	});
     $('#AssistitiTableContainer').jtable('load');
 });
