@@ -35,6 +35,41 @@
 			}
 
 		},
+
+        /* Creates an array of options from given object.
+        *************************************************************************/
+        _buildOptionsArrayFromObject: function (options) {
+            var list = [];
+
+            $.each(options, function (propName, propValue) {
+                list.push({
+                    Value: propName,
+                    DisplayText: propValue
+                });
+            });
+
+            return list;
+        },
+
+        /* Creates array of options from giving options array.
+        *************************************************************************/
+        _buildOptionsFromArray: function (optionsArray) {
+            var list = [];
+
+            for (var i = 0; i < optionsArray.length; i++) {
+                if ($.isPlainObject(optionsArray[i])) {
+                    list.push(optionsArray[i]);
+                } else { //assumed as primitive type (int, string...)
+                    list.push({
+                        Value: optionsArray[i],
+                        DisplayText: optionsArray[i]
+                    });
+                }
+            }
+
+            return list;
+        },
+
 		/* Private method fot toolbarsearch: adds options to a select field
 		 * by Alberto Mognoni. Options are returned by AJAX call in JSON format, same as jTable
 		 */
@@ -44,7 +79,7 @@
 			/* Load a generic catch all with value of -1 */
 	        $($targetField).append($('<option>', {
 	            value: -1,
-	            text: '--- Tutti ---'
+	            text: '---'
 	        }));
 			if (typeof $optionsURL==='string') {
 				$.getJSON($optionsURL, function(data) {
@@ -55,10 +90,24 @@
 				        }));
 					})
 				});
-			} else {
-				// It's an object...
-					console.log($optionsURL);
-			}
+			} else if (jQuery.isArray($optionsURL)) { //It is an array of options
+                options = this._buildOptionsFromArray($optionsURL);
+                console.log(options);
+    	    	for (var i = 0; i < options.length; i++) {
+			        $($targetField).append($('<option>', {
+			            value: options[i].Value,
+			            text: options[i].DisplayText
+			        }));
+                }
+            } else { //It is an object that it's properties are options
+                options = this._buildOptionsArrayFromObject($optionsURL);
+    	    	for (var i = 0; i < options.length; i++) {
+			        $($targetField).append($('<option>', {
+			            value: options[i].Value,
+			            text: options[i].DisplayText
+			        }));
+                }
+            }
         },	
 		/* Adds column header cells to given tr element.
 		 * A.M. - Modified to move Reset "button" to REAL toolbar, along with other items in a standard
@@ -74,6 +123,14 @@
         	    var $headerCell = this._toolbarsearch_createHeaderCellForField(fieldName, this.options.fields[fieldName]);
             	$headerCell.appendTo($tr);
             }
+			if (typeof this.options.actions.deleteAction != 'undefined'){
+				$tr.append('<td/>');	
+			};
+
+			if (typeof this.options.actions.updateAction != 'undefined'){
+				$tr.append('<td/>');	
+			};
+
 			if(this.options.toolbarReset){
 				$reset = $('.jtable-toolbar');
 				$resetbutton = $(
@@ -89,6 +146,7 @@
 				});
 				$resetbutton.click(function(){
 					$('.jtable-toolbarsearch').val('');
+					$('.jtable-toolbarsearch-select').val('-1');
 					self.load({});				
 				});
 			}
@@ -112,8 +170,11 @@
 			if(typeof field.sqlName === 'undefined'){
 				field.sqlName = fieldName;
 			};
-			if(typeof field.sqlOperator === 'undefined'){
-				field.sqlOperator = "LIKE";
+			if(typeof field.sqlOperator === 'undefined'){ //default sqlOperator if unspecified
+				if (field.type=='text')
+					field.sqlOperator = "LIKE";
+				else
+					field.sqlOperator = "=";
 			};
             field.width = field.width || '10%'; //default column width: 10%.
             var $_id = field.type + '-' + field.sqlOperator;
@@ -125,19 +186,19 @@
 			}
  
 			var $_title = 'Colonna con filtro, operatore: <b>' + field.sqlOperator + '</b>';
-			if(field.type=="options"){
+			if(field.type=="options" || field.type=="checkbox"){
 				var $input = $('<SELECT '
 						+ 'id="' + $_id + '"'
 						+ 'name="' + $_name + '"'
 						+ ' title="' + $_title + '" ></SELECT>')
-						.addClass('jtable-toolbarsearch hasTooltip')
+						.addClass('jtable-toolbarsearch jtable-toolbarsearch-select')
 						.css('width','90%');				
 			} else {
 				var $input = $('<input type="' + $_type + '" '
 						+ 'id="' + $_id + '"'
 						+ 'name="' + $_name + '"'
 						+ ' title="' + $_title + '"/>')
-						.addClass('jtable-toolbarsearch hasTooltip')
+						.addClass('jtable-toolbarsearch jtable-toolbarsearch-input')
 						.css('width','90%');				
 			}
 			if(field.type=="date"){
@@ -171,7 +232,7 @@
 						$field_value = _toolbarsearch_convertDateFromEuroToISO($field_value);
 					}
 					if($(this).val().length>=1 && 
-							!($field_type=='options' && $field_value==-1)){
+							!(($field_type=='options' || $field_type=='checkbox') && $field_value==-1)){
 						if ($sql_operator=='LIKE')
 							$search_string = $search_string + ' AND ' + 
 								$field_name + " LIKE'%" + $field_value + "%'";
@@ -194,6 +255,9 @@
 				$headerContainerDiv.append($input);
 				if (field.type=='options') {
 					this._toolbarsearch_addOptionsToSelectField($input, field.options);
+				}
+				if (field.type=='checkbox') {
+					this._toolbarsearch_addOptionsToSelectField($input, field.values);
 				}
 			}
 		

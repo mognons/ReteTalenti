@@ -15,6 +15,7 @@
 <style>
 .label {
 	font-style: italic;
+	text-align: right;
 }
 
 td.dato {

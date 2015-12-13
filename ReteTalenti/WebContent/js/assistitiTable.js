@@ -131,6 +131,7 @@
 									        	  $("#dialog").html("Assistenza riattivata con successo")
 									        }
 										});
+										$('#AssistitiTableContainer').jtable('reload');
 									},
 									error: function () {
 										$dfd.reject();
@@ -138,8 +139,6 @@
 								});
 							}
 						})
-						$('#AssistitiTableContainer').jtable('reload');
-						;
 					})}
 			},
 			{
@@ -189,6 +188,8 @@
 									        	  $("#dialog").html("Assistenza Terminata con successo")
 									        }
 										});
+										$('#AssistitiTableContainer').jtable('reload');
+
 									},
 									error: function () {
 										$dfd.reject();
@@ -196,8 +197,6 @@
 								});
 							}
 						})
-						$('#AssistitiTableContainer').jtable('reload');
-						;
 					})}
 			},
 			{
@@ -242,7 +241,7 @@
         fields: {
             // CHILD TABLE DEFINITION FOR "NUCLEO FAMILIARE"
             nucleo_familiare: {
-                title: '',
+                title: ' ',
                 width: '1%',
                 sorting: false,
                 edit: false,
@@ -655,7 +654,9 @@
 				type: 'checkbox',
 				defaultValue: 'N',
 				values:  {'N' : 'No' ,'S' : 'Sì'},
-                list: true,
+				searchable: true,
+//				sqlOperator: '=',
+				list: true,
                 edit: true
             },
             punteggio_idb: {
