@@ -5,10 +5,6 @@
 <html>
 <head>
 <link href="css/jquery-ui.structure.css" rel="stylesheet" type="text/css" />
-<link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
-<link href="css/theme.css" rel="stylesheet" type="text/css" />
-<link href="css/lightcolor/blue/jtable.css" rel="stylesheet" type="text/css" />
-<link href="css/style.css" rel="stylesheet" type="text/css" />
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>

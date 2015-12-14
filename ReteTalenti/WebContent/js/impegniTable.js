@@ -58,7 +58,14 @@
                 edit: false,
                 create: false,
                 display: function (eccedenzaData) {
-                    var $img = $('<center><img src="icons/Delivery.png" width="16" height="16" title="Prenotazione del ritiro"/></center>');
+                	if (eccedenzaData.record.own_impegno!=0) {
+                		if (eccedenzaData.record.can_edit)
+                            var $img = $('<center><img src="icons/traffic-lights-yellow-icon.png" width="24" height="24" title="Prenotazione effettuata e modificabile"/></center>');
+                		else
+                            var $img = $('<center><img src="icons/traffic-lights-red-icon.png" width="24" height="24" title="Prenotazione già ritirata"/></center>');
+                	} else {
+                        var $img = $('<center><img src="icons/traffic-lights-green-icon.png" width="24" height="24" title="Prenotazione possibile"/></center>');
+                	}
                     // Open child table when user clicks the image
                     $img.find('img').qtip({
         			    position: {

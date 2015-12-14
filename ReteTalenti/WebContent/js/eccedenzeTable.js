@@ -33,8 +33,12 @@
                 display: function (userData) {
                 	if (userData.record.qta == userData.record.qta_residua) {return '<center><b>-</b></center>';}
                     // Create an image that will be used to open child table
-                    var $img = $('<span align="CENTER"><img src="icons/Delivery.png" width="16" height="16" title="Ritiri prenotati"/></span>');
-                    // Open child table when user clicks the image
+                    var $img = $('<center><img src="icons/Delivery.png" width="16" height="16" title="Esistono prenotazioni di ritiro"/></center>');
+                    $img.find('img').qtip({
+        			    position: {
+        			        viewport: $(window)
+        			    }
+        			});
                     $img.click(function () {
                         $('#EccedenzeTableContainer').jtable('openChildTable',$img.closest('tr'),
                         {
@@ -136,13 +140,6 @@
             	key: true,
             	list: false
             },
-            ente_cedente: {
-                title: 'Ente Cedente',
-                width: '0%',
-                list: false,
-                edit: false,
-                create: false
-            },
             prodotto: {
                 title: 'Prodotto',
                 width: '55%',
@@ -175,22 +172,23 @@
                 width: '10%',
                 list: true,
                 edit: true,
+                create: false,
                 input: function (data) {
                 	return 	'<input name="qta_residua" '
                 			+ 'style="border:0px; text-align:right; background-color: #F2F5F7;" '
                 			+ 'readonly value="'+  data.record.qta_residua + '"/>';
-                },
-              create: false
-            },
+                }
+            },            
             scadenza: {
-                title: 'Scadenza',
-                inputTitle: 'Scadenza' + ' <span style="color:red">*</span>',
+                title: 'Validità',
+                inputTitle: 'Segnalazione valida fino a' + ' <span style="color:red">*</span>',
                 type: 'date',
-				displayFormat: 'dd/mm/yy',
-                inputClass: 'validate[required],future[now] datepicker',
+                displayFormat: 'dd/mm/yy',
+                inputClass: 'validate[required,future[now]] datepicker',
                 width: '10%',
-                edit: true,
-                create: true
+                list: true,
+                create: true,
+                edit: true
             }
         },
         rowInserted: function(event, data){
@@ -203,7 +201,8 @@
         formCreated: function (event, data) {
             data.form.find('input[name=prodotto]').css('width', '300px');
             data.form.validationEngine('attach',{promptPosition : "bottomLeft", scroll: false});
-            data.form.find('.jtable-input-field-container:nth-of-type(4)').hide();
+            if (data.formType=='edit')
+            	data.form.find('.jtable-input-field-container:nth-of-type(4)').hide();
         },
         // Validate form when it is being submitted
         formSubmitting: function (event, data) {

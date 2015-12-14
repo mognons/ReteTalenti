@@ -229,6 +229,7 @@ public class ImpegniDao {
 
 		String query = 	"SELECT COUNT(*) FROM IMPEGNI " 
 						+ "WHERE ENTE_RICHIEDENTE=? "
+						+ "AND RITIRO_EFFETTUATO IS FALSE "
 						+ "AND DATA_RITIRO > SUBDATE(NOW(),7)";
 		try {
 			pStmt = dbConnection.prepareStatement(query);

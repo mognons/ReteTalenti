@@ -3,9 +3,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<script src="scripts/jquery.jtable.js" type="text/javascript"></script>
-<!-- User defined Jtable js file -->
-<script src="scripts/jquery.jtable.it.js" type="text/javascript"></script>
 
 <script type="text/JavaScript">
 	var today = new Date(); 

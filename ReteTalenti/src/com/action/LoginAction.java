@@ -1,9 +1,8 @@
 package com.action;
  
 import java.util.Map;
-
 import org.apache.struts2.interceptor.SessionAware;
-
+import org.apache.log4j.Logger;
 import com.model.User;
 import com.dao.MessagesDao;
 import com.dao.UsersDao;
@@ -12,7 +11,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
  
 public class LoginAction extends ActionSupport implements SessionAware, ModelDriven<User>{
- 
+	static final Logger LOGGER = Logger.getLogger(LoginAction.class);
     private static final long serialVersionUID = -3369875299120377549L;
     private String errorMsg, errorMessage;
     private UsersDao dao = new UsersDao();
@@ -39,7 +38,8 @@ public class LoginAction extends ActionSupport implements SessionAware, ModelDri
         	int actualMessageId = m_dao.getLastIdOfValidMessages(user);
         	System.err.println("Actual message id: " + actualMessageId);
         	sessionAttributes.put("LASTMSGID", actualMessageId);
-            errorMsg="";
+            errorMsg="";    
+            LOGGER.info("user: " + user.getUsername());
             return SUCCESS;
         }
         else {

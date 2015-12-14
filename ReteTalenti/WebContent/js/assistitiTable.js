@@ -62,6 +62,10 @@
 		addUser();
 	});
 	// CUT HERE
+	
+	
+	
+	
     $('#AssistitiTableContainer').jtable({
         title: 'Gestione Anagrafica Assistiti',
         paging: true, // Enable paging

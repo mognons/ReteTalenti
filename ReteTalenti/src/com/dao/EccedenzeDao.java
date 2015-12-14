@@ -119,9 +119,12 @@ public class EccedenzeDao {
 			User user) {
 		List<Eccedenza> eccedenze = new ArrayList<Eccedenza>();
 		String query = 	"SELECT * FROM ("
-						+ "SELECT ECC.*, (QTA-COALESCE(IMP.QTA_PRENOTATA,0))  QTA_RESIDUA FROM ECCEDENZE ECC " 
+						+ "SELECT ECC.*, (QTA-COALESCE(IMP.QTA_PRENOTATA,0))  QTA_RESIDUA , OWN_IMP, CAN_EDIT "
+						+ "FROM ECCEDENZE ECC " 
 						+ "LEFT JOIN (SELECT ID_ECCEDENZA, SUM(QTA_PRENOTATA) AS QTA_PRENOTATA FROM IMPEGNI "
 						+ "GROUP BY ID_ECCEDENZA ) IMP ON ECC.ID=IMP.ID_ECCEDENZA "
+						+ "LEFT JOIN (SELECT ID_ECCEDENZA AS OWN_IMP, NOT(RITIRO_EFFETTUATO) AS CAN_EDIT FROM IMPEGNI "
+						+ "WHERE ENTE_RICHIEDENTE=?) O_IMP ON ECC.ID=O_IMP.OWN_IMP "
 						+ "INNER JOIN ENTI E ON E.ID=ECC.ENTE_CEDENTE "
 						+ "WHERE ENTE_CEDENTE<>? "
 						+ "AND PROVINCIA_ENTE=? "
@@ -134,7 +137,8 @@ public class EccedenzeDao {
 		try {
 			pStmt = dbConnection.prepareStatement(query);
 			pStmt.setInt(1, user.getEnte());
-			pStmt.setInt(2, user.getProvinciaEnte());
+			pStmt.setInt(2, user.getEnte());
+			pStmt.setInt(3, user.getProvinciaEnte());
 			ResultSet rs = pStmt.executeQuery();
 			while (rs.next()) {
 				Eccedenza eccedenza = new Eccedenza();
@@ -146,6 +150,8 @@ public class EccedenzeDao {
 				eccedenza.setQta(rs.getInt("QTA"));
 				eccedenza.setScadenza(rs.getDate("SCADENZA"));
 				eccedenza.setQta_residua(rs.getInt("QTA_RESIDUA"));
+				eccedenza.setCan_edit(rs.getBoolean("CAN_EDIT"));
+				eccedenza.setOwn_impegno(rs.getInt("OWN_IMP"));;
 				eccedenze.add(eccedenza);
 			}
 		} catch (SQLException e) {
@@ -157,7 +163,7 @@ public class EccedenzeDao {
 	public int getCountAvailableEccedenze(String jtFilter, User user) {
 		int totalRecord = 0;
 
-		String query = 	"SELECT * FROM ("
+		String query = 	"SELECT COUNT(*) FROM ("
 						+ "SELECT ECC.*, (QTA-COALESCE(IMP.QTA_PRENOTATA,0))  QTA_RESIDUA FROM ECCEDENZE ECC " 
 						+ "LEFT JOIN (SELECT ID_ECCEDENZA, SUM(QTA_PRENOTATA) AS QTA_PRENOTATA FROM IMPEGNI "
 						+ "GROUP BY ID_ECCEDENZA ) IMP ON ECC.ID=IMP.ID_ECCEDENZA "

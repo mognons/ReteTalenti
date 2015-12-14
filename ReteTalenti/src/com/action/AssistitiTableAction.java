@@ -88,7 +88,6 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
             records = dao.getAllAssistiti(jtStartIndex, jtPageSize, jtSorting, jtFilter, user);
             totalRecordCount = dao.getCountAssistiti(jtFilter, user);
             result = "OK";
-            System.out.println("Inside listAssistitiAction with filter: " + jtFilter);
         } catch (Exception e) {
             result = "ERROR";
             message = e.getMessage();

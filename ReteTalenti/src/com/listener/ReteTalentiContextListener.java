@@ -7,15 +7,20 @@ import java.util.Enumeration;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.apache.log4j.Logger;
+
+import com.action.LogoutAction;
 import com.jdbc.DataAccessObject;
  
 public class ReteTalentiContextListener 
                implements ServletContextListener{
- 
+	static final Logger LOGGER = Logger.getLogger(ReteTalentiContextListener.class);
+
 	@Override
 	public final void contextDestroyed(ServletContextEvent sce) {
+		
 		// Close Database Connection
-		System.out.println("Closing DB Connection");
+		LOGGER.info("Closing DB Connection");
 	    DataAccessObject.closeConnection();
 	    
 		// Now deregister JDBC drivers in this context's ClassLoader:
@@ -28,20 +33,20 @@ public class ReteTalentiContextListener
 	        if (driver.getClass().getClassLoader() == cl) {
 	            // This driver was registered by the webapp's ClassLoader, so deregister it:
 	            try {
-	                System.out.println("Deregistering JDBC driver " + driver);
+	                LOGGER.info("Deregistering JDBC driver " + driver);
 	                DriverManager.deregisterDriver(driver);
 	            } catch (SQLException ex) {
-	                System.out.println("Error deregistering JDBC driver " + driver);
+	                LOGGER.error("Error deregistering JDBC driver " + driver);
 	            }
 	        } else {
 	            // driver was not registered by the webapp's ClassLoader and may be in use elsewhere
-                System.out.println("JDBC driver not registered with this app " + driver);
+                LOGGER.info("JDBC driver not registered with this app " + driver);
 	        }
 	    }
 	} 
         //Run this before web application is started
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		System.out.println("ReteTalenti starting...");
+		LOGGER.info("Application ReteTalenti starting...");
 	}
 }

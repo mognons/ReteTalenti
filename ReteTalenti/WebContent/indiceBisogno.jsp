@@ -5,19 +5,7 @@
 <html>
 
 <head>
-<link href="css/validationEngine.jquery.css" rel="stylesheet"
-	type="text/css" />
-<link href="css/jquery-ui.structure.css" rel="stylesheet"
-	type="text/css" />
-<link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
-<link href="css/theme.css" rel="stylesheet" type="text/css" />
-<link href="css/lightcolor/blue/jtable.css" rel="stylesheet"
-	type="text/css" />
-<link href="css/style.css" rel="stylesheet" type="text/css" />
-<script src="scripts/jquery-2.1.4.js" type="text/javascript"></script>
-<script src="scripts/jquery-ui.js" type="text/javascript"></script>
-<script type="text/javascript" src="scripts/jquery.validationEngine.js"></script>
-<script type="text/javascript" src="scripts/jquery.validationEngine-it.js"></script>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <script type="text/JavaScript">
