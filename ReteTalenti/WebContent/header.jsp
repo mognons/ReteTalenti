@@ -35,13 +35,13 @@ $(document).ready(function () {
 <body>
 	<div class="main-header" style="position: relative">
 		<table border="0" width="100%">
-			<tr>
-				<td style="vertical-align:bottom" width="15%" ><a href="home.action"><img
-						alt="ReteTalenti" src="images/logoReteTalenti.png" height="75"
+			<tr style="vertical-align:bottom">
+				<td width="25%" ><a href="home.action"><img
+						src="images/logoReteTalenti.png" height="67"
 						width="160"></a></td>
-				<td style="vertical-align:bottom" width="40%">
+				<td width="40%">
 					<h2>
-						<a href="profileLink">
+						<a href="profileLink" title="Clicca per modificare i dati del profilo">
 							<span style="color:#FFF2B3; font-size:larger;">
 								<s:property value="user.userFirstname"></s:property>
 								<s:property value="user.userLastname"></s:property>
@@ -55,7 +55,7 @@ $(document).ready(function () {
 					</h2>
 				</td>
 				<td align="right"><a href="http://www.regione.veneto.it" target="_new"><img
-						alt="ReteTalenti" src="images/stemmacolore.png" height="75"
+						src="images/stemmacolore.png" height="65"
 						width="90"></a></td>
 			</tr>
 		</table>

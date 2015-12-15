@@ -73,7 +73,7 @@
 		pageSizes: [5,10,15],
         sorting: false, // Enable sorting
         defaultSorting : 'COD_FISCALE ASC', //Set default sorting
-        selecting: true, // Enable selecting
+        selecting: (gruppoUtente==2),
         multiselect: false, // Allow multiple selecting
         selectingCheckboxes: true, // Show checkboxes on first column
         selectOnRowClick: false, // Enable this to only select using checkboxes
@@ -505,7 +505,7 @@
 				searchable: true, // default is false, if set to true then a text input is created
 				sqlOperator: '=',
 //				sqlName: 'NOME_DELLA_COLONNA'
-            	list: true,
+            	list: !onlyLocalData,
             	edit: false,
             	create: false
             },
@@ -577,7 +577,8 @@
             	options: { 	'M': 'Maschio',
     						'F': 'Femmina', 
     						'-': 'Altro' },
-                list: false,
+    			searchable: true,
+                list: onlyLocalData,
                 edit: true,
                 create: true
             },
@@ -696,6 +697,11 @@
 	            	if (assistito.record.data_accettazione==null)
 	            		{return '<center><b></b></center>';}
 	                var $img = $('<CENTER><img src="icons/shop_basket.png" width="16" height="16" title="Utente dell\'emporio"/></CENTER>');
+	                $img.find('img').qtip({
+	            	    position: {
+	            	        viewport: $(window)
+	            	    }
+	            	});
 	                $img.click(function () {
 	                	var page = "ShowSchedaAssistitoEmporio?codice_fiscale="+ assistito.record.cod_fiscale;
 	                	showSchedaAssistito(page);
@@ -768,6 +774,17 @@
 	      	     $('#AssistitiTableContainer').find('.jtable-toolbar-item.RIAT').remove();
 	      	     $('#AssistitiTableContainer').find('.jtable-toolbar-item.DISA').remove();
 	      	}
+	        $(function() {
+	        	$('#AssistitiTableContainer').find('.jtable-command-button').each(function() {
+	    	        var tipContent = $(this).attr('oldtitle');
+	    	        $(this).qtip({
+	    	            content: tipContent,
+	    	    	    position: {
+	    	    	        viewport: $(window)
+	    	    	    }
+	    	        });
+	    	    });
+	        });
         },
         rowInserted: function(event, data){
         	if (recordObfuscation(data.record.ente_assistente) || (data.record.data_fine_assistenza)) {
@@ -810,10 +827,6 @@
 	        viewport: $(window)
 	    }
 	});
-    $('button.jtable-command-button').qtip({
-	    position: {
-	        viewport: $(window)
-	    }
-	});
+
     $('#AssistitiTableContainer').jtable('load');
 });

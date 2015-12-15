@@ -99,6 +99,7 @@ public class AssistitiTableAction extends ActionSupport implements UserAware, Mo
     
     public String checkCFIsUnique() {
     	Tuple risultato = new Tuple();
+    	System.out.println("Check univocità CF: " + cf_search);
     	risultato = dao.verifyCF(cf_search);
     	if (risultato.getStringa1()==null) {
     		status = false;

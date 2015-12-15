@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import com.jdbc.DataAccessObject;
 import com.model.Assistito;
@@ -153,6 +154,9 @@ public class AssistitiDao {
 
     public List<Assistito> getAllAssistiti(int jtStartIndex, int jtPageSize, String jtSorting, 
     		String jtFilter, User user) {
+		ResourceBundle rb = ResourceBundle.getBundle("com.properties.basicConfiguration");
+		final String onlyLocalData = rb.getString("onlyLocalData");
+		rb = null;
         if (jtSorting == null) {
             jtSorting = "COD_FISCALE ASC";
         }
@@ -160,7 +164,7 @@ public class AssistitiDao {
         List<Assistito> assistiti = new ArrayList<Assistito>();
         String whereCondition1 = "AND 1=1 ";
         String whereCondition2 = "AND 1=1 ";
-        if (user.getGroupId() == 3) {
+        if (user.getGroupId() == 3 || onlyLocalData.equalsIgnoreCase("true")) {
             whereCondition1 = "AND ENTE_ASSISTENTE=" + user.getEnte() + " ";
         } else if (user.getGroupId() == 2) {
             whereCondition2 = "AND E.PROVINCIA_ENTE=" + user.getProvinciaEnte() + " ";

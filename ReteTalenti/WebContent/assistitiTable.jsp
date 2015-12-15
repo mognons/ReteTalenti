@@ -4,6 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<%@ page import="java.util.ResourceBundle" %>
 
 
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
@@ -146,10 +147,15 @@ fieldset {
 	// Groups
 	var enteUtente = '<s:property value="ente"/>';
 	var gruppoUtente = '<s:property value="groupId"/>';
+	<%
+	ResourceBundle rb = ResourceBundle.getBundle("com.properties.basicConfiguration");
+	final String onlyLocalData = rb.getString("onlyLocalData");
+	%>
+	var onlyLocalData = <% onlyLocalData.equalsIgnoreCase("true"); %>
 
-	
-	function checkCF(field, rules, i, options) {
+	checkCF = function (field, rules, i, options) {
 		var codiceFiscale = field.val();
+		console.log(codiceFiscale);
 		var valido = validaCodiceFiscale(codiceFiscale);
 		var ajaxData = "";
 		if (!valido) { // Validità formale NON verificata
@@ -313,7 +319,6 @@ fieldset {
 	</div>
 	<div id="dialog" title="Informazione dal sistema"></div>
 	<div id="AssistitiTableContainer"></div>
-	
 	<div id="dialog-form" title="Trasferimento Assistito" class="ui-widget">
 		<form action="#">
 			<fieldset>

@@ -197,6 +197,20 @@
               data.row.find('.jtable-delete-command-button').hide();
             }
         },
+        recordsLoaded: function(event, data) {
+	        $(function() {
+	        	$('#EccedenzeTableContainer').find('.jtable-command-button').each(function() {
+	    	        var tipContent = $(this).attr('oldtitle');
+	    	        $(this).qtip({
+	    	            content: tipContent,
+	    	    	    position: {
+	    	    	        viewport: $(window)
+	    	    	    }
+	    	        });
+	    	    });
+	        });
+
+        },
         // Initialize validation logic when a form is created
         formCreated: function (event, data) {
             data.form.find('input[name=prodotto]').css('width', '300px');
