@@ -209,7 +209,7 @@ public class ReportDao {
         return rs;
     }
 
-    public ResultSet tabellaNoteAssistiti(int ente) {
+    public ResultSet tabellaNoteAssistiti(int ente, int limit, int offset) {
         ResultSet rs = null;
         String whereCondition = "1=1";
         if (ente!=-1)
@@ -217,7 +217,7 @@ public class ReportDao {
         
         String query = 	"SELECT NA.* FROM NOTE_ASSISTITI NA "
         				+ "INNER JOIN ASSISTITI A ON A.COD_FISCALE = NA.CF_ASSISTITO_NOTE "
-        				+ "WHERE " + whereCondition;
+        				+ "WHERE " + whereCondition + " LIMIT " + limit + " OFFSET " + offset;
         try {
             pStmt = dbConnection.prepareStatement(query);
             rs = pStmt.executeQuery();
@@ -399,6 +399,22 @@ public class ReportDao {
             System.err.println(e.getMessage());
         }
         return rs;
+    }
+    
+    public int getCountNoteAssistiti() {
+        
+    	int totalRecord = 0;
+        String query = "SELECT COUNT(*) FROM NOTE_ASSISTITI";
+        try {
+            pStmt = dbConnection.prepareStatement(query);
+            ResultSet rs = pStmt.executeQuery();
+            while (rs.next()) {
+                totalRecord = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return totalRecord;
     }
 
 

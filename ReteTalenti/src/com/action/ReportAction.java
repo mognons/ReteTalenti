@@ -9,6 +9,7 @@ import com.model.User;
 import com.opensymphony.xwork2.ActionSupport;
 
 import java.io.*;
+import java.util.ResourceBundle;
 
 public class ReportAction extends ActionSupport implements UserAware {
 
@@ -16,6 +17,7 @@ public class ReportAction extends ActionSupport implements UserAware {
     private ReportDao dao = new ReportDao();
     private String errorMessage;
     private Boolean Assistiti = false;
+    private Boolean NoteAssistiti = false;
     private Boolean Eccedenze = false;
     private Boolean Utenti = false;
     private Boolean Reference = false;
@@ -251,9 +253,16 @@ public class ReportAction extends ActionSupport implements UserAware {
         formati_r = null;
         return SUCCESS;
     }
-
+    
     public String export() {
     	Boolean first = true;
+    	
+    	ResourceBundle rb = ResourceBundle.getBundle("com.properties.basicConfiguration");
+		int exportPageSize = Integer.parseInt(rb.getString("exportPageSize"));//LIMIT
+    	int totRowNum = dao.getCountNoteAssistiti();
+    	
+    	int numFogli = totRowNum%exportPageSize>0 ? (totRowNum / exportPageSize)+1:(totRowNum / exportPageSize);
+    	
     	RSToExcel RSToExcel = null;
     	System.out.println("Filename : "+ filename);
     	if (!filename.contains(".xls")) {
@@ -261,6 +270,8 @@ public class ReportAction extends ActionSupport implements UserAware {
     	}
     	System.out.println("Filename : "+ filename);
         ByteArrayOutputStream out;
+              
+        
         if (Assistiti) {
         	if (first) {
                 RSToExcel = new RSToExcel(dao.tabellaAssistiti(ente), "Assistiti");
@@ -270,7 +281,12 @@ public class ReportAction extends ActionSupport implements UserAware {
         	}
             RSToExcel.addRSToExcel(dao.tabellaNucleoFamiliare(ente), "NucleiFamiliari");
             RSToExcel.addRSToExcel(dao.tabellaIndiciBisogno(ente), "IndiciBisogno");
-            RSToExcel.addRSToExcel(dao.tabellaNoteAssistiti(ente), "NoteAssistiti");
+            int myoffset=0;
+        	for (int i = 0; i < numFogli; i++) {
+        		myoffset=(exportPageSize*i)+1;
+        		int k = i+1;
+        		RSToExcel.addRSToExcel(dao.tabellaNoteAssistiti(ente, exportPageSize, myoffset),"NoteAssistiti_" + k);
+        	}
         }
         if (Eccedenze) {
         	if (first) {
