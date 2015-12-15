@@ -41,17 +41,19 @@ ul ul{
 
 	<div id="menu-container" style="display:none; height:42px; position:relative; left: 0px; top: 0px; z-index: 10">
 		<ul id="verticalMenu">
-			<s:if test="(!enteEmporio)" >
+			<s:if test="(!enteEmporio) && groupId != 1" >
 				<li>
 				<img src="icons/group.png" align="bottom" height="16" width="16">
 					<span style="vertical-align: top">Gestione Assistiti</span>
 					<ul>
-						<li <s:if test="(enteEmporio)" >class="ui-state-disabled"</s:if> 
+						<li 
 							onclick="window.location='assistitiLink';">Anagrafica</li>
-						<li <s:if test="(enteEmporio || groupId > 2)" >class="ui-state-disabled"</s:if>
-							onclick="window.location='candidatureLink';">Candidatura Emporio</li>
-						<li <s:if test="(enteEmporio || groupId > 2)" >class="ui-state-disabled"</s:if>
-							onclick="window.location='rimozioneEmporioLink';">Rimozione Emporio</li>
+						<s:if test="(groupId <= 2)" >
+						<li 
+							onclick="window.location='candidatureLink';">Candidatura Emporio</li></s:if>
+						<s:if test="(groupId <= 2)" >
+						<li 
+							onclick="window.location='rimozioneEmporioLink';">Rimozione Emporio</li></s:if>
 					</ul>
 				</li>
 			</s:if>
@@ -66,6 +68,7 @@ ul ul{
 					</ul>
 				</li>
 			</s:if>
+			<s:if test="(groupId != 1)" >
 			<li>-</li>
 			<li> <img src="icons/Food-Bunch-Ingredients-icon.png" align="bottom" height="16" width="16">
 				<span style="vertical-align: top">Gestione Eccedenze</span>
@@ -75,27 +78,39 @@ ul ul{
 					<li onclick="window.location='ritiriLink';">Elenco Prenotazioni</li>
 				</ul>
 			</li>
+			</s:if>
+			<s:if test="(groupId > 2)" >
 			<li>-</li>
 			<li> <img src="icons/report_data_online.png" align="bottom" height="16" width="16">
 				<span style="vertical-align: top">Report</span>
 				<ul>
 					<li>Report Assistiti
 						<ul>
-							<li <s:if test="(groupId == 2 || groupId == 3)" >class="ui-state-disabled"</s:if>
-								onclick="window.location='anagraficaCompletaReport.action';">Elenco Regionale</li>
-							<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
-								onclick="window.location='anagraficaXProvinciaEnteUserReport.action';">Elenco per Provincia</li>
-							<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
+							<s:if test="(groupId == 4)" >
+							<li 
+								onclick="window.location='anagraficaCompletaReport.action';">Elenco Regionale
+							</li></s:if>
+							<s:if test="(groupId == 2)" >
+							<li
+								onclick="window.location='anagraficaXProvinciaEnteUserReport.action';">Elenco per Provincia
+							</li></s:if>
+							<s:if test="(groupId == 2 || groupId == 3)" >
+							<li 
 								onclick="window.location='anagraficaEnteUserReport.action';">Elenco per Ente</li>
-							<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
-								onclick="window.location='graduatoriaProvincialeReport.action';">Graduatoria Provinciale</li>
+							</s:if>
+							<s:if test="(groupId == 2)" >
+							<li
+								onclick="window.location='graduatoriaProvincialeReport.action';">Graduatoria Provinciale
+							</li></s:if>
 						</ul>
 					</li>
-					<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
-								onclick="window.location='situazioneEccedenzeReport.action';">
-								Elenco Eccedenze</li>
+					<s:if test="(groupId == 2 || groupId == 3)" >
+					<li 
+								onclick="window.location='situazioneEccedenzeReport.action';">Elenco Eccedenze
+					</li></s:if>
 				</ul>
 			</li>
+			</s:if>
 			<s:if test="(#isAdmin || #isAdminEnte)">
 				<li>-</li>
 				<li>
@@ -127,7 +142,6 @@ ul ul{
 								<img src="icons/Database.png" align="bottom" height="16" width="16">
 								<span style="vertical-align: top">Gradi parentela</span>
 							</li>
-							
 							<li onclick="window.location='stati_civiliLink';">
 								<img src="icons/Database.png" align="bottom" height="16" width="16">
 								<span style="vertical-align: top">Stati Civili</span>
@@ -135,8 +149,7 @@ ul ul{
 							<li onclick="window.location='messagesLink';">
 								<img src="icons/Message.png" align="bottom" height="16" width="16">
 								<span style="vertical-align: top">Messaggi</span></li>
-							<li <s:if test="(groupId >2)" >class="ui-state-disabled"</s:if>
-								onclick="window.location='exportLink';">
+							<li onclick="window.location='exportLink';">
 								<img src="icons/save-icon.png" align="bottom" height="16" width="16">
 								<span style="vertical-align: top">Export</span>
 							</li>
@@ -151,6 +164,5 @@ ul ul{
 			</li>
 		</ul>
 	</div>
-
 </body>
 </html>
