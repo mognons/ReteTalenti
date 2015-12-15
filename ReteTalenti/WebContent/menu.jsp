@@ -41,7 +41,7 @@ ul ul{
 
 	<div id="menu-container" style="display:none; height:42px; position:relative; left: 0px; top: 0px; z-index: 10">
 		<ul id="verticalMenu">
-			<s:if test="(!enteEmporio) && groupId != 1" >
+			<s:if test="(!enteEmporio) && (groupId == 2 || groupId == 3)" >
 				<li>
 				<img src="icons/group.png" align="bottom" height="16" width="16">
 					<span style="vertical-align: top">Gestione Assistiti</span>
@@ -55,7 +55,7 @@ ul ul{
 						<li 
 							onclick="window.location='rimozioneEmporioLink';">Rimozione Emporio</li></s:if>
 					</ul>
-				</li>
+				</li><li>-</li>
 			</s:if>
 			<s:if test="(enteEmporio)" >
 				<li>
@@ -66,10 +66,9 @@ ul ul{
 						<li onclick="window.location='dismissioneEmporioLink';">Dimissione</li>
 						<li onclick="window.location='anagraficaEmporioLink';">Anagrafica</li>
 					</ul>
-				</li>
+				</li><li>-</li>
 			</s:if>
-			<s:if test="(groupId != 1)" >
-			<li>-</li>
+			<s:if test="(groupId == 2 || groupId == 3)" >
 			<li> <img src="icons/Food-Bunch-Ingredients-icon.png" align="bottom" height="16" width="16">
 				<span style="vertical-align: top">Gestione Eccedenze</span>
 				<ul>
@@ -77,10 +76,9 @@ ul ul{
 					<li onclick="window.location='impegniLink';">Prenotazione</li>
 					<li onclick="window.location='ritiriLink';">Elenco Prenotazioni</li>
 				</ul>
-			</li>
+			</li><li>-</li>
 			</s:if>
-			<s:if test="(groupId > 2)" >
-			<li>-</li>
+			<s:if test="(groupId != 1)" >
 			<li> <img src="icons/report_data_online.png" align="bottom" height="16" width="16">
 				<span style="vertical-align: top">Report</span>
 				<ul>
@@ -109,10 +107,9 @@ ul ul{
 								onclick="window.location='situazioneEccedenzeReport.action';">Elenco Eccedenze
 					</li></s:if>
 				</ul>
-			</li>
+			</li><li>-</li>
 			</s:if>
 			<s:if test="(#isAdmin || #isAdminEnte)">
-				<li>-</li>
 				<li>
 					<img src="icons/Settings.png" align="bottom" height="18" width="18">
 					<span style="vertical-align: top">Sistema</span>
@@ -122,30 +119,34 @@ ul ul{
 							<span style="vertical-align: top">Utenti</span>
 						</li>
 						<s:if test="(#isAdmin)">
-							<li onclick="window.location='entiLink';">
-								<img src="icons/Database.png" align="bottom" height="16" width="16">
-								<span style="vertical-align: top">Enti</span>
-							</li>
-							<li onclick="window.location='nazioniLink';">
-								<img src="icons/Database.png" align="bottom" height="16" width="16">
-								<span style="vertical-align: top">Nazioni</span>
-							</li>
-							<li onclick="window.location='provinceLink';">
-								<img src="icons/Database.png" align="bottom" height="16" width="16">
-								<span style="vertical-align: top">Province</span>
-							</li>
-							<li onclick="window.location='uni_misuraLink';">
-								<img src="icons/Database.png" align="bottom" height="16" width="16">
-								<span style="vertical-align: top">Unità di Misura</span>
-							</li>
-							<li onclick="window.location='gradi_parentelaLink';">
-								<img src="icons/Database.png" align="bottom" height="16" width="16">
-								<span style="vertical-align: top">Gradi parentela</span>
-							</li>
-							<li onclick="window.location='stati_civiliLink';">
-								<img src="icons/Database.png" align="bottom" height="16" width="16">
-								<span style="vertical-align: top">Stati Civili</span>
-							</li>
+							<li><img src="icons/Database.png" align="bottom" height="16" width="16">
+									<span style="vertical-align: top">Tabelle</span>
+							<ul>
+								<li onclick="window.location='entiLink';">
+									<img src="icons/Database.png" align="bottom" height="16" width="16">
+									<span style="vertical-align: top">Enti</span>
+								</li>
+								<li onclick="window.location='nazioniLink';">
+									<img src="icons/Database.png" align="bottom" height="16" width="16">
+									<span style="vertical-align: top">Nazioni</span>
+								</li>
+								<li onclick="window.location='provinceLink';">
+									<img src="icons/Database.png" align="bottom" height="16" width="16">
+									<span style="vertical-align: top">Province</span>
+								</li>
+								<li onclick="window.location='uni_misuraLink';">
+									<img src="icons/Database.png" align="bottom" height="16" width="16">
+									<span style="vertical-align: top">Unità di Misura</span>
+								</li>
+								<li onclick="window.location='gradi_parentelaLink';">
+									<img src="icons/Database.png" align="bottom" height="16" width="16">
+									<span style="vertical-align: top">Gradi parentela</span>
+								</li>
+								<li onclick="window.location='stati_civiliLink';">
+									<img src="icons/Database.png" align="bottom" height="16" width="16">
+									<span style="vertical-align: top">Stati Civili</span>
+								</li>
+							</ul></li>
 							<li onclick="window.location='messagesLink';">
 								<img src="icons/Message.png" align="bottom" height="16" width="16">
 								<span style="vertical-align: top">Messaggi</span></li>
@@ -155,9 +156,8 @@ ul ul{
 							</li>
 						</s:if>
 					</ul>
-				</li>
+				</li><li>-</li>
 			</s:if>
-			<li>-</li>
 			<li  onclick="window.location='Logout';">
 				<img src="icons/Power-Shutdown.png" align="bottom" height="20" width="20">
 				<span style="vertical-align: top">Logout</span>
