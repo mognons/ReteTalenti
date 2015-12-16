@@ -29,7 +29,7 @@
 
             this._addColumnsToHeaderRow($tr);
 			if(this.options.toolbarSearch){			
-	            var $tr = $('<tr></tr>')
+	            var $tr = $('<tr class="jtable-data-row"></tr>')
                 .appendTo($thead);
     	        this._toolbarsearch_addColumnsToHeaderRow($tr);
 			}
@@ -116,25 +116,26 @@
         _toolbarsearch_addColumnsToHeaderRow: function ($tr) {
 			var self = this;
 			if(this.options.selecting && this.options.selectingCheckboxes){
-				$tr.append('<td/>');	
+				$tr.append('<td class="jtable-command-column-header ui-state-default"/>');	
 			}
 	    	for (var i = 0; i < this._columnList.length; i++) {
     	    	var fieldName = this._columnList[i];
-        	    var $headerCell = this._toolbarsearch_createHeaderCellForField(fieldName, this.options.fields[fieldName]);
+        	    var $headerCell = this._toolbarsearch_createHeaderCellForField(fieldName, 
+        	    		this.options.fields[fieldName]).addClass('jtable-column-header ui-state-default');
             	$headerCell.appendTo($tr);
             }
 			if (typeof this.options.actions.deleteAction != 'undefined'){
-				$tr.append('<td/>');	
+				$tr.append('<td class="jtable-command-column-header ui-state-default"/>');	
 			};
 
 			if (typeof this.options.actions.updateAction != 'undefined'){
-				$tr.append('<td/>');	
+				$tr.append('<td class="jtable-command-column-header ui-state-default"/>');	
 			};
 
 			if(this.options.toolbarReset){
 				$reset = $('.jtable-toolbar');
 				$resetbutton = $(
-					'<span class="jtable-toolbar-item RESET" title="Azzera i criteri di ricerca" style="">'
+					'<span class="jtable-toolbar-item ui-widget ui-state-default ui-corner-all RESET" title="Azzera i criteri di ricerca" style="">'
 					+ '<span class="jtable-toolbar-item-icon"' 
 					+ 'style="background-image: url(icons/Cancel.png); background-position: initial initial; background-repeat: initial initial;">'
 					+ '</span>'
