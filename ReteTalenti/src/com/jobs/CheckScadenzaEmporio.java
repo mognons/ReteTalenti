@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
@@ -24,7 +25,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.utilities.sendMail;
 
 public class CheckScadenzaEmporio extends ActionSupport implements Job {
-
+	static final Logger LOGGER = Logger.getLogger(CheckScadenzaEmporio.class);
     private static final long serialVersionUID = 1L;
     private AssistitiDao a_dao = new AssistitiDao();
     private EntiDao e_dao = new EntiDao();
@@ -33,7 +34,7 @@ public class CheckScadenzaEmporio extends ActionSupport implements Job {
     public void execute(JobExecutionContext context) throws JobExecutionException {
 		JobDetail jobDetail = context.getJobDetail();
 		JobKey key = jobDetail.getKey();
-		System.out.println("Job key:"+ key +", Date:"+ new Date());
+		LOGGER.info("Job key:"+ key);
     	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String mailRecipient;
 		ResourceBundle rb = ResourceBundle.getBundle("com.properties.basicConfiguration");
@@ -47,7 +48,8 @@ public class CheckScadenzaEmporio extends ActionSupport implements Job {
             while (itr.hasNext()) {
             	Message messaggio = new Message();
             	Assistito assistito = itr.next();
-            	System.out.println("assitito emporio: " + assistito.getEmporio());
+            	LOGGER.info(assistito.getNome() + " " + assistito.getCognome() + 
+            				" in scadenza presso l'emporio: " + assistito.getDesc_emporio());
                 Ente emporio = e_dao.getEnte(assistito.getEmporio());
                 String message_text = 	
                 		"Il vostro assistito <b>" + assistito.getNome() + " " + assistito.getCognome() + "</b> "
@@ -56,8 +58,8 @@ public class CheckScadenzaEmporio extends ActionSupport implements Job {
         				+ " al numero di telefono <b>" + emporio.getResp_phone()
         				+ "</b> oppure via email all'indirizzo <b><a href='mailto:" + emporio.getResp_email() + "'>" 
         				+ emporio.getResp_email() +"</a></b>.";
-//            	String mail_body = message_text.replaceAll("\\<[^>]*>","");
-//            	mail_body = mail_body + "\n\nMessaggio inviato automaticamente dal sistema ReteTalenti.";
+            	String mail_body = message_text.replaceAll("\\<[^>]*>","");
+            	mail_body = mail_body + "\n\nMessaggio inviato automaticamente dal sistema ReteTalenti.";
                 
             	messaggio.setEnte(assistito.getEnte_assistente());
             	messaggio.setTag("ASSISTITI");
@@ -69,13 +71,13 @@ public class CheckScadenzaEmporio extends ActionSupport implements Job {
             	messaggio.setStart_date(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
             	messaggio.setEnd_date(assistito.getData_scadenza());
             	mess.createMessage(messaggio);
-//            	mailRecipient = enteDestinatario.getResp_email();
+            	mailRecipient = emporio.getResp_email();
             	/* Invio email */
             	try {
-//            		if (invioEmail)
-//        	    		sm.send("Segnalazione eccedenza", mail_body, mailRecipient);
+            		if (invioEmail)
+        	    		sm.send("ReteTalenti: Segnalazione Scadenza Emporio", mail_body, mailRecipient);
             	} catch (Exception e) {
-            		//
+            		LOGGER.error(e.getMessage());
             	}
             }
         } catch (Exception e) {

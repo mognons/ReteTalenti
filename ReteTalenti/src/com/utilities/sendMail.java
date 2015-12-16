@@ -12,14 +12,17 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.log4j.Logger;
+
 public class sendMail {
+	static final Logger LOGGER = Logger.getLogger(sendMail.class);
+	
 	public void send(String mailSubject, String msgBody, String mailRecipient) {
 		ResourceBundle rb = ResourceBundle.getBundle("com.properties.basicConfiguration");
 		final String username = rb.getString("mailUser");
 		final String password = rb.getString("mailPassword");
 		final String mailServer =  rb.getString("mailServer");
 		final String mailServerPort =  rb.getString("mailServerPort");
-		System.out.println("Inside sendMail with " + username + " / " + password);
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");

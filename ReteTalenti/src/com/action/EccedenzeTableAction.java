@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.apache.log4j.Logger;
+
 import com.dao.EccedenzeDao;
 import com.dao.EntiDao;
 import com.dao.Uni_misuraDao;
@@ -22,6 +24,7 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.utilities.sendMail;
 
 public class EccedenzeTableAction extends ActionSupport implements UserAware, ModelDriven<User> {
+	static final Logger LOGGER = Logger.getLogger(EccedenzeTableAction.class);
 
     private static final long serialVersionUID = 1L;
     private EccedenzeDao dao = new EccedenzeDao();
@@ -63,7 +66,6 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
     	jtSorting = "SCADENZA ASC";
         try {
             // Fetch Data from Enti Table
-        	System.out.println(jtFilter);
             records = dao.getAvailableEccedenze(jtStartIndex, jtPageSize, jtSorting, jtFilter, user);
             result = "OK";
             totalRecordCount = dao.getCountAvailableEccedenze(jtFilter, user);
@@ -71,7 +73,7 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
         } catch (Exception e) {
             result = "ERROR";
             message = e.getMessage();
-            System.err.println(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
         return SUCCESS;
     }
@@ -128,15 +130,15 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
             	/* Invio email */
             	try {
             		if (invioEmail)
-        	    		sm.send("Segnalazione eccedenza", mail_body, mailRecipient);
+        	    		sm.send("ReteTalenti: Segnalazione Disponibilità Eccedenza", mail_body, mailRecipient);
             	} catch (Exception e) {
-            		//
+            		LOGGER.error(e.getMessage());
             	}
             }
             result = "OK";
         } catch (Exception e) {
             message = e.getMessage();
-            System.err.println(e.getMessage());
+            LOGGER.error(e.getMessage());
             result = "ERROR";
         }
         return SUCCESS;
@@ -195,7 +197,7 @@ public class EccedenzeTableAction extends ActionSupport implements UserAware, Mo
         } catch (Exception e) {
             result = "ERROR";
             message = e.getMessage();
-            System.err.println(e.getCause());
+            LOGGER.error(e.getCause());
             return SUCCESS;
         }
         result = "OK";

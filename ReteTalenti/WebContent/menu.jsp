@@ -88,15 +88,15 @@ ul ul{
 							<li 
 								onclick="window.location='anagraficaCompletaReport.action';">Elenco Regionale
 							</li></s:if>
-							<s:if test="(groupId == 2)" >
+							<s:if test="(groupId == 2 && !enteEmporio)" >
 							<li
 								onclick="window.location='anagraficaXProvinciaEnteUserReport.action';">Elenco per Provincia
 							</li></s:if>
-							<s:if test="(groupId == 2 || groupId == 3)" >
+							<s:if test="((groupId == 2 || groupId == 3)  && !enteEmporio)" >
 							<li 
 								onclick="window.location='anagraficaEnteUserReport.action';">Elenco per Ente</li>
 							</s:if>
-							<s:if test="(groupId == 2)" >
+							<s:if test="(groupId == 2 || enteEmporio)" >
 							<li
 								onclick="window.location='graduatoriaProvincialeReport.action';">Graduatoria Provinciale
 							</li></s:if>
