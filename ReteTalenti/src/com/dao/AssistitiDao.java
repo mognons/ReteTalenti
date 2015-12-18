@@ -648,10 +648,13 @@ public class AssistitiDao {
     }
 
     public int getCountAssistiti(String jtFilter, User user) {
+		ResourceBundle rb = ResourceBundle.getBundle("com.properties.basicConfiguration");
+		final String onlyLocalData = rb.getString("onlyLocalData");
+		rb = null;
         int totalRecord = 0;
         String whereCondition1 = "AND 1=1 ";
         String whereCondition2 = "AND 1=1 ";
-        if (user.getGroupId() == 3) {
+        if (user.getGroupId() == 3 || onlyLocalData.equalsIgnoreCase("true")) {
             whereCondition1 = "AND ENTE_ASSISTENTE=" + user.getEnte() + " ";
         } else if (user.getGroupId() == 2) {
             whereCondition2 = "AND E.PROVINCIA_ENTE=" + user.getProvinciaEnte() + " ";
