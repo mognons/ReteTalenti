@@ -8,12 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.Date;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
 
-import com.interceptor.UserAware;
 import com.jdbc.DataAccessObject;
 import com.model.Eccedenza;
 import com.model.User;
@@ -55,7 +50,9 @@ public class EccedenzeDao {
 	}
 
 	public void updateEccedenza(Eccedenza eccedenza) {
-		String updateQuery = "UPDATE ECCEDENZE SET " + "PRODOTTO=?, UDM=?, QTA=?, SCADENZA=? " + "WHERE ID=?";
+		String updateQuery = 	"UPDATE ECCEDENZE SET " 
+								+ "PRODOTTO=?, UDM=?, QTA=?, SCADENZA=? " 
+								+ "WHERE ID=?";
 		try {
 			pStmt = dbConnection.prepareStatement(updateQuery);
 			pStmt.setString(1, eccedenza.getProdotto());
@@ -71,9 +68,9 @@ public class EccedenzeDao {
 
 	public List<Eccedenza> getOwnEccedenze(int jtStartIndex, int jtPageSize, String jtSorting, User user) {
 		List<Eccedenza> eccedenze = new ArrayList<Eccedenza>();
-		String query = 	"select ecc.*, coalesce(imp.qta_prenotata,0)  qta_prenotata from eccedenze ecc "
-						+ "left join (SELECT id_eccedenza, sum(qta_prenotata) as qta_prenotata from impegni "
-						+ "group by id_eccedenza ) imp on ecc.id=imp.id_eccedenza "
+		String query = 	"SELECT ECC.*, COALESCE(imp.qta_prenotata,0)  qta_prenotata from ECCEDENZE ECC "
+						+ "left join (SELECT id_eccedenza, sum(qta_prenotata) as qta_prenotata FROM IMPEGNI "
+						+ "group by id_eccedenza ) IMP on ecc.id=imp.id_eccedenza "
 						+ "WHERE ENTE_CEDENTE=? "
 						+ "ORDER BY " + jtSorting
 						+ " LIMIT " + jtPageSize
@@ -118,24 +115,30 @@ public class EccedenzeDao {
 		return totalRecord;
 	}
 
-	public List<Eccedenza> getAvailableEccedenze(int jtStartIndex, int jtPageSize, String jtSorting, User user) {
+	public List<Eccedenza> getAvailableEccedenze(int jtStartIndex, int jtPageSize, String jtSorting, String jtFilter, 
+			User user) {
 		List<Eccedenza> eccedenze = new ArrayList<Eccedenza>();
 		String query = 	"SELECT * FROM ("
-						+ "SELECT ECC.*, (QTA-COALESCE(IMP.QTA_PRENOTATA,0))  QTA_RESIDUA FROM ECCEDENZE ECC " 
+						+ "SELECT ECC.*, (QTA-COALESCE(IMP.QTA_PRENOTATA,0))  QTA_RESIDUA , OWN_IMP, CAN_EDIT "
+						+ "FROM ECCEDENZE ECC " 
 						+ "LEFT JOIN (SELECT ID_ECCEDENZA, SUM(QTA_PRENOTATA) AS QTA_PRENOTATA FROM IMPEGNI "
 						+ "GROUP BY ID_ECCEDENZA ) IMP ON ECC.ID=IMP.ID_ECCEDENZA "
+						+ "LEFT JOIN (SELECT ID_ECCEDENZA AS OWN_IMP, NOT(RITIRO_EFFETTUATO) AS CAN_EDIT FROM IMPEGNI "
+						+ "WHERE ENTE_RICHIEDENTE=?) O_IMP ON ECC.ID=O_IMP.OWN_IMP "
 						+ "INNER JOIN ENTI E ON E.ID=ECC.ENTE_CEDENTE "
 						+ "WHERE ENTE_CEDENTE<>? "
 						+ "AND PROVINCIA_ENTE=? "
 						+ "AND SCADENZA>=NOW() ) ECCE "
 						+ "WHERE QTA_RESIDUA <>0 "
-						+ "ORDER BY " + jtSorting
+						+ jtFilter 
+						+ " ORDER BY " + jtSorting
 						+ " LIMIT " + jtPageSize
 						+ " OFFSET " + jtStartIndex;
 		try {
 			pStmt = dbConnection.prepareStatement(query);
 			pStmt.setInt(1, user.getEnte());
-			pStmt.setInt(2, user.getProvinciaEnte());
+			pStmt.setInt(2, user.getEnte());
+			pStmt.setInt(3, user.getProvinciaEnte());
 			ResultSet rs = pStmt.executeQuery();
 			while (rs.next()) {
 				Eccedenza eccedenza = new Eccedenza();
@@ -147,6 +150,8 @@ public class EccedenzeDao {
 				eccedenza.setQta(rs.getInt("QTA"));
 				eccedenza.setScadenza(rs.getDate("SCADENZA"));
 				eccedenza.setQta_residua(rs.getInt("QTA_RESIDUA"));
+				eccedenza.setCan_edit(rs.getBoolean("CAN_EDIT"));
+				eccedenza.setOwn_impegno(rs.getInt("OWN_IMP"));;
 				eccedenze.add(eccedenza);
 			}
 		} catch (SQLException e) {
@@ -155,17 +160,17 @@ public class EccedenzeDao {
 		return eccedenze;
 	}
 
-	public int getCountAvailableEccedenze(User user) {
+	public int getCountAvailableEccedenze(String jtFilter, User user) {
 		int totalRecord = 0;
 
-		String query = 	"SELECT * FROM ("
+		String query = 	"SELECT COUNT(*) FROM ("
 						+ "SELECT ECC.*, (QTA-COALESCE(IMP.QTA_PRENOTATA,0))  QTA_RESIDUA FROM ECCEDENZE ECC " 
 						+ "LEFT JOIN (SELECT ID_ECCEDENZA, SUM(QTA_PRENOTATA) AS QTA_PRENOTATA FROM IMPEGNI "
 						+ "GROUP BY ID_ECCEDENZA ) IMP ON ECC.ID=IMP.ID_ECCEDENZA "
 						+ "WHERE ENTE_CEDENTE<>? "
-						+ "AND SCADENZA>=NOW() "
+						+ " AND SCADENZA>=NOW() "
 						+ ") ECCE "
-						+ "WHERE QTA_RESIDUA <>0 ";
+						+ "WHERE QTA_RESIDUA <>0 " + jtFilter;
 		try {
 			pStmt = dbConnection.prepareStatement(query);
 			pStmt.setInt(1, user.getEnte());

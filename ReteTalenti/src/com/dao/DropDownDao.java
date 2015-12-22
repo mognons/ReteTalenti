@@ -11,6 +11,7 @@ import java.util.List;
 import org.json.simple.JSONObject;
 
 import com.jdbc.DataAccessObject;
+import com.model.User;
 
 public class DropDownDao {
 
@@ -114,6 +115,52 @@ public class DropDownDao {
 				option.put("DisplayText", rs.getString("DESCRIZIONE"));
 				options.add(option);
 			}
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return options;
+	}
+
+	public List<JSONObject> getOtherEnti(User user) {
+
+		ArrayList<JSONObject> options = new ArrayList<JSONObject>();
+		String query = 	"SELECT ID, DESCRIZIONE FROM ENTI "
+						+ "WHERE ID<>?";
+		try {
+			PreparedStatement pStmt = dbConnection.prepareStatement(query);
+			pStmt.setInt(1, user.getEnte());
+			ResultSet rs = pStmt.executeQuery();
+			while (rs.next()) {
+				JSONObject option = new JSONObject();
+				option.put("Value", rs.getInt("ID"));
+				option.put("DisplayText", rs.getString("DESCRIZIONE"));
+				options.add(option);
+			}
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return options;
+	}
+
+	public List<JSONObject> getMessageDestination(User user) {
+		ArrayList<JSONObject> options = new ArrayList<JSONObject>();
+		String query = 	"SELECT ID, DESCRIZIONE FROM ENTI "
+						+ "WHERE ID<>?";
+		try {
+			PreparedStatement pStmt = dbConnection.prepareStatement(query);
+			pStmt.setInt(1, user.getEnte());
+			ResultSet rs = pStmt.executeQuery();
+			JSONObject option = new JSONObject();
+			option.put("Value", 0);
+			option.put("DisplayText","Circolare");
+			options.add(option);
+			while (rs.next()) {
+				option = new JSONObject();
+				option.put("Value", rs.getInt("ID"));
+				option.put("DisplayText", rs.getString("DESCRIZIONE"));
+				options.add(option);
+			}
+			option = null;
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}

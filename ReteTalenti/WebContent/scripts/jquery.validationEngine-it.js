@@ -133,6 +133,10 @@
                     "regex": /^[0-9\ ]+$/,
                     "alertText": "* Solo numeri"
                 },
+                "fileName": {
+                    "regex": /^(?!\.)(?!com[0-9]$)(?!con$)(?!lpt[0-9]$)(?!nul$)(?!prn$)[^\|\*\?\\:<>/$"]*[^\.\|\*\?\\:<>/$"]+$/,
+                    "alertText": "* nome del file non valido"
+                },
                 "onlyLetterSp": {
                     "regex": /^[a-zA-Z\ \']+$/,
                     "alertText": "* Solo lettere"
@@ -199,13 +203,7 @@
                 "timeh24": {
                     "regex": /^([01][0-9]|2[0-3]|[1-9]):([0-5][0-9]|[0-9])$/,
                     "alertText": "* Formato richiesto: hh:mm"
-                },
-                "ajaxCFUnique": {
-                    "url": "checkCFIsUniqueAssistitiAction",
-                    "alertText": "* Persona già assistita",
-                    "alertTextOk": "All good!",
-                    "alertTextLoad": "* Validating, please wait"
-                },
+                }
             };
 
         }

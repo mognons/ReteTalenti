@@ -68,7 +68,7 @@
 					<h3 style="color: red">
 						<s:property value="errorMsg"></s:property>
 					</h3>
-				<form id="userData" action="login" method="post" onSubmit="javascript: return $(this).validationEngine('validate');">
+				<form id="userData" method="POST" action="login" onSubmit="javascript: return $(this).validationEngine('validate');">
 				<table>		
 					<tr>
 					<td>

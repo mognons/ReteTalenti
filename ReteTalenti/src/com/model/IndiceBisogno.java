@@ -32,6 +32,7 @@ public class IndiceBisogno {
     
     private String cf_assistito_ib;
     private Date data_inserimento;
+    private int operatore;
 
     public IndiceBisogno() {
     }
@@ -163,13 +164,13 @@ public class IndiceBisogno {
     public void setData_inserimento(Date data_inserimento) {
         this.data_inserimento = data_inserimento;
     }
-    
-    
-    
-    
-    
-    
-    
-    
+
+	public int getOperatore() {
+		return operatore;
+	}
+
+	public void setOperatore(int operatore) {
+		this.operatore = operatore;
+	}
     
 }

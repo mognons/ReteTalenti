@@ -2,9 +2,10 @@
     $('#EccedenzeTableContainer').jtable({
         title: 'Gestione Segnalazione Eccedenze',
         paging: true, // Enable paging
-        pageSize: 15, // Set page size (default: 10)
+		pageSize: 15,
+		pageSizes: [5,10,15],
         sorting: false, // Enable sorting
-        selecting: true, // Enable selecting
+        selecting: false, // Enable selecting
         multiselect: false, // Allow multiple selecting
         selectingCheckboxes: true, // Show checkboxes on first column
         selectOnRowClick: false, // Enable this to only select using
@@ -32,8 +33,12 @@
                 display: function (userData) {
                 	if (userData.record.qta == userData.record.qta_residua) {return '<center><b>-</b></center>';}
                     // Create an image that will be used to open child table
-                    var $img = $('<span align="CENTER"><img src="icons/Delivery.png" width="16" height="16" title="Ritiri prenotati"/></span>');
-                    // Open child table when user clicks the image
+                    var $img = $('<center><img src="icons/Delivery.png" width="16" height="16" title="Esistono prenotazioni di ritiro"/></center>');
+                    $img.find('img').qtip({
+        			    position: {
+        			        viewport: $(window)
+        			    }
+        			});
                     $img.click(function () {
                         $('#EccedenzeTableContainer').jtable('openChildTable',$img.closest('tr'),
                         {
@@ -135,13 +140,6 @@
             	key: true,
             	list: false
             },
-            ente_cedente: {
-                title: 'Ente Cedente',
-                width: '0%',
-                list: false,
-                edit: false,
-                create: false
-            },
             prodotto: {
                 title: 'Prodotto',
                 width: '55%',
@@ -173,18 +171,24 @@
                 title: 'Quantità Disp.',
                 width: '10%',
                 list: true,
-                edit: false,
-                create: false
-            },
-            scadenza: {
-                title: 'Scadenza',
-                inputTitle: 'Scadenza' + ' <span style="color:red">*</span>',
-                type: 'date',
-				displayFormat: 'dd/mm/yy',
-                inputClass: 'validate[required],future[now] datepicker',
-                width: '10%',
                 edit: true,
-                create: true
+                create: false,
+                input: function (data) {
+                	return 	'<input name="qta_residua" '
+                			+ 'style="border:0px; text-align:right; background-color: #F2F5F7;" '
+                			+ 'readonly value="'+  data.record.qta_residua + '"/>';
+                }
+            },            
+            scadenza: {
+                title: 'Validità',
+                inputTitle: 'Segnalazione valida fino a' + ' <span style="color:red">*</span>',
+                type: 'date',
+                displayFormat: 'dd/mm/yy',
+                inputClass: 'validate[required,future[now]] datepicker',
+                width: '10%',
+                list: true,
+                create: true,
+                edit: true
             }
         },
         rowInserted: function(event, data){
@@ -193,17 +197,36 @@
               data.row.find('.jtable-delete-command-button').hide();
             }
         },
+        recordsLoaded: function(event, data) {
+	        $(function() {
+	        	$('#EccedenzeTableContainer').find('.jtable-command-button').each(function() {
+	    	        var tipContent = $(this).attr('oldtitle');
+	    	        $(this).qtip({
+	    	            content: tipContent,
+	    	    	    position: {
+	    	    	        viewport: $(window)
+	    	    	    }
+	    	        });
+	    	    });
+	        });
+
+        },
         // Initialize validation logic when a form is created
         formCreated: function (event, data) {
             data.form.find('input[name=prodotto]').css('width', '300px');
             data.form.validationEngine('attach',{promptPosition : "bottomLeft", scroll: false});
+            if (data.formType=='edit')
+            	data.form.find('.jtable-input-field-container:nth-of-type(4)').hide();
         },
         // Validate form when it is being submitted
         formSubmitting: function (event, data) {
+            data.form.find('input[name=qta_residua]')
+            .val(data.form.find('input[name=qta]').val());
             return data.form.validationEngine('validate');
         },
         // Dispose validation logic when form is closed
         formClosed: function (event, data) {
+        	console.log(data);
             data.form.validationEngine('hide');
             data.form.validationEngine('detach');
         }

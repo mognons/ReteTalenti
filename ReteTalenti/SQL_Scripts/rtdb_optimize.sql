@@ -1,0 +1,15 @@
+optimize table ASSISTITI;
+optimize table ECCEDENZE;
+optimize table ENTI;
+optimize table GRADI_PARENTELA;
+optimize table GROUPS;
+optimize table IMPEGNI;
+optimize table INDICI_BISOGNO;
+optimize table MESSAGES;
+optimize table NAZIONI;
+optimize table NOTE_ASSISTITI;
+optimize table NUCLEO_FAMILIARE;
+optimize table PROVINCE;
+optimize table STATI_CIVILI;
+optimize table UNI_MISURA;
+optimize table USERS;

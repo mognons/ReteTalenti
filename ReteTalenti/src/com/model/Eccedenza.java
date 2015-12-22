@@ -9,6 +9,8 @@ public class Eccedenza {
 	int udm;
 	int qta;
 	int qta_residua;
+	int own_impegno;
+	Boolean can_edit;
 	Date scadenza;
 	java.util.Date timestamp;
 	String operatore; // this is user.username
@@ -66,6 +68,19 @@ public class Eccedenza {
 	}
 	public void setQta_residua(int qta_residua) {
 		this.qta_residua = qta_residua;
+	}
+
+	public Boolean getCan_edit() {
+		return can_edit;
+	}
+	public void setCan_edit(Boolean can_edit) {
+		this.can_edit = can_edit;
+	}
+	public int getOwn_impegno() {
+		return own_impegno;
+	}
+	public void setOwn_impegno(int own_impegno) {
+		this.own_impegno = own_impegno;
 	}
 	
 	

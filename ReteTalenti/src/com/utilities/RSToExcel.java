@@ -15,6 +15,7 @@ import java.io.OutputStream;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -65,11 +66,20 @@ public class RSToExcel {
 	}
 
 	private FormatType getFormatType(Class _class) {
+//		if (_class == Integer.class || _class == Long.class) {
+//			return FormatType.INTEGER;
+//		} else if (_class == Float.class || _class == Double.class) {
+//			return FormatType.FLOAT;
+//		} else if (_class == Timestamp.class || _class == java.sql.Date.class) {
+//			return FormatType.DATE;
+//		} else {
+//			return FormatType.TEXT;
+//		}
 		if (_class == Integer.class || _class == Long.class) {
 			return FormatType.INTEGER;
 		} else if (_class == Float.class || _class == Double.class) {
 			return FormatType.FLOAT;
-		} else if (_class == Timestamp.class || _class == java.sql.Date.class) {
+		} else if (_class == java.sql.Date.class) {
 			return FormatType.DATE;
 		} else {
 			return FormatType.TEXT;
@@ -123,6 +133,7 @@ public class RSToExcel {
 			workbook.write(outputStream);
 		} finally {
 			outputStream.close();
+			dataSheets = null;
 		}
 	}
 
@@ -152,6 +163,7 @@ public class RSToExcel {
 			style.setFont(font);
 			cell.setCellStyle(style);
 		}
+//		System.out.println("Cella " + col + " valore " + value + " tipo " + formatType);
 		switch (formatType) {
 		case TEXT:
 			cell.setCellValue(value.toString());
@@ -169,7 +181,7 @@ public class RSToExcel {
 					HSSFDataFormat.getBuiltinFormat(("#,##0.00")));
 			break;
 		case DATE:
-			cell.setCellValue((Timestamp) value);
+			cell.setCellValue((Date) value);
 			HSSFCellUtil.setCellStyleProperty(cell, workbook,
 					HSSFCellUtil.DATA_FORMAT,
 					HSSFDataFormat.getBuiltinFormat(("m/d/yy")));

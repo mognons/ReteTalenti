@@ -1,5 +1,6 @@
 package com.action;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.dao.NazioniDao;
@@ -18,6 +19,7 @@ public class NazioniAction extends ActionSupport implements UserAware {
 	private List<Nazione> records;
 	private String result;
 	private String message;
+	private String jtFilter = "";
 	private User record;
 	private int totalRecordCount;
 	private String jtStartIndex,jtPageSize;
@@ -25,10 +27,12 @@ public class NazioniAction extends ActionSupport implements UserAware {
 	//
 
 	public String list() {
+		System.out.println(jtFilter);
+
 		try {
 			// Fetch Data from User Table
-			totalRecordCount = dao.getCountNazioni();
-			records = dao.getAllNazioni(jtStartIndex, jtPageSize);
+			totalRecordCount = dao.getCountNazioni(jtFilter);
+			records = dao.getAllNazioni(jtStartIndex, jtPageSize, jtFilter);
 			result = "OK";
 			
 		} catch (Exception e) {
@@ -91,6 +95,11 @@ public class NazioniAction extends ActionSupport implements UserAware {
 	public void setJtStartIndex(String jtStartIndex) {
 		this.jtStartIndex = jtStartIndex;
 	}
-
+	public String getJtFilter() {
+		return jtFilter;
+	}
+	public void setJtFilter(String jtFilter) {
+		this.jtFilter = jtFilter;
+	}
 
 }

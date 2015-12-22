@@ -80,6 +80,28 @@ public class MessagesDao {
 		return recordCount;
 	}
 	
+	public int getLastIdOfValidMessages(User loggedUser) {
+		int recordCount = 0;
+		String query = 	"SELECT COALESCE(MAX(ID),999999999) FROM MESSAGES "
+						+ "WHERE MESSAGE_READ=FALSE "
+						+ "AND (END_DATE>=NOW() OR END_DATE IS NULL) "
+						+ "AND START_DATE<=NOW() "
+						+ "AND (ENTE=? OR ENTE=0) "
+						+ "ORDER BY START_DATE DESC";
+		
+		try {
+			PreparedStatement pStmt = dbConnection.prepareStatement(query);
+			pStmt.setInt(1, loggedUser.getEnte());
+			ResultSet rs = pStmt.executeQuery();
+			while (rs.next()) {
+				recordCount = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return recordCount;
+	}
+	
 	public List<Message> getAllMessages(int jtStartIndex, int jtPageSize) {
 		List<Message> messaggi = new ArrayList<Message>();
 
@@ -144,6 +166,21 @@ public class MessagesDao {
 		return;
 	}
 	
+	public void markMessage(int messageID) {
+		String query = 	"UPDATE MESSAGES "
+						+ "SET MESSAGE_READ=NOT(MESSAGE_READ) "
+						+ "WHERE ID=?";
+		
+		try {
+			PreparedStatement pStmt = dbConnection.prepareStatement(query);
+			pStmt.setInt(1, messageID);
+			pStmt.executeUpdate();
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return;
+	}
+	
 	public void insertNewMessage(Message messaggio) {
 		String query = 	"INSERT INTO MESSAGES "
 						+ "(ENTE,TAG,MESSAGE_TEXT,ACTION,KEY1,KEY2,KEY3,START_DATE,END_DATE,MESSAGE_READ,TIMESTAMP) "
@@ -182,4 +219,19 @@ public class MessagesDao {
 		return;
 	}
 	
+	public void deleteMessageByTypeAndKey(Message messaggio) {
+		String query = 	"DELETE FROM MESSAGES "
+						+ "WHERE KEY2=? " 
+						+ "AND ACTION=?";
+		
+		try {
+			PreparedStatement pStmt = dbConnection.prepareStatement(query);
+			pStmt.setInt(1, messaggio.getKey2());
+			pStmt.setString(2, messaggio.getAction());
+			pStmt.executeUpdate();
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return;
+	}
 }

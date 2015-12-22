@@ -4,16 +4,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link href="css/validationEngine.jquery.css" rel="stylesheet"
-	type="text/css" />
+<%@ page import="java.util.ResourceBundle" %>
 
-<!-- Import Javascript files for validation engine (in Head section of HTML) -->
-<script type="text/javascript" src="scripts/jquery.validationEngine.js"></script>
-<script type="text/javascript" src="scripts/jquery.validationEngine-it.js"></script>
-<script src="scripts/jquery.jtable.js" type="text/javascript"></script>
-
-<!-- User defined Jtable js file -->
-<script src="scripts/jquery.jtable.it.js" type="text/javascript"></script>
 
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
 
@@ -155,10 +147,15 @@ fieldset {
 	// Groups
 	var enteUtente = '<s:property value="ente"/>';
 	var gruppoUtente = '<s:property value="groupId"/>';
+	<%
+	ResourceBundle rb = ResourceBundle.getBundle("com.properties.basicConfiguration");
+	final String onlyLocalData = rb.getString("onlyLocalData");
+	%>
+	var onlyLocalData = <% onlyLocalData.equalsIgnoreCase("true"); %>
 
-	
-	function checkCF(field, rules, i, options) {
+	checkCF = function (field, rules, i, options) {
 		var codiceFiscale = field.val();
+		console.log(codiceFiscale);
 		var valido = validaCodiceFiscale(codiceFiscale);
 		var ajaxData = "";
 		if (!valido) { // Validità formale NON verificata
@@ -236,18 +233,14 @@ fieldset {
 	function openPage(page) {
 		var popup = document.getElementById('modalDialogBox');
 		popup.src = page;
-		(function() {
-			$('#pop-up').dialog({
-				modal : true,
-				resizable : false,
-				draggable : false,
-				width : '800',
-				height : '500',
-				title : 'Calcolo punteggio Indice di Bisogno'
-			});
-			$('#LoadRecordsButton').click();
-	   	})();
-
+		$('#pop-up').dialog({
+			modal : true,
+			resizable : false,
+			draggable : false,
+			width : '800',
+			height : '500',
+			title : 'Calcolo punteggio Indice di Bisogno'
+		});
 	};
 
 	function showSchedaAssistito(page) {
@@ -321,22 +314,11 @@ fieldset {
 
 </head>
 <body>
-	<div id="filtering" class="ui-tabs-panel ui-widget-content ui-corner-bottom" align="LEFT">
-		<form >
-			<span class="jtable-title-text">Codice Fiscale</span>
-			<input type="text" name="cf_search" id="cf_search" />
-			<span class="jtable-title-text">Cognome</span>
-			<input type="text" name="cognome_search" id="cognome_search" />
-			<input type="submit" class="searchButton" id="LoadRecordsButton" value="Ricerca"/>
-			<input type="button" class="searchButton" id="ResetButton" value="Tutti"/>
-		</form>
-	</div>
 	<div id="pop-up" style="display: none;">
 		<iframe style="width: 98%; height: 98%; background-color: #F2F5F7;" id="modalDialogBox" src=""></iframe>
 	</div>
 	<div id="dialog" title="Informazione dal sistema"></div>
 	<div id="AssistitiTableContainer"></div>
-	
 	<div id="dialog-form" title="Trasferimento Assistito" class="ui-widget">
 		<form action="#">
 			<fieldset>

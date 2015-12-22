@@ -19,10 +19,14 @@ public class NazioniDao {
 		dbConnection = DataAccessObject.getConnection();
 	}
 
-	public List<Nazione> getAllNazioni(String jtStartIndex, String jtPageSize) {
+	public List<Nazione> getAllNazioni(String jtStartIndex, String jtPageSize, String jtFilter) {
 		List<Nazione> nazioni = new ArrayList<Nazione>();
 
-		String query = "SELECT * FROM NAZIONI ORDER BY DENOMINAZIONE " + "LIMIT " + jtPageSize
+		String query = "SELECT * FROM NAZIONI "
+				+ "WHERE 1=1 "
+				+ jtFilter 
+				+ " ORDER BY DENOMINAZIONE"
+				+ " LIMIT " + jtPageSize
 				+ " OFFSET " + jtStartIndex;
 		
 		try {
@@ -42,12 +46,13 @@ public class NazioniDao {
 		return nazioni;
 	}
 
-	public Integer getCountNazioni() {
+	public Integer getCountNazioni(String jtFilter) {
 		int totalRecordCount = 0;
 		List<Nazione> nazioni = new ArrayList<Nazione>();
 
-		String query = "SELECT COUNT(1) FROM NAZIONI";
-		;
+		String query = 	"SELECT COUNT(1) FROM NAZIONI "
+						+ "WHERE 1=1 "
+						+ jtFilter;
 		try {
 			Statement stmt = dbConnection.createStatement();
 			ResultSet rs = stmt.executeQuery(query);

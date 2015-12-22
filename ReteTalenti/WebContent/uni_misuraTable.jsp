@@ -4,8 +4,6 @@
 <html>
 <head>
 
-<script src="scripts/jquery.jtable.js" type="text/javascript"></script>
-<script src="scripts/jquery.jtable.it.js" type="text/javascript"></script>
 <script src="js/uni_misuraTable.js" type="text/javascript"></script>
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
 

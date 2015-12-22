@@ -26,7 +26,7 @@ public class MessageAction extends ActionSupport implements UserAware {
 	private int jtStartIndex,jtPageSize;
 	private String jtSorting;
 	private User user = new User();
-	private int messageID, id;
+	private int messageID, id, ente;
 	private String key1;
 	private int key2;
 	private java.sql.Date key3;
@@ -57,7 +57,7 @@ public class MessageAction extends ActionSupport implements UserAware {
 	
 	public String create() {
 		record = new Message();
-		record.setEnte(0); // Broadcast
+		record.setEnte(ente); // Broadcast
 		record.setTag(tag);
 		record.setMessage_text(message_text);
 		record.setAction(action);
@@ -89,8 +89,23 @@ public class MessageAction extends ActionSupport implements UserAware {
 	}
 	
 	public String markRead() {
+		System.out.println("Marking message id " + messageID + " as read");
 		try {
 			dao.markMessageAsRead(messageID);
+			result = "OK";
+			
+		} catch (Exception e) {
+			result = "ERROR";
+			message = e.getMessage();
+			System.err.println(e.getMessage());
+		}
+		return Action.SUCCESS;
+	}
+	
+	public String changeStatus() {
+		System.out.println("Marking message id " + messageID + " as read");
+		try {
+			dao.markMessage(messageID);
 			result = "OK";
 			
 		} catch (Exception e) {
@@ -104,7 +119,21 @@ public class MessageAction extends ActionSupport implements UserAware {
 	public String createMessage(Message messaggio) {
 		try {
 			// Fetch Data from User Table
-			dao.insertNewMessage(messaggio);;
+			dao.insertNewMessage(messaggio);
+			result = "OK";
+			
+		} catch (Exception e) {
+			result = "ERROR";
+			message = e.getMessage();
+			System.err.println(e.getMessage());
+		}
+		return Action.SUCCESS;
+	}
+	
+	public String deleteMessage(Message messaggio) {
+		try {
+			// Fetch Data from User Table
+			dao.deleteMessageByTypeAndKey(messaggio);
 			result = "OK";
 			
 		} catch (Exception e) {
@@ -289,5 +318,13 @@ public class MessageAction extends ActionSupport implements UserAware {
 
 	public void setMessage_read(Boolean message_read) {
 		this.message_read = message_read;
+	}
+
+	public int getEnte() {
+		return ente;
+	}
+
+	public void setEnte(int ente) {
+		this.ente = ente;
 	}
 }

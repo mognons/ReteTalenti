@@ -20,7 +20,10 @@
     <listener-class>org.apache.struts2.tiles.StrutsTilesListener</listener-class>
   </listener>
   <listener>
-    <listener-class>com.listener.classActionServletContextListener</listener-class>
+    <listener-class>com.listener.ReteTalentiContextListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>com.listener.QuartzSchedulerListener</listener-class>
   </listener>
   <welcome-file-list>
     <welcome-file>/index.jsp</welcome-file>

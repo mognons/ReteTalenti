@@ -94,6 +94,7 @@ public class ImpegniDao {
 						+ "INNER JOIN UNI_MISURA U ON Z.UDM = U.ID "
 						+ "WHERE ENTE_RICHIEDENTE=? "
 						+ "AND RITIRO_EFFETTUATO IS FALSE "
+						+ "AND DATA_RITIRO > SUBDATE(NOW(),7) "
 						+ "ORDER BY " + jtSorting
 						+ " LIMIT " + jtPageSize
 						+ " OFFSET " + jtStartIndex;
@@ -123,9 +124,10 @@ public class ImpegniDao {
 
 	public List<Impegno> getOwnImpegniByEccedenza(int jtStartIndex, int jtPageSize, String jtSorting, User user, int id_eccedenza) {
 		List<Impegno> impegni = new ArrayList<Impegno>();
-		String query = 	"select * from impegni "
+		String query = 	"SELECT * FROM IMPEGNI "
 						+ "WHERE ENTE_RICHIEDENTE=? "
 						+ "AND ID_ECCEDENZA=? "
+						+ "AND DATA_RITIRO > SUBDATE(NOW(),7) "
 						+ "ORDER BY " + jtSorting
 						+ " LIMIT " + jtPageSize
 						+ " OFFSET " + jtStartIndex;
@@ -153,7 +155,7 @@ public class ImpegniDao {
 
 	public List<Impegno> getAllImpegni(int jtStartIndex, int jtPageSize, String jtSorting, User user) {
 		List<Impegno> impegni = new ArrayList<Impegno>();
-		String query = 	"select * from impegni "
+		String query = 	"SELECT * FROM IMPEGNI "
 						+ "WHERE ID_ECCEDENZA=? "
 						+ "ORDER BY " + jtSorting
 						+ " LIMIT " + jtPageSize
@@ -226,7 +228,9 @@ public class ImpegniDao {
 		int totalRecord = 0;
 
 		String query = 	"SELECT COUNT(*) FROM IMPEGNI " 
-						+ "WHERE ENTE_RICHIEDENTE=?";
+						+ "WHERE ENTE_RICHIEDENTE=? "
+						+ "AND RITIRO_EFFETTUATO IS FALSE "
+						+ "AND DATA_RITIRO > SUBDATE(NOW(),7)";
 		try {
 			pStmt = dbConnection.prepareStatement(query);
 			pStmt.setInt(1, user.getEnte());
@@ -245,7 +249,8 @@ public class ImpegniDao {
 
 		String query = 	"SELECT COUNT(*) FROM IMPEGNI " 
 						+ "WHERE ENTE_RICHIEDENTE=? "
-						+ "AND ID_ECCEDENZA=?";
+						+ "AND ID_ECCEDENZA=? "
+						+ "AND DATA_RITIRO > SUBDATE(NOW(),7) ";
 		try {
 			pStmt = dbConnection.prepareStatement(query);
 			pStmt.setInt(1, user.getEnte());

@@ -5,20 +5,14 @@
 <html>
 
 <head>
-<link href="css/validationEngine.jquery.css" rel="stylesheet"
-	type="text/css" />
-<link href="css/jquery-ui.structure.css" rel="stylesheet"
-	type="text/css" />
-<link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
-<link href="css/theme.css" rel="stylesheet" type="text/css" />
-<link href="css/lightcolor/blue/jtable.css" rel="stylesheet"
-	type="text/css" />
 <link href="css/style.css" rel="stylesheet" type="text/css" />
-<script src="scripts/jquery.js" type="text/javascript"></script>
+<!-- jQuery script file. -->
+<script src="scripts/jquery-2.1.4.js" type="text/javascript"></script>
 <script src="scripts/jquery-ui.js" type="text/javascript"></script>
+<script type="text/javascript" src="scripts/datepicker-it.js"></script>
+<!-- Import Javascript files for validation engine (in Head section of HTML) -->
 <script type="text/javascript" src="scripts/jquery.validationEngine.js"></script>
 <script type="text/javascript" src="scripts/jquery.validationEngine-it.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <script type="text/JavaScript">
 
@@ -32,7 +26,7 @@ $(document).ready(function() {
 
 function resetMode() {
 	formMode = 'CALC';
-	$('#submitButton').val("Calcola");
+	$('#submitButton').val("Verifica");
 };
 
 function go() {
@@ -43,12 +37,56 @@ function go() {
 		calcoloPunteggio();
 		// Submit form
 		if (formMode == 'SUBMIT') {
-			$('#calcoloIDB').trigger(event);
-			window.parent.$('.ui-dialog-content:visible').dialog('close');
+			$.Deferred(function ($dfd) {
+				$.ajax({
+					traditional: true, // THIS IS MANDATORY FOR ARRAYS
+					url: 'updateIDBAction',
+					type: 'POST',
+					dataType: 'json',
+					data: {
+						id: '<s:property value="recordIDB.id"/>',
+						cf_assistito_ib: '<s:property value="recordIDB.cf_assistito_ib"/>',
+						nome: '<s:property value="nome"/>',
+						cognome: '<s:property value="cognome"/>',
+						isee_euro: $('#isee_euro').val(),
+						cc_euro: $('#cc_euro').val(),
+						ca_euro: $('#ca_euro').val(),
+						cs_euro: $('#cs_euro').val(),
+						stato_disoc: $('#stato_disoc').val(),
+						spese_imp: $('#spese_imp').val(),
+						urgenza: $('#urgenza').val(),
+						isee_punti: $('#isee_punti').val(),
+						entrate_nc_punti: $('#entrate_nc_punti').val(),
+						stato_disoc_punti: $('#stato_disoc_punti').val(),
+						spese_imp_punti: $('#spese_imp_punti').val(),
+						urgenza_punti: $('#urgenza_punti').val(),
+						totalepunti: $('#totalepunti').val()
+					},
+					success: function (data) {
+						$dfd.resolve(data);
+						if (data.message) {
+							$('#errorMessage').html("<h3>"+data.message+"</h3	>");
+						} else {
+							window.parent.$('#AssistitiTableContainer').jtable('reload');
+				 			window.parent.$('.ui-dialog-content:visible').dialog('close');
+						};
+					},
+					error: function () {
+						alert("si è rotto");
+						$dfd.reject();
+					}
+				});
+			})
 		} else {
 			formMode = 'SUBMIT';
 			$('#submitButton').val("Aggiorna");
 		}
+	}
+};
+
+function dynamicCalc() {
+	if ($('#calcoloIDB').validationEngine('validate')) {
+		calcoloPunteggio();
 	}
 };
 
@@ -109,6 +147,39 @@ function calcoloPunteggio() {
 
 
 <style>
+.label {
+	font-style: italic;
+	text-align: left;
+}
+
+.labelHead {
+	font-style: italic;
+	font-weight: bold;
+	text-align: left;
+ 	border-bottom: 1px solid gray;
+}
+
+td.dato {
+	font-weight:bold;
+}
+
+h1 {
+  	border-bottom: 1px solid gray;
+	padding: 1px 10px 1px 5px;
+	margin-bottom: 3px;
+	font-size: larger;
+	font-style: italic;
+	font-weight: bold;
+}
+table {
+	padding: 1px 1px 1px 1px;
+}
+
+th {
+	text-align: left;
+    color: gray;
+	font-style: italic;
+}
 .okButton {
 	-moz-box-shadow: 0px 1px 0px 0px #f0f7fa;
 	-webkit-box-shadow: 0px 1px 0px 0px #f0f7fa;
@@ -157,7 +228,7 @@ function calcoloPunteggio() {
 }
 
 input[readonly] {
-	background-color: #F2F5F7;
+	background-color: #FFFFFF;
 	color: red;
 	border: none;
 	font-weight: bold;
@@ -172,12 +243,16 @@ select {
 <body bgcolor="#F2F5F7">
 	<div class="ui-tabs-panel ui-widget-content ui-corner-bottom">
 		<s:set var="codice_fiscale" value="recordIDB.cf_assistito_ib" />
-		<span style="color: #2D89EF; font-weight: bold; font-size: 14pt;">Soggetto:
+		<h1 >Soggetto:
 			<s:property value="nome" /> <s:property value="cognome" /> (<s:property
 				value="recordIDB.cf_assistito_ib" />)
-		</span>
+		</h1>
+<%-- 		<span style="color: #2D89EF; font-weight: bold; font-size: 14pt;">Soggetto: --%>
+<%-- 			<s:property value="nome" /> <s:property value="cognome" /> (<s:property --%>
+<%-- 				value="recordIDB.cf_assistito_ib" />) --%>
+<%-- 		</span> --%>
 		<form method="POST" id="calcoloIDB" name="calcoloIDB" id="calcoloIDB"
-			action="updateIDBAction?cf_assistito_ib=<s:property value="codice_fiscale"/>&nome=<s:property value="nome"/>&cognome=<s:property value="cognome"/>"
+			action="#"
 			>
 			<input type="hidden" name="id"
 				value="<s:property value="recordIDB.id"/>">
@@ -189,52 +264,52 @@ select {
 					<td></td>
 				</tr>
 				<tr valign="top">
-					<td colspan="2" style="font-weight: bold;">DATI RICHIESTI</td>
-					<td colspan="2" ALIGN="left" style="font-weight: bold;">PUNTEGGIO</td>
+					<td colspan="2" class="labelHead">DATI RICHIESTI</td>
+					<td colspan="2" ALIGN="left"  class="labelHead">PUNTEGGIO</td>
 				</tr>
 				<tr>
-					<td style="font-weight: bold;">1. ISEE - Valore in EURO</td>
-					<td><input name="isee_euro"
+					<td  class="label">1. ISEE - Valore in EURO</td>
+					<td><input name="isee_euro" id="isee_euro"
 						style="text-align:right;" 
 						value="<s:property value="%{recordIDB.isee_euro}"/>"
 						class="validate[required,custom[integer]]"
-						onChange="resetMode()" /></td>
+						onChange="dynamicCalc();resetMode()" /></td>
 					<td></td>
-					<td ALIGN="right"><input name="isee_punti" readonly size="2"
+					<td ALIGN="right"><input name="isee_punti"  id="isee_punti" readonly size="2"
 						value="<s:property value="%{recordIDB.isee_punti}"/>" style="text-align:right;"/></td>
 				</tr>
 				<tr>
-					<td style="font-weight: bold;">2. Contributo Comune per spese
+					<td  class="label">2. Contributo Comune per spese
 						documentate</td>
-					<td><input name="cc_euro"
+					<td><input name="cc_euro" id="cc_euro"
 						style="text-align:right;" 
 						value="<s:property value="%{recordIDB.cc_euro}"/>"
-						class="validate[required,custom[integer]]" onChange="resetMode()"/></td>
+						class="validate[required,custom[integer]]" onChange="dynamicCalc();resetMode()"/></td>
 				</tr>
 				<tr>
-					<td style="font-weight: bold;">3. Contributo affitto regione
+					<td  class="label">3. Contributo affitto regione
 						per spese documentate</td>
-					<td><input name="ca_euro"
+					<td><input name="ca_euro" id="ca_euro"
 						style="text-align:right;" 
 						value="<s:property value="%{recordIDB.ca_euro}"/>"
-						class="validate[required,custom[integer]]" onChange="resetMode()"/></td>
+						class="validate[required,custom[integer]]" onChange="dynamicCalc();resetMode()"/></td>
 				</tr>
 				<tr>
-					<td style="font-weight: bold;">4. Contributo spot privato
+					<td  class="label">4. Contributo spot privato
 						sociale per spese documentate</td>
-					<td><input name="cs_euro"
+					<td><input name="cs_euro" id="cs_euro"
 						style="text-align:right;" 
 						value="<s:property value="%{recordIDB.cs_euro}"/>"
-						class="validate[required,custom[integer]]" onChange="resetMode()"/></td>
+						class="validate[required,custom[integer]]" onChange="dynamicCalc();resetMode()"/></td>
 					<td></td>
-					<td ALIGN="right"><input name="entrate_nc_punti" readonly
+					<td ALIGN="right"><input name="entrate_nc_punti" id="entrate_nc_punti" readonly
 						size="2"
 						value="<s:property value="%{recordIDB.entrate_nc_punti}"/>"  style="text-align:right;"/></td>
 				</tr>
 				<tr>
-					<td style="font-weight: bold;">5. Stato di disoccupazione di
+					<td  class="label">5. Stato di disoccupazione di
 						lunga durata (mesi)</td>
-					<td><select name="stato_disoc" onChange="resetMode()">
+					<td><select name="stato_disoc" id="stato_disoc" onChange="dynamicCalc();resetMode()">
 							<option
 								<s:if test="(recordIDB.stato_disoc==1)">selected="selected"</s:if>
 								value="1">1-3 mesi</option>
@@ -252,25 +327,25 @@ select {
 								value="5">Mai percepita</option>
 					</select></td>
 					<td></td>
-					<td ALIGN="right"><input name="stato_disoc_punti" readonly
+					<td ALIGN="right"><input name="stato_disoc_punti" id="stato_disoc_punti" readonly
 						size="2"
 						value="<s:property value="%{recordIDB.stato_disoc_punti}"/>" style="text-align:right;"/></td>
 				<tr>
-					<td style="font-weight: bold;">6. Spese impreviste e
+					<td  class="label">6. Spese impreviste e
 						straordinarie"</td>
-					<td><input name="spese_imp"
+					<td><input name="spese_imp" id="spese_imp"
 						style="text-align:right;" 
 						value="<s:property value="%{recordIDB.spese_imp}"/>"
-						class="validate[required,custom[integer]]" onChange="resetMode()"/></td>
+						class="validate[required,custom[integer]]" onChange="dynamicCalc();resetMode()"/></td>
 					<td></td>
-					<td ALIGN="right"><input name="spese_imp_punti" readonly
+					<td ALIGN="right"><input name="spese_imp_punti" id="spese_imp_punti" readonly
 						size="2"
 						value="<s:property value="%{recordIDB.spese_imp_punti}"/>" style="text-align:right;"/></td>
 				</tr>
 				<tr>
-					<td style="font-weight: bold;">7. Carattere di urgenza e
+					<td  class="label">7. Carattere di urgenza e
 						condizione socio-economica"</td>
-					<td><select name="urgenza" onChange="resetMode()">
+					<td><select name="urgenza" id="urgenza" onChange="dynamicCalc();resetMode()">
 							<option
 								<s:if test="(recordIDB.urgenza==0)">selected="selected"</s:if>
 								value="0">Situazione cronica</option>
@@ -285,23 +360,23 @@ select {
 								value="3">Miglioramento medio</option>
 							<option
 								<s:if test="(recordIDB.urgenza==4)">selected="selected"</s:if>
-								value="4">Miglioramento discret0</option>
+								value="4">Miglioramento discreto</option>
 							<option
 								<s:if test="(recordIDB.urgenza==5)">selected="selected"</s:if>
 								value="5">Miglioramento ottimo</option>
 					</select></td>
 					<td></td>
-					<td ALIGN="right"><input name="urgenza_punti" readonly
+					<td ALIGN="right"><input name="urgenza_punti" id="urgenza_punti" readonly
 						size="2" value="<s:property value="%{recordIDB.urgenza_punti}"/>" style="text-align:right;"/></td>
 				</tr>
 				<tr>
-					<td COLSPAN="3" ALIGN="right">TOTALE</td>
-					<td COLSPAN="1" ALIGN="right"><input name="totalepunti"
+					<td COLSPAN="3" class="labelHead">TOTALE</td>
+					<td COLSPAN="1" ALIGN="right"><input name="totalepunti" id="totalepunti"
 						readonly size="2"
 						value="<s:property value="%{recordIDB.totalepunti}"/>" style="text-align:right;"/></td>
 				</tr>
 				<tr>
-					<td COLSPAN="4" ALIGN="right"><input type="button" value="Calcola"
+					<td COLSPAN="4" ALIGN="right"><input type="button" value="Verifica"
 						id="submitButton" class="okButton" onClick="go()"/></td>
 				</tr>
 			</table>

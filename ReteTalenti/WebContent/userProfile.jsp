@@ -4,9 +4,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link href="css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="scripts/jquery.validationEngine.js"></script>
-<script type="text/javascript" src="scripts/jquery.validationEngine-it.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function () {

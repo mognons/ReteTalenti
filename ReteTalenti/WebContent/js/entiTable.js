@@ -2,7 +2,8 @@
     $('#EntiTableContainer').jtable({
         title: 'Gestione Enti',
         paging: true, //Enable paging
-        pageSize: 10, //Set page size (default: 10)           
+		pageSize: 15,
+		pageSizes: [5,10,15],
         sorting: false, //Enable sorting
         selecting: true, //Enable selecting
         multiselect: false, //Allow multiple selecting
@@ -102,7 +103,7 @@
             },
             resp_phone: {
                 title: 'Telefono',
-                inputClass: 'validate[required,custom[phone]]',
+                inputClass: 'validate[required,custom[phone],maxSize[10]]',
                 width: '10%',
                 list: true,
                 edit: true,

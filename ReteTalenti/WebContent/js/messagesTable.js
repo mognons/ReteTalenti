@@ -14,7 +14,8 @@ $(document).ready(function () {
 			{
 				title : 'Messaggi dal sistema ReteTalenti',
 				paging : true, // Enable paging
-				pageSize : 5, // Set page size (default: 10)
+				pageSize: 15,
+				pageSizes: [5,10,15],
 				sorting : false, // Enable sorting
 				selecting : false, // Enable selecting
 				multiselect : false, // Allow multiple selecting

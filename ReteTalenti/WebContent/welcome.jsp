@@ -3,9 +3,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<script src="scripts/jquery.jtable.js" type="text/javascript"></script>
-<!-- User defined Jtable js file -->
-<script src="scripts/jquery.jtable.it.js" type="text/javascript"></script>
 
 <script type="text/JavaScript">
 	var today = new Date(); 
@@ -29,7 +26,10 @@
 			URL = URL + "&key2=" + message.key2;
 		if (message.key3 != null)				
 			URL = URL + "&key3=" + message.key3;
-		
+		console.log(message);
+		if (message.ente==0)
+			return;
+// 		alert("Aspetta");
 		var dialog_text = null;
 		switch (action) {
 			case "READMSG":
@@ -70,22 +70,10 @@
 	};
 
 	$(document).ready(function() {
-		var myUsername = "";
-		var openTab = '<s:property value="openTab"/>';
-		if (openTab == '')
-			openTab = 0;
 
 		$("#tabs").tabs({
-			active : openTab
+			active : 0
 		});
-
-		// Groups
-		var userGroups = [];
-		<s:iterator value="groups">
-		myGroup = '<s:property value="groupName"/>';
-		userGroups.push(myGroup);
-		console.log(myGroup);
-		</s:iterator>;
 	});
 </script>
 <style>

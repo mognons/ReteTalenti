@@ -2,7 +2,8 @@
     $('#GraduatoriaTableContainer').jtable({
         title: "Graduatoria Potenziali Candidati all'Emporio",
         paging: true, // Enable paging
-        pageSize: 10, // Set page size (default: 10)
+		pageSize: 15,
+		pageSizes: [5,10,15],
         sorting: false, // Enable sorting
         defaultSorting : 'COD_FISCALE ASC', //Set default sorting
         selecting: true, // Enable selecting

@@ -2,14 +2,13 @@
     $('#IndiceBisognoTableContainer').jtable({
         title: 'Tabella Indice di Bisogno',
         paging: true, // Enable paging
-        pageSize: 15, // Set page size (default: 10)
+		pageSize: 15,
+		pageSizes: [5,10,15],
         sorting: false, // Enable sorting
-        //defaultSorting : 'COD_FISCALE ASC', //Set default sorting
         selecting: false, // Enable selecting
         multiselect: false, // Allow multiple selecting
         selectingCheckboxes: true, // Show checkboxes on first column
         selectOnRowClick: false, // Enable this to only select using
-        // checkboxes
         pageSizeChangeArea: false,
         openChildAsAccordion: true,
         actions: {

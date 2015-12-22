@@ -29,15 +29,17 @@
 		return (dd+"/"+mm+"/"+yyyy);
 	};
     $('#ImpegniTableContainer').jtable({
-        title: 'Gestione Prenotazione Eccedenze',
+        title: 'Eccedenze disponibili per il ritiro',
         paging: true, // Enable paging
-        pageSize: 15, // Set page size (default: 10)
+		pageSize: 15,
+		pageSizes: [5,10,15],
         sorting: false, // Enable sorting
         selecting: false, // Enable selecting
         multiselect: false, // Allow multiple selecting
         selectingCheckboxes: true, // Show checkboxes on first column
-        selectOnRowClick: false, // Enable this to only select using
-									// checkboxes
+        selectOnRowClick: false, // Enable this to only select using checkboxes
+		toolbarSearch:true,
+		toolbarReset:true,
         pageSizeChangeArea: false,
         openChildAsAccordion: true,
         actions: {
@@ -56,9 +58,20 @@
                 edit: false,
                 create: false,
                 display: function (eccedenzaData) {
-                    // Create an image that will be used to open child table
-                    var $img = $('<span align="CENTER"><img src="icons/Delivery.png" width="16" height="16" title="Ritiri prenotati"/></span>');
+                	if (eccedenzaData.record.own_impegno!=0) {
+                		if (eccedenzaData.record.can_edit)
+                            var $img = $('<center><img src="icons/traffic-lights-yellow-icon.png" width="24" height="24" title="Prenotazione effettuata e modificabile"/></center>');
+                		else
+                            var $img = $('<center><img src="icons/traffic-lights-red-icon.png" width="24" height="24" title="Prenotazione già ritirata"/></center>');
+                	} else {
+                        var $img = $('<center><img src="icons/traffic-lights-green-icon.png" width="24" height="24" title="Prenotazione possibile"/></center>');
+                	}
                     // Open child table when user clicks the image
+                    $img.find('img').qtip({
+        			    position: {
+        			        viewport: $(window)
+        			    }
+        			});
                     $img.click(function () {
                         $('#ImpegniTableContainer').jtable('openChildTable',$img.closest('tr'),
                         {
@@ -67,7 +80,7 @@
                             pageSize: 5, // Set page size (default: 10)
                             pageSizeChangeArea: false,
 					        defaultSorting : 'DATA_RITIRO ASC', //Set default sorting
-							selecting: true,
+							selecting: false,
 							multiselect: false, 
 							selectingCheckboxes: true, 
 							selectOnRowClick: true,
@@ -140,6 +153,12 @@
                             	     $('#ImpegniTableContainer').find('.jtable-toolbar-item.jtable-toolbar-item-add-record').remove();
                             	  }
                             },
+                            rowInserted: function(event, data){
+                            	if (data.record.ritiro_effettuato) {
+                                  data.row.find('.jtable-edit-command-button').hide();
+                                  data.row.find('.jtable-delete-command-button').hide();
+                                }
+                            },
                             // Initialize validation logic when a form is created
                             formCreated: function (event, data) {
                                 data.form.validationEngine('attach',{promptPosition : "bottomLeft", scroll: false});
@@ -175,6 +194,8 @@
                 width: '15%',
                 options: 'Choose_Enti',
                 width: '15%',
+				searchable: true, // default is false, if set to true then a text input is created
+				sqlOperator: '=',
                 list: true,
                 edit: false,
                 create: false
@@ -184,13 +205,18 @@
                 width: '45%',
                 inputTitle: 'Prodotto' + ' <span style="color:red">*</span>',
                 inputClass: 'validate[required]',
-                list: true
+				searchable: true, // default is false, if set to true then a text input is created
+//				sqlOperator: '=',
+//				sqlName: 'NOME_DELLA_COLONNA'
+               list: true
             },
             udm: {
                 title: 'UDM',
                 inputTitle: 'Unità di misura' + ' <span style="color:red">*</span>',
                 options: 'Choose_UDM',
                 width: '15%',
+				searchable: true, // default is false, if set to true then a text input is created
+				sqlOperator: '=',
                 list: true,
                 edit: true,
                 create: true
@@ -198,6 +224,8 @@
             qta: {
                 title: 'Quantità',
                 width: '5%',
+				searchable: true, // default is false, if set to true then a text input is created
+				sqlOperator: '>=',
                 list: true,
                 edit: true,
                 create: true
@@ -212,6 +240,9 @@
                 type: 'date',
 				displayFormat: 'dd/mm/yy',
                 inputClass: 'validate[required]',
+				searchable: true, // default is false, if set to true then a text input is created
+				sqlOperator: '>=',
+//				sqlName: 'NOME_DELLA_COLONNA'
                 width: '10%'
             }
         },
