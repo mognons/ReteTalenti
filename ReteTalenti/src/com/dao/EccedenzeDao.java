@@ -68,9 +68,9 @@ public class EccedenzeDao {
 
 	public List<Eccedenza> getOwnEccedenze(int jtStartIndex, int jtPageSize, String jtSorting, User user) {
 		List<Eccedenza> eccedenze = new ArrayList<Eccedenza>();
-		String query = 	"SELECT ECC.*, COALESCE(imp.qta_prenotata,0)  qta_prenotata from ECCEDENZE ECC "
-						+ "left join (SELECT id_eccedenza, sum(qta_prenotata) as qta_prenotata FROM IMPEGNI "
-						+ "group by id_eccedenza ) IMP on ecc.id=imp.id_eccedenza "
+		String query = 	"SELECT ECC.*, COALESCE(IMP.QTA_PRENOTATA,0)  QTA_PRENOTATA FROM ECCEDENZE ECC "
+						+ "LEFT JOIN (SELECT ID_ECCEDENZA, SUM(QTA_PRENOTATA) AS QTA_PRENOTATA FROM IMPEGNI "
+						+ "GROUP BY ID_ECCEDENZA ) IMP ON ECC.ID=IMP.ID_ECCEDENZA "
 						+ "WHERE ENTE_CEDENTE=? "
 						+ "ORDER BY " + jtSorting
 						+ " LIMIT " + jtPageSize
