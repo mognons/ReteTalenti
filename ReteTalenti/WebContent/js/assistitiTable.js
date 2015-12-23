@@ -12,7 +12,7 @@
 		$.Deferred(function ($dfd) {
 			$.ajax({
 				traditional: true, // THIS IS MANDATORY FOR ARRAYS
-				url: 'trasferisciAssistitiAction',
+				url: 'trasferisciAssistitiAction?request_locale=it',
 				type: 'POST',
 				dataType: 'json',
 				data: {
@@ -84,8 +84,8 @@
         jqueryuiTheme: false,
         actions: {
             listAction: 'listAssistitiAction',
-            createAction: 'createAssistitiAction',
-            updateAction: 'updateAssistitiAction'
+            createAction: 'createAssistitiAction?request_locale=it',
+            updateAction: 'updateAssistitiAction?request_locale=it'
         },
 		toolbar: {
 			items: [{
@@ -113,7 +113,7 @@
 								});
 							} else {
 								$.ajax({
-									url: 'riattivaAssistitiAction',
+									url: 'riattivaAssistitiAction?request_locale=it',
 									type: 'POST',
 									dataType: 'json',
 									data: {
@@ -170,7 +170,7 @@
 								});
 							} else {
 								$.ajax({
-									url: 'disattivaAssistitiAction',
+									url: 'disattivaAssistitiAction?request_locale=it',
 									type: 'POST',
 									dataType: 'json',
 									data: {

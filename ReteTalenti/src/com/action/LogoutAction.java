@@ -22,6 +22,7 @@ public class LogoutAction extends ActionSupport implements UserAware, SessionAwa
     public String execute() {
         LOGGER.info("user: " + user.getUsername());
         sessionAttributes.remove("USER");
+        user = null;
         return INPUT;
     }
      
