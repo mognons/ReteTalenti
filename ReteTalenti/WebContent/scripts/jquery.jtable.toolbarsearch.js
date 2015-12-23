@@ -135,7 +135,7 @@
 			if(this.options.toolbarReset){
 				$reset = $('.jtable-toolbar');
 				$resetbutton = $(
-					'<span class="jtable-toolbar-item ui-widget ui-state-default ui-corner-all RESET" title="Azzera i criteri di ricerca" style="">'
+					'<span class="jtable-toolbar-item RESET" title="Azzera i criteri di ricerca" style="">'
 					+ '<span class="jtable-toolbar-item-icon"' 
 					+ 'style="background-image: url(icons/Cancel.png); background-position: initial initial; background-repeat: initial initial;">'
 					+ '</span>'

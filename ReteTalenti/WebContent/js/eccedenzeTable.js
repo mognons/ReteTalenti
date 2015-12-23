@@ -14,8 +14,8 @@
         openChildAsAccordion: true,
         actions: {
             listAction: 'listOwnEccedenzeAction',
-            createAction: 'createEccedenzeAction',
-            updateAction: 'updateEccedenzeAction',
+            createAction: 'createEccedenzeAction?request_locale=it',
+            updateAction: 'updateEccedenzeAction?request_locale=it',
             deleteAction: 'deleteEccedenzeAction'
         },
         fields: {
